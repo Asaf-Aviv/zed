@@ -1,0 +1,12 @@
+include partials/head.pug
+body
+    include partials/nav.pug
+
+    .container
+        .champions-squares-wrapper.d-flex.flex-wrap.flex-gap
+            each champName in champs
+                .champion-square.p-1
+                    a(href="/champions/" + champName.replace("'", ''))
+                        img(src=`/assets/league/img/champion-base-tile/${champName}.png`)
+                 
+    include partials/footer.pug

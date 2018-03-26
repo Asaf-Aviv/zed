@@ -1,0 +1,245 @@
+include partials/head.pug
+body
+    include partials/nav.pug
+    .jumbotron
+        .container
+            h1.champion-name.text-center.mb-2= champ.name
+            .champion-title.text-center.mb-2: q.lead= champ.title
+            .champion-role.text-center.mb-2: span= champ.tags
+            .champion-tile
+                a(href="/champions/" + champ.name.replace(/_/g,'').replace(/ /g, '').replace("'", ''))
+                    img(src=`/assets/league/img/champion-base-tile/${champ.name.replace("'", "")}.png`)
+            br
+    .container
+
+
+        main#main-section-wrapper.row
+            .col-md-4.col-sm-12
+                table.table
+                    tr
+                        td.colorFF0000 Health
+                        td= `${champ.stats.hp}(+${champ.stats.hpperlevel})`
+                    tr
+                        td.colorFF0000 Health Regen
+                        td= `${champ.stats.hpregen}(+${champ.stats.hpregenperlevel})`
+                    tr    
+                        td.colorFF8C00 Attack Damage
+                        td= `${champ.stats.attackdamage}(+${champ.stats.attackdamageperlevel})`
+                    tr
+                        td.colorFFFF00 Armor
+                        td= `${champ.stats.armor}(+${champ.stats.armorperlevel})`
+                    tr
+                        td.colorFF00FF Magic Resist
+                        td= Math.trunc(champ.stats.spellblock) + `(+${champ.stats.spellblockperlevel})`
+
+
+            .col-md-4.col-sm-12
+                table.table
+                    tr
+                        td.general-color Attack Speed
+                        td= `${champ.stats.attackspeedoffset * 10}(+${champ.stats.attackspeedperlevel})`
+                    tr
+                        td.general-color Range
+                        td= champ.stats.attackrange
+                    tr
+                        td.general-color Movement Speed
+                        td= champ.stats.movespeed
+                    tr
+                        td.general-color= champ.partype !== 'None' ? champ.partype : ''
+                        td= champ.stats.mp ? Math.trunc(champ.stats.mp) : '', champ.stats.mpperlevel ? `(+${champ.stats.mpperlevel})` : ''
+                    tr
+                        td.general-color= champ.stats.mpregen ? `${champ.partype} Regen`: ''
+                        td= champ.stats.mpregen || '', champ.stats.mpregenperlevel ? `(+${champ.stats.mpregenperlevel})` : ''
+
+            section.game-charts.col-md-4.col-sm-12.row
+                h6.text-center Win Rate By Game Length
+                canvas#winrate-chart.col-12
+            br
+            hr
+            br
+            br
+
+            section#champion-statistics.col-md-4.col-sm-12
+                table.table
+                    tr
+                        td Games Played
+                        td= champStats[0].gamesPlayed
+                    tr
+                        td Win Rate
+                        td= +String(champStats[0].winRate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
+                    tr
+                        td Play Rate
+                        td= +String(champStats[0].playRate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
+                    tr
+                        td Ban Rate
+                        td= +String(champStats[0].banRate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
+                    tr
+                        td Kills
+                        td= +String(champStats[0].kills).slice(0, 4)
+                    tr
+                        td Gold Earned
+                        td= +String(champStats[0].kills).slice(0, 4)
+                    tr
+                        td Deaths
+                        td= +String(champStats[0].deaths).slice(0, 4)
+                    tr
+                        td Assists
+                        td= +String(champStats[0].assists).slice(0, 4)
+                    tr
+                        td Damage Dealt
+                        td= +String(champStats[0].damageComposition.total).split('.')[0]
+                    tr
+                        td Damage Taken
+                        td= +String(champStats[0].totalDamageTaken).split('.')[0]
+                    tr
+                        td Minions Killed
+                        td= +champStats[0].minionsKilled.toFixed(2)
+
+    blockquote.blockquote.text-center.d-none.d-sm-block= champ.blurb
+        = champ.blurb
+    </blockquote>
+
+        
+        section.champion-abilities
+            .container
+                .ability-wrapper.row.col-10.offset-1
+                    .passive-name.col-12.text-center.mb-2: h5.py-4= champ.passive.name
+                
+                    .ability-tile.col-lg-1.col-md-2.d-flex.justify-content-center.align-items-center.mb-4: img(src=`/assets/league/img/passive/${champ.passive.image.full}`)
+                    
+                    -
+                        let passiveDesc = champ.passive.description
+                            passiveDesc = passiveDesc.replace(/bonus/g, 'Bonus ').replace(/spelldamage/g, 'AP').replace(/attackdamage/g, 'AD').replace(/armor/g, 'Armor')
+                            passiveDesc = passiveDesc.replace(/magic damage/gi, '<span class="color99FF99">Magic Damage</span>')
+                            passiveDesc = passiveDesc.replace(/physical damage/gi, '<span class="colorFF8C00">Physical Damage</span>')
+                            passiveDesc = passiveDesc.replace(/maximum health/gi, '<span class="colorFF0000">Maximum Health</span>')
+                            passiveDesc = passiveDesc.replace(/health/gi, '<span class="colorFF0000">Health</span>')
+                            passiveDesc = passiveDesc.replace(/energy/gi, '<span class="colorFFFF00">Energy</span>')
+                            passiveDesc = passiveDesc.replace(/magic/gi, '<span class="color99FF99">Magic</span>')
+                            passiveDesc = passiveDesc.replace(/armor/gi, '<span class="colorFFFF00">Armor</span>')
+                            passiveDesc = passiveDesc.replace(/physical/gi, '<span class="colorFF8C00">Physical</span>')
+                            
+                    .ability-desc.col-lg-11.col-md-10.px-4.mb-4: span.lead!= passiveDesc
+
+                    //- .damage-stats.col-lg-2.row.justify-content-center.align-items-center
+                    //-     span.text-center.col-lg-12.col-md-4.mb-2 100/200
+                    //-     span.text-center.col-lg-12.col-md-4.mb-2 100/200/250
+                    //-     span.text-center.col-lg-12.col-md-4.mb-2 100/300/400
+                br
+                br
+                br
+
+                - for (let i = 0; i < 4; i++)
+                    .ability-wrapper.row.col-10.offset-1
+
+                        .ability-name.col-12.text-center.mb-4: h5.py-4= champ.spells[i].name
+
+                        .row.col-12.mb-4.px-4
+
+                            .cooldown.col-lg-4.col-sm-4.text-xs-center: span= 'Cooldown ' + champ.spells[i].cooldownBurn
+                    
+                            if (champ.spells.resourse) 
+                            -
+                                let res = champ.spells[i].resource.replace('{{ cost }}', champ.spells[i].costBurn)
+                                let resEffect = res.match(/{{ ..+? }}/g)
+                                if (resEffect) 
+                                    res = res.replace(resEffect[0], champ.spells[i].effectBurn[resEffect[0].slice(4, resEffect[0].lastIndexOf(' '))])
+                            -
+                        
+                            .cost-type.col-lg-4.col-sm-4.text-xs-center: span= res
+                            
+                            .range.col-lg-4.col-sm-4.text-xs-center: span= 'Range ' + champ.spells[i].rangeBurn
+                        
+                        .ability-tile.col-lg-1.d-flex.justify-content-center.align-items-center.mb-4: img(src=`/assets/league/img/spell/${champ.spells[i].image.full}`)
+
+                        .ability-desc.col-lg-11.px-4.mb-4: span.lead!= champ.spells[i].description
+
+                        -
+                            let tooltip = champ.spells[i].tooltip
+                            let damageAmp
+
+                            if (tooltip) {
+                                let champEffects = tooltip.match(/{{ ..+? }}/g)
+                                
+                                if(champEffects) {
+                                    champEffects.map(effect => {
+                                    
+                                    if (effect.includes('e')) {
+                                        tooltip = tooltip.replace(effect, champ.spells[i].effectBurn[effect.slice(4, effect.lastIndexOf(' '))])
+                                    }
+
+                                    if (effect.includes('a')) {
+                                        spellObj = champ.spells[i].vars ? champ.spells[i].vars.filter(obj => obj.key === effect.slice(3, 5))[0] : ''
+                                        damageAmp = spellObj ? `(+${spellObj.coeff * 100}% ${spellObj.link})` : ''
+                                        tooltip = tooltip.includes(`(+${effect})`) ? tooltip.replace(`(+${effect})`, damageAmp) : tooltip.replace(`(+${effect}%)`, damageAmp)
+
+                                        if (tooltip.includes(`(+${effect})`)) tooltip = tooltip.replace(`(+${effect})`, damageAmp)
+                                        if (tooltip.includes(`(+${effect}%)`)) tooltip = tooltip.replace(`(+${effect}%)`, damageAmp)
+                                        if (tooltip.includes(effect)) tooltip = tooltip.replace(effect, damageAmp)
+                                    }
+
+                                    if (effect.includes('f')) {
+                                        spellObj = champ.spells[i].vars ? champ.spells[i].vars.filter(obj => obj.key === effect.slice(3, 5))[0] : ''
+                                        damageAmp = spellObj ? `(+${spellObj.coeff * 100}% ${spellObj.link})` : ''
+
+                                        if (tooltip.includes(`(+${effect})`)) tooltip = tooltip.replace(`(+${effect})`, damageAmp)
+                                        if (tooltip.includes(`(+${effect}%)`)) tooltip = tooltip.replace(`(+${effect}%)`, damageAmp)
+                                        if (tooltip.includes(effect)) tooltip = tooltip.replace(effect, damageAmp)
+                                    }})
+                                }
+                            tooltip = tooltip.replace(/bonus/g, 'Bonus ').replace(/spelldamage/g, 'AP').replace(/attackdamage/g, 'AD').replace(/armor/g, 'Armor')
+                            tooltip = tooltip.replace(/magic damage/gi, '<span class="color99FF99">Magic Damage</span>')
+                            tooltip = tooltip.replace(/physical damage/gi, '<span class="colorFF8C00">Physical Damage</span>')
+                            tooltip = tooltip.replace(/maximum health/gi, '<span class="colorFF0000">Maximum Health</span>')
+                            tooltip = tooltip.replace(/health/gi, '<span class="colorFF0000">Health</span>')
+                            tooltip = tooltip.replace(/energy/gi, '<span class="colorFFFF00">Energy</span>')
+                            tooltip = tooltip.replace(/armor/gi, '<span class="colorFFFF00">Armor</span>')
+                            tooltip = tooltip.replace(/physical/gi, '<span class="colorFF8C00">Physical</span>')
+                            }
+
+                        //- .damage-stats.col-lg-2.row.justify-content-center.align-items-center
+                        //-     span.text-center.col-lg-12.col-md-4.mb-2 100/200
+                        //-     span.text-center.col-lg-12.col-md-4.mb-2 100/200/250
+                        //-     span.text-center.col-lg-12.col-md-4.mb-2 100/300/400
+                            
+                        .ability-tooltip.col-lg-11.offset-lg-1.px-4.mb-4: span.lead!= tooltip
+                    br
+                    br
+                    br
+
+    script.
+        var ctx = $("#winrate-chart")
+        var chart = new Chart(ctx, {
+            // tde type of chart we want to create
+            type: 'line',
+
+            // tde data for our dataset
+            data: {
+                labels: ["0-15", "15-20", "20-25", "25-30", "30-35", "35-40", "40+"],
+                datasets: [{
+                    cubicInterpolationMode: 'monotone',
+                    backgroundColor: 'rgba(00, 59, 255, 0.8)',
+                    borderColor: 'rgba(255, 255, 255, 0.5)',
+                    data: [0, 10, 5, 2, 20, 30, 45],
+                }]
+            },
+
+            // Configuration options go here
+            options: {
+                legend: {
+                    display: false
+                },
+                responsive: true,
+                animation: {
+                    duration: 2000,
+                    easting: 'easeOutCubic',
+                },
+
+                tick: {
+                    fontColor: '#fff'
+                }
+            }
+        });
+        $('iframe').remove()
+
+    include partials/footer.pug

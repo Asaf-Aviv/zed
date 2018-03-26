@@ -1,0 +1,32 @@
+include partials/head.pug
+body
+    include partials/nav.pug
+    br
+    br
+    br
+    .container
+        #legends-list
+            each legend in usersList
+                if (legend._id != currentUser._id)
+                    .legend-wrapper
+                        div(id=legend._id)
+                            h3= legend.username
+                            br
+                            img(src=legend.profilePicture)
+                            br
+                            if (pendingRequests.includes(legend._id.toString()))
+                                a.btn.btn-success.accept-friend-request(href="javascript:void(0)", data-id=legend._id) Accept
+                                a.btn.btn-danger.decline-friend-request(href="javascript:void(0)", data-id=legend._id) Decline
+                                br
+                                hr
+                            else if (sentRequests.includes(legend._id.toString()))
+                                a.btn.btn-warning Pending
+                                br
+                                hr
+                            else if (friends.includes(legend._id.toString()))
+                                a.btn.btn-success Friends
+                            else 
+                                a.btn.btn-success.send-friend-request(href="javascript:void(0)", data-id=legend._id) Add
+
+        
+    include partials/footer.pug

@@ -1,0 +1,38 @@
+include partials/head.pug
+body
+    include partials/nav.pug
+    .container
+        h1= currentUser.username
+        hr
+        
+        form(method="POST", action="/post")
+            .form-group
+                textarea.form-control(name="postBody", placeholder="Post something nice ...", rows="6", required)
+            input.btn.btn-success(type="submit", value="Post")
+
+        hr
+
+        each request in currentUser.friendRequests
+            if (request.pending)
+                div(id=request.requester)
+                    h3= request.requester
+                    img(src=request.profilePicture)
+                    h2= request.pending
+                    br
+                    a.btn.btn-success.accept-friend-request(href="javascript:void(0)", data-id=request.requester) Accept
+                    a.btn.btn-danger.decline-friend-request(href="javascript:void(0)", data-id=request.requester) Decline
+
+        each post in currentUser.posts
+            div( id=post._id )
+                h1= post.author
+                br
+                p= post.body
+                br
+                p= 'Likes:' + post.likes
+                p= 'Shares:' + post.shares
+                br
+                a.btn.btn-default(href="/post/edit/"+post._id) Edit
+                a.btn.btn-danger.delete-post(href="javascript:void(0)", data-id=post._id) Delete
+                hr
+        
+    include partials/footer.pug

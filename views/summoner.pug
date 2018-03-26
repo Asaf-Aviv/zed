@@ -1,0 +1,28 @@
+include partials/head.pug
+body
+    include partials/nav.pug
+    .container
+        .profile-wrapper
+        
+            header
+                h1.text-center= summoner.name
+
+            main#summoner-main
+                h3.text-center= summoner.summonerLevel
+
+                if (league && typeof league[0] != 'undefined')
+                    img.league-icon.animated.zoomInUp(src=`/assets/league/img/tier_icons/${league[0].tier}${league[0].rank}.png`)
+                else
+                    img.league-icon.animated.zoomInUp(src="/assets/league/img/base_rank_icons/PROVISIONAL.png")
+
+                img.profile-icon.animated.zoomInUpclass(
+                    src=`/assets/league/img/profileicon/${summoner.profileIconId}.png`
+                    width="80", height="80")
+
+                .must-played
+                    - mustPlayedBG.map((bg, i) => {
+                        a(href=`/champions/${mustPlayed[i].name}`)
+                            img.champion-image-rounded(src=`/assets/league/img/champion/tiles/${bg}`)
+                    - })
+                    
+    include partials/footer.pug

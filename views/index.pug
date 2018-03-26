@@ -1,0 +1,32 @@
+include partials/head.pug
+body
+    include partials/nav.pug
+    .container
+        form#main-form(method="GET", action="/summoner")
+            input(type="text", name="userName", placeholder="Enter Username")
+            button(type="submit") Search
+            br
+            input(type="radio", name="region", value="NA", checked)
+            | NA
+            input(type="radio", name="region", value="EUW1")
+            | EUW
+            input(type="radio", name="region", value="EUN1")
+            | EUNE
+            input(type="radio", name="region", value="BR1")
+            | BRAZIL
+            input(type="radio", name="region", value="KR")
+            | KOREA
+            input(type="radio", name="region", value="JP1")
+            | JAPAN
+            input(type="radio", name="region", value="LA1")
+            | LAN
+            input(type="radio", name="region", value="LA2")
+            | LAS
+            input(type="radio", name="region", value="TR1")
+            | TURKEY
+            input(type="radio", name="region", value="OC1")
+            | OCE
+            input(type="radio", name="region", value="RU")
+            | RUSSIA
+
+    include partials/footer.pug

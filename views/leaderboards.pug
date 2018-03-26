@@ -1,0 +1,53 @@
+include partials/head.pug
+body
+    include partials/nav.pug
+
+    .container
+
+        header.leaderboard-name
+            h1.text-center= LB.name
+
+        nav.leaderboard-regions
+            a(href="/leaderboards?region=NA1") NA
+            a(href="/leaderboards?region=EUW1") EUW
+            a(href="/leaderboards?region=EUN1") EUNE
+            a(href="/leaderboards?region=BR1") BRAZIL
+            a(href="/leaderboards?region=KR") KOREA
+            a(href="/leaderboards?region=JP1") JAPAN
+            a(href="/leaderboards?region=LA1") LAN
+            a(href="/leaderboards?region=LA2") LAS
+            a(href="/leaderboards?region=TR1") TURKEY
+            a(href="/leaderboards?region=OC1") OCE
+            a(href="/leaderboards?region=RU") RUSSIA
+
+        main
+            table#leaderboard-table.table.table-hover.table-dark
+                thead.table-fixed
+                    tr
+                        th Rank
+                        th Summoner
+                        th Tier
+                        th LP
+                        th Emblems
+                        th Team
+                        th Win Ratio
+
+                - for (let i = 0, x = LB.entries.length; i < x; i++) {
+                    tr
+                        td= i + 1
+                        td: span.lb-summoner= LB.entries[i].playerOrTeamName
+                        td= LB.tier
+                        td= LB.entries[i].leaguePoints
+                        td.hot-streak
+                            if LB.entries[i].hotStreak
+                                i.fa.fa-fire
+                        td Dignitas
+                        td= ((LB.entries[i].wins / (LB.entries[i].wins + LB.entries[i].losses)) * 100).toFixed(0) + '%'
+                - }
+
+        svg.icon.icon-arrow-up2
+            use(xlink:href="#icon-arrow-up2")
+            symbol#icon-arrow-up2(viewBox="0 0 32 32")
+                path(d="M27.414 12.586l-10-10c-0.781-0.781-2.047-0.781-2.828 0l-10 10c-0.781 0.781-0.781 2.047 0 2.828s2.047 0.781 2.828 0l6.586-6.586v19.172c0 1.105 0.895 2 2 2s2-0.895 2-2v-19.172l6.586 6.586c0.39 0.39 0.902 0.586 1.414 0.586s1.024-0.195 1.414-0.586c0.781-0.781 0.781-2.047 0-2.828z")
+    
+    include partials/footer.pug

@@ -1,0 +1,16 @@
+include partials/head.pug
+body
+    include partials/nav.pug
+    .container
+        h1= currentUser.username
+        hr
+        form(method="POST", action="/post/edit/"+post._id)
+            .form-group
+                textarea.form-control(name="postBody", rows="6", required)= post.body
+            br
+            input.btn.btn-success(type="submit", value="Edit")
+            a.btn.btn-danger.delete-post(href="javascript:void(0)", data-id=post._id) Delete
+        hr
+        br
+        
+    include partials/footer.pug

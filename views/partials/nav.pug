@@ -1,0 +1,33 @@
+nav#main-nav-bar.nav.navbar-expand-md.bg-dark
+    .container.nav.justify-content-between
+        #main-left-nav-bar.nav
+            ul.nav.justify-content-center.align-items-center
+                li.nav-item: a.nav-link(href="/") Home
+                li.nav-item: a.nav-link(href="/leaderboards?region=NA1") Leaderboards
+                li.nav-item: a.nav-link(href="/champions") Champions
+                li.nav-item: a.nav-link(href="/statistics") Statistics
+        #nav-search.d-flex.justify-content-center.align-items-center
+            form#navbar-search-form(method="GET", action="/summoner")
+                select#region-select(name="region")
+                    option(value="NA") NA
+                    option(value="EUW1") EUW
+                    option(value="EUN1") EUNE
+                    option(value="KR") KOREA
+                    option(value="JP1") JAPAN
+                    option(value="LA1") LAN
+                    option(value="BR1") BRAZIL
+                    option(value="LA2") LAS
+                    option(value="TR1") TURKEY
+                    option(value="OC1") OCE
+                    option(value="RU") RUSSIA
+                input(type="text", name="userName", placeholder="Enter Username")
+                i.fa.fa-search
+        #nav-bar-login.nav.justify-content-center.align-items-center
+            a.nav-link(href="/users") Find Legends
+            if currentUser
+                a.nav-link(href="/profile")= currentUser.username
+                img(style="width: 50px; height: 50px;", src=currentUser.profilePicture)
+                a.nav-link(href="/logout") Logout
+            else
+                a.nav-link(href="/register") Register
+                a.nav-link(href="/login") Login

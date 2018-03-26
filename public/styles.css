@@ -1,0 +1,151 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    color: #fff;
+    background: #2b2b2b;
+    /* background: rgba(0,0,0,1);
+    background: -moz-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(1,1,1,1) 1%, rgba(84,84,84,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,0,1)), color-stop(1%, rgba(1,1,1,1)), color-stop(100%, rgba(84,84,84,1)));
+    background: -webkit-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(1,1,1,1) 1%, rgba(84,84,84,1) 100%);
+    background: -o-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(1,1,1,1) 1%, rgba(84,84,84,1) 100%);
+    background: -ms-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(1,1,1,1) 1%, rgba(84,84,84,1) 100%);
+    background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(1,1,1,1) 1%, rgba(84,84,84,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#545454', GradientType=0 ); */
+}
+a {
+    color: #fff;
+}
+.table {
+    max-width: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+.table td, .table th {
+    border: 0;
+    padding: .50rem;
+}
+
+.container {
+    max-width: 1400px;
+}
+
+.jumbotron {
+    background-color: #222;
+
+}
+
+.champion-name {
+    text-shadow:0px 5px 10px #fff;
+}
+
+.champion-square img{
+    -webkit-box-shadow: 5px 5px 2px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 5px 5px 2px 0px rgba(0,0,0,0.75);
+    box-shadow: 5px 5px 2px 0px rgba(0,0,0,0.75); 
+}
+
+hr {
+    margin-right: auto;
+    margin-left: auto;
+    width: 83.5%;
+    background-color: #9d84ff;
+}
+
+.champion-tile img {
+    -webkit-box-shadow: 5px 5px 2px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 5px 5px 2px 0px rgba(0,0,0,0.75);
+    box-shadow: 5px 5px 2px 0px rgba(0,0,0,0.75);
+}
+
+.lb-summoner:hover {
+    cursor: pointer;
+}
+
+.ability-tile img {
+    -webkit-box-shadow: 7px 7px 2px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 7px 7px 2px 0px rgba(0,0,0,0.75);
+    box-shadow: 7px 7px 2px 0px rgba(0,0,0,0.75);
+}
+.ability-wrapper {
+    -webkit-box-shadow: 15px 15px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 15px 15px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 15px 15px 5px 0px rgba(0,0,0,0.75);
+    border: 1px solid #9d84ff;
+    background-color: #202020;
+    color: #fff;
+}
+
+.blockquote {
+    font-style: italic;
+    line-height: 1.5em;
+    letter-spacing: 0.2em;
+    font-size: 1.5rem;
+    background-color: #222;
+    padding: 50px;
+    margin: 50px 0px;
+}
+
+@media (max-width: 978px) {
+    .container {
+      padding:0;
+      margin:0;
+    }
+}
+
+@media (max-width: 577px) {
+    .text-xs-center {
+        text-align: center;
+    }
+
+    .ability-desc,
+    .ability-tooltip {
+        padding: 0 !important;
+    }
+}
+/* AD */
+.colorFF8C00 {
+    color: #ff8c00;
+}
+/* AP DAMAGE */
+.color99FF99 {
+    color: #99ff99;
+}
+/* HEALTH */
+.colorCC3300 {
+    color: #cc3300;
+}
+/* HEALTH */
+.colorFF0000 {
+    color: #ff0000;
+}
+.colorFFFFFF {
+    color: #ffffff;
+}
+.color91d7ee {
+    color: #91d7ee;
+}
+.colorF88017 {
+    color: #f88017;
+}
+/* ARMOR */
+.colorFFFF00 {
+    color: #FFFF00
+}
+/* MAGIC RESIST */
+.colorFF00FF {
+    color: #FF00FF;
+}
+/* FURY */
+.colorFF6633{
+    color: #FF6633;
+}
+.general-color {
+    color: #b1a0ff;
+}
+.colorFF9900 {
+    color: #FF9900;
+}

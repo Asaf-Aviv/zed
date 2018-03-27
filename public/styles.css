@@ -5,6 +5,7 @@
 }
 
 body {
+    padding-top: 64px; 
     color: #fff;
     background: #2b2b2b;
     /* background: rgba(0,0,0,1);
@@ -16,7 +17,9 @@ body {
     background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(1,1,1,1) 1%, rgba(84,84,84,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#545454', GradientType=0 ); */
 }
-
+ul {
+    margin: 0;
+}
 a,
 a:hover {
     color: #fff;
@@ -33,9 +36,89 @@ a:hover {
     padding: .50rem;
 }
 
+.row {
+    margin: 0;
+}
+
 .container {
     max-width: 1400px;
 }
+
+/* NAVBAR */
+#main-nav-bar {
+    display: flex;
+    justify-content: space-evenly;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    width: 100%;
+    background-color: #000;
+}
+/* NARBAR LEFT */
+#main-left-nav-bar ul {
+    display: flex;
+}
+
+#main-nav-bar li {
+    display: flex;
+}
+
+#main-nav-bar a {
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 20px 15px;
+    font-family: 'Libre Baskerville', serif;
+    letter-spacing: 0.2em;
+}
+
+#main-nav-bar a:hover {
+    text-decoration: none;
+    color: #fff;
+    background-color: #32383e;
+}
+
+/* NARBAR SEARCH */
+#nav-search {
+    display: flex;
+}
+
+#navbar-search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#navbar-search-form input {
+    color: #fff;
+    padding: 0 10px;
+    background-color: #32383e;
+    width: 250px;
+    border: 0;
+    margin: 0 10px 0 20px;
+}
+
+#navbar-search-form select {
+    background-color: #32383e;
+    color: #fff;
+    border: 0;
+    outline: 0;
+}
+
+.fa-search {
+    font-size: 25px;
+    margin-right: 10px;
+}
+
+.fa-search:hover {
+    cursor: pointer;
+    color: #32383e;
+}
+/* NAVBAR LOGIN */
+#nav-bar-login {
+    display: flex;
+}
+
 
 .jumbotron {
     background-color: #222;
@@ -100,7 +183,7 @@ hr {
     }
 }
 
-@media (max-width: 577px) {
+@media (max-width: 580px) {
     .text-xs-center {
         text-align: center;
     }
@@ -110,6 +193,7 @@ hr {
         padding: 0 !important;
     }
 }
+
 /* AD */
 .colorFF8C00 {
     color: #ff8c00;

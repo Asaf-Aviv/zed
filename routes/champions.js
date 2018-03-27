@@ -12,14 +12,12 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/*', (req, res) => {
-    zed.getChampionStats(req.params['0']).then(champStats => {
-        
-        if (champStats.length === 0) return res.redirect('/champions')
-
+router.get('/:champName', (req, res) => {
+    zed.getChampionStats(req.params.champName).then(champStats => {
+        if (champStats.length === 0) return res.redirect('/champions');
         zed.getChampDesc(champStats[0].championId).then(champ => {
             res.render('champion', {
-                title: champ.name + ' | Legends',
+                title: `${champ.name} | Legends`,
                 champStats,
                 champ,
             });
@@ -27,4 +25,4 @@ router.get('/*', (req, res) => {
     });
 });
 
-module.exports = router
+module.exports = router;

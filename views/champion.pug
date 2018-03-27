@@ -6,7 +6,7 @@ body
             h1.champion-name.text-center.mb-2= champ.name
             .champion-title.text-center.mb-2: q.lead= champ.title
             .champion-role.text-center.mb-2: span= champ.tags
-            .champion-tile
+            .champion-tile.pl-3
                 a(href="/champions/" + champ.name.replace(/_/g,'').replace(/ /g, '').replace("'", ''))
                     img(src=`/assets/league/img/champion-base-tile/${champ.name.replace("'", "")}.png`)
             br

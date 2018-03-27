@@ -1,5 +1,5 @@
-const assert = require('assert')
-const Legend = require('../models/user')
+const assert = require('assert');
+const Legend = require('../models/user');
 
 describe('User Registration Tests', () => {
 
@@ -9,11 +9,11 @@ describe('User Registration Tests', () => {
             username: 'test',
             email: 'test@gmail.com',
             password: '123123123'
-        })
+        });
 
         user.save().then( () => {
             assert(user.isNew === false)
-            done()
-        })
-    })
-})
+            done();
+        });
+    });
+});

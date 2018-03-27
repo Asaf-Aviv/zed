@@ -1,40 +1,41 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
 // Server utils
-require('dotenv').config()
-const compression = require('compression')
-const bodyParser = require("body-parser")
-const morgan = require('morgan')
-const fs = require('fs')
-const path = require('path')
-const expressValidator = require('express-validator')
-const flash = require('connect-flash')
+require('dotenv').config();
+const compression = require('compression');
+const bodyParser = require("body-parser");
+const morgan = require('morgan');
+const fs = require('fs');
+const path = require('path');
+const expressValidator = require('express-validator');
+const flash = require('connect-flash');
 
 // Authentication utils
-const session = require('express-session')
-const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
+const session = require('express-session');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 // DB utils
-const mongoose = require('mongoose')
-const Legend = require('./models/user')
-const MongoStore = require('connect-mongo')(session)
+const mongoose = require('mongoose');
+const Legend = require('./models/user');
+const MongoStore = require('connect-mongo')(session);
 
 // Routes 
-const leaderboards = require('./routes/leaderboards')
-const champions = require('./routes/champions')
-const summoner = require('./routes/summoner')
-const statistics = require('./routes/statistics')
-const contact = require('./routes/contact')
-const logout = require('./routes/logout')
-const profile = require('./routes/profile')
-const login = require('./routes/login')
-const register = require('./routes/register')
-const post = require('./routes/post')
-const legendSearch = require('./routes/legendSearch')
-const friendRequests = require('./routes/friendRequests')
-const dbHelper = require('./routes/dbUtils')
+const leaderboards = require('./routes/leaderboards');
+const champions = require('./routes/champions');
+const summoner = require('./routes/summoner');
+const statistics = require('./routes/statistics');
+const contact = require('./routes/contact');
+const logout = require('./routes/logout');
+const profile = require('./routes/profile');
+const login = require('./routes/login');
+const register = require('./routes/register');
+const post = require('./routes/post');
+const legendSearch = require('./routes/legendSearch');
+const friendRequests = require('./routes/friendRequests');
+const index = require('./routes/index');
+const dbHelper = require('./routes/dbUtils');
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_ADMIN);
@@ -45,7 +46,7 @@ db.once('open', () => {
 });
 
 // Logs
-const accessLogStream = fs.createWriteStream(path.join(__dirname+'/logs', 'access.log'), {flags: 'a'})
+const accessLogStream = fs.createWriteStream(path.join(__dirname+'/logs', 'access.log'), {flags: 'a'});
 
 // Compress files
 // Serve Static files
@@ -93,6 +94,7 @@ app
 .use('/post', post)
 .use('/users', legendSearch)
 .use('/users', friendRequests)
+.use('/', index)
 .use('/', dbHelper)
 
 passport.use(new LocalStrategy({
@@ -100,9 +102,9 @@ passport.use(new LocalStrategy({
     },
     function(email, password, done) {
         Legend.authenticate(email.toLowerCase(), password, function (err, user) {
-            if(err || !user) return done(null, false)
+            if(err || !user) return done(null, false);
             done(null, user);
-        })
+        });
     }
 ));
 
@@ -114,17 +116,11 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((user, done) => {
     Legend.findById(user._id).then(updatedUser => {
         done(null, updatedUser);
-    })
+    });
 });
 
 // Setup view engine
-app.set('view engine', 'pug')
-
-app.get('/', (req, res) => {
-    res.render('index', {
-        title: 'Home | Legends'
-    });
-});
+app.set('view engine', 'pug');
 
 app.get('*', (req, res) => {
     res.render('404', {

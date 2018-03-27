@@ -26,7 +26,7 @@ function getMastery(summonerId, region) {
     const getMasteryData = `https://${region}${lol}champion-mastery/v3/champion-masteries/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`;
     return rp({ uri: getMasteryData, json: true })
         .catch(function(err) {
-            console.log("getMastery ERROR: " + err)
+            console.log("getMastery ERROR: " + err);
         });
 }
 
@@ -34,7 +34,7 @@ function getLeaderboards(region) {
     const getLeaderboardData = `https://${region}${lol}league/v3/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=${process.env.LOL_KEY}`;
     return rp({ uri: getLeaderboardData, json: true })
         .catch(function(err) {
-            console.log("getLeaderboards ERROR: " + err)
+            console.log("getLeaderboards ERROR: " + err);
         });
 }
 
@@ -42,7 +42,7 @@ function getSummonerGame(summonerId, region) {
     const getLeaderboardData = `https://${region}${lol}spectator/v3/active-games/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`;
     return rp({ uri: getLeaderboardData, json: true })
         .catch(function(err) {
-            console.log("getSummonerGame ERROR: " + err)
+            console.log("getSummonerGame ERROR: " + err);
         });
 }
 
@@ -54,25 +54,27 @@ function getMatches(summonerId, region) {
         });
 }
 
-function getChampDesc(champId) {
-    return new Promise((resolve, reject) => {
-        resolve(champions.data[championIds[champId]])
-    })
-}
 function getChampionStats(champName) {
     // const allData = `kda,damage,minions,wins,positions,wards,normalized,averageGames,overallPerformanceScore,goldEarned,sprees,hashes,wins,maxMins,matchups`
-    const champId = +Object.keys(champions.keys).filter(v => champions.keys[v].toLowerCase() === champName.toLowerCase())
-    const allData = `wins,kda,damage,minions`
+    const champId = +Object.keys(champions.keys).filter(v => champions.keys[v].toLowerCase() === champName.toLowerCase());
+    const allData = `wins,kda,damage,minions`;
     const getChampsData = `http://api.champion.gg/v2/champions/${champId}?champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
     return rp({ uri: getChampsData, json: true })
         .catch(function(err) {
             console.log("getChampionStats ERROR: " + err);
         });
 }
+
+function getChampDesc(champId) {
+    return new Promise((resolve, reject) => {
+        resolve(champions.data[championIds[champId]]);
+    });
+}
+
 function getChampionsIdsAndNames() {
     return new Promise((resolve, reject) => {
-        resolve(champions.keys)
-    })
+        resolve(champions.keys);
+    });
 }
 
 function getRunesReforged() {
@@ -82,10 +84,11 @@ function getRunesReforged() {
             console.log("getRunesReforged ERROR: " + err);
         });
 }
+
 function getBg(name, max) {
     name = name.replace(' ', '').replace("'", '');
     const skinNum = Math.floor(Math.random() * max);
-    return `${name}_${skinNum}.jpg`
+    return `${name}_${skinNum}.jpg`;
 }
 
 function getSkins(champId) {
@@ -95,12 +98,12 @@ function getSkins(champId) {
 
 function setIdToName(obj) {
     for (let i = 0, x = obj.length; i < x; i++) {
-        obj[i].championName = championIds[obj[i].championId]
+        obj[i].championName = championIds[obj[i].championId];
     }
 }
 
 function getNameById(champId) {
-    return championIds[champId]
+    return championIds[champId];
 }
 
 module.exports = {

@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
                 profilePicture: user.profilePicture
             })
         })
-        res.render('legends', {
+        res.render('legend_search', {
             title:  'Legends | Legends',
             usersList,
             sentRequests,

@@ -23,7 +23,7 @@ body
                     a.btn.btn-danger.decline-friend-request(href="javascript:void(0)", data-id=request.requester) Decline
 
         each post in currentUser.posts
-            div( id=post._id )
+            div(id=post._id)
                 h1= post.author
                 br
                 p= post.body

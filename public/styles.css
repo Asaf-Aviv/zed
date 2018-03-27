@@ -16,9 +16,13 @@ body {
     background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(1,1,1,1) 1%, rgba(84,84,84,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#545454', GradientType=0 ); */
 }
-a {
+
+a,
+a:hover {
     color: #fff;
+    text-decoration: none;
 }
+
 .table {
     max-width: none;
     text-transform: uppercase;
@@ -148,4 +152,10 @@ hr {
 }
 .colorFF9900 {
     color: #FF9900;
+}
+.coloree91d7 {
+    color: #ee91d7;
+}
+.colorb3b3b3 {
+    color: #b3b3b3;
 }

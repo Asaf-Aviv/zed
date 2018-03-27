@@ -4,10 +4,9 @@ const zed = require('../util/zed');
 const championIds = require('../assets/data/champions/championIds');
 
 router.get('/', (req, res) => {
-    console.log(req.query)
     const region = req.query.region
     zed.getSummoner(req.query.userName, region).then(summoner => {
-        if(!summoner) return res.redirect('/')
+        if (!summoner) return res.redirect('/')
         zed.getLeague(summoner.id, region).then(league => {
             zed.getSummonerGame(summoner.id, region).then(match => {
                 zed.getMatches(summoner.accountId, region).then(matches => {

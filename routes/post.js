@@ -24,17 +24,11 @@ router.post('/', (req, res) => {
 });
 
 router.post('/edit/:id', (req, res) => {
-    Legend.update({
-        "posts._id" : req.params.id
-        },
-        {$set: 
-            {"posts.$.body": req.body.postBody}
-        }, 
-        (err, result) => {
+    Legend.update({ "posts._id" : req.params.id },
+        { $set: { "posts.$.body": req.body.postBody }}, (err, result) => {
             if (err) console.log(err)
             res.redirect('/profile')
     })
-
 });
 
 router.delete('/:id', (req, res) => {
@@ -44,6 +38,16 @@ router.delete('/:id', (req, res) => {
             if(err) console.log(err)
             res.send()
         })
+})
+
+router.post('/like/:id', (req, res) => {
+    console.log('request')
+    console.log(req.params.id)
+    Legend.update({ "posts._id" : req.params.id },
+        { $inc: { "posts.$.likes": 1 }}, (err, result) => {
+            if (err) console.log(err)
+            res.send()
+    })
 })
 
 module.exports = router

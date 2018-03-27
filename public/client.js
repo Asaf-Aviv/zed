@@ -17,7 +17,7 @@ $(function() {
         $(this).scrollTop() > 200 ? $('.icon-arrow-up2').fadeIn() : $('.icon-arrow-up2').fadeOut()
     });
     
-    $('.delete-post').click(function(e) {
+    $('.delete-post').click(function() {
         const postId = $(this).attr('data-id')
 
         $.ajax({
@@ -26,6 +26,22 @@ $(function() {
             success: function(res) {
                 console.log(res)
                 window.location.href = '/profile'
+            },
+            error: function(err) {
+                alert(err)
+            }
+        })
+    })
+
+    $('.like-post').click(function() {
+        const postId = $(this).attr('data-id')
+        let likes = $(this).text()
+
+        $.ajax({
+            type: 'POST',
+            url: '/post/like/'+postId,
+            success: function(res) {
+                $(`#${postId} .like-post`).text(++likes)
             },
             error: function(err) {
                 alert(err)
@@ -77,6 +93,8 @@ $(function() {
             }
         })
     })
+    
+
 
     $('#makeUsers').click( () => {
         $.ajax({

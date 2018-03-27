@@ -1,0 +1,18 @@
+include partials/head.pug
+body
+    include partials/nav.pug
+
+    .container
+    
+        h1.text-center= legend.username
+        h1.text-center= legend.profileViews
+
+        each post in legend.posts
+            div(id=post.id).post-wrapper
+                
+                p= post.body
+                a(href="javascript:void(0)", data-id=post.id).like-post= post.likes
+                br
+                a(href="javascript:void(0)", data-id=post.id).share-post= post.shares
+
+    include partials/footer.pug

@@ -10,7 +10,7 @@ body
                 if (legend._id != currentUser._id)
                     .legend-wrapper
                         div(id=legend._id)
-                            h3= legend.username
+                            a(href=`/profile/${legend.username}`): h3= legend.username
                             br
                             img(src=legend.profilePicture)
                             br

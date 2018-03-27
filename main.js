@@ -32,7 +32,7 @@ const profile = require('./routes/profile')
 const login = require('./routes/login')
 const register = require('./routes/register')
 const post = require('./routes/post')
-const userSearch = require('./routes/userSearch')
+const legendSearch = require('./routes/legendSearch')
 const friendRequests = require('./routes/friendRequests')
 const dbHelper = require('./routes/dbUtils')
 
@@ -91,7 +91,7 @@ app
 .use('/login', login)
 .use('/logout', logout)
 .use('/post', post)
-.use('/users', userSearch)
+.use('/users', legendSearch)
 .use('/users', friendRequests)
 .use('/', dbHelper)
 

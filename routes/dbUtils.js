@@ -3,9 +3,7 @@ const router = express.Router()
 const mongoose = require('mongoose')
 const Legend = require('../models/user')
 
-
 router.get('/makeUsers', (req, res) => {
-    console.log('making')
     makeDummyUsers();
     res.send();
 })

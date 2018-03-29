@@ -6,15 +6,15 @@ body
             h1.champion-name.text-center.mb-2= champ.name
             .champion-title.text-center.mb-2: q.lead= champ.title
             .champion-role.text-center.mb-2: span= champ.tags
-            .champion-tile.pl-3
-                a(href="/champions/" + champ.name.replace(/_/g,'').replace(/ /g, '').replace("'", ''))
-                    img(src=`/assets/league/img/champion-base-tile/${champ.name.replace("'", "")}.png`)
-            br
-    .container
-
-
+        br
+            
         main#main-section-wrapper.row
-            .col-md-4.col-sm-12
+
+            .champion-tile.col-md-2.col-lg-push-2.pl-3
+                    a(href="/champions/" + champ.name.replace(/_/g,'').replace(/ /g, '').replace("'", ''))
+                        img(src=`/assets/league/img/champion-base-tile/${champ.name.replace("'", "")}.png`)
+
+            .col-md-5.col-sm-12
                 table.table
                     tr
                         td.colorFF0000 Health
@@ -32,8 +32,7 @@ body
                         td.colorFF00FF Magic Resist
                         td= Math.trunc(champ.stats.spellblock) + `(+${champ.stats.spellblockperlevel})`
 
-
-            .col-md-4.col-sm-12
+            .col-md-5.col-sm-12
                 table.table
                     tr
                         td.general-color Attack Speed
@@ -50,10 +49,14 @@ body
                     tr
                         td.general-color= champ.stats.mpregen ? `${champ.partype} Regen`: ''
                         td= champ.stats.mpregen || '', champ.stats.mpregenperlevel ? `(+${champ.stats.mpregenperlevel})` : ''
+    .container
 
-            section.game-charts.col-md-4.col-sm-12.row
-                h6.text-center Win Rate By Game Length
-                canvas#winrate-chart.col-12
+
+
+
+            //- section.game-charts.col-md-4.col-sm-12.row
+            //-     h6.text-center Win Rate By Game Length
+            //-     canvas#winrate-chart.col-12
             br
             hr
             br

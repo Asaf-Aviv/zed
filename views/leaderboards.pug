@@ -2,11 +2,10 @@ include partials/head.pug
 body
     include partials/nav.pug
 
+    .jumbotron
+        h1.text-center= LB.name
+
     .container
-
-        header.leaderboard-name
-            h1.text-center= LB.name
-
         nav.leaderboard-regions
             a(href="/leaderboards?region=NA1") NA
             a(href="/leaderboards?region=EUW1") EUW
@@ -21,7 +20,7 @@ body
             a(href="/leaderboards?region=RU") RUSSIA
 
         main
-            table#leaderboard-table.table.table-hover.table-dark
+            table#leaderboard-table.table.table-hover
                 thead.table-fixed
                     tr
                         th Rank

@@ -2,8 +2,11 @@ const rp = require('request-promise');
 const championSkins = require('../assets/data/champions/championSkins');
 const championIds = require('../assets/data/champions/championIds');
 const champions = require('../assets/data/champions/champion');
+const items = require('../assets/league/data/en_US/item');
+const runes = require('../assets/league/data/en_US/runesReforged');
+const summonerSpells = require('../assets/league/data/en_US/summoner');
 
-const ddragon = '8.5.2';
+const ddragon = '8.6.1';
 const lol = '.api.riotgames.com/lol/';
 
 function getSummoner(summonerName, region) {
@@ -55,10 +58,11 @@ function getMatches(summonerId, region) {
 }
 
 function getChampionStats(champName) {
-    // const allData = `kda,damage,minions,wins,positions,wards,normalized,averageGames,overallPerformanceScore,goldEarned,sprees,hashes,wins,maxMins,matchups`
+    const allData = `kda,damage,minions,wins,positions,wards,normalized,averageGames,overallPerformanceScore,goldEarned,sprees,hashes,wins,maxMins` //,matchups
     const champId = +Object.keys(champions.keys).filter(v => champions.keys[v].toLowerCase() === champName.toLowerCase());
-    const allData = `wins,kda,damage,minions`;
+    // const allData = `kda,damage,minions,gold`;
     const getChampsData = `http://api.champion.gg/v2/champions/${champId}?champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
+    console.log(getChampsData)
     return rp({ uri: getChampsData, json: true })
         .catch(function(err) {
             console.log("getChampionStats ERROR: " + err);
@@ -77,13 +81,7 @@ function getChampionsIdsAndNames() {
     });
 }
 
-function getRunesReforged() {
-    const runesRegorged = `http://ddragon.leagueoflegends.com/cdn/${ddragon}/data/en_US/runesReforged.json`;
-    return rp({ uri: runesRegorged, json: true })
-        .catch(function(err) {
-            console.log("getRunesReforged ERROR: " + err);
-        });
-}
+
 
 function getBg(name, max) {
     name = name.replace(' ', '').replace("'", '');
@@ -106,6 +104,24 @@ function getNameById(champId) {
     return championIds[champId];
 }
 
+function getRunesReforged() {
+    return new Promise((resolve, reject) => {
+        resolve(runes);
+    });
+}
+
+function getSummonerSpells() {
+    return new Promise((resolve, reject) => {
+        resolve(summonerSpells);
+    });
+}
+
+function getItems() {
+    return new Promise((resolve, reject) => {
+        resolve(items);
+    });
+}
+
 module.exports = {
     setIdToName,
     getSummoner,
@@ -119,5 +135,7 @@ module.exports = {
     getBg,
     getChampionsIdsAndNames,
     getChampDesc,
-    getRunesReforged
+    getRunesReforged,
+    getItems,
+    getSummonerSpells
 };

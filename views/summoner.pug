@@ -22,7 +22,7 @@ body
                 .must-played
                     - mustPlayedBG.map((bg, i) => {
                         a(href=`/champions/${mustPlayed[i].name}`)
-                            img.champion-image-rounded(src=`/assets/league/img/champion/tiles/${bg}`)
+                            img(src=`/assets/league/img/champion/tiles/${bg}`)
                     - })
                     
     include partials/footer.pug

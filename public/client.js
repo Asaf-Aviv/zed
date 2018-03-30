@@ -5,17 +5,17 @@ $(function() {
 
     $('.fa-search').click( () => $('#navbar-search-form').submit());
 
-    $('a[href="' + window.location.href + '"]').addClass('current');
-
     $(".icon-arrow-up2").click(function() {
         $("html, body").animate({ scrollTop: 0 }, 1000, 'easeInOutCubic');
         return false;
       });
 
     $(document).scroll(function() {
-        $(this).scrollTop() > 200 ? $('.icon-arrow-up2').fadeIn() : $('.icon-arrow-up2').fadeOut()
+        $(this).scrollTop() > 200 ? $('.icon-arrow-up2').fadeIn() : $('.icon-arrow-up2').fadeOut();
     });
     
+    $('[data-toggle="tooltip"]').tooltip()
+
     $('.delete-post').click(function() {
         const postId = $(this).attr('data-id');
 

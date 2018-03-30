@@ -6,7 +6,7 @@ body
         .champions-squares-wrapper.d-flex.flex-wrap.justify-content-around
             each champName in champs
                 .champion-square.p-1
-                    a(href="/champions/" + champName.replace("'", ''))
+                    a(href=`/champions/${champName.replace("'", '')}`)
                         img(src=`/assets/league/img/champion-base-tile/${champName}.png`)
                  
     include partials/footer.pug

@@ -14,7 +14,9 @@ $(function() {
         $(this).scrollTop() > 200 ? $('.icon-arrow-up2').fadeIn() : $('.icon-arrow-up2').fadeOut();
     });
     
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').popover();
+
 
     $('.delete-post').click(function() {
         const postId = $(this).attr('data-id');

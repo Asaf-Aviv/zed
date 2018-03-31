@@ -11,11 +11,11 @@ body
                 h3.text-center= summoner.summonerLevel
 
                 if (league && typeof league[0] != 'undefined')
-                    img.league-icon.animated.zoomInUp(src=`/assets/league/img/tier_icons/${league[0].tier}${league[0].rank}.png`)
+                    img.league-icon(src=`/assets/league/img/tier_icons/${league[0].tier}${league[0].rank}.png`)
                 else
-                    img.league-icon.animated.zoomInUp(src="/assets/league/img/base_rank_icons/PROVISIONAL.png")
+                    img.league-icon(src="/assets/league/img/base_rank_icons/PROVISIONAL.png")
 
-                img.profile-icon.animated.zoomInUpclass(
+                img.profile-icon(
                     src=`/assets/league/img/profileicon/${summoner.profileIconId}.png`
                     width="80", height="80")
 

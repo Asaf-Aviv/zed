@@ -80,9 +80,6 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                         td Deaths
                         td.font-weight-bold= +String(champStats[0].deaths).slice(0, 4)
                     tr
-                        td Deaths
-                        td.font-weight-bold= +String(champStats[0].deaths).slice(0, 4)
-                    tr
                         td Assists
                         td.font-weight-bold= +String(champStats[0].assists).slice(0, 4)
                     tr
@@ -108,7 +105,7 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                         td.font-weight-bold= champStats[0].killingSprees.toFixed(2)
                
         
-            #item-sets.col-md-5.col-sm-12.pt-3
+            #item-sets.col-md-4.col-sm-12.pt-3
                 - let highestCountItems = champStats[0].hashes.finalitemshashfixed.highestCount.hash.split('-').splice(1)
                 - let highestWinrateItems = champStats[0].hashes.finalitemshashfixed.highestWinrate.hash.split('-').splice(1)
 
@@ -163,7 +160,7 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                                 each val, key in summonerSpells.data
                                     if (summonerSpells.data[key].key == item)
                                         .item-tile: img(src=`/assets/league/img/spell/${summonerSpells.data[key].image.full}`, data-toggle="tooltip", title=summonerSpells.data[key].description)
-            #summoner-sets.col-md-3.pt-3
+            #summoner-sets.col-md-4.pt-3
                 
                 - let highestTrinketCount = champStats[0].hashes.trinkethash.highestCount.hash
                 - let highestTrinketWinrate = champStats[0].hashes.trinkethash.highestWinrate.hash
@@ -192,10 +189,6 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                 .start-items.row.justify-content-around.text-center
                     each item in highestStartItemWinrate
                         .item-tile: img(src=`/assets/league/img/item/${item}.png`, data-toggle="tooltip", title=items.data[item].plaintext)
-
-                
-                                //- p= JSON.stringify(summonerSpells.data[key])
-
 
             #skill-sets.col-md-6.col-sm-12
                 - let highestCountSkill = champStats[0].hashes.skillorderhash.highestCount.hash.split('-').splice(1)
@@ -262,14 +255,20 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                 br
                 br
 
-                #runes-set
-                    - let highestRuneCount = champStats[0].hashes.runehash.highestCount.hash.split('-')
-                    - let highestRuneWinrate = champStats[0].hashes.runehash.highestWinrate.hash.split('-')
-                    p= highestRuneCount
-                    p= highestRuneWinrate
-                    //- champStats[0].hashes.runehash.highestCount.hash.split('-')
-                    each rune in highestRuneCount
-                        img(src=`/assets/league/img/runesReforged/perk/${rune}.png`, data-toggle="tooltip", title=runes[rune])
+            #runes-set.row
+                - let highestRuneCount = champStats[0].hashes.runehash.highestCount.hash.split('-')
+                - let highestRuneWinrate = champStats[0].hashes.runehash.highestWinrate.hash.split('-')
+                p= highestRuneCount
+                p= highestRuneWinrate
+                //- champStats[0].hashes.runehash.highestCount.hash.split('-')
+                .runes.col-md-6.col-sm-12
+                    .d-flex.justify-content-center.align-items-center
+                        each rune, index in highestRuneCount
+                            //- if (index < 3)
+                            img(src=`/assets/league/img/runesReforged/perk/${rune}.png`, data-toggle="tooltip", title=runes[rune])
+                                //- img(src=`/assets/league/img/runesReforged/perk/${highestRuneCount[index+4]}.png`, data-toggle="tooltip", title=runes[rune])
+                            //- else if (index > 5 && index < 8)
+                                img(src=`/assets/league/img/runesReforged/perk/${rune}.png`, data-toggle="tooltip", title=runes[rune])
                     
     blockquote.blockquote.text-center.mb-0= champ.blurb
         = champ.blurb
@@ -375,39 +374,4 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                     br
                     br
 
-    script.
-        var ctx = $("#winrate-chart")
-        var chart = new Chart(ctx, {
-            // tde type of chart we want to create
-            type: 'line',
-
-            // tde data for our dataset
-            data: {
-                labels: ["0-15", "15-20", "20-25", "25-30", "30-35", "35-40", "40+"],
-                datasets: [{
-                    cubicInterpolationMode: 'monotone',
-                    backgroundColor: 'rgba(00, 59, 255, 0.8)',
-                    borderColor: 'rgba(255, 255, 255, 0.5)',
-                    data: [0, 10, 5, 2, 20, 30, 45],
-                }]
-            },
-
-            // Configuration options go here
-            options: {
-                legend: {
-                    display: false
-                },
-                responsive: true,
-                animation: {
-                    duration: 2000,
-                    easting: 'easeOutCubic',
-                },
-
-                tick: {
-                    fontColor: '#fff'
-                }
-            }
-        });
-        $('iframe').remove()
-
-    include partials/footer.pug
+                include partials/footer.pug

@@ -35,6 +35,7 @@ const post = require('./routes/post');
 const legendSearch = require('./routes/legendSearch');
 const friendRequests = require('./routes/friendRequests');
 const index = require('./routes/index');
+const items = require('./routes/items');
 const dbHelper = require('./routes/dbUtils');
 
 // Connect to MongoDB
@@ -94,6 +95,7 @@ app
 .use('/post', post)
 .use('/users', legendSearch)
 .use('/users', friendRequests)
+.use('/items', items)
 .use('/', index)
 .use('/', dbHelper)
 

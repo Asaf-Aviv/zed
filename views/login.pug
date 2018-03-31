@@ -3,20 +3,21 @@ body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
     include partials/nav.pug
 
     .container
-        .form-wrapper
-        
-            legend.text-center Log In
+        .form-wrapper.mt-5
+            form#login-form.form-group(action="/login", method="POST", autocomplete="off")
+                legend.text-center Log In
+                .md-form
+                    i.fa.fa-envelope.prefix
+                    input.form-control.pb-3(type="text" id="login-email" name="email" required)
+                    label(for="login-email") Email
 
-            form#login-form.form-horizontal.text-center.justify-content-center(action="/login", method="POST")
-
-                .form-group
-                    label(for="email") Email
-                    input#login-email.form-control(type="email", name="email", placeholder="Email" required)
-
-                .form-group
-                    label(for="password") Password
-                    input#login-password.form-control(type="password", name="password", placeholder="Password" required)
-
-                button.btn.btn-success(type="submit") Log In
+                .md-form.mb-4
+                    i.fa.fa-lock.prefix
+                    input.form-control.pb-3(type="password" id="login-password" name="password" required)
+                    label(for="login-password") Password
+                .text-center
+                    button.btn.btn-success
+                        i.fa.fa-sign-in.fa-5x.mr-2
+                        | Log In
 
         include partials/footer.pug

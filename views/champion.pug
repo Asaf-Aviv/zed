@@ -5,10 +5,12 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
         h1.champion-name.text-center.pt-5.mb-2= champ.name
         .champion-title.text-center.mb-2: q.lead= champ.title
         .champion-role.text-center.mb-2: span= champ.tags
+        hr
         .row
-            .champion-tile.col-md-2.pl-3
+            .col-md-2.pl-3.text-center.pt-4
                 a(href="/champions/" + champ.name.replace(/_/g,'').replace(/ /g, '').replace("'", ''))
                     img(src=`/assets/league/img/champion-base-tile/${champ.name.replace("'", "").replace(' ', '')}.png`)
+
 
             .col-md-5.col-sm-12
                 table.table
@@ -29,32 +31,25 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                         td.font-weight-bold= Math.trunc(champ.stats.spellblock) + `(+${champ.stats.spellblockperlevel})`
 
             .col-md-5.col-sm-12
-                table.table
+                table.table.general-color
                     tr
-                        td.general-color Attack Speed
+                        td Attack Speed
                         td.font-weight-bold= `${(champ.stats.attackspeedoffset * 10).toFixed(3)}(+${champ.stats.attackspeedperlevel})`
                     tr
-                        td.general-color Range
+                        td Range
                         td.font-weight-bold= champ.stats.attackrange
                     tr
-                        td.general-color Movement Speed
+                        td Movement Speed
                         td.font-weight-bold= champ.stats.movespeed
                     tr
-                        td.general-color= champ.partype !== 'None' ? champ.partype : ''
+                        td= champ.partype !== 'None' ? champ.partype : ''
                         td.font-weight-bold= champ.stats.mp ? Math.trunc(champ.stats.mp) : '', champ.stats.mpperlevel ? `(+${champ.stats.mpperlevel})` : ''
                     tr
-                        td.general-color= champ.stats.mpregen ? `${champ.partype} Regen`: ''
+                        td= champ.stats.mpregen ? `${champ.partype} Regen`: ''
                         td.font-weight-bold= champ.stats.mpregen || '', champ.stats.mpregenperlevel ? `(+${champ.stats.mpregenperlevel})` : ''
 
-        #champion-info.row
-            = champ.info.attack
-            = champ.info.defense
-            = champ.info.magic
-            = champ.info.difficulty
         hr
-            //- section.game-charts.col-md-4.col-sm-12.row
-            //-     h6.text-center Win Rate By Game Length
-            //-     canvas#winrate-chart.col-12
+
         section#champion-statistics.row.col-12
             #champ-patch-stats.col-md-4.col-sm-12.pt-3
                 table.table
@@ -139,7 +134,7 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                     each item in highestWinrateItems
                         .item-tile
                             a(href=`/items/${item}`)
-                                img(src=`/assets/league/img/item/${item}.png`, data-toggle="tooltip", title=items.data[item].plaintext)
+                                img(src=`/assets/league/img/item/${item}.png` data-toggle="tooltip" title=items.data[item].plaintext)
 
                 - let highestSummonerCount = champStats[0].hashes.summonershash.highestCount.hash.split('-')
                 - let highesSummonertWinrateS = champStats[0].hashes.summonershash.highestWinrate.hash.split('-')
@@ -193,7 +188,6 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
             #skill-sets.col-md-6.col-sm-12
                 - let highestCountSkill = champStats[0].hashes.skillorderhash.highestCount.hash.split('-').splice(1)
                 - let highestWinrateSkill = champStats[0].hashes.skillorderhash.highestWinrate.hash.split('-').splice(1)
-                .col-6
                 h5.text-center.pt-3 Must Common Skill Order
 
                 .row.text-center
@@ -204,7 +198,7 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                     p.col-4 Win rate 
                         span.font-weight-bold= +String(champStats[0].hashes.skillorderhash.highestCount.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
 
-                .skill-order-table
+                .skill-order-table.mb-3
                     - for (let i = 0; i < 19; i++)
                         if i
                             .board-box= i
@@ -223,7 +217,6 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                     - for (let i = 0; i < 18; i++)
                         .board-box.R= highestCountSkill[i] == 'R' ? 'R' : ''
                 
-                .col-6
                 h5.text-center Highest Win Rate Skill Order
 
                 .row.text-center
@@ -254,6 +247,11 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                         .board-box.R= highestWinrateSkill[i] == 'R' ? 'R' : ''
                 br
                 br
+            #champion-info.col-md-6.col-sm12
+                span= champ.info.attack
+                span= champ.info.defense
+                span= champ.info.magic
+                span= champ.info.difficulty
 
             #runes-set.row
                 - let highestRuneCount = champStats[0].hashes.runehash.highestCount.hash.split('-')
@@ -281,7 +279,6 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                     .passive-name.col-12.text-center.mb-1: h5.pt-4= champ.passive.name
                 
                     .ability-tile.col-lg-1.col-md-2.d-flex.justify-content-center.align-items-center.mb-4: img(src=`/assets/league/img/passive/${champ.passive.image.full}`)
-                    
                     -
                         let passiveDesc = champ.passive.description
                             passiveDesc = passiveDesc.replace(/bonus/g, 'Bonus ').replace(/spelldamage/g, 'AP').replace(/attackdamage/g, 'AD').replace(/armor/g, 'Armor')
@@ -295,11 +292,6 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                             passiveDesc = passiveDesc.replace(/physical/gi, '<span class="colorFF8C00">Physical</span>')
                             
                     .ability-desc.col-lg-11.col-md-10.px-4.mb-4: span.lead!= passiveDesc
-
-                    //- .damage-stats.col-lg-2.row.justify-content-center.align-items-center
-                    //-     span.text-center.col-lg-12.col-md-4.mb-2 100/200
-                    //-     span.text-center.col-lg-12.col-md-4.mb-2 100/200/250
-                    //-     span.text-center.col-lg-12.col-md-4.mb-2 100/300/400
                 br
                 br
                 - for (let i = 0; i < 4; i++)

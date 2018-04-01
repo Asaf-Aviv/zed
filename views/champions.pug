@@ -7,6 +7,6 @@ body
             each champName in champs
                 .champion-square.p-1
                     a(href=`/champions/${champName.replace("'", '')}`)
-                        img(src=`/assets/league/img/champion-base-tile/${champName}.png`)
+                        img(src=`//ddragon.leagueoflegends.com/cdn/8.5.2/img/champion/${champName}.png`)
                  
     include partials/footer.pug

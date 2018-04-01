@@ -3,9 +3,7 @@
     padding: 0;
     box-sizing: border-box;
 }
-input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
-}
+
 body {
     color: beige;
     /* color: #fff; */
@@ -27,16 +25,29 @@ a:hover {
     color: #fff;
     text-decoration: none;
 }
-
+.table td, .table th {
+    vertical-align: middle;
+}
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 1px solid #b1a0ff;
+}
+table.table a {
+    color: inherit;
+}
 .table {
     max-width: none;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     letter-spacing: 0.1em;
 }
 .table td,
 .table th {
     border: 0;
     padding: 0.25rem;
+}
+table.table td,
+table.table th {
+    padding-bottom: 0;
 }
 .btn {
     margin: 5px;
@@ -46,8 +57,15 @@ a:hover {
 .row {
     margin: 0;
 }
+.bold {
+    font-weight: 600 !important;
+}
+
+.font-weight-bold {
+    font-weight: 600 !important;
+}
 .container {
-    padding-top: 59px;
+    padding: 59px 0 0 0;
     min-height: 100vh;
     max-width: 1400px;
     background-color: rgba(0, 0, 0, 0.75);
@@ -114,15 +132,7 @@ a:hover {
     outline: 0;
 }
 
-.fa-search {
-    font-size: 22px;
-    margin-right: 10px;
-}
 
-.fa-search:hover {
-    cursor: pointer;
-    color: #5e3086;
-}
 /* NAVBAR LOGIN */
 #nav-bar-login {
     display: flex;
@@ -138,7 +148,6 @@ a:hover {
 .index-regions div {
     padding: 5px 10px;
 }
-
 .champion-name {
     letter-spacing: 0.1em;
 }
@@ -259,14 +268,7 @@ a:hover {
     border-radius: 0;
 }
 
-.bold {
-    font-weight: 800;
-}
 
-.font-weight-bold {
-    color: #42ff00;
-    font-weight: 600 !important;
-}
 
 @media (max-width: 978px) {
     .container {
@@ -313,6 +315,37 @@ a:hover {
     border-color: beige;
 }
 /* LOGIN */
+
+/* OVERALL */
+#overall-wrapper {
+    font-size: 0.8rem;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+}
+#overall-wrapper img {
+    /* transform: scale(0.5) */
+}
+
+#overall-wrapper th,
+#overall-wrapper td {
+    font-weight: 500;
+}
+
+.overall-champ-tile {
+    transform: scale(0.7);
+    width: 36px;
+    height: 36px;
+    display: inline-block;
+    background-size: cover;
+    float: left;
+}
+.t-champ-name {
+    display: inline-block;
+    padding-left: 0.3rem;
+    padding-top: 0.4rem;
+}
+/* OVERALL */
+
 /* ITEMS */
 .league-item {
     padding: 1px;
@@ -378,7 +411,9 @@ stats {
 /* POPOVER */
 
 /* RIOT CLASSES */
-
+.greenC {
+    color: #42ff00;
+}
 /* AD */
 .colorFF8C00 {
     color: #ff8c00;
@@ -430,10 +465,29 @@ yellow {
     color: #b3b3b3;
 }
 .color88FF88 {
-    color: #88ff88;
+    color: #a2ffa2;
 }
 /* RIOT CLASSES */
 
+/* FONT AWESOME */
+.fa-arrow-down {
+    color: #ff0000;
+    margin: 0 0.2rem;
+}
+.fa-arrow-up {
+    color: #42ff00;
+    margin: 0 0.2rem;
+}
+.fa-search {
+    font-size: 22px;
+    margin-right: 10px;
+}
+
+.fa-search:hover {
+    cursor: pointer;
+    color: #5e3086;
+}
+/* FONT AWESOME */
 ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #fff;

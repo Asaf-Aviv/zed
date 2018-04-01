@@ -4,7 +4,7 @@ body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
 
     .container
         .form-wrapper.mt-5
-            form#register-form.form-group(action="/register", method="POST", autocomplete="off")
+            form#register-form.form-group(action="/register" method="POST" autocomplete="off")
                 legend.text-center Register
                 .md-form
                     i.fa.fa-user.prefix
@@ -27,8 +27,6 @@ body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
                     label(for="reg-conPass") Confirm Password
                 
                 .text-center
-                    button.btn.btn-success
-                        i.fa.fa-sign-in.fa-5x.mr-2
-                        | Become a Legend
+                    button.btn.btn-outline-success Become a Legend
 
         include partials/footer.pug

@@ -69,6 +69,14 @@ function getChampionStats(champName) {
         });
 }
 
+function getOverallStatistics(elo) {
+    const getOverallData = `http://api.champion.gg/v2/overall?elo=PLATINUM&api_key=${process.env.CHAMPION_KEY}`;
+    return rp({ uri: getOverallData, json: true })
+        .catch(function(err) {
+            console.log("getOverallStatistics ERROR: " + err);
+        });
+}
+
 function getChampDesc(champId) {
     return new Promise((resolve, reject) => {
         resolve(champions.data[championIds[champId]]);
@@ -80,8 +88,6 @@ function getChampionsIdsAndNames() {
         resolve(champions.keys);
     });
 }
-
-
 
 function getBg(name, max) {
     name = name.replace(' ', '').replace("'", '');
@@ -137,5 +143,6 @@ module.exports = {
     getChampDesc,
     getRunesReforged,
     getItems,
-    getSummonerSpells
+    getSummonerSpells,
+    getOverallStatistics,
 };

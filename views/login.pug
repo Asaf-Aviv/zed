@@ -4,7 +4,7 @@ body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
 
     .container
         .form-wrapper.mt-5
-            form#login-form.form-group(action="/login", method="POST", autocomplete="off")
+            form#login-form.form-group(action="/login" method="POST" autocomplete="off")
                 legend.text-center Log In
                 .md-form
                     i.fa.fa-envelope.prefix
@@ -16,7 +16,7 @@ body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
                     input.form-control.pb-3(type="password" id="login-password" name="password" required)
                     label(for="login-password") Password
                 .text-center
-                    button.btn.btn-success
+                    button.btn.btn-outline-success
                         i.fa.fa-sign-in.fa-5x.mr-2
                         | Log In
 

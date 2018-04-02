@@ -1,12 +1,12 @@
 include partials/head.pug
-body
+body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
     include partials/nav.pug
 
     .container
-        .champions-squares-wrapper.d-flex.flex-wrap.justify-content-around
+        .champions-squares-wrapper.d-flex.flex-wrap.justify-content-between
             each champName in champs
-                .champion-square.p-1
-                    a(href=`/champions/${champName.replace("'", '')}`)
-                        img(src=`//ddragon.leagueoflegends.com/cdn/8.5.2/img/champion/${champName}.png`)
-                 
-    include partials/footer.pug
+                .champion-square.text-center
+                    a.zoom(href=`/champions/${champName.replace("'", '')}`)
+                        img.border.border-primary.rounded(src=`//ddragon.leagueoflegends.com/cdn/8.5.2/img/champion/${champName}.png`)
+                        p.pt-1.m-0.text-center= champName
+        include partials/footer.pug

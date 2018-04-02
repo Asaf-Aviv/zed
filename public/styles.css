@@ -65,7 +65,7 @@ table.table th {
     font-weight: 600 !important;
 }
 .container {
-    padding: 59px 0 0 0;
+    padding: 64px 0 0 0;
     min-height: 100vh;
     max-width: 1400px;
     background-color: rgba(0, 0, 0, 0.75);
@@ -151,12 +151,29 @@ table.table th {
 .champion-name {
     letter-spacing: 0.1em;
 }
+/* CHAMPIONS */
 
-.champion-square img {
-    box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.75);
+
+.champion-square {
+    color: #b1a0ff;
+    font-weight: 500;
+    width: 100px;
+    height: 100px;
+    font-size: 0.9em;
 }
+.champion-square p{
+    color: #b1a0ff;
+}
+.champion-square img {
+    max-width: 64px;
+    max-height: 64px;
+    /* box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.75); */
+}
+.champion-square p:hover {
+    
+}
+/* CHAMPIONS */
 
-.champion-square,
 .champion-tile img {
     -moz-transition: all 0.3s;
     -webkit-transition: all 0.3s;
@@ -207,7 +224,6 @@ table.table th {
     border-radius: 5px;
 }
 
-.champion-square:hover,
 .champion-tile img:hover,
 .item-tile img:hover {
     transform: scale(1.1);
@@ -267,8 +283,6 @@ table.table th {
 .form-wrapper input {
     border-radius: 0;
 }
-
-
 
 @media (max-width: 978px) {
     .container {
@@ -348,6 +362,8 @@ table.table th {
 
 /* ITEMS */
 .league-item {
+    width: 48px;
+    height: 48px;
     padding: 1px;
 }
 .form-control,

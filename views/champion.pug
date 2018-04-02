@@ -4,7 +4,7 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
     .container
         h1.champion-name.text-center.pt-5.mb-2= champ.name
         .champion-title.text-center.mb-2: q.lead= champ.title
-        .champion-role.text-center.mb-2: span= champ.tags
+        .champion-role.text-center.mb-2: span= champ.tags.join(', ')
         hr
         .row
             .col-md-2.pl-3.text-center.pt-4

@@ -1,6 +1,6 @@
-include partials/head.pug
+include partials/head
 body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
-    include partials/nav.pug
+    include partials/nav
     - const pos = overallStats[0].positions
     .container
         #overall-wrapper.row
@@ -254,4 +254,4 @@ body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
                                 i.fa.fa-arrow-down
                                 span.colorFF0000= pos.DUO_SUPPORT.performanceDelta.worst.score
                         
-        include partials/footer.pug
+        include partials/footer

@@ -33,7 +33,6 @@
   "devDependencies": {
     "browser-sync": "^2.23.6",
     "dotenv": "^5.0.1",
-    "gulp": "^3.9.1",
-    "gulp-nodemon": "^2.2.1"
+    "gulp": "^3.9.1"
   }
 }

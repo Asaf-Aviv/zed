@@ -364,7 +364,13 @@ input:focus {
 .form-wrapper legend {
     margin-bottom: 25px;
 }
+/* REGISTER */
 
+/* FOOTER */
+footer p {
+    font-size: 0.8em;
+}
+/* FOOTER */
 ::-webkit-input-placeholder {
     font-style: italic;
     letter-spacing: 0.1em;

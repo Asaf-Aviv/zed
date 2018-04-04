@@ -1,6 +1,6 @@
-include partials/head.pug
+include partials/head
 body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' ', '').replace("'", '')}.jpg);`)
-    include partials/nav.pug
+    include partials/nav
     .container
         h1.champion-name.text-center.pt-5.mb-2= champ.name
         .champion-title.text-center.mb-2: q.lead= champ.title
@@ -366,4 +366,4 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                     br
                     br
 
-                include partials/footer.pug
+                include partials/footer

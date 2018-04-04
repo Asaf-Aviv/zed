@@ -1,6 +1,6 @@
-include partials/head.pug
+include partials/head
 body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
-    include partials/nav.pug
+    include partials/nav
 
     .container
         .champions-squares-wrapper.d-flex.flex-wrap.justify-content-between
@@ -9,4 +9,4 @@ body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
                     a.zoom(href=`/champions/${champName.replace("'", '')}`)
                         img.border.border-primary.rounded(src=`//ddragon.leagueoflegends.com/cdn/8.5.2/img/champion/${champName}.png`)
                         p.pt-1.m-0.text-center= champName
-        include partials/footer.pug
+        include partials/footer

@@ -1,6 +1,6 @@
-include partials/head.pug
+include partials/head
 body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
-    include partials/nav.pug
+    include partials/nav
     .container
         #item-filter.row
             .col-lg-2.col-md-6.col-sm-12
@@ -124,4 +124,4 @@ body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
                                 </span><span>Sell <yellow>${item.gold.sell}</yellow></span></div>`)
                                     img.league-item(src=`/assets/league/img/item/${item.image.full}`)
         
-        include partials/footer.pug
+        include partials/footer

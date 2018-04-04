@@ -1,0 +1,25 @@
+table#leaderboard-table.table.py-2
+    p.text-center.lead= LB.tier
+    p.text-center= LB.name
+    span.text-center.pl-5= LB.queue
+    thead
+        tr.text-center
+            th Rank
+            th Summoner
+            th LP
+            th Emblems
+            th Win Ratio
+
+    - for (let i = 0, x = LB.entries.length; i < x; i++) {
+        tr.text-center
+            td(style="max-width: 50px")= i + 1
+            td: span.lb-summoner= LB.entries[i].playerOrTeamName
+            td= LB.entries[i].leaguePoints
+            td.hot-streak
+                i.fa.fa-fire
+                i.fa.fa-angle-double-up
+                i.fa.fa-ribbon
+            td: span.lb-wins= LB.entries[i].wins + '/'
+                span.lb-losses=LB.entries[i].losses + ' '
+                span.lb-winrate=((LB.entries[i].wins / (LB.entries[i].wins + LB.entries[i].losses)) * 100).toFixed(0) + '%'
+    - }

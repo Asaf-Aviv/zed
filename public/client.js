@@ -1,5 +1,6 @@
 $(function() {
     fixPopover();
+    $('#leaderboard-table').DataTable();
     $('[data-toggle="tooltip"]').tooltip().click(function(e) {
         e.preventDefault()
     });
@@ -147,7 +148,6 @@ $(function() {
             }
         });
     });
-    
     $('#makeUsers').click( () => {
         $.ajax({
             type: 'GET',

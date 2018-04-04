@@ -1,6 +1,6 @@
-include partials/head.pug
+include partials/head
 body
-    include partials/nav.pug
+    include partials/nav
     .container
         h1= currentUser.username
         hr
@@ -35,4 +35,4 @@ body
                 a.btn.btn-danger.delete-post(href="javascript:void(0)", data-id=post._id) Delete
                 hr
         
-    include partials/footer.pug
+    include partials/footer

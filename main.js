@@ -36,6 +36,7 @@ const legendSearch = require('./routes/legendSearch');
 const friendRequests = require('./routes/friendRequests');
 const index = require('./routes/index');
 const items = require('./routes/items');
+const spectate = require('./routes/spectate');
 const dbHelper = require('./routes/dbUtils');
 
 // Connect to MongoDB
@@ -55,7 +56,6 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname+'/logs', 'acces
 // Use sessions
 // Authentication
 // Flash messages
-// Routes
 app
 .use(compression())
 .use('/public', express.static(path.join(__dirname, 'public')))
@@ -83,6 +83,8 @@ app
     res.locals.messages = require('express-messages')(req, res);
     next();
 })
+// Routes
+app
 .use('/leaderboards', leaderboards)
 .use('/champions', champions)
 .use('/summoner', summoner)
@@ -96,6 +98,7 @@ app
 .use('/users', legendSearch)
 .use('/users', friendRequests)
 .use('/items', items)
+.use('/spectate', spectate)
 .use('/', index)
 .use('/', dbHelper)
 

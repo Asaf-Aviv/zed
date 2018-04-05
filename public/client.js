@@ -148,6 +148,21 @@ $(function() {
             }
         });
     });
+
+    $('#spectate').click(function() {
+        const gameId = $(this).attr('data-id');
+        $.ajax({
+            type: 'GET',
+            url: `/spectate/${gameId}`,
+            success: function(res) {
+                window.open(window.location + `/${gameId}.bat`)
+            },
+            error: function(err) {
+                alert(err);
+            }
+        });
+    });
+
     $('#makeUsers').click( () => {
         $.ajax({
             type: 'GET',
@@ -162,6 +177,7 @@ $(function() {
         });
     });
 });
+
 
 function fixPopover() {
     $('[data-trigger="manual"]').click(function(e) {

@@ -8,6 +8,28 @@ const summonerSpells = require('../assets/league/data/en_US/summoner');
 
 const ddragon = '8.6.1';
 const lol = '.api.riotgames.com/lol/';
+const specGrid = {
+    start: '"League of Legends.exe" 8394 LoLLauncher.exe "" "spectator ',
+    NA1: 'spectator.na.lol.riotgames.com:80 ',
+    EUW1: 'spectator.euw1.lol.riotgames.com:80 ',
+    EUNE: 'spectator.eu.lol.riotgames.com:8080 ',
+    JP1: 'spectator.jp1.lol.riotgames.com:80 ',
+    KR: 'spectator.kr.lol.riotgames.com:80 ',
+    OC1: 'spectator.oc1.lol.riotgames.com:80 ',
+    BR1: 'spectator.br.lol.riotgames.com:80 ',
+    LA1: 'spectator.la1.lol.riotgames.com:80 ',
+    LA2: 'spectator.la2.lol.riotgames.com:80 ',
+    RU: 'spectator.ru.lol.riotgames.com:80 ',
+    TR1: 'spectator.tr.lol.riotgames.com:80 '
+};
+
+async function makeSpecBatch(summonerId, region) {
+    const match = await rp({uri: `https://na1${lol}spectator/v3/active-games/by-summoner/44840773?api_key=${process.env.LOL_KEY}`, json: true});
+    // console.log(match.observers)
+    const batch = `${specGrid.start}${specGrid[match.platformId]}${match.observers.encryptionKey} ${match.gameId} ${match.platformId}"`
+    // console.log(batch)
+    return batch
+}
 
 function getSummoner(summonerName, region) {
     const getSummonerData = `https://${region}${lol}summoner/v3/summoners/by-name/${summonerName}?api_key=${process.env.LOL_KEY}`;
@@ -77,6 +99,8 @@ function getOverallStatistics(elo) {
         });
 }
 
+
+
 function getChampDesc(champId) {
     return new Promise((resolve, reject) => {
         resolve(champions.data[championIds[champId]]);
@@ -145,4 +169,5 @@ module.exports = {
     getItems,
     getSummonerSpells,
     getOverallStatistics,
+    makeSpecBatch,
 };

@@ -1,7 +1,72 @@
 include partials/head
 body
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment.min.js")
     include partials/nav
     .container
+        p= JSON.stringify(match)
+
+        .row
+            .col-12
+                if (match)
+                    h3.text-center Active Game
+                    .text-center
+                        button#spectate.btn.btn-outline-success(data-id=match.gameId, data-region=match.platformId) Spectate
+                    #match-wrapper.row.justify-content-around
+                        table#blue-team
+                            each player in match.participants
+                                if player.teamId == 100
+                                    tr
+                                        td: .player-profile-icon
+                                            img(src=`//ddragon.leagueoflegends.com/cdn/8.7.1/img/profileicon/${player.profileIconId}.png`)
+                                        td: .player-champ-icon: a(href=`/champions/${championIds[player.championId]}`)
+                                            img(src=`//ddragon.leagueoflegends.com/cdn/8.7.1/img/champion/${championIds[player.championId]}.png`)
+                                        td: a(href=`/summoner?userName=${player.summonerName}&region=${match.platformId}`): span= player.summonerName
+                                        td: .player-rune-icon
+                                            img(src=`/assets/league/img/runesReforged/perk/${player.perks.perkStyle}.png`)
+                                        td: .player-rune-icon
+                                            img(src=`/assets/league/img/runesReforged/perk/${player.perks.perkSubStyle}.png`)
+                                        td
+                                            each val, key in summonerSpells.data
+                                                if (summonerSpells.data[key].key == player.spell1Id)
+                                                    .player-ss-icon
+                                                        img(src=`//ddragon.leagueoflegends.com/cdn/8.7.1/img/spell/${summonerSpells.data[key].image.full}`,
+                                                        data-toggle="tooltip", title=summonerSpells.data[key].description)
+                                        td
+                                            each val, key in summonerSpells.data
+                                                if (summonerSpells.data[key].key == player.spell2Id)
+                                                    .player-ss-icon
+                                                        img(src=`//ddragon.leagueoflegends.com/cdn/8.7.1/img/spell/${summonerSpells.data[key].image.full}`,
+                                                        data-toggle="tooltip", title=summonerSpells.data[key].description)
+                        
+                        #match-clock= match.gameLength > 3599 ? new Date(1000 * 3754).toISOString().substr(11, 8) : new Date(1000 * 454).toISOString().substr(14, 5)
+                        
+                        table#red-team
+                            each player in match.participants
+                                if player.teamId == 200
+                                    tr
+                                        td: .player-profile-icon
+                                            img(src=`//ddragon.leagueoflegends.com/cdn/8.7.1/img/profileicon/${player.profileIconId}.png`)
+                                        td: .player-champ-icon: a(href=`/champions/${championIds[player.championId]}`)
+                                            img(src=`//ddragon.leagueoflegends.com/cdn/8.7.1/img/champion/${championIds[player.championId]}.png`)
+                                        td: a(href=`/summoner?userName=${player.summonerName}&region=${match.platformId}`): span= player.summonerName
+                                        td: .player-rune-icon
+                                            img(src=`/assets/league/img/runesReforged/perk/${player.perks.perkStyle}.png`)
+                                        td: .player-rune-icon
+                                            img(src=`/assets/league/img/runesReforged/perk/${player.perks.perkSubStyle}.png`)
+                                        td
+                                            each val, key in summonerSpells.data
+                                                if (summonerSpells.data[key].key == player.spell1Id)
+                                                    .player-ss-icon
+                                                        img(src=`//ddragon.leagueoflegends.com/cdn/8.7.1/img/spell/${summonerSpells.data[key].image.full}`,
+                                                        data-toggle="tooltip", title=summonerSpells.data[key].description)
+                                        td
+                                            each val, key in summonerSpells.data
+                                                if (summonerSpells.data[key].key == player.spell2Id)
+                                                    .player-ss-icon
+                                                        img(src=`//ddragon.leagueoflegends.com/cdn/8.7.1/img/spell/${summonerSpells.data[key].image.full}`,
+                                                        data-toggle="tooltip", title=summonerSpells.data[key].description)
+
+        
         .profile-wrapper
         
             header
@@ -14,9 +79,9 @@ body
                     img.league-icon(src=`/assets/league/img/tier_icons/${league[0].tier}${league[0].rank}.png`)
                 else
                     img.league-icon(src="/assets/league/img/base_rank_icons/PROVISIONAL.png")
-
+                
                 img.profile-icon(
-                    src=`/assets/league/img/profileicon/${summoner.profileIconId}.png`
+                    src=`//ddragon.leagueoflegends.com/cdn/8.7.1/img/profileicon/${summoner.profileIconId}.png`
                     width="80", height="80")
 
                 .must-played
@@ -26,3 +91,24 @@ body
                     - })
                     
     include partials/footer
+    script.
+        window.onload = function() {
+            setInterval(function () {
+                incTimer();
+            }, 1000);
+
+            function incTimer() {
+                time = $('#match-clock').text().split(':').reverse();
+                time[0]++
+                if (time[0] > 59) {
+                    time[0] = 0
+                    time[1]++
+                    if (time[1] > 59) {
+                        time[1] = 0;
+                        time[2] = 1;
+                    }
+                }
+                time = time.map(t => String(t).padStart(2, '0'))
+                $('#match-clock').html(time.reverse().join(':'));
+            }
+        }

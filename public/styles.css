@@ -154,9 +154,34 @@ table.table th {
 .champion-name {
     letter-spacing: 0.1em;
 }
+/* NAVBAR LOGIN */
+
+/* SUMMONER */
+/* ACTIVE MATCH */
+#match-wrapper img{
+    height: 100%;
+    width: 100%;
+}
+#match-wrapper td{
+    padding: 5px;
+}
+.player-profile-icon,
+.player-champ-icon,
+.player-rune-icon,
+.player-ss-icon {
+    height: 36px;
+    width: 36px;
+}
+#blue-team {
+    border-right: 3px solid blue;
+}
+#red-team {
+    border-left: 3px solid red;
+}
+/* ACTIVE MATCH */
+/* SUMMONER */
+
 /* CHAMPIONS */
-
-
 .champion-square {
     color: #b1a0ff;
     font-weight: 500;

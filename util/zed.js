@@ -6,7 +6,7 @@ const items = require('../assets/league/data/en_US/item');
 const runes = require('../assets/league/data/en_US/runesReforged');
 const summonerSpells = require('../assets/league/data/en_US/summoner');
 
-const ddragon = '8.6.1';
+const ddragon = '8.7.1';
 const lol = '.api.riotgames.com/lol/';
 const specGrid = {
     start: '"League of Legends.exe" 8394 LoLLauncher.exe "" "spectator ',
@@ -24,13 +24,20 @@ const specGrid = {
 };
 
 async function makeSpecBatch(summonerId, region) {
-    const match = await rp({uri: `https://na1${lol}spectator/v3/active-games/by-summoner/44840773?api_key=${process.env.LOL_KEY}`, json: true});
+    const match = await rp({uri: `https://${region}${lol}spectator/v3/active-games/by-summoner/44840773?api_key=${process.env.LOL_KEY}`, json: true});
     // console.log(match.observers)
     const batch = `${specGrid.start}${specGrid[match.platformId]}${match.observers.encryptionKey} ${match.gameId} ${match.platformId}"`
     // console.log(batch)
     return batch
 }
 
+function getSummonerGame(summonerId, region) {
+    const summonerGameData = `https://${region}${lol}spectator/v3/active-games/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`;
+    return rp({ uri: summonerGameData, json: true })
+        .catch(function(err) {
+            console.log("getSummonerGame ERROR: " + err);
+        });
+}
 function getSummoner(summonerName, region) {
     const getSummonerData = `https://${region}${lol}summoner/v3/summoners/by-name/${summonerName}?api_key=${process.env.LOL_KEY}`;
     return rp({ uri: getSummonerData, json: true })
@@ -63,14 +70,6 @@ function getLeaderboards(region) {
         });
 }
 
-function getSummonerGame(summonerId, region) {
-    const getLeaderboardData = `https://${region}${lol}spectator/v3/active-games/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`;
-    return rp({ uri: getLeaderboardData, json: true })
-        .catch(function(err) {
-            console.log("getSummonerGame ERROR: " + err);
-        });
-}
-
 function getMatches(summonerId, region) {
     const getMatchesData = `https://${region}${lol}match/v3/matchlists/by-account/${summonerId}/recent?api_key=${process.env.LOL_KEY}`;
     return rp({ uri: getMatchesData, json: true })
@@ -98,8 +97,6 @@ function getOverallStatistics(elo) {
             console.log("getOverallStatistics ERROR: " + err);
         });
 }
-
-
 
 function getChampDesc(champId) {
     return new Promise((resolve, reject) => {

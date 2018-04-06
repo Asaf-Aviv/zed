@@ -146,7 +146,8 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                             each item in highestSummonerCount
                                 each val, key in summonerSpells.data
                                     if (summonerSpells.data[key].key == item)
-                                        .item-tile: img(src=`/assets/league/img/spell/${summonerSpells.data[key].image.full}`, data-toggle="tooltip", title=summonerSpells.data[key].description)
+                                        .item-tile: img(src=`/assets/league/img/spell/${summonerSpells.data[key].image.full}`,
+                                        data-toggle="tooltip", title=summonerSpells.data[key].description)
                     .col-md-6.col-sm-12
                         h5.text-center.pb-2 Highest Win Rate Summoners
                         p.font-weight-bold.text-center= +String(champStats[0].hashes.summonershash.highestWinrate.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
@@ -154,7 +155,8 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                             each item in highesSummonertWinrateS
                                 each val, key in summonerSpells.data
                                     if (summonerSpells.data[key].key == item)
-                                        .item-tile: img(src=`/assets/league/img/spell/${summonerSpells.data[key].image.full}`, data-toggle="tooltip", title=summonerSpells.data[key].description)
+                                        .item-tile: img(src=`/assets/league/img/spell/${summonerSpells.data[key].image.full}`, data-toggle="tooltip",
+                                        title=summonerSpells.data[key].description)
             #summoner-sets.col-md-4.pt-3
                 
                 - let highestTrinketCount = champStats[0].hashes.trinkethash.highestCount.hash

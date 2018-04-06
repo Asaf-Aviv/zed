@@ -1,2 +1,0 @@
-CD /D D:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\0.0.1.209\deploy
-	"League of Legends.exe" 8394 LoLLauncher.exe "" "spectator spectator.na.lol.riotgames.com:80 4PVhTgxIP6vk+qzqjAUO7Ds4DJUbHmk1 2756347576 NA1"

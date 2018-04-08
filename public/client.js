@@ -1,5 +1,6 @@
 $(function() {
     fixPopover();
+    $('#tier-1 table, #tier-2 table, #tier-3 table, #tier-4 table, #tier-5 table').DataTable();
     $('#leaderboard-table').DataTable();
     $('[data-toggle="tooltip"]').tooltip().click(function(e) {
         e.preventDefault()
@@ -149,13 +150,34 @@ $(function() {
         });
     });
 
-    $('#spectate').click(function() {
-        const gameId = $(this).attr('data-id');
+    $('.overall-wrapper').on('change', '#overall-league', function() {
+        let league = $(this).val();
+
         $.ajax({
             type: 'GET',
-            url: `/spectate/${gameId}`,
+            url: `/statistics?league=${$(this).val()}`,
             success: function(res) {
-                window.open(window.location + `/${gameId}.bat`)
+                console.log(res);
+                $('.overall-wrapper').html(res);
+            }
+        })
+    });
+
+    $('#spectate').click(function() {
+        const gameId = $(this).attr('data-id');
+        const region = $(this).attr('data-region');
+        const key = $(this).attr('data-key')
+        $.ajax({
+            type: 'POST',
+            url: `/spectate/${gameId}`,
+            data: {
+                gameId,
+                region,
+                key,
+            },
+            success: function(res) {
+                console.log(res)
+                window.open(`/spectate/${gameId}`)
             },
             error: function(err) {
                 alert(err);

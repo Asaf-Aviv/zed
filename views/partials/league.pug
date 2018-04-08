@@ -1,0 +1,210 @@
+- const tier1 = [];
+- const tier2 = [];
+- const tier3 = [];
+- const tier4 = [];
+- const tier5 = [];
+
+each player in league.entries
+    case player.rank
+        when 'I'
+            - tier1.push(player)
+        when 'II'
+            - tier2.push(player)
+        when 'III'
+            - tier3.push(player)
+        when 'IV'
+            - tier4.push(player)
+        when 'V'
+            - tier5.push(player)
+
+- tier1.sort((a, b) => b.leaguePoints - a.leaguePoints)
+- tier2.sort((a, b) => b.leaguePoints - a.leaguePoints)
+- tier3.sort((a, b) => b.leaguePoints - a.leaguePoints)
+- tier4.sort((a, b) => b.leaguePoints - a.leaguePoints)
+- tier5.sort((a, b) => b.leaguePoints - a.leaguePoints)
+
+#leagues.row.justify-content-center
+    .col-6
+        ul.nav.nav-pills
+            li.nav-item: a.nav-link(class=summonerRank[0].rank == 'I' ? 'active' : '', data-toggle="pill" href="#tier-1") I
+            li.nav-item: a.nav-link(class=summonerRank[0].rank == 'II' ? 'active' : '', data-toggle="pill" href="#tier-2") II
+            li.nav-item: a.nav-link(class=summonerRank[0].rank == 'III' ? 'active' : '', data-toggle="pill" href="#tier-3") II
+            li.nav-item: a.nav-link(class=summonerRank[0].rank == 'IV' ? 'active' : '', data-toggle="pill" href="#tier-4") IV
+            li.nav-item: a.nav-link(class=summonerRank[0].rank == 'V' ? 'active' : '', data-toggle="pill" href="#tier-5") V
+
+        .tab-content
+            #tier-1.tab-pane(class=summonerRank[0].rank == 'I' ? 'active' : '')
+                table.table.text-center
+                    thead
+                        tr
+                            td Rank
+                            td Summoner
+                            td LP
+                            td Emblems
+                            td Win Ratio
+                            td Series
+                    tbody
+                        - for (let i = 0, x = tier1.length; i < x; i++) {
+                            tr.text-center
+                                td(style="width: 50px")= i + 1
+                                td: a(href=`/summoner?region=${region}&userName=${tier1[i].playerOrTeamName}`): span= tier1[i].playerOrTeamName
+                                td= tier1[i].leaguePoints
+                                td.hot-streak
+                                    i.fa.fa-fire
+                                    i.fa.fa-angle-double-up
+                                    i.fa.fa-ribbon
+                                td: span.lb-wins= tier1[i].wins + '/'
+                                    span.lb-losses= tier1[i].losses + ' '
+                                    span.lb-winrate=((tier1[i].wins / (tier1[i].wins + tier1[i].losses)) * 100).toFixed(0) + '%'
+                                if tier1[i].miniSeries
+                                    td
+                                        each game in tier1[i].miniSeries.progress
+                                            if game == 'W'
+                                                i.fa.fa-check-circle(style="color: green; font-size: 18px; padding: 1px")
+                                            else if game == 'L'
+                                                i.fa.fa-times-circle(style="color: red; font-size: 18px; padding: 1px")
+                                            else
+                                                i.fa.fa-question(style="color: #fff; font-size: 18px; padding: 1px")
+                                else
+                                    td
+                        - }
+            #tier-2.tab-pane(class=summonerRank[0].rank == 'II' ? 'active' : '')
+                table.table.text-center
+                    thead
+                        tr
+                            td Rank
+                            td Summoner
+                            td LP
+                            td Emblems
+                            td Win Ratio
+                            td Series
+                    tbody
+                        - for (let i = 0, x = tier2.length; i < x; i++) {
+                            tr.text-center
+                                td(style="width: 50px")= i + 1
+                                td: a(href=`/summoner?region=${region}&userName=${tier2[i].playerOrTeamName}`): span= tier2[i].playerOrTeamName
+                                td= tier2[i].leaguePoints
+                                td.hot-streak
+                                    i.fa.fa-fire
+                                    i.fa.fa-angle-double-up
+                                    i.fa.fa-ribbon
+                                td: span.lb-wins= tier2[i].wins + '/'
+                                    span.lb-losses= tier2[i].losses + ' '
+                                    span.lb-winrate=((tier2[i].wins / (tier2[i].wins + tier2[i].losses)) * 100).toFixed(0) + '%'
+                                if tier2[i].miniSeries
+                                    td
+                                        each game in tier2[i].miniSeries.progress
+                                            if game == 'W'
+                                                i.fa.fa-check-circle(style="color: green; font-size: 18px; padding: 1px")
+                                            else if game == 'L'
+                                                i.fa.fa-times-circle(style="color: red; font-size: 18px; padding: 1px")
+                                            else
+                                                i.fa.fa-question(style="color: #fff; font-size: 18px; padding: 1px")
+                                else
+                                    td
+                        - }
+            #tier-3.tab-pane(class=summonerRank[0].rank == 'III' ? 'active' : '')
+                table.table.text-center
+                    thead
+                        tr
+                            td Rank
+                            td Summoner
+                            td LP
+                            td Emblems
+                            td Win Ratio
+                            td Series
+                    tbody
+                        - for (let i = 0, x = tier3.length; i < x; i++) {
+                            tr.text-center
+                                td(style="width: 50px")= i + 1
+                                td: a(href=`/summoner?region=${region}&userName=${tier3[i].playerOrTeamName}`): span= tier3[i].playerOrTeamName
+                                td= tier3[i].leaguePoints
+                                td.hot-streak
+                                    i.fa.fa-fire
+                                    i.fa.fa-angle-double-up
+                                    i.fa.fa-ribbon
+                                td: span.lb-wins= tier3[i].wins + '/'
+                                    span.lb-losses= tier3[i].losses + ' '
+                                    span.lb-winrate=((tier3[i].wins / (tier3[i].wins + tier3[i].losses)) * 100).toFixed(0) + '%'
+                                if tier3[i].miniSeries
+                                    td
+                                        each game in tier3[i].miniSeries.progress
+                                            if game == 'W'
+                                                i.fa.fa-check-circle(style="color: green; font-size: 18px; padding: 1px")
+                                            else if game == 'L'
+                                                i.fa.fa-times-circle(style="color: red; font-size: 18px; padding: 1px")
+                                            else
+                                                i.fa.fa-question(style="color: #fff; font-size: 18px; padding: 1px")
+                                else
+                                    td
+                        - }
+            #tier-4.tab-pane(class=summonerRank[0].rank == 'IV' ? 'active' : '')
+                table.table.text-center
+                    thead
+                        tr
+                            td Rank
+                            td Summoner
+                            td LP
+                            td Emblems
+                            td Win Ratio
+                            td Series
+                    tbody
+                        - for (let i = 0, x = tier4.length; i < x; i++) {
+                            tr.text-center
+                                td(style="width: 50px")= i + 1
+                                td: a(href=`/summoner?region=${region}&userName=${tier4[i].playerOrTeamName}`): span= tier4[i].playerOrTeamName
+                                td= tier4[i].leaguePoints
+                                td.hot-streak
+                                    i.fa.fa-fire
+                                    i.fa.fa-angle-double-up
+                                    i.fa.fa-ribbon
+                                td: span.lb-wins= tier4[i].wins + '/'
+                                    span.lb-losses= tier4[i].losses + ' '
+                                    span.lb-winrate=((tier4[i].wins / (tier4[i].wins + tier4[i].losses)) * 100).toFixed(0) + '%'
+                                if tier4[i].miniSeries
+                                    td
+                                        each game in tier4[i].miniSeries.progress
+                                            if game == 'W'
+                                                i.fa.fa-check-circle(style="color: green; font-size: 18px; padding: 1px")
+                                            else if game == 'L'
+                                                i.fa.fa-times-circle(style="color: red; font-size: 18px; padding: 1px")
+                                            else
+                                                i.fa.fa-question(style="color: #fff; font-size: 18px; padding: 1px")
+                                else
+                                    td
+                        - }
+            #tier-5.tab-pane(class=summonerRank[0].rank == 'V' ? 'active' : '')
+                table.table.text-center
+                    thead
+                        tr
+                            td Rank
+                            td Summoner
+                            td LP
+                            td Emblems
+                            td Win Ratio
+                            td Series
+                    tbody
+                        - for (let i = 0, x = tier5.length; i < x; i++) {
+                            tr.text-center
+                                td(style="width: 50px")= i + 1
+                                td: a(href=`/summoner?region=${region}&userName=${tier5[i].playerOrTeamName}`): span= tier5[i].playerOrTeamName
+                                td= tier5[i].leaguePoints
+                                td.hot-streak
+                                    i.fa.fa-fire
+                                    i.fa.fa-angle-double-up
+                                    i.fa.fa-ribbon
+                                td: span.lb-wins= tier5[i].wins + '/'
+                                    span.lb-losses= tier5[i].losses + ' '
+                                    span.lb-winrate=((tier5[i].wins / (tier5[i].wins + tier5[i].losses)) * 100).toFixed(0) + '%'
+                                if tier5[i].miniSeries
+                                    td
+                                        each game in tier5[i].miniSeries.progress
+                                            if game == 'W'
+                                                i.fa.fa-check-circle(style="color: green; font-size: 18px; padding: 1px")
+                                            else if game == 'L'
+                                                i.fa.fa-times-circle(style="color: red; font-size: 18px; padding: 1px")
+                                            else
+                                                i.fa.fa-question(style="color: #fff; font-size: 18px; padding: 1px")
+                                else
+                                    td
+                        - }

@@ -8,6 +8,8 @@ const summonerSpells = require('../assets/league/data/en_US/summoner');
 
 const ddragon = '8.7.1';
 const lol = '.api.riotgames.com/lol/';
+const champGG = 'http://api.champion.gg/v2';
+
 const specGrid = {
     start: '"League of Legends.exe" 8394 LoLLauncher.exe "" "spectator ',
     NA1: 'spectator.na.lol.riotgames.com:80 ',
@@ -23,11 +25,9 @@ const specGrid = {
     TR1: 'spectator.tr.lol.riotgames.com:80 '
 };
 
-async function makeSpecBatch(summonerId, region) {
-    const match = await rp({uri: `https://${region}${lol}spectator/v3/active-games/by-summoner/44840773?api_key=${process.env.LOL_KEY}`, json: true});
-    // console.log(match.observers)
-    const batch = `${specGrid.start}${specGrid[match.platformId]}${match.observers.encryptionKey} ${match.gameId} ${match.platformId}"`
-    // console.log(batch)
+async function makeSpecBatch(specObject) {
+    const specBat = String.raw`CD /D D:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\0.0.1.210\deploy`
+    const batch = `${specBat}\n\t${specGrid.start}${specGrid[specObject.region]}${specObject.key} ${specObject.gameId} ${specObject.region}"`
     return batch
 }
 
@@ -46,12 +46,25 @@ function getSummoner(summonerName, region) {
         });
 }
 
-function getLeague(summonerId, region) {
+async function getSummonerLeague(summonerId, region) {
+    const summonerLeague = await rp({
+        uri: `https://${region}${lol}league/v3/positions/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`,
+        json: true})
+    return summonerLeague;
+    
+}
+
+async function getLeague(summonerId, region) {
     const getLeagueData = `https://${region}${lol}league/v3/positions/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`;
-    return rp({ uri: getLeagueData, json: true })
+    const leagueData = await rp({ uri: getLeagueData, json: true })
         .catch(function(err) {
             console.log("getLeague ERROR: " + err);
         });
+    return rp({
+        uri: `https://${region}${lol}league/v3/leagues/${leagueData[0].leagueId}?api_key=${process.env.LOL_KEY}`, json: true
+    }).catch(err => {
+        console.log('getLeague error: ', err);
+    });
 }
 
 function getMastery(summonerId, region) {
@@ -91,8 +104,19 @@ function getChampionStats(champName) {
 }
 
 function getOverallStatistics(elo) {
-    const getOverallData = `http://api.champion.gg/v2/overall?elo=PLATINUM&api_key=${process.env.CHAMPION_KEY}`;
+    const getOverallData = elo && elo !== 'platplus' ? `http://api.champion.gg/v2/overall?elo=${elo.toUpperCase()}&api_key=${process.env.CHAMPION_KEY}` :
+                                                       `http://api.champion.gg/v2/overall?&api_key=${process.env.CHAMPION_KEY}`;
+     
     return rp({ uri: getOverallData, json: true })
+        .catch(function(err) {
+            console.log("getOverallStatistics ERROR: " + err);
+        });
+}
+function getOverallPatch(elo) {
+    const getOverallPatchData = elo && elo !== 'platplus' ? `http://api.champion.gg/v2/general?elo=${elo.toUpperCase()}&api_key=${process.env.CHAMPION_KEY}` :
+                                                       `http://api.champion.gg/v2/general?&api_key=${process.env.CHAMPION_KEY}`;
+    console.log(getOverallPatchData)
+    return rp({ uri: getOverallPatchData, json: true })
         .catch(function(err) {
             console.log("getOverallStatistics ERROR: " + err);
         });
@@ -167,4 +191,6 @@ module.exports = {
     getSummonerSpells,
     getOverallStatistics,
     makeSpecBatch,
+    getOverallPatch,
+    getSummonerLeague
 };

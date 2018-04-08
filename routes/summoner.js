@@ -10,35 +10,28 @@ router.get('/', (req, res) => {
     zed.getSummoner(req.query.userName, region).then(summoner => {
         console.log(summoner)
         if (!summoner) return res.redirect('/')
-        zed.getLeague(summoner.id, region).then(league => {
-            zed.getSummonerGame(summoner.id, region).then(match => {
-                zed.getMatches(summoner.accountId, region).then(matches => {
-                    zed.getMastery(summoner.id, region).then(mastery => {
-                        zed.getSummonerSpells().then(summonerSpells => {
-                            const skins = mastery.length > 0 ? zed.getSkins(mastery[0].championId) : zed.getSkins(7);
-                            const mustPlayed = [zed.getSkins(mastery[0].championId), zed.getSkins(mastery[1].championId), zed.getSkins(mastery[2].championId)];
-                            const mustPlayedBG = mustPlayed.map(champ => zed.getBg(champ.name, champ.skins.length));
-                            const bg = zed.getBg(skins.name, skins.skins.length);
-                            res.render('summoner', {
-                                title: summoner.name + " | Summoner Profile | Legends",
-                                summoner,
-                                league,
-                                match: dummyMatch,                  
-                                championIds,
-                                mustPlayed,
-                                mustPlayedBG,
-                                matches,
-                                mastery,
-                                skins,
-                                bg,
-                                region,
-                                summonerSpells,
-                            });
-                        });
-                    });
+        zed.getSummonerLeague(summoner.id, region).then(summonerRank => {
+            Promise.all([
+                zed.getLeague(summoner.id, region),
+                zed.getSummonerGame(summoner.id, region),
+                zed.getMastery(summoner.id, region),
+                zed.getSummonerSpells()
+            ]).then(([league, match, mastery, summonerSpells]) => {
+                console.log('what', league)
+                res.render('summoner', {
+                    title: summoner.name + " | Summoner Profile | Legends",
+                    summoner,
+                    summonerRank,
+                    league,
+                    match,
+                    championIds,
+                    mastery,
+                    region,
+                    summonerSpells,
                 });
             });
         });
     });
 });
+
 module.exports = router;

@@ -157,6 +157,15 @@ table.table th {
 /* NAVBAR LOGIN */
 
 /* SUMMONER */
+
+/* SUMMONER */
+
+/* LEAGUE */
+#tier1 {
+
+}
+/* LEAGUE */
+
 /* ACTIVE MATCH */
 #match-wrapper img{
     height: 100%;
@@ -179,7 +188,6 @@ table.table th {
     border-left: 3px solid red;
 }
 /* ACTIVE MATCH */
-/* SUMMONER */
 
 /* CHAMPIONS */
 .champion-square {
@@ -413,8 +421,7 @@ table.dataTable tbody tr {
 
 /* OVERALL */
 #overall-wrapper {
-    font-size: 0.8rem;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.6);
     border-radius: 10px;
 }
 #overall-wrapper img {
@@ -424,20 +431,27 @@ table.dataTable tbody tr {
 #overall-wrapper th,
 #overall-wrapper td {
     font-weight: 500;
+    font-size: 14px;
+    padding-top: 0.6rem;
+}
+#overall-league {
+    background: #101010;
+    border: 0;
+    color: #b1a0ff;
+    border: 1px solid #b1a0ff;
 }
 
 .overall-champ-tile {
     transform: scale(0.7);
     width: 36px;
     height: 36px;
-    display: inline-block;
     background-size: cover;
     float: left;
 }
 .t-champ-name {
     display: inline-block;
     padding-left: 0.3rem;
-    padding-top: 0.4rem;
+    padding-top: 0.6rem;
 }
 /* OVERALL */
 

@@ -12,7 +12,7 @@ table#leaderboard-table.table.py-2
 
     - for (let i = 0, x = LB.entries.length; i < x; i++) {
         tr.text-center
-            td(style="max-width: 50px")= i + 1
+            td(style="width: 50px")= i + 1
             td: span.lb-summoner= LB.entries[i].playerOrTeamName
             td= LB.entries[i].leaguePoints
             td.hot-streak

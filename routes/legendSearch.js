@@ -43,7 +43,6 @@ router.post('/sendFriendRequest/:id', (req, res) => {
                 break;
             }
         }
-
         if (!requestExist) {
             Legend.findByIdAndUpdate(
                 req.params.id,
@@ -60,10 +59,11 @@ router.post('/sendFriendRequest/:id', (req, res) => {
                 { safe: true, new: true },
                 (err, updatedUser) => {
                     if (err) console.log(err);
-                    req.session.passport.user = updatedUser;
+                    // req.session.passport.user = updatedUser;
                     res.send(req.params.id);
                 }
             );
+            io.to(connectedUsers[req.params.id]).emit('friendRequest', req.user.username);
         } else {
             console.log('Request already exists');
         }

@@ -71,7 +71,29 @@ $(function() {
             fixPopover();
         });
     }
-    
+
+    $('.inbox-delete').click(function() {
+        const msg = $(`#${$(this).parent().attr('id')}`)
+        $.confirm({
+            draggable: true,
+            closeIcon: true,
+            icon: 'fa fa-warning',
+            type: 'red',
+            title: 'Confirm',
+            content: 'Are you sure you want to delete this message ?',
+            theme: 'dark',
+            buttons: {
+                Yes: {
+                    action: () => msg.remove(),
+                    btnClass: 'btn btn-outline-success'
+                },
+                No:{
+                    action: () => msg.remove(),
+                    btnClass: 'btn btn-outline-danger'
+                }
+            }
+        });
+    });
 
     $('.delete-post').click(function() {
         const postId = $(this).attr('data-id');
@@ -183,21 +205,9 @@ $(function() {
                 alert(err);
             }
         });
+
     });
 
-    $('#makeUsers').click( () => {
-        $.ajax({
-            type: 'GET',
-            url: '/makeUsers'
-        });
-    });
-
-    $('#clearDB').click( () => {
-        $.ajax({
-            type: 'GET',
-            url: '/clearDB'
-        });
-    });
     var pusher = new Pusher('8a344f0f04d1ec9118c7', {
         cluster: 'mt1'
       });
@@ -206,9 +216,45 @@ $(function() {
     channel.bind('my-event', function(data) {
         alert('An event was triggered with message: ' + data.message);
       });
-    
 });
+
 var socket = io();
+
+iziToast.settings({
+    class: 'izi-alert',
+    titleSize: '18px',
+    titleColor: '#b1a0ff',
+    messageSize: '15px',
+    messageColor: '#b1a0ff',
+    iconColor: '#b1a0ff',
+    backgroundColor: 'rgba(44,44,44,0.7)',
+    progressBarColor: '#b1a0ff',
+    overlay: true,
+    close: true,
+    position: 'topRight',
+});
+
+$('#suhdude').click( () => {
+    iziToast.show({
+        title: 'Friend Request',
+        message: `<a href="/users/yojimbozx">yojimbozx</a> sent you a friend request`,
+        icon: 'fa fa-user',
+    });
+});
+
+socket.on('friendRequest', (user) => {
+    iziToast.show({
+        title: 'Friend Request',
+        message: `<a href="/users/${user}">${user}</a> sent you a friend request`,
+        color: 'yellow',
+        position: 'topRight'
+    });
+});
+socket.on('acceptFriendRequest', (data) => {
+    console.log(data);
+    $('#modal').iziModal('open');
+    $('#success-alerts').html(data)
+});
 
 function fixPopover() {
     $('[data-trigger="manual"]').click(function(e) {

@@ -15,6 +15,7 @@ const expressValidator = require('express-validator');
 const flash            = require('connect-flash');
 // Authentication utils
 const session          = require('express-session');
+const sharedsession    = require("express-socket.io-session");
 const passport         = require('passport');
 const LocalStrategy    = require('passport-local').Strategy;
 // DB utils
@@ -37,8 +38,6 @@ const friendRequests   = require('./routes/friendRequests');
 const index            = require('./routes/index');
 const items            = require('./routes/items');
 const spectate         = require('./routes/spectate');
-const dbHelper         = require('./routes/dbUtils');
-
 // MongoDB
 mongoose.connect(process.env.MONGO_ADMIN);
 const db = mongoose.connection;
@@ -46,10 +45,8 @@ db.on('error', console.error.bind(console, 'DB connection error:'));
 db.once('open', () => {
     console.log("Conneted to DB");
 });
-
 // Logs
 const accessLogStream = fs.createWriteStream(path.join(__dirname+'/logs', 'access.log'), {flags: 'a'});
-
 // Compress files
 // Serve Static files
 // Parse incoming requests
@@ -100,7 +97,15 @@ app
 .use('/items', items)
 .use('/spectate', spectate)
 .use('/', index)
-.use('/', dbHelper)
+
+io.use(sharedsession(session({
+    secret: 'EFK9AqwLKR932',
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({
+        mongooseConnection: db
+    })
+})));
 
 passport.use(new LocalStrategy({
     usernameField: 'email'
@@ -123,6 +128,7 @@ passport.deserializeUser((user, done) => {
         done(null, updatedUser);
     });
 });
+console.log(connectedUsers)
 
 // Setup view engine
 app.set('view engine', 'pug');

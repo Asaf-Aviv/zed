@@ -1,20 +1,19 @@
 #sidebar
 	.sidebar-wrapper
-		hr
 		.d-flex.justify-content-start
-			a#sidebar-btn(style="margin-left: 21px"): i.fa.fa-bars.fa-lg
+			a#sidebar-btn(style="margin-left: 22px"): i.fa.fa-bars.fa-lg
 		.profile-menu.d-flex.flex-column.flex-grow
 			.sidebar-item
 				a.d-flex(href="/")
-					i.fa.fa-lg.fa-home(style="margin-right: 20px")
+					i.fa.fa-lg.fa-home(style="margin-left: 1px; margin-right: 20px")
 					span Home
 			.sidebar-item
-					a.d-flex(href="/")
-						i.fa.fa-lg.fa-user(style="margin-left: 2px; margin-right: 23px")
+					a.d-flex(href="/profile")
+						i.fa.fa-lg.fa-user-o(style="margin-left: 1px; margin-right: 22px")
 						span Profile
-			.sidebar-item
-					a.d-flex(href="/")
-						i.fa.fa-lg.fa-envelope(style="margin-right: 19px")
+			.sidebar-item.sidebar-active
+					a.d-flex(href="/profile/messages")
+						i.fa.fa-lg.fa-envelope-o(style="margin-right: 19px")
 						span Messages
 			hr
 

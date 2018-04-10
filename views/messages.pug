@@ -1,0 +1,34 @@
+include partials/head
+body
+    include partials/nav
+    include partials/sidenav
+    .container
+        #inbox
+            .row
+                #inbox-controls.col-2.d-flex.flex-column.flex-grow
+                    #inbox.inbox-active
+                        i.fa.fa-inbox.fa-lg(style="margin-left: 1px; margin-right: 21px")
+                        span Inbox
+                    #sent
+                        i.fa.fa-envelope-o.fa-lg(style="margin-right: 20px")
+                        span Sent
+                    #bookmark
+                        i.fa.fa-bookmark-o.fa-lg(style="margin-left: 2px; margin-right: 24px")
+                        span Bookmark
+                    #inbox-trash
+                        i.fa.fa-trash-o.fa-lg(style="margin-left: 1px; margin-right: 23px")
+                        span Trash
+                #inbox-msgs.col-9
+                    table.table.table-hover.table-dark
+                        tbody
+                            - for(let i = 0; i < 5; i++) {
+                                tr(id=i)
+                                    td: input.d-flex(type="checkbox")
+                                    td: i.fa.fa-star
+                                    td Arjuna Admin
+                                    td class="view-message ">Lorem ipsum dolorqweqweqweqweqweqweqweqweqweqwe...</td>
+                                    td 9:27
+                                    td.inbox-delete: i.fa.fa-trash-o.fa-lg.text-danger
+                            - }
+                            
+        include partials/footer

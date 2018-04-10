@@ -31,6 +31,7 @@ router.post('/acceptFriendRequest/:id', (req, res) => {
             if(err) console.log(err);
             res.send(req.params.id);
     });
+    io.to(connectedUsers[req.params.id]).emit('acceptFriendRequest', req.user.username);
 });
 
 router.post('/declineFriendRequest/:id', (req, res) => {

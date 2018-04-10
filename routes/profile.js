@@ -9,14 +9,20 @@ router.get('/', auth.isLogged(), (req, res) => {
     });
 });
 
-router.get('/:legendName', (req, res) => {
-    Legend.findOne({ username: req.params.legendName }).then(legend => {
-        if (legend) {
-            legend.profileViews++;
-            legend.save();
+router.get('/messages', auth.isLogged(), (req, res) => {
+    res.render('messages', {
+        title: `${req.user.username} messages | Legends`
+    });
+});
+
+router.get('/:userName', (req, res) => {
+    Legend.findOne({ username: req.params.legendName }).then(user => {
+        if (user) {
+            user.profileViews++;
+            user.save();
             res.render('legend_profile', {
-                title: `${legend.username} | Legends`,
-                legend,
+                title: `${user.username} | Legends`,
+                user,
             });
         } else {
             res.redirect('/users');

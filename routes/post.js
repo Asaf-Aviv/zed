@@ -1,7 +1,7 @@
 const express = require('express');
-const router = express.Router();
-const Post = require('../models/post');
-const Legend = require('../models/user');
+const router  = express.Router();
+const Post    = require('../models/post');
+const Legend  = require('../models/user');
 
 router.get('/edit/:id', (req, res) => {
     Legend.findById(req.user._id, (err, user) => {

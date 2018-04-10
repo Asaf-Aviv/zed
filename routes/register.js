@@ -1,7 +1,7 @@
 const express = require('express');
-const router = express.Router();
-const Legend = require('../models/user');
-const auth = require('../middlewares/auth');
+const router  = express.Router();
+const Legend  = require('../models/user');
+const auth    = require('../middlewares/auth');
 
 router.get('/', auth.isNotLogged(), (req, res) => {
     res.render('register', {
@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
                     res.redirect('/profile');
                 });
             }
-        })
+        });
     } else {
         res.redirect('/register');
     }

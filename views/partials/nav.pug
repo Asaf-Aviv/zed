@@ -1,11 +1,11 @@
 nav#main-nav-bar
     #main-left-nav-bar
         ul
-            li: a(href="/") Home
-            li: a(href="/champions") Champions
-            li: a(href="/leaderboards?region=NA1") Leaderboards
-            li: a(href="/statistics") Statistics
-            li: a(href="/items") Items
+            li.nav-link: a(href="/") Home
+            li.nav-link: a(href="/champions") Champions
+            li.nav-link: a(href="/leaderboards?region=NA1") Leaderboards
+            li.nav-link: a(href="/statistics") Statistics
+            li.nav-link: a(href="/items") Items
     #nav-search
         form#navbar-search-form(method="GET", action="/summoner")
             select#region-select(name="region")
@@ -22,12 +22,21 @@ nav#main-nav-bar
                 option(value="RU") RUSSIA
             input(type="text", name="userName", placeholder="Enter Username")
             i.fa.fa-search
-    #nav-bar-login
+    #nav-bar-util.d-flex.align-items-center
+        a(href="#")
+            i.fa.fa-lg.fa-bell
+            span.badge.badge-danger 6
+        a(href="#")
+            i.fa.fa-lg.fa-envelope
+        a(href="#")
+            i.fa.fa-lg.fa-user-plus
+    #nav-bar-login.d-flex.align-items-center
         a(href="/users") Find Legends
         if currentUser
             a(href="/profile")= currentUser.username
-            img(style="width: 50px; height: 50px;", src=currentUser.profilePicture)
+            //- img(style="width: 50px; height: 50px;", src=currentUser.profilePicture)
             a(href="/logout") Logout
+                i.fa.fa-logout
         else
             a(href="/register") Register
             a(href="/login") Login

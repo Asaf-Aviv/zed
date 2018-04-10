@@ -1,10 +1,9 @@
 const express = require('express');
-const router = express.Router();
-const Legend = require('../models/user');
-const auth = require('../middlewares/auth');
+const router  = express.Router();
+const Legend  = require('../models/user');
+const auth    = require('../middlewares/auth');
 
 router.get('/', auth.isLogged(), (req, res) => {
-    
     res.render('profile', {
         title: `${req.user.username} | Legends`
     });
@@ -17,8 +16,8 @@ router.get('/:legendName', (req, res) => {
             legend.save();
             res.render('legend_profile', {
                 title: `${legend.username} | Legends`,
-                legend
-            })    
+                legend,
+            });
         } else {
             res.redirect('/users');
         }

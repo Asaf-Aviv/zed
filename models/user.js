@@ -1,12 +1,12 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const validator = require('validator');
-const uniqueValidator = require('mongoose-unique-validator');
-const bcrypt = require('bcrypt');
-const PostSchema = require('./post');
-const FriendRequestSchema = require('./friendRequest');
+const mongoose                = require('mongoose');
+const Schema                  = mongoose.Schema;
+const validator               = require('validator');
+const uniqueValidator         = require('mongoose-unique-validator');
+const bcrypt                  = require('bcrypt');
+const PostSchema              = require('./post');
+const FriendRequestSchema     = require('./friendRequest');
 const FriendRequestSentSchema = require('./friendRequestSent');
-const FriendSchema = require('./friend');
+const FriendSchema            = require('./friend');
 
 const LegendSchema = new Schema({
     username: {

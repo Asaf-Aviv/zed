@@ -1,6 +1,7 @@
 include partials/head
 body
     include partials/nav
+    include partials/sidenav
     .container
         form#main-form(method="GET", action="/summoner")
             .form-group.col-md-8
@@ -43,4 +44,4 @@ body
                     input(type="radio", name="region", value="RU")
                     | RUSSIA
 
-    include partials/footer
+        include partials/footer

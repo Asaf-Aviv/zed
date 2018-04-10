@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
+const express  = require('express');
+const router   = express.Router();
 const mongoose = require('mongoose');
-const Legend = require('../models/user');
+const Legend   = require('../models/user');
 
 router.get('/makeUsers', (req, res) => {
     makeDummyUsers();

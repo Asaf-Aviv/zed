@@ -1,7 +1,7 @@
 const express = require('express');
-const router = express.Router();
-const fs = require('fs');
-const zed = require('../util/zed');
+const router  = express.Router();
+const fs      = require('fs');
+const zed     = require('../util/zed');
 
 router.get('/:matchId', (req, res) => {
     res.sendFile(`${req.params.matchId}.bat`, {root: __dirname+'/../matches'})

@@ -1,6 +1,6 @@
 const express = require('express');
-const router = express.Router();
-const zed = require('../util/zed');
+const router  = express.Router();
+const zed     = require('../util/zed');
 
 router.get('/', (req, res) => {
     zed.getLeaderboards(req.query.region).then(LB => {

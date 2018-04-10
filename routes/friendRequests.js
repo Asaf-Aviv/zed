@@ -1,6 +1,6 @@
 const express = require('express');
-const router = express.Router();
-const Legend = require('../models/user');
+const router  = express.Router();
+const Legend  = require('../models/user');
 
 router.post('/acceptFriendRequest/:id', (req, res) => {
     Legend.update(
@@ -22,7 +22,7 @@ router.post('/acceptFriendRequest/:id', (req, res) => {
         $push : { friends : { _id: req.params.id }}},
         (err, doc) => {
             if(err) console.log(err);
-    })
+    });
 
     Legend.update(
         {_id: req.params.id},
@@ -30,8 +30,8 @@ router.post('/acceptFriendRequest/:id', (req, res) => {
         (err, doc) => {
             if(err) console.log(err);
             res.send(req.params.id);
-    })
-})
+    });
+});
 
 router.post('/declineFriendRequest/:id', (req, res) => {
     Legend.update(
@@ -39,7 +39,7 @@ router.post('/declineFriendRequest/:id', (req, res) => {
         { $pull: { friendRequests : { requester: req.params.id }}},
         (err, doc) => {
             if(err) console.log(err);
-    })
+    });
 
     Legend.update(
         { _id: req.params.id },
@@ -47,7 +47,7 @@ router.post('/declineFriendRequest/:id', (req, res) => {
         (err, doc) => {
             if(err) console.log(err);
             res.send(req.params.id);
-    })
-})
+    });
+});
 
 module.exports = router;

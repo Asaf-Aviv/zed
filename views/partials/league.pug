@@ -53,9 +53,10 @@ each player in league.entries
                                     i.fa.fa-fire
                                     i.fa.fa-angle-double-up
                                     i.fa.fa-ribbon
-                                td: span.lb-wins= tier1[i].wins + '/'
-                                    span.lb-losses= tier1[i].losses + ' '
-                                    span.lb-winrate=((tier1[i].wins / (tier1[i].wins + tier1[i].losses)) * 100).toFixed(0) + '%'
+                                td
+                                    span.lg-wins(style='width:'+((tier1[i].wins / (tier1[i].wins + tier1[i].losses)) * 100).toFixed(0) + '%')= tier1[i].wins
+                                    span.lg-losses(style='width:'+((tier1[i].losses / (tier1[i].losses + tier1[i].wins)) * 100).toFixed(0) + '%')= tier1[i].losses
+                                    span.lg-winrate=((tier1[i].wins / (tier1[i].wins + tier1[i].losses)) * 100).toFixed(0) + '%'
                                 if tier1[i].miniSeries
                                     td
                                         each game in tier1[i].miniSeries.progress
@@ -88,9 +89,10 @@ each player in league.entries
                                     i.fa.fa-fire
                                     i.fa.fa-angle-double-up
                                     i.fa.fa-ribbon
-                                td: span.lb-wins= tier2[i].wins + '/'
-                                    span.lb-losses= tier2[i].losses + ' '
-                                    span.lb-winrate=((tier2[i].wins / (tier2[i].wins + tier2[i].losses)) * 100).toFixed(0) + '%'
+                                td
+                                    span.lg-wins= tier2[i].wins
+                                    span.lg-losses= tier2[i].losses
+                                    span.lg-winrate= ((tier2[i].wins / (tier2[i].wins + tier2[i].losses)) * 100).toFixed(0) + '%'
                                 if tier2[i].miniSeries
                                     td
                                         each game in tier2[i].miniSeries.progress
@@ -123,9 +125,10 @@ each player in league.entries
                                     i.fa.fa-fire
                                     i.fa.fa-angle-double-up
                                     i.fa.fa-ribbon
-                                td: span.lb-wins= tier3[i].wins + '/'
-                                    span.lb-losses= tier3[i].losses + ' '
-                                    span.lb-winrate=((tier3[i].wins / (tier3[i].wins + tier3[i].losses)) * 100).toFixed(0) + '%'
+                                td
+                                    span.lg-wins= tier3[i].wins
+                                    span.lg-losses= tier3[i].losses
+                                    span.lg-winrate=((tier3[i].wins / (tier3[i].wins + tier3[i].losses)) * 100).toFixed(0) + '%'
                                 if tier3[i].miniSeries
                                     td
                                         each game in tier3[i].miniSeries.progress
@@ -158,9 +161,10 @@ each player in league.entries
                                     i.fa.fa-fire
                                     i.fa.fa-angle-double-up
                                     i.fa.fa-ribbon
-                                td: span.lb-wins= tier4[i].wins + '/'
-                                    span.lb-losses= tier4[i].losses + ' '
-                                    span.lb-winrate=((tier4[i].wins / (tier4[i].wins + tier4[i].losses)) * 100).toFixed(0) + '%'
+                                td
+                                    span.lg-wins= tier4[i].wins
+                                    span.lg-losses= tier4[i].losses
+                                    span.lg-winrate=((tier4[i].wins / (tier4[i].wins + tier4[i].losses)) * 100).toFixed(0) + '%'
                                 if tier4[i].miniSeries
                                     td
                                         each game in tier4[i].miniSeries.progress
@@ -193,9 +197,10 @@ each player in league.entries
                                     i.fa.fa-fire
                                     i.fa.fa-angle-double-up
                                     i.fa.fa-ribbon
-                                td: span.lb-wins= tier5[i].wins + '/'
-                                    span.lb-losses= tier5[i].losses + ' '
-                                    span.lb-winrate=((tier5[i].wins / (tier5[i].wins + tier5[i].losses)) * 100).toFixed(0) + '%'
+                                td
+                                    span.lg-wins= tier5[i].wins
+                                    span.lg-losses= tier5[i].losses
+                                    span.lg-winrate=((tier5[i].wins / (tier5[i].wins + tier5[i].losses)) * 100).toFixed(0) + '%'
                                 if tier5[i].miniSeries
                                     td
                                         each game in tier5[i].miniSeries.progress

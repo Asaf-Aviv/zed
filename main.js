@@ -1,45 +1,45 @@
-const express = require('express');
-const app = express();
-
-// Server utils
 require('dotenv').config();
-const compression = require('compression');
-const bodyParser = require("body-parser");
-const morgan = require('morgan');
-const fs = require('fs');
-const path = require('path');
+const express          = require('express');
+const app              = express();
+const server           = require('http').Server(app);
+// Socket.io
+global.io              = require('socket.io')(server);
+require('./io');
+// Server utils
+const compression      = require('compression');
+const bodyParser       = require("body-parser");
+const morgan           = require('morgan');
+const fs               = require('fs');
+const path             = require('path');
 const expressValidator = require('express-validator');
-const flash = require('connect-flash');
-
+const flash            = require('connect-flash');
 // Authentication utils
-const session = require('express-session');
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-
+const session          = require('express-session');
+const passport         = require('passport');
+const LocalStrategy    = require('passport-local').Strategy;
 // DB utils
-const mongoose = require('mongoose');
-const Legend = require('./models/user');
-const MongoStore = require('connect-mongo')(session);
-
+const mongoose         = require('mongoose');
+const Legend           = require('./models/user');
+const MongoStore       = require('connect-mongo')(session);
 // Routes 
-const leaderboards = require('./routes/leaderboards');
-const champions = require('./routes/champions');
-const summoner = require('./routes/summoner');
-const statistics = require('./routes/statistics');
-const contact = require('./routes/contact');
-const logout = require('./routes/logout');
-const profile = require('./routes/profile');
-const login = require('./routes/login');
-const register = require('./routes/register');
-const post = require('./routes/post');
-const legendSearch = require('./routes/legendSearch');
-const friendRequests = require('./routes/friendRequests');
-const index = require('./routes/index');
-const items = require('./routes/items');
-const spectate = require('./routes/spectate');
-const dbHelper = require('./routes/dbUtils');
+const leaderboards     = require('./routes/leaderboards');
+const champions        = require('./routes/champions');
+const summoner         = require('./routes/summoner');
+const statistics       = require('./routes/statistics');
+const contact          = require('./routes/contact');
+const logout           = require('./routes/logout');
+const profile          = require('./routes/profile');
+const login            = require('./routes/login');
+const register         = require('./routes/register');
+const post             = require('./routes/post');
+const legendSearch     = require('./routes/legendSearch');
+const friendRequests   = require('./routes/friendRequests');
+const index            = require('./routes/index');
+const items            = require('./routes/items');
+const spectate         = require('./routes/spectate');
+const dbHelper         = require('./routes/dbUtils');
 
-// Connect to MongoDB
+// MongoDB
 mongoose.connect(process.env.MONGO_ADMIN);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'DB connection error:'));
@@ -141,6 +141,6 @@ process.on('uncaughtException', err => {
     console.log(`Caught exception: ${err}\n`);
 });
 
-app.listen('1337', () => {
+server.listen('1337', () => {
     console.log(`Listening on port 1337`);
 });

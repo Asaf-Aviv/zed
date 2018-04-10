@@ -1,13 +1,13 @@
-const rp = require('request-promise');
-const championSkins = require('../assets/data/champions/championSkins');
-const championIds = require('../assets/data/champions/championIds');
-const champions = require('../assets/data/champions/champion');
-const items = require('../assets/league/data/en_US/item');
-const runes = require('../assets/league/data/en_US/runesReforged');
+const rp             = require('request-promise');
+const championSkins  = require('../assets/data/champions/championSkins');
+const championIds    = require('../assets/data/champions/championIds');
+const champions      = require('../assets/data/champions/champion');
+const items          = require('../assets/league/data/en_US/item');
+const runes          = require('../assets/league/data/en_US/runesReforged');
 const summonerSpells = require('../assets/league/data/en_US/summoner');
 
 const ddragon = '8.7.1';
-const lol = '.api.riotgames.com/lol/';
+const lol     = '.api.riotgames.com/lol/';
 const champGG = 'http://api.champion.gg/v2';
 
 const specGrid = {
@@ -49,9 +49,8 @@ function getSummoner(summonerName, region) {
 async function getSummonerLeague(summonerId, region) {
     const summonerLeague = await rp({
         uri: `https://${region}${lol}league/v3/positions/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`,
-        json: true})
+        json: true});
     return summonerLeague;
-    
 }
 
 async function getLeague(summonerId, region) {

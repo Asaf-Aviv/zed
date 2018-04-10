@@ -1,6 +1,6 @@
 const express = require('express');
-const router = express.Router();
-const auth = require('../middlewares/auth');
+const router  = express.Router();
+const auth    = require('../middlewares/auth');
 
 router.get('/', auth.isLogged(), (req, res, next) =>{
     req.logout();

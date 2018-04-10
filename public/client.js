@@ -198,8 +198,17 @@ $(function() {
             url: '/clearDB'
         });
     });
+    var pusher = new Pusher('8a344f0f04d1ec9118c7', {
+        cluster: 'mt1'
+      });
+    var channel = pusher.subscribe('my-channel');
+    
+    channel.bind('my-event', function(data) {
+        alert('An event was triggered with message: ' + data.message);
+      });
+    
 });
-
+var socket = io();
 
 function fixPopover() {
     $('[data-trigger="manual"]').click(function(e) {
@@ -207,6 +216,5 @@ function fixPopover() {
         e.preventDefault();
     }).blur(function() {
         $(this).popover('hide');
-        // e.preventDefault();
     });
 }

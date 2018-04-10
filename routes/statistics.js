@@ -1,7 +1,7 @@
 const express = require('express');
-const router = express.Router();
-const pug = require('pug');
-const zed = require('../util/zed');
+const router  = express.Router();
+const pug     = require('pug');
+const zed     = require('../util/zed');
 
 router.get('/', (req, res) => {
     Promise.all([

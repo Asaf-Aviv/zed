@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
+const express  = require('express');
+const router   = express.Router();
 const passport = require('passport');
-const auth = require('../middlewares/auth');
+const auth     = require('../middlewares/auth');
 
 router.get('/', auth.isNotLogged(), (req, res) => {
     res.render('login', {

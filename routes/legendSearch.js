@@ -1,6 +1,6 @@
 const express = require('express');
-const router = express.Router();
-const Legend = require('../models/user');
+const router  = express.Router();
+const Legend  = require('../models/user');
 
 router.get('/', (req, res) => {
     Legend.find({}).then(result => {

@@ -1,3 +1,4 @@
+const debug            = require('debug')('legends');
 require('dotenv').config();
 const express          = require('express');
 const app              = express();
@@ -132,6 +133,12 @@ console.log(connectedUsers)
 
 // Setup view engine
 app.set('view engine', 'pug');
+
+app.get('/sendmessage', (req, res) => {
+    res.render('send_message', {
+        title: 'send message'
+    });
+});
 
 app.get('*', (req, res) => {
     res.render('404', {

@@ -16,8 +16,11 @@ router.get('/messages', auth.isLogged(), (req, res) => {
 });
 
 router.get('/:userName', (req, res) => {
-    Legend.findOne({ username: req.params.legendName }).then(user => {
+    console.log(req.params.userName)
+    console.log('searching')
+    Legend.findOne({ username: req.params.userName }).then(user => {
         if (user) {
+            console.log('users found')
             user.profileViews++;
             user.save();
             res.render('legend_profile', {

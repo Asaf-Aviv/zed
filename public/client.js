@@ -72,28 +72,7 @@ $(function() {
         });
     }
 
-    $('.inbox-delete').click(function() {
-        const msg = $(`#${$(this).parent().attr('id')}`)
-        $.confirm({
-            draggable: true,
-            closeIcon: true,
-            icon: 'fa fa-warning',
-            type: 'red',
-            title: 'Confirm',
-            content: 'Are you sure you want to delete this message ?',
-            theme: 'dark',
-            buttons: {
-                Yes: {
-                    action: () => msg.remove(),
-                    btnClass: 'btn btn-outline-success'
-                },
-                No:{
-                    action: () => msg.remove(),
-                    btnClass: 'btn btn-outline-danger'
-                }
-            }
-        });
-    });
+    
 
     $('.delete-post').click(function() {
         const postId = $(this).attr('data-id');
@@ -216,6 +195,71 @@ $(function() {
     channel.bind('my-event', function(data) {
         alert('An event was triggered with message: ' + data.message);
       });
+
+      $('.move-to-trash').click(function() {
+        const msg = $(`#${$(this).parent().attr('id')}`)
+        $.confirm({
+            draggable: true,
+            closeIcon: true,
+            icon: 'fa fa-warning',
+            type: 'red',
+            title: 'Confirm',
+            content: 'Are you sure you want to delete this message ?',
+            theme: 'dark',
+            buttons: {
+                Yes: {
+                    action: () => msg.remove(),
+                    btnClass: 'btn btn-outline-success'
+                },
+                No:{
+                    action: () => {},
+                    btnClass: 'btn btn-outline-danger'
+                }
+            }
+        });
+    });
+
+    $('.clear-trash').click(function() {
+        const msg = $(`#${$(this).parent().attr('id')}`)
+        $.confirm({
+            draggable: true,
+            closeIcon: true,
+            icon: 'fa fa-warning',
+            type: 'red',
+            title: 'Confirm',
+            content: 'Are you sto delete this message ?',
+            theme: 'dark',
+            buttons: {
+                Yes: {
+                    action: () => msg.remove(),
+                    btnClass: 'btn btn-outline-success'
+                },
+                No:{
+                    action: () => {},
+                    btnClass: 'btn btn-outline-danger'
+                }
+            }
+        });
+
+
+    });
+
+    $('#inbox-controls > div').click(function(e) {
+        
+        if (!$(this).hasClass('inbox-nav-active')) {
+            window.location.hash = $(this).attr('id');
+            let divToShow = $(this).attr('data-link');
+            $('.inbox-nav-active').removeClass('inbox-nav-active');
+            $(this).addClass('inbox-nav-active');
+            $('#inbox-msg-wrapper > div').hide();
+            $(`#${divToShow}`).show();
+        }
+    });
+    var href = location.href;
+    var pgurl = href.substr(href.lastIndexOf('/') + 1);
+    console.log(pgurl)
+    // match all the anchors on the page with the html file name
+    $('.sidebar-item a[href="/' + pgurl + '"]').parent().addClass('sidebar-active');
 });
 
 var socket = io();
@@ -229,7 +273,6 @@ iziToast.settings({
     iconColor: '#b1a0ff',
     backgroundColor: 'rgba(44,44,44,0.7)',
     progressBarColor: '#b1a0ff',
-    overlay: true,
     close: true,
     position: 'topRight',
 });

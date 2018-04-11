@@ -1,11 +1,10 @@
 nav#main-nav-bar
-    #main-left-nav-bar
-        ul
-            li.nav-link: a(href="/") Home
-            li.nav-link: a(href="/champions") Champions
-            li.nav-link: a(href="/leaderboards?region=NA1") Leaderboards
-            li.nav-link: a(href="/statistics") Statistics
-            li.nav-link: a(href="/items") Items
+    #main-left-nav-bar.d-flex.align-items-center
+        a(href="/") Home
+        a(href="/champions") Champions
+        a(href="/leaderboards?region=NA1") Leaderboards
+        a(href="/statistics") Statistics
+        a(href="/items") Items
     #nav-search
         form#navbar-search-form(method="GET", action="/summoner")
             select#region-select(name="region")

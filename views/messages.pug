@@ -5,30 +5,69 @@ body
     .container
         #inbox
             .row
-                #inbox-controls.col-2.d-flex.flex-column.flex-grow
-                    #inbox.inbox-active
+                #inbox-controls.col-md-2.col-sm-12.d-flex.flex-column.flex-grow
+                    #inbox.inbox-nav-active(data-link='inbox-msgs')
                         i.fa.fa-inbox.fa-lg(style="margin-left: 1px; margin-right: 21px")
                         span Inbox
-                    #sent
-                        i.fa.fa-envelope-o.fa-lg(style="margin-right: 20px")
+                    #sent(data-link='inbox-sent' href="#sent")
+                        i.fa.fa-envelope-o.fa-lg(style="margin-right: 19px")
                         span Sent
-                    #bookmark
-                        i.fa.fa-bookmark-o.fa-lg(style="margin-left: 2px; margin-right: 24px")
+                    #bookmark(data-link='inbox-bookmark')
+                        i.fa.fa-star-o.fa-lg(style="margin-right: 20px")
                         span Bookmark
-                    #inbox-trash
+                    #trash(data-link='inbox-trash')
                         i.fa.fa-trash-o.fa-lg(style="margin-left: 1px; margin-right: 23px")
                         span Trash
-                #inbox-msgs.col-9
-                    table.table.table-hover.table-dark
-                        tbody
-                            - for(let i = 0; i < 5; i++) {
-                                tr(id=i)
-                                    td: input.d-flex(type="checkbox")
-                                    td: i.fa.fa-star
-                                    td Arjuna Admin
-                                    td class="view-message ">Lorem ipsum dolorqweqweqweqweqweqweqweqweqweqwe...</td>
-                                    td 9:27
-                                    td.inbox-delete: i.fa.fa-trash-o.fa-lg.text-danger
-                            - }
+
+                #inbox-msg-wrapper.col-md-8.col-sm-12
+                    #inbox-msgs
+                        table.table.table-hover.table-dark
+                            tbody
+                                - for(let i = 0; i < 5; i++) {
+                                    tr(id=i)
+                                        td: input.d-flex(type="checkbox")
+                                        td.add-bookmark: i.fa.fa-star
+                                        td Arjuna Admin
+                                        td Lorem iporqweqqweqwe...</td>
+                                        td 9:27
+                                        td.move-to-trash: i.fa.fa-trash-o.fa-lg.text-danger
+                                - }
+
+                    #inbox-sent(style="display: none")
+                        table.table.table-hover.table-dark
+                            tbody
+                                - for(let i = 0; i < 5; i++) {
+                                    tr(id=i)
+                                        td: input.d-flex(type="checkbox")
+                                        td: i.fa.fa-star
+                                        td Admin
+                                        td class="view-message ">Lorem ipsum dolorqweqweqweqweqweqweqweqweqweqwe...</td>
+                                        td 9:27
+                                        td.move-to-trash: i.fa.fa-trash-o.fa-lg.text-danger
+                                - }
+                    #inbox-bookmark(style="display: none")
+                        table.table.table-hover.table-dark
+                            tbody
+                                - for(let i = 0; i < 5; i++) {
+                                    tr(id=i)
+                                        td: input.d-flex(type="checkbox")
+                                        td: i.fa.fa-star
+                                        td bookmark
+                                        td class="view-message ">Lorem ipsum dolorqweqweqweqweqweqweqweqweqweqwe...</td>
+                                        td 9:27
+                                        td.move-to-trash: i.fa.fa-trash-o.fa-lg.text-danger
+                                - }
+                    #inbox-trash(style="display: none")
+                        table.table.table-hover.table-dark
+                            tbody
+                                - for(let i = 0; i < 5; i++) {
+                                    tr(id=i)
+                                        td: input.d-flex(type="checkbox")
+                                        td: i.fa.fa-star
+                                        td trash
+                                        td class="view-message ">Lorem ipsum dolorqweqweqweqweqweqweqweqweqweqwe...</td>
+                                        td 9:27
+                                        td.clear-trash: i.fa.fa-trash-o.fa-lg.text-danger
+                                - }
                             
         include partials/footer

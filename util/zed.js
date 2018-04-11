@@ -75,6 +75,7 @@ function getMastery(summonerId, region) {
 }
 
 function getLeaderboards(region) {
+    region = region || 'NA1'
     const getLeaderboardData = `https://${region}${lol}league/v3/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=${process.env.LOL_KEY}`;
     return rp({ uri: getLeaderboardData, json: true })
         .catch(function(err) {

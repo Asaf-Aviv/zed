@@ -3,11 +3,11 @@ body
     include partials/nav
     include partials/sidenav
     .container
-    
-        h1.text-center= legend.username
-        h1.text-center= legend.profileViews
+        button.btn.btn-primary Send Message
+        h1.text-center= user.username
+        h1.text-center= user.profileViews
 
-        each post in legend.posts
+        each post in user.posts
             div(id=post.id).post-wrapper
                 
                 p= post.body

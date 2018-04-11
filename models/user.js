@@ -7,6 +7,7 @@ const PostSchema              = require('./post');
 const FriendRequestSchema     = require('./friendRequest');
 const FriendRequestSentSchema = require('./friendRequestSent');
 const FriendSchema            = require('./friend');
+const MessageSchema           = require('./message');
 
 const LegendSchema = new Schema({
     username: {
@@ -58,8 +59,8 @@ const LegendSchema = new Schema({
         default: '/assets/img/user_profile_icons/glasses.png'
     },
     posts: [ PostSchema ],
-    messages: [],
-    messagesSent: [],
+    messages: [ MessageSchema ],
+    messagesSent: [ MessageSchema ],
     comments: [],
     likes: [],
     shares: [],

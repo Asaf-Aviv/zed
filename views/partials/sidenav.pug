@@ -1,8 +1,8 @@
 #sidebar
 	.sidebar-wrapper
 		.d-flex.justify-content-start
-			a#sidebar-btn(style="margin-left: 22px"): i.fa.fa-bars.fa-lg
-		.profile-menu.d-flex.flex-column.flex-grow
+			a#sidebar-btn(style="margin-left: 17px"): i.fa.fa-bars.fa-lg
+		.sidenav-menu.d-flex.flex-column.flex-grow
 			.sidebar-item
 				a.d-flex(href="/")
 					i.fa.fa-lg.fa-home(style="margin-left: 1px; margin-right: 20px")
@@ -11,19 +11,29 @@
 					a.d-flex(href="/profile")
 						i.fa.fa-lg.fa-user-o(style="margin-left: 1px; margin-right: 22px")
 						span Profile
-			.sidebar-item.sidebar-active
+			.sidebar-item
 					a.d-flex(href="/profile/messages")
 						i.fa.fa-lg.fa-envelope-o(style="margin-right: 19px")
 						span Messages
 			hr
-
-
-	
-//- script.
-//- 	window.onload = function() {
-//- 		$('#sidebar-btn').click( () => {
-//- 			console.log('open')
-//- 			$('#sidebar').toggleClass('open-sidebar');
-//- 		});
-//- 	}
-		
+			.sidebar-item
+					a.d-flex(href="/champions")
+						i.fa.fa-lg.fa-envelope-o(style="margin-right: 19px")
+						span Champions
+			.sidebar-item
+					a.d-flex(href="/leaderboards")
+						i.fa.fa-lg.fa-line-chart(style="margin-right: 19px")
+						span Leaderboards
+			.sidebar-item
+					a.d-flex(href="/statistics")
+						i.fa.fa-lg.fa-pie-chart(style="margin-right: 19px")
+						span Statistics
+			hr
+			.sidebar-item
+				a.d-flex(href="/settings")
+					i.fa.fa-lg.fa-wrench(style="margin-right: 19px")
+					span Settings
+			.sidebar-item
+				a.d-flex(href="/logout")
+					i.fa.fa-lg.fa-sign-out(style="margin-right: 19px")
+					span Logout

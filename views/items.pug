@@ -15,7 +15,7 @@ body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
                     input(type="checkbox", value="data-price")
                     | Price
         .row
-            #filter-items.col-md-2
+            #filter-items.col-md-2.col-sm-4
                 p.lead.pl-4 Filter By
                 .form-check
                     .filter-option
@@ -114,7 +114,7 @@ body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
                         label.checkbox-inline.mr-3
                             input(type="checkbox", value="NonbootsMovement")
                             | Movement Speed
-            .col-md-10
+            .col-md-10.col-sm-8
                 .league-item-wrapper.d-flex.flex-wrap
                     each item in items.data
                         if (item.gold.purchasable && item.maps["11"])

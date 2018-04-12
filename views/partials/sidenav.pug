@@ -1,4 +1,9 @@
 #sidebar
+	<form class="search-form" role="search">
+		<div class="form-group md-form mt-0 pt-1 waves-light waves-effect waves-light">
+			<input type="text" class="form-control" placeholder="Search">
+		</div>
+	</form>
 	.sidebar-wrapper
 		.d-flex.justify-content-start
 			a#sidebar-btn(style="margin-left: 17px"): i.fa.fa-bars.fa-lg
@@ -18,11 +23,11 @@
 			hr
 			.sidebar-item
 					a.d-flex(href="/champions")
-						i.fa.fa-lg.fa-envelope-o(style="margin-right: 19px")
+						i.fa.fa-lg.fa-trophy(style="margin-left: 3px; margin-right: 19px")
 						span Champions
 			.sidebar-item
 					a.d-flex(href="/leaderboards")
-						i.fa.fa-lg.fa-line-chart(style="margin-right: 19px")
+						i.fa.fa-lg.fa-line-chart(style="margin-right: 18px")
 						span Leaderboards
 			.sidebar-item
 					a.d-flex(href="/statistics")
@@ -33,6 +38,10 @@
 				a.d-flex(href="/settings")
 					i.fa.fa-lg.fa-wrench(style="margin-right: 19px")
 					span Settings
+			.sidebar-item
+				a.d-flex(href="/settings")
+					i.fa.fa-lg.fa-commenting(style="margin-right: 19px")
+					span Feedback
 			.sidebar-item
 				a.d-flex(href="/logout")
 					i.fa.fa-lg.fa-sign-out(style="margin-right: 19px")

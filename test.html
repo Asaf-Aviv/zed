@@ -1,61 +1,25 @@
-<div id="sidebar">
-    <div class="sidebar-wrapper">
-        <div class="d-flex justify-content-start">
-            <a id="sidebar-btn" style="margin-left: 22px">
-                <i class="fa fa-bars fa-lg"></i>
-            </a>
+<button class="feedback-btn">
+    TOGGLE
+</button>
+
+<div id="feedback-wrapper">
+    <div class="d-flex flex-column text-center p-3">
+        <div class="d-flex pb-3">
+            <h4 class="m-0">Send feedback</h4>
+            <button class="close-feedback-btn ml-auto px-2">✕</button>
         </div>
-        <div class="profile-menu d-flex flex-column flex-grow">
-            <div class="sidebar-item">
-                <a class="d-flex" href="/">
-                    <i class="fa fa-lg fa-home" style="margin-left: 1px; margin-right: 20px"></i>
-                    <span>Home</span>
-                </a>
+        <form id="feedback-form" action="/feedback" method="POST">
+            <select class="mb-4 custom-select" name="feedback">
+                <option value="idea" selected="selected">Hey check out my awesome  !</option>
+                <option value="bug">I would like to report a </option>
+            </select>
+            <div class="md-form m-0">
+                <textarea class="form-control md-textarea md-textarea-auto mb-4" id="feedback-label" type="text" name="message"
+                    placeholder="Describe your issue or share your awesome ideas!" style="height: 72px;"></textarea>
             </div>
-            <div class="sidebar-item">
-                <a class="d-flex" href="/profile">
-                    <i class="fa fa-lg fa-user-o" style="margin-left: 1px; margin-right: 22px"></i>
-                    <span>Profile</span>
-                </a>
-            </div>
-            <div class="sidebar-item">
-                <a class="d-flex" href="/profile/messages">
-                    <i class="fa fa-lg fa-envelope-o" style="margin-right: 19px"></i>
-                    <span>Messages</span>
-                </a>
-            </div>
-            <hr>
-            <div class="sidebar-item">
-                <a class="d-flex" href="/champions">
-                    <i class="fa fa-lg fa-envelope-o" style="margin-right: 19px"></i>
-                    <span>Champions</span>
-                </a>
-            </div>
-            <div class="sidebar-item">
-                <a class="d-flex" href="/leaderboards">
-                    <i class="fa fa-lg fa-line-chart" style="margin-right: 19px"></i>
-                    <span>Leaderboards</span>
-                </a>
-            </div>
-            <div class="sidebar-item">
-                <a class="d-flex" href="/statistics">
-                    <i class="fa fa-lg fa-pie-chart" style="margin-right: 19px"></i>
-                    <span>Statistics</span>
-                </a>
-            </div>
-            <hr>
-            <div class="sidebar-item">
-                <a class="d-flex" href="/settings">
-                    <i class="fa fa-lg fa-wrench" style="margin-right: 19px"></i>
-                    <span>Settings</span>
-                </a>
-            </div>
-            <div class="sidebar-item">
-                <a class="d-flex" href="/logout">
-                    <i class="fa fa-lg fa-sign-out" style="margin-right: 19px"></i>
-                    <span>Logout</span>
-                </a>
-            </div>
-        </div>
+            <button class="btn btn-sm btn-outline-primary waves-effect waves-light">Send
+                <i class="fa fa-paper-plane-o pl-2"></i>
+            </button>
+        </form>
     </div>
 </div>

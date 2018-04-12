@@ -28,7 +28,6 @@ const leaderboards     = require('./routes/leaderboards');
 const champions        = require('./routes/champions');
 const summoner         = require('./routes/summoner');
 const statistics       = require('./routes/statistics');
-const contact          = require('./routes/contact');
 const logout           = require('./routes/logout');
 const profile          = require('./routes/profile');
 const login            = require('./routes/login');
@@ -88,7 +87,6 @@ app
 .use('/summoner', summoner)
 .use('/profile', profile)
 .use('/statistics', statistics)
-.use('/contact', contact)
 .use('/register', register)
 .use('/login', login)
 .use('/logout', logout)

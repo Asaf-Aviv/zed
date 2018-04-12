@@ -243,9 +243,56 @@ $(function() {
 
 
     });
+    $('#contact-form').submit(function(e) {
+        e.preventDefault();
+        $('.ajax-loader-wrapper').removeClass('invisible');
+        $('#contact-form button').prop('disabled', true);
+        $.ajax({
+            type: "POST",
+            url: '/contact',
+            data: $('#contact-form').serialize(),
+            success: function(data) {
+                succesAlertCenter(data);
+            },
+            error: function(data) {
+                errorAlertCenter(data);
+            },
+            complete: function() {
+                $('.ajax-loader-wrapper').addClass('invisible');
+                $('#contact-form button').prop('disabled', false);
+            }
+        });
+    });
 
+    $('#feedback-form').submit(function(e) {
+        e.preventDefault();
+        $('.ajax-loader-wrapper').removeClass('invisible');
+        $('#feedback-form button').prop('disabled', true);
+        $.ajax({
+            type: "POST",
+            url: '/feedback',
+            data: $('#feedback-form').serialize(),
+            success: function(data) {
+                succesAlertCenter(data);
+            },
+            error: function(data) {
+                errorAlertCenter(data);
+            },
+            complete: function() {
+                $('.ajax-loader-wrapper').addClass('invisible');
+                $('#feedback-form button').prop('disabled', false);
+            }
+        });
+    });
+    $('.remove-feedback').click(function(){
+        $('#feedback-wrapper, .feedback-btns').remove();
+    });
+    $('.feedback-btn, .close-feedback').click(function() {
+        $('#feedback-wrapper').toggleClass('d-none');
+        $('#feedback-form textarea').focus();
+    });
+    
     $('#inbox-controls > div').click(function(e) {
-        
         if (!$(this).hasClass('inbox-nav-active')) {
             window.location.hash = $(this).attr('id');
             let divToShow = $(this).attr('data-link');
@@ -258,11 +305,10 @@ $(function() {
     var href = location.href;
     var pgurl = href.substr(href.lastIndexOf('/') + 1);
     console.log(pgurl)
-    // match all the anchors on the page with the html file name
     $('.sidebar-item a[href="/' + pgurl + '"]').parent().addClass('sidebar-active');
 });
 
-var socket = io();
+
 
 iziToast.settings({
     class: 'izi-alert',
@@ -275,7 +321,36 @@ iziToast.settings({
     progressBarColor: '#b1a0ff',
     close: true,
     position: 'topRight',
+    titleLineHeight: '1.2',
+    messageLineHeight: '1.5'
 });
+
+function succesAlertCenter(message) {
+    iziToast.show({
+        titleColor: 'green',
+        iconColor: 'green',
+        icon: 'fa fa-check',
+        title: 'Success: ',
+        message,
+        position: 'center',
+        overlay: true,
+        overlayClose: true,
+    });
+}
+
+function errorAlertCenter(message) {
+    console.log(message.responseJSON)
+    iziToast.show({
+        titleColor: 'red',
+        iconColor: 'red',
+        icon: 'fa fa-exclamation-triangle',
+        title: 'Error: ',
+        message: message.responseJSON,
+        position: 'center',
+        overlay: true,
+        overlayClose: true,
+    });
+}
 
 $('#suhdude').click( () => {
     iziToast.show({
@@ -285,6 +360,8 @@ $('#suhdude').click( () => {
     });
 });
 
+var socket = io();
+
 socket.on('friendRequest', (user) => {
     iziToast.show({
         title: 'Friend Request',
@@ -293,6 +370,7 @@ socket.on('friendRequest', (user) => {
         position: 'topRight'
     });
 });
+
 socket.on('acceptFriendRequest', (data) => {
     console.log(data);
     $('#modal').iziModal('open');

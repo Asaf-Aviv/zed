@@ -21,6 +21,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/overall/:elo', (req, res) => {
+    console.log('patch request')
     Promise.all([
         zed.getOverallPatch(req.params.elo),
         zed.getOverallStatistics(req.params.elo),
@@ -29,6 +30,19 @@ router.get('/overall/:elo', (req, res) => {
         res.send(pug.renderFile('views/partials/overall_patch.pug', {
             overallPatch,
             overallStats,
+            ids,
+        }));
+    });
+});
+
+router.get('/overall/champions/:elo', (req, res) => {
+    console.log('champions request')
+    Promise.all([
+        zed.getAllChampionsStats(req.params.elo),
+        zed.getChampionsIdsAndNames(),
+    ]).then(([allChampsStats, ids]) => {
+        res.send(pug.renderFile('views/partials/overall_champs.pug', {
+            allChampsStats,
             ids,
         }));
     });

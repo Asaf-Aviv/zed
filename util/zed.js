@@ -110,7 +110,10 @@ function getMatches(summonerId, region) {
 // CHAMPION
 function getAllChampionsStats(elo) {
     const allData = `kda,wins,minions,positions,wards,goldEarned,hashes`
-    const getChampsData = `http://api.champion.gg/v2/champions?limit=300&champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
+    const getChampsData = elo && elo !== 'platplus' ? 
+        `http://api.champion.gg/v2/champions?limit=1&elo=${elo.toUpperCase()}&champData=${allData}&api_key=${process.env.CHAMPION_KEY}` :
+        `http://api.champion.gg/v2/champions?limit=1&champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
+
     console.log('allchamops ', getChampsData)
     return rp({ uri: getChampsData, json: true })
         .catch(function(err) {

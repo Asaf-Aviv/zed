@@ -1,7 +1,10 @@
 $(function() {
     fixPopover();
+
     $('#tier-1 table, #tier-2 table, #tier-3 table, #tier-4 table, #tier-5 table').DataTable();
+
     $('#leaderboard-table').DataTable();
+
     $('[data-toggle="tooltip"]').tooltip().click(function(e) {
         e.preventDefault()
     });
@@ -81,7 +84,6 @@ $(function() {
             type: 'DELETE',
             url: '/post/'+postId,
             success: function(res) {
-                console.log(res);
                 window.location.href = '/profile';
             },
             error: function(err) {
@@ -151,17 +153,25 @@ $(function() {
         });
     });
 
-    $('.overall-wrapper').on('change', '#overall-league', function() {
-        let league = $(this).val();
-
+    $('#overall-wrapper').on('change', '#overall-league', function() {
         $.ajax({
             type: 'GET',
             url: `/statistics/overall/${$(this).val()}`,
             success: function(res) {
-                console.log(res);
-                $('.overall-wrapper').html(res);
+                $('#overall-wrapper').html(res);
             }
-        })
+        });
+    });
+
+    $('#overall-champs').on('change', '#overall-table-elo', function() {
+        $.ajax({
+            type: 'GET',
+            url: `/statistics/overall/champions/${$(this).val()}`,
+            success: function(res) {
+                console.log(res)
+                $('#overall-champs').html(res);
+            }
+        });
     });
 
     $('#spectate').click(function() {
@@ -177,7 +187,6 @@ $(function() {
                 key,
             },
             success: function(res) {
-                console.log(res)
                 window.open(`/spectate/${gameId}`)
             },
             error: function(err) {
@@ -304,7 +313,6 @@ $(function() {
     });
     var href = location.href;
     var pgurl = href.substr(href.lastIndexOf('/') + 1);
-    console.log(pgurl)
     $('.sidebar-item a[href="/' + pgurl + '"]').parent().addClass('sidebar-active');
 });
 
@@ -339,7 +347,6 @@ function succesAlertCenter(message) {
 }
 
 function errorAlertCenter(message) {
-    console.log(message.responseJSON)
     iziToast.show({
         titleColor: 'red',
         iconColor: 'red',
@@ -372,7 +379,6 @@ socket.on('friendRequest', (user) => {
 });
 
 socket.on('acceptFriendRequest', (data) => {
-    console.log(data);
     $('#modal').iziModal('open');
     $('#success-alerts').html(data)
 });

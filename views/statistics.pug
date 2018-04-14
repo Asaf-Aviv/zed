@@ -3,40 +3,8 @@ body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
     include partials/nav
     include partials/sidenav
     .container
-        .overall-wrapper
+        #overall-patch-wrapper
             include partials/overall_patch
-        #overall-table-wrapper
-            table#overall-table.table
-                thead
-                    tr(style="height: 80px;")
-                        th Champion
-                        th Role
-                        th Games Played
-                        th Win Rate
-                        th Ban Rate
-                        th Pick Rate
-                        th Kills
-                        th Deaths
-                        th Assists
-                        th CS
-                        th Gold
-                tbody
-                    - for (let i = 0, x = allChampsStats.length; i < x; i++) {
-                        tr
-                            td
-                                a.d-flex.align-items-center(href=`/champions/${ids[allChampsStats[i].championId]}`)
-                                    .overall-table-champ-tile(
-                                        style=`background-image: url(//ddragon.leagueoflegends.com/cdn/8.7.1/img/champion/${ids[allChampsStats[i].championId]}.png)`)
-                                    span.bold.ml-2= ids[allChampsStats[i].championId]
-                            td= allChampsStats[i].role
-                            td= allChampsStats[i].gamesPlayed
-                            td=(allChampsStats[i].winRate * 100).toFixed(2) + '%'
-                            td=(allChampsStats[i].banRate * 100).toFixed(2) + '%'
-                            td=(allChampsStats[i].playRate * 100).toFixed(2) + '%'
-                            td= allChampsStats[i].kills.toFixed(2)
-                            td= allChampsStats[i].deaths.toFixed(2)
-                            td= allChampsStats[i].assists.toFixed(2)
-                            td= allChampsStats[i].minionsKilled.toFixed(2)
-                            td= allChampsStats[i].goldEarned.toFixed(2)
-                    - }
+        #overall-champs-wrapper
+            include partials/overall_champs
         include partials/footer

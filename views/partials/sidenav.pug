@@ -1,9 +1,7 @@
 #sidebar
-	<form class="search-form" role="search">
-		<div class="form-group md-form mt-0 pt-1 waves-light waves-effect waves-light">
-			<input type="text" class="form-control" placeholder="Search">
-		</div>
-	</form>
+	form.search-form
+		.form-group.md-form
+			input.form-control(type="text" placeholder="Search")
 	.sidebar-wrapper
 		.d-flex.justify-content-start
 			a#sidebar-btn(style="margin-left: 17px"): i.fa.fa-bars.fa-lg
@@ -39,9 +37,9 @@
 					i.fa.fa-lg.fa-wrench(style="margin-right: 19px")
 					span Settings
 			.sidebar-item
-				a.d-flex(href="/settings")
+				a.d-flex(href="/contact")
 					i.fa.fa-lg.fa-commenting(style="margin-right: 19px")
-					span Feedback
+					span Contact
 			.sidebar-item
 				a.d-flex(href="/logout")
 					i.fa.fa-lg.fa-sign-out(style="margin-right: 19px")

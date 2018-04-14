@@ -3,8 +3,8 @@ body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
     include partials/nav
     include partials/sidenav
     .container
-        .row
-            .col-10.offset-md-1
+        .row.justify-content-center
+            .col-10
                 nav.leaderboard-regions
                     a(href="/leaderboards?region=NA1") NA
                     a(href="/leaderboards?region=EUW1") EUW
@@ -17,7 +17,5 @@ body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
                     a(href="/leaderboards?region=TR1") TURKEY
                     a(href="/leaderboards?region=OC1") OCE
                     a(href="/leaderboards?region=RU") RUSSIA
-        .row
-            .col-sm-10.offset-md-1
-                include partials/leaderboard
+        include partials/leaderboard
         include partials/footer

@@ -5,8 +5,14 @@ const Idea = require('../models/idea');
 const Bug = require('../models/bug');
 
 router.get('/', (req, res) => {
-    res.status(200).render('index', {
+    res.render('index', {
         title: 'Home | Legends'
+    });
+});
+
+router.get('/contact', (req, res) => {
+    res.render('contact', {
+        title: 'Contact | Legends'
     });
 });
 

@@ -15,7 +15,7 @@ $(function() {
     $(".icon-arrow-up2").click(function() {
         $("html, body").animate({ scrollTop: 0 }, 1000, 'easeInOutCubic');
         return false;
-      });
+    });
 
     $(document).scroll(function() {
         $(this).scrollTop() > 200 ? $('.icon-arrow-up2').fadeIn() : $('.icon-arrow-up2').fadeOut();
@@ -156,7 +156,7 @@ $(function() {
 
         $.ajax({
             type: 'GET',
-            url: `/statistics?league=${$(this).val()}`,
+            url: `/statistics/overall/${$(this).val()}`,
             success: function(res) {
                 console.log(res);
                 $('.overall-wrapper').html(res);
@@ -189,14 +189,14 @@ $(function() {
 
     var pusher = new Pusher('8a344f0f04d1ec9118c7', {
         cluster: 'mt1'
-      });
+    });
     var channel = pusher.subscribe('my-channel');
     
     channel.bind('my-event', function(data) {
         alert('An event was triggered with message: ' + data.message);
-      });
+    });
 
-      $('.move-to-trash').click(function() {
+    $('.move-to-trash').click(function() {
         const msg = $(`#${$(this).parent().attr('id')}`)
         $.confirm({
             draggable: true,

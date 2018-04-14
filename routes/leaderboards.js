@@ -8,8 +8,9 @@ router.get('/', (req, res) => {
             return b.leaguePoints - a.leaguePoints;
         });
         res.render('leaderboards', {
-            title: 'EU West Leaderboards | League of Legends',
+            title: `${regionNameFix[req.query.region]}  Leaderboards | League of Legends`,
             LB,
+            region: regionNameFix[req.query.region]
         });
     });
 });

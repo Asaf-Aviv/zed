@@ -3,118 +3,118 @@ body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
     include partials/nav
     include partials/sidenav
     .container
-        #item-filter.row
-            .col-lg-2.col-md-6.col-sm-12
+        //- #item-filter.row
+            .col-lg-2.col-md-4.col-sm-5
                 #search-filter.md-form
                     input#item-search.form-control(type="text")
                     label(for="item-search") Search
 
-            #sort-items.col-lg-4.col-md-6.col-sm-12
+            #sort-items.col-lg-4.col-md-6.col-sm-3
                 p.lead Sort By
                 label.checkbox-inline
                     input(type="checkbox", value="data-price")
                     | Price
         .row
-            #filter-items.col-md-2.col-sm-4
+            #filter-items.col-xl-2.col-lg-3.col-md-3.col-sm-4
                 p.lead.pl-4 Filter By
-                .form-check
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="SpellDamage")
-                            | Ability Power
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="Damage")
-                            | Attack Damage
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="Armor")
-                            | Armor
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="SpellBlock")
-                            | Magic Resist
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="Health")
-                            | Health
-                    .filter-option        
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="CriticalStrike")
-                            | Critical Strike
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="LifeSteal")
-                            | Life Steal
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="Tenacity")
-                            | Tenacity
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="OnHit")
-                            | On Hit
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="Trinket")
-                            | Trinkets
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="Vision")
-                            | Vision
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="GoldPer")
-                            | Gold Generation
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="Slow")
-                            | Slow Effect
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="CooldownReduction")
-                            | Cooldown Reduction
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="Aura")
-                            | Aura
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="Active")
-                            | Active
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="Mana")
-                            | Mana
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="MagicPenetration")
-                            | Magic Penetration
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="ArmorPenetration")
-                            | Armor Penetration
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="AttackSpeed")
-                            | Attack Speed
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="ManaRegen")
-                            | Mana Regen
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="HealthRegen")
-                            | Health Regen
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="Boots")
-                            | Boots
-                    .filter-option
-                        label.checkbox-inline.mr-3
-                            input(type="checkbox", value="NonbootsMovement")
-                            | Movement Speed
-            .col-md-10.col-sm-8
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="SpellDamage")
+                        | Ability Power
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="Damage")
+                        | Attack Damage
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="Armor")
+                        | Armor
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="SpellBlock")
+                        | Magic Resist
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="Health")
+                        | Health
+                .filter-option        
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="CriticalStrike")
+                        | Critical Strike
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="LifeSteal")
+                        | Life Steal
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="Tenacity")
+                        | Tenacity
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="OnHit")
+                        | On Hit
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="Trinket")
+                        | Trinkets
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="Vision")
+                        | Vision
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="GoldPer")
+                        | Gold Generation
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="Slow")
+                        | Slow Effect
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="CooldownReduction")
+                        | Cooldown Reduction
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="Aura")
+                        | Aura
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="Active")
+                        | Active
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="Mana")
+                        | Mana
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="MagicPenetration")
+                        | Magic Penetration
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="ArmorPenetration")
+                        | Armor Penetration
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="AttackSpeed")
+                        | Attack Speed
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="ManaRegen")
+                        | Mana Regen
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="HealthRegen")
+                        | Health Regen
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="Boots")
+                        | Boots
+                .filter-option
+                    label.checkbox-inline.mr-3
+                        input(type="checkbox", value="NonbootsMovement")
+                        | Movement Speed
+            
+            .col-xl-10.col-lg-9.col-md-9.col-sm-8
                 .league-item-wrapper.d-flex.flex-wrap
                     each item in items.data
                         if (item.gold.purchasable && item.maps["11"])

@@ -1,4 +1,5 @@
 const debug            = require('debug')('legends');
+const fs               = require('fs');
 require('dotenv').config();
 const express          = require('express');
 const app              = express();
@@ -10,7 +11,6 @@ require('./io');
 const compression      = require('compression');
 const bodyParser       = require("body-parser");
 const morgan           = require('morgan');
-const fs               = require('fs');
 const path             = require('path');
 const expressValidator = require('express-validator');
 const flash            = require('connect-flash');
@@ -37,7 +37,9 @@ const legendSearch     = require('./routes/legendSearch');
 const friendRequests   = require('./routes/friendRequests');
 const index            = require('./routes/index');
 const items            = require('./routes/items');
+const runes            = require('./routes/runes');
 const spectate         = require('./routes/spectate');
+
 // MongoDB
 mongoose.connect(process.env.MONGO_ADMIN);
 const db = mongoose.connection;
@@ -94,6 +96,7 @@ app
 .use('/users', legendSearch)
 .use('/users', friendRequests)
 .use('/items', items)
+.use('/runes', runes)
 .use('/spectate', spectate)
 .use('/', index)
 

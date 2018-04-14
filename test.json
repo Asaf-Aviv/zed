@@ -1,0 +1,277 @@
+{
+    "_id": { "championId": 81, "role": "DUO_CARRY" },
+    "elo": "PLATINUM,DIAMOND,MASTER,CHALLENGER",
+    "patch": "8.7",
+    "championId": 81,
+    "positions": {
+        "deaths": 1,
+        "winRates": 9,
+        "minionsKilled": 12,
+        "previousOverallPerformanceScore": 2,
+        "previousDeaths": 1,
+        "previousAssists": 2,
+        "banRates": 6,
+        "previousWinRates": 12,
+        "previousPlayRates": 3,
+        "previousBanRates": 6,
+        "assists": 2,
+        "kills": 15,
+        "previousKills": 15,
+        "previousGoldEarned": 8,
+        "previousTotalDamageTakenPosition": 15,
+        "playRates": 1,
+        "previousAverageGamesScore": 7,
+        "previousKillingSprees": 15,
+        "damageDealt": 1,
+        "goldEarned": 8,
+        "overallPerformanceScore": 2,
+        "previousDamageDealt": 1,
+        "overallPerformanceScoreDelta": 0,
+        "totalHeal": 18,
+        "killingSprees": 15,
+        "previousTotalHeal": 18,
+        "previousMinionsKilled": 12,
+        "totalDamageTaken": 15,
+        "totalPositions": 18,
+        "averageGamesScore": 7
+    },
+    "normalized": {
+        "winRate": 0.509432521662871,
+        "neutralMinionsKilledEnemyJungle": 0.3337313215478642,
+        "neutralMinionsKilledTeamJungle": 0.28540981601111515,
+        "minionsKilled": 0.2697426300185319,
+        "goldEarned": 0.443466341941981,
+        "playRate": 1,
+        "banRate": 0.12074769584177646,
+        "killingSprees": 0.21649717950704003,
+        "averageGameScore": 0.07671598412214836,
+        "totalDamageTaken": 0.1017591790517364,
+        "totalDamageDealt": 1,
+        "totalHeal": 0,
+        "kills": 0.2198079321314318,
+        "assists": 0.8686335255738973,
+        "deaths": 1
+    },
+    "winsByMatchesPlayed": {
+        "fiftyOneToHundred": {
+            "gamesPlayed": 456555,
+            "wins": 235016,
+            "winRate": 0.5147594484782775,
+            "players": 6823
+        },
+        "twoHundredOnePlus": {
+            "gamesPlayed": 50758,
+            "wins": 26061,
+            "winRate": 0.5134363056069979,
+            "players": 178
+        },
+        "hundredFiftyOneToTwoHundred": {
+            "gamesPlayed": 43118,
+            "wins": 22865,
+            "winRate": 0.5302889744422283,
+            "players": 254
+        },
+        "hundredOneToHundredFifty": {
+            "gamesPlayed": 125460,
+            "wins": 64522,
+            "winRate": 0.5142834369520166,
+            "players": 1051
+        },
+        "oneToFifty": {
+            "gamesPlayed": 3816433,
+            "wins": 1838469,
+            "winRate": 0.48172442697146783,
+            "players": 551618
+        }
+    },
+    "winRate": 0.49590255095470565,
+    "damageComposition": {
+        "percentTrue": 0.027054323954124417,
+        "percentMagical": 0.25336974016567543,
+        "totalTrue": 662.4757957831396,
+        "totalMagical": 6204.23265901029,
+        "percentPhysical": 0.7195498408589766,
+        "total": 24486.873037614583,
+        "totalPhysical": 17619.525597349537
+    },
+    "kills": 6.336675681054566,
+    "totalDamageTaken": 17411.049175242042,
+    "wardsKilled": 2.208279188470949,
+    "averageGames": 8.02309599159886,
+    "largestKillingSpree": 10,
+    "neutralMinionsKilledTeamJungle": 7.351122115688547,
+    "assists": 8.538352123063955,
+    "playRate": 0.1357230351184684,
+    "gamesPlayed": 170838,
+    "overallPerformanceScore": 13.388433321354663,
+    "percentRolePlayed": 0.7604053999919882,
+    "neutralMinionsKilledEnemyJungle": 2.00495205984617,
+    "goldEarned": 12885.429839965347,
+    "killingSprees": 1.4848335850337746,
+    "deaths": 5.143902410470738,
+    "wardPlaced": 12.957632376871656,
+    "banRate": 0.0070935527228541155,
+    "minionsKilled": 194.77145599925075,
+    "role": "DUO_CARRY",
+    "winsByMatchLength": {
+        "twentyFiveToThirty": {
+            "count": 52126,
+            "wins": 27245,
+            "winRate": 0.5226758239650079
+        },
+        "thirtyToThirtyFive": {
+            "wins": 20857,
+            "count": 42861,
+            "winRate": 0.4866195375749516
+        },
+        "twentyToTwentyFive": {
+            "wins": 20709,
+            "count": 39633,
+            "winRate": 0.522519112860495
+        },
+        "thirtyFiveToForty": {
+            "wins": 10566,
+            "count": 23353,
+            "winRate": 0.45244722305485374
+        },
+        "fifteenToTwenty": { "count": 0, "wins": 0, "winRate": 0 },
+        "zeroToFifteen": { "count": 4, "wins": 0, "winRate": 0 },
+        "fortyPlus": {
+            "count": 12861,
+            "wins": 5342,
+            "winRate": 0.4153642796050074
+        }
+    },
+    "hashes": {
+        "finalitemshashfixed": {
+            "highestCount": {
+                "count": 11596,
+                "wins": 5617,
+                "winrate": 0.4843911693687478,
+                "hash": "items-3004-3158-3078-3153-3036-3026"
+            },
+            "highestWinrate": {
+                "count": 5423,
+                "wins": 2784,
+                "winrate": 0.5133689839572193,
+                "hash": "items-3078-3004-3158-3153-3036-3026"
+            }
+        },
+        "masterieshash": {
+            "highestCount": {
+                "count": 170838,
+                "wins": 84719,
+                "winrate": 0.49590255095470565,
+                "hash": ""
+            },
+            "highestWinrate": {
+                "count": 170838,
+                "wins": 84719,
+                "winrate": 0.49590255095470565,
+                "hash": ""
+            }
+        },
+        "skillorderhash": {
+            "highestCount": {
+                "count": 51223,
+                "wins": 25415,
+                "winrate": 0.4961638326533003,
+                "hash": "skill-Q-E-Q-W-Q-R-Q-E-Q-E-R-E-E-W-W-R-W-W"
+            },
+            "highestWinrate": {
+                "count": 119,
+                "wins": 65,
+                "winrate": 0.5462184873949579,
+                "hash": "skill-Q-E-Q-E-Q-R-W-Q-E-Q-E-R-E-W-W-W-R-W"
+            }
+        },
+        "summonershash": {
+            "highestCount": {
+                "count": 168952,
+                "wins": 83819,
+                "winrate": 0.4961113215587859,
+                "hash": "4-7"
+            },
+            "highestWinrate": {
+                "count": 54,
+                "wins": 29,
+                "winrate": 0.5370370370370371,
+                "hash": "3-4"
+            }
+        },
+        "trinkethash": {
+            "highestCount": {
+                "count": 110405,
+                "wins": 56779,
+                "winrate": 0.5142792445994294,
+                "hash": "3363"
+            },
+            "highestWinrate": {
+                "count": 110405,
+                "wins": 56779,
+                "winrate": 0.5142792445994294,
+                "hash": "3363"
+            }
+        },
+        "firstitemshash": {
+            "highestCount": {
+                "count": 114824,
+                "wins": 57084,
+                "winrate": 0.4971434543301052,
+                "hash": "first-1055-2003"
+            },
+            "highestWinrate": {
+                "count": 302,
+                "wins": 164,
+                "winrate": 0.543046357615894,
+                "hash": "first-1055-2003-2003"
+            }
+        },
+        "runehash": {
+            "highestCount": {
+                "count": 24245,
+                "wins": 12308,
+                "winrate": 0.5076510620746546,
+                "hash": "8300-8359-8304-8345-8347-8200-8226-8210"
+            },
+            "highestWinrate": {
+                "count": 133,
+                "wins": 78,
+                "winrate": 0.5864661654135338,
+                "hash": "8300-8359-8304-8316-8347-8200-8210-8226"
+            }
+        }
+    },
+    "totalHeal": 2312.9283180557018,
+    "maxMins": {
+        "minDeaths": 5.143902410470738,
+        "maxDeaths": 6.749895789912464,
+        "minPlayRate": 0.0019058965876983206,
+        "minWinRate": 0.45030843043180263,
+        "minTotalDamageDealtToChampions": 18151.17066483893,
+        "minNeutralMinionsKilledTeamJungle": 6.222329783801226,
+        "maxNeutralMinionsKilledTeamJungle": 10.17731755424063,
+        "maxHeal": 4838.3262986435,
+        "minMinionsKilled": 183.43809920800334,
+        "minHeal": 2312.9283180557018,
+        "minKillingSprees": 1.3501148313791853,
+        "maxWinRate": 0.5398082534389329,
+        "maxGoldEarned": 13525.008938331941,
+        "maxTotalDamageDealtToChampions": 24486.873037614583,
+        "minBanRate": 0.00024495683529539346,
+        "maxNeutralMinionsKilledEnemyJungle": 2.734748758838574,
+        "minAssists": 6.077454922374221,
+        "minTotalDamageTaken": 17002.299829152056,
+        "maxKills": 8.574349343112472,
+        "maxBanRate": 0.05696318934329191,
+        "maxPlayRate": 0.1357230351184684,
+        "minNeutralMinionsKilledEnemyJungle": 1.6393998063891577,
+        "maxTotalDamageTaken": 21019.130054189245,
+        "maxMinionsKilled": 225.45354478465833,
+        "minGoldEarned": 12375.78985857609,
+        "minKills": 5.706243200773601,
+        "maxAssists": 8.910522180587453,
+        "_id": null,
+        "maxKillingSprees": 1.972380460711361
+    }
+}

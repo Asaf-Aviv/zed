@@ -7,7 +7,7 @@ const runes          = require('../assets/league/data/en_US/runesReforged');
 const summonerSpells = require('../assets/league/data/en_US/summoner');
 
 const ddragon = '8.7.1';
-const lol     = '.api.riotgames.com/lol/';
+const riot     = '.api.riotgames.com/lol/';
 const champGG = 'http://api.champion.gg/v2';
 
 const specGrid = {
@@ -25,21 +25,39 @@ const specGrid = {
     TR1: 'spectator.tr.lol.riotgames.com:80 '
 };
 
-async function makeSpecBatch(specObject) {
-    const specBat = String.raw`CD /D D:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\0.0.1.210\deploy`
-    const batch = `${specBat}\n\t${specGrid.start}${specGrid[specObject.region]}${specObject.key} ${specObject.gameId} ${specObject.region}"`
-    return batch
+global.regionNameFix = {
+    NA1: 'North America',
+    EUW1: 'Eu West',
+    EUN1: 'Eu Nordic & East',
+    BR1: 'Brazil',
+    KR: 'Korea',
+    JP1: 'Japan',
+    LA1: 'Latin America',
+    LA2: 'Latin America',
+    TR1: 'Turkey',
+    OC1: 'Oceania',
+    RU: 'Russia'
+};
+
+// SPECTATE
+function makeSpecBatch(specObject) {
+    const specBat = String.raw`CD /D D:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\0.0.1.210\deploy`;
+    const batch = `${specBat}\n\t${specGrid.start}${specGrid[specObject.region]}${specObject.key} ${specObject.gameId} ${specObject.region}"`;
+    return batch;
 }
 
 function getSummonerGame(summonerId, region) {
-    const summonerGameData = `https://${region}${lol}spectator/v3/active-games/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`;
+    const summonerGameData = `https://${region}${riot}spectator/v3/active-games/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`;
     return rp({ uri: summonerGameData, json: true })
         .catch(function(err) {
             console.log("getSummonerGame ERROR: " + err);
         });
 }
+// SPECTATE
+
+// RIOT
 function getSummoner(summonerName, region) {
-    const getSummonerData = `https://${region}${lol}summoner/v3/summoners/by-name/${summonerName}?api_key=${process.env.LOL_KEY}`;
+    const getSummonerData = `https://${region}${riot}summoner/v3/summoners/by-name/${summonerName}?api_key=${process.env.LOL_KEY}`;
     return rp({ uri: getSummonerData, json: true })
         .catch(err => {
             console.log("getSummoner ERROR: " + err);
@@ -48,46 +66,55 @@ function getSummoner(summonerName, region) {
 
 async function getSummonerLeague(summonerId, region) {
     const summonerLeague = await rp({
-        uri: `https://${region}${lol}league/v3/positions/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`,
+        uri: `https://${region}${riot}league/v3/positions/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`,
         json: true});
     return summonerLeague;
 }
 
 async function getLeague(summonerId, region) {
-    const getLeagueData = `https://${region}${lol}league/v3/positions/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`;
+    const getLeagueData = `https://${region}${riot}league/v3/positions/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`;
     const leagueData = await rp({ uri: getLeagueData, json: true })
         .catch(function(err) {
             console.log("getLeague ERROR: " + err);
         });
     return rp({
-        uri: `https://${region}${lol}league/v3/leagues/${leagueData[0].leagueId}?api_key=${process.env.LOL_KEY}`, json: true
+        uri: `https://${region}${riot}league/v3/leagues/${leagueData[0].leagueId}?api_key=${process.env.LOL_KEY}`, json: true
     }).catch(err => {
         console.log('getLeague error: ', err);
     });
 }
-
 function getMastery(summonerId, region) {
-    const getMasteryData = `https://${region}${lol}champion-mastery/v3/champion-masteries/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`;
+    const getMasteryData = `https://${region}${riot}champion-mastery/v3/champion-masteries/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`;
     return rp({ uri: getMasteryData, json: true })
         .catch(function(err) {
             console.log("getMastery ERROR: " + err);
         });
 }
-
 function getLeaderboards(region) {
     region = region || 'NA1'
-    const getLeaderboardData = `https://${region}${lol}league/v3/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=${process.env.LOL_KEY}`;
+    const getLeaderboardData = `https://${region}${riot}league/v3/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=${process.env.LOL_KEY}`;
     return rp({ uri: getLeaderboardData, json: true })
         .catch(function(err) {
             console.log("getLeaderboards ERROR: " + err);
         });
 }
-
 function getMatches(summonerId, region) {
-    const getMatchesData = `https://${region}${lol}match/v3/matchlists/by-account/${summonerId}/recent?api_key=${process.env.LOL_KEY}`;
+    const getMatchesData = `https://${region}${riot}match/v3/matchlists/by-account/${summonerId}/recent?api_key=${process.env.LOL_KEY}`;
     return rp({ uri: getMatchesData, json: true })
         .catch(function(err) {
             console.log("getMatches ERROR: " + err);
+        });
+}
+// RIOT
+
+// CHAMPION
+function getAllChampionsStats(elo) {
+    const allData = `kda,wins,minions,positions,wards,goldEarned,hashes`
+    const getChampsData = `http://api.champion.gg/v2/champions?limit=300&champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
+    console.log('allchamops ', getChampsData)
+    return rp({ uri: getChampsData, json: true })
+        .catch(function(err) {
+            console.log("getAllChampionsStats ERROR: " + err);
         });
 }
 
@@ -95,7 +122,7 @@ function getChampionStats(champName) {
     const allData = `kda,damage,minions,wins,positions,wards,normalized,averageGames,overallPerformanceScore,goldEarned,sprees,hashes,wins,maxMins` //,matchups
     const champId = +Object.keys(champions.keys).filter(v => champions.keys[v].toLowerCase() === champName.toLowerCase());
     // const allData = `kda,damage,minions,gold`;
-    const getChampsData = `http://api.champion.gg/v2/champions/${champId}?champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
+    const getChampsData = `${champGG}/champions/${champId}?champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
     console.log(getChampsData)
     return rp({ uri: getChampsData, json: true })
         .catch(function(err) {
@@ -104,24 +131,28 @@ function getChampionStats(champName) {
 }
 
 function getOverallStatistics(elo) {
-    const getOverallData = elo && elo !== 'platplus' ? `http://api.champion.gg/v2/overall?elo=${elo.toUpperCase()}&api_key=${process.env.CHAMPION_KEY}` :
-                                                       `http://api.champion.gg/v2/overall?&api_key=${process.env.CHAMPION_KEY}`;
-     
+    const getOverallData = elo && elo !== 'platplus' ? 
+        `${champGG}/overall?elo=${elo.toUpperCase()}&api_key=${process.env.CHAMPION_KEY}` :
+        `${champGG}/v2/overall?&api_key=${process.env.CHAMPION_KEY}`;
     return rp({ uri: getOverallData, json: true })
         .catch(function(err) {
             console.log("getOverallStatistics ERROR: " + err);
         });
 }
+
 function getOverallPatch(elo) {
-    const getOverallPatchData = elo && elo !== 'platplus' ? `http://api.champion.gg/v2/general?elo=${elo.toUpperCase()}&api_key=${process.env.CHAMPION_KEY}` :
-                                                       `http://api.champion.gg/v2/general?&api_key=${process.env.CHAMPION_KEY}`;
+    const getOverallPatchData = elo && elo !== 'platplus' ? 
+        `${champGG}/v2/general?elo=${elo.toUpperCase()}&api_key=${process.env.CHAMPION_KEY}` :
+        `${champGG}/v2/general?&api_key=${process.env.CHAMPION_KEY}`;
     console.log(getOverallPatchData)
     return rp({ uri: getOverallPatchData, json: true })
         .catch(function(err) {
             console.log("getOverallStatistics ERROR: " + err);
         });
 }
+// CHAMPION
 
+// STATIC DATA
 function getChampDesc(champId) {
     return new Promise((resolve, reject) => {
         resolve(champions.data[championIds[champId]]);
@@ -192,5 +223,6 @@ module.exports = {
     getOverallStatistics,
     makeSpecBatch,
     getOverallPatch,
-    getSummonerLeague
+    getSummonerLeague,
+    getAllChampionsStats,
 };

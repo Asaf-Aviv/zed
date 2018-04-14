@@ -45,6 +45,15 @@ a,
 a:hover {
     color: inherit;
 }
+.dropdown-menu {
+    padding: 0;
+    background-color: #2f2f2f;
+    border-radius: 0;
+    border-color: #b1a0ff;
+}
+.dropdown-item {
+    text-align: left !important;
+}
 
 .form-control,
 .form-control:focus {
@@ -169,7 +178,9 @@ table.table th {
     font-family: "Libre Baskerville", serif;
     letter-spacing: 0.1em;
 }
-
+#main-nav-bar a:hover {
+    background: #474747;
+}
 /* NARBAR SEARCH */
 #nav-search {
     display: flex;
@@ -496,12 +507,39 @@ table.dataTable tbody tr {
 /*  MDB */
 
 /* OVERALL */
+
+
+/* OVERALLTABLE */
+
+#overall-table thead tr th {
+    vertical-align: middle!important;
+}
+
+#overall-table td {
+    padding-top: 0; 
+}
+
+#overall-table tbody tr:nth-child(even) {
+    background: #363636;
+}
+#overall-table tbody tr:nth-child(odd) {
+    background: #525252;
+}
+.overall-table-champ-tile {
+    transform: scale(0.8);
+    width: 64px;
+    height: 64px;
+    background-size: cover;
+    float: left;
+}
+#overall-table tbody tr:hover{
+    color: #b1a0ff;
+    background: #101010;
+}
+/* OVERALLTABLE */
 #overall-wrapper {
     background: rgba(0, 0, 0, 0.6);
     border-radius: 10px;
-}
-#overall-wrapper img {
-    /* transform: scale(0.5) */
 }
 
 #overall-wrapper th,
@@ -546,6 +584,9 @@ table.dataTable tbody tr {
     width: 48px;
     height: 48px;
     padding: 1px;
+}
+.filter-option input {
+    margin-right: 1em;
 }
 /* ITEMS */
 

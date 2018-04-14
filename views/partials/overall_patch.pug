@@ -1,19 +1,22 @@
 - const pos = overallStats[0].positions
 - const elo = overallStats[0].elo
 #overall-wrapper
-    .d-flex.p-md-4.flex-wrap.text-center
-        select#overall-league.browser-default.ml-5
-            option(value="platplus" selected=elo.length > 10) Platinum+
-            option(value="platinum" selected=elo == 'PLATINUM') Platinum
-            option(value="gold" selected=elo == 'GOLD') Gold
-            option(value="silver" selected=elo == 'SILVER') Silver
-            option(value="bronze" selected=elo == 'BRONZE') Bronze
-        span.bold.ml-auto.px-5 Elo: 
-            span.general-color= overallPatch[0].elo.length > 10 ? 'Platinum+' : overallPatch[0].elo[0].toUpperCase() + overallPatch[0].elo.slice(1).toLowerCase()
-        span.bold.px-5 Patch: 
-            span.general-color= overallPatch[0].patch
-        span.bold.px-5 Champion Analyzed: 
-            span.general-color= overallPatch[0].championCount.toLocaleString()
+    .league-wrapper.p-md-4
+        .d-flex.flex-wrap.text-center
+            select#overall-league.browser-default.ml-5
+                option(value="platplus" selected=elo.length > 10) Platinum+
+                option(value="platinum" selected=elo == 'PLATINUM') Platinum
+                option(value="gold" selected=elo == 'GOLD') Gold
+                option(value="silver" selected=elo == 'SILVER') Silver
+                option(value="bronze" selected=elo == 'BRONZE') Bronze
+            span.bold.ml-auto.px-5 Elo: 
+                span.general-color= overallPatch[0].elo.length > 10 ? 'Platinum+' : overallPatch[0].elo[0].toUpperCase() + overallPatch[0].elo.slice(1).toLowerCase()
+            span.bold.px-5 Patch: 
+                span.general-color= overallPatch[0].patch
+            span.bold.px-5 Champion Analyzed: 
+                span.general-color= overallPatch[0].championCount.toLocaleString()
+    hr
+    
     .row
         #overall-winrate.col-lg-5.col-md-12.col-sm-12
             h6.text-center.bold.general-color WIN RATES

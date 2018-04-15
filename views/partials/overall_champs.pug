@@ -1,15 +1,18 @@
+- const champElo = allChampsStats[0].elo.length > 10 ? 'platplus' : allChampsStats[0].elo.toLowerCase()
 #overall-champs
-    select#overall-table-elo.browser-default.ml-5
-        option(value="platplus" selected=allChampsStats[0].elo.length > 10) Platinum+
-        option(value="platinum" selected=allChampsStats[0].elo == 'PLATINUM') Platinum
-        option(value="gold" selected=allChampsStats[0].elo == 'GOLD') Gold
-        option(value="silver" selected=allChampsStats[0].elo == 'SILVER') Silver
-        option(value="bronze" selected=allChampsStats[0].elo == 'BRONZE') Bronze
-    .overall-table-info
-        span.bold.ml-auto.px-5 Elo: 
-            span.general-color= allChampsStats[0].elo.length > 10 ? 'Platinum+' : allChampsStats[0].elo[0].toUpperCase() + allChampsStats[0].elo.slice(1).toLowerCase()
-        span.bold.px-5 Patch: 
-            span.general-color= allChampsStats[0].patch
+    .row
+        .league-info.col-md-3.col-sm-12.justify-content-center
+            select#overall-table-elo
+                option(value="platplus" selected=allChampsStats[0].elo.length > 10) Platinum+
+                option(value="platinum" selected=allChampsStats[0].elo == 'PLATINUM') Platinum
+                option(value="gold" selected=allChampsStats[0].elo == 'GOLD') Gold
+                option(value="silver" selected=allChampsStats[0].elo == 'SILVER') Silver
+                option(value="bronze" selected=allChampsStats[0].elo == 'BRONZE') Bronze
+        .league-info.col-md-9.col-sm-12.justify-content-center.justify-content-md-end.pl-m-3
+            span.bold Elo: 
+                span.general-color= allChampsStats[0].elo.length > 10 ? 'Platinum+' : allChampsStats[0].elo[0].toUpperCase() + allChampsStats[0].elo.slice(1).toLowerCase()
+            span.bold Patch: 
+                span.general-color= allChampsStats[0].patch
     table#overall-table.table
         thead
             tr(style="height: 80px;")
@@ -26,13 +29,15 @@
                 th Gold
         tbody
             - for (let i = 0, x = allChampsStats.length; i < x; i++) {
+                - const role = allChampsStats[i].role.replace('DUO_CARRY', 'ADC').replace('DUO_SUPPORT', 'Support')
                 tr
                     td
-                        a.d-flex.align-items-center(href=`/champions/${ids[allChampsStats[i].championId]}`)
+                        a.d-flex.align-items-center(
+                            href=`/statistics/champion/${ids[allChampsStats[i].championId]}?position=${role.toLowerCase()}&elo=${champElo}`)
                             .overall-table-champ-tile(
                                 style=`background-image: url(//ddragon.leagueoflegends.com/cdn/8.7.1/img/champion/${ids[allChampsStats[i].championId]}.png)`)
                             span.bold.ml-2= ids[allChampsStats[i].championId]
-                    td= allChampsStats[i].role
+                    td= role
                     td= allChampsStats[i].gamesPlayed
                     td=(allChampsStats[i].winRate * 100).toFixed(2) + '%'
                     td=(allChampsStats[i].banRate * 100).toFixed(2) + '%'

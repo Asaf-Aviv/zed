@@ -12,7 +12,6 @@ body::-webkit-scrollbar {
     color: #fff;
 }
 body::-webkit-scrollbar-track {
-    z-index: 99;
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
@@ -49,7 +48,8 @@ a:hover {
     padding: 0;
     background-color: #2f2f2f;
     border-radius: 0;
-    border-color: #b1a0ff;
+    border: 0;
+    margin: 0;
 }
 .dropdown-item {
     text-align: left !important;
@@ -537,6 +537,7 @@ table.dataTable tbody td {
     background: #101010;
 }
 /* OVERALLTABLE END*/
+/* OVERALL PATCH */
 #overall-league,
 #overall-table-elo {
     background: #101010;
@@ -562,7 +563,15 @@ table.dataTable tbody td {
     background-size: cover;
     float: left;
 }
-
+.league-info {
+    display: flex;
+    align-items: center;
+    height: 80px;
+    border-bottom: 1px solid #b1a0ff;
+}
+.league-info > span{
+    margin-left: 25px;
+}
 .t-champ-name {
     display: inline-block;
     padding-left: 0.3rem;
@@ -580,6 +589,7 @@ table.dataTable tbody td {
     display: inline-block;
     background: #ff0000;
 }
+/* OVERALL PATCH END */
 /* OVERALL */
 
 /* ITEMS */

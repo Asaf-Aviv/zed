@@ -111,8 +111,8 @@ function getMatches(summonerId, region) {
 function getAllChampionsStats(elo) {
     const allData = `kda,wins,minions,positions,wards,goldEarned,hashes`
     const getChampsData = elo && elo !== 'platplus' ? 
-        `http://api.champion.gg/v2/champions?limit=1&elo=${elo.toUpperCase()}&champData=${allData}&api_key=${process.env.CHAMPION_KEY}` :
-        `http://api.champion.gg/v2/champions?limit=1&champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
+        `http://api.champion.gg/v2/champions?limit=250&elo=${elo.toUpperCase()}&champData=${allData}&api_key=${process.env.CHAMPION_KEY}` :
+        `http://api.champion.gg/v2/champions?limit=250&champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
 
     console.log('allchamops ', getChampsData)
     return rp({ uri: getChampsData, json: true })
@@ -123,14 +123,33 @@ function getAllChampionsStats(elo) {
 
 function getChampionStats(champName) {
     const allData = `kda,damage,minions,wins,positions,wards,normalized,averageGames,overallPerformanceScore,goldEarned,sprees,hashes,wins,maxMins` //,matchups
-    const champId = +Object.keys(champions.keys).filter(v => champions.keys[v].toLowerCase() === champName.toLowerCase());
-    // const allData = `kda,damage,minions,gold`;
+    const champId = championIds[`${champName[0].toUpperCase() + champName.slice(1).toLowerCase()}`];
     const getChampsData = `${champGG}/champions/${champId}?champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
     console.log(getChampsData)
     return rp({ uri: getChampsData, json: true })
         .catch(function(err) {
             console.log("getChampionStats ERROR: " + err);
         });
+}
+
+async function getIndepthStats(champName, elo, position) {
+    console.log(champName)
+    console.log(elo)
+    console.log(position)
+    champName = championIds[champName[0].toUpperCase() + champName.slice(1).toLowerCase()];
+    if (!champName) return;
+
+    elo = (elo.toLowerCase() == 'platplus') ? '' : elo.toUpperCase();
+    position = position.toUpperCase().replace('SUPPORT', 'DUO_SUPPORT').replace('ADC','DUO_CARRY');
+    const allData = 'kda,damage,averageGames,killingSpree,minions,gold,positions,normalized,groupedWins,trinkets,runes,firstItems,summoners,skills,finalitems,masteries,matchups'
+    const getIndepthData = `${champGG}/champions/${champName}?elo=${elo}&champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
+    console.log(getIndepthData)
+    let indepthStats = await rp({ 
+        uri: getIndepthData, 
+        json: true 
+    });
+    indepthStats = indepthStats.filter(champ => champ.role == position);
+    return indepthStats;
 }
 
 function getOverallStatistics(elo) {
@@ -228,4 +247,5 @@ module.exports = {
     getOverallPatch,
     getSummonerLeague,
     getAllChampionsStats,
+    getIndepthStats,
 };

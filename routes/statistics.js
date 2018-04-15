@@ -20,6 +20,17 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/champion/:champName', (req, res) => {
+    console.log('indepth request')
+    zed.getIndepthStats(req.params.champName, req.query.elo, req.query.position).then(champStats => {
+        if(!champStats || champStats.length === 0) return res.redirect('/statistics');
+        res.render('champion_statistics', {
+            title: 'janna champion Stats',
+            champStats,
+        });
+    });
+});
+
 router.get('/overall/:elo', (req, res) => {
     console.log('patch request')
     Promise.all([

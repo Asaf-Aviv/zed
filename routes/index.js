@@ -19,7 +19,7 @@ router.get('/contact', (req, res) => {
 router.post('/contact', (req, res) => {
     console.log(req.body);
     new Contact({...req.body}).save(err => {
-        if (err) res.status(400).json('Something went wrong :/ Please try again.');
+        if (err) res.status(400).send();
         else res.send('Thanks for contacting us ! :)');
     });
 });
@@ -28,12 +28,12 @@ router.post('/feedback', (req, res) => {
     if (req.body.feedback === 'idea') {
         new Idea({message: req.body.message}).save(err => {
             console.log(err.message.split('Path')[1])
-            if (err) res.status(400).json('Something went wrong :/ Please try again.');
+            if (err) res.status(400).json();
             else res.send('Thanks for your awesome idea !');
         });
     } else {
         new Bug({message: req.body.message}).save(err => {
-            if (err) res.status(400).json('Something went wrong :/ Please try again.');
+            if (err) res.status(400).json();
             else res.send('Thanks for reporting a bug ! :)');
         });
     }

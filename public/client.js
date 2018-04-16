@@ -108,48 +108,83 @@ $(function() {
         });
     });
 
-    $('.send-friend-request').click(function() {
+    $(document).on('click', '.send-friend-request', function() {
+
         const userId = $(this).attr('data-id');
+        $this = $(this)
+        $this.prop('disabled', true);
 
         $.ajax({
             type: 'POST',
             url: 'users/sendFriendRequest/'+userId,
             success: function(res) {
-                $(`[data-id=${res}]`).replaceWith($('<a>').addClass('btn btn-warning').html('Pending'));
+                $(`[data-id=${res}]`).replaceWith($('<button>').addClass('btn btn-warning').html('Pending'));
+                $(`#${res}`).append($('<button>').addClass('btn btn-danger cancel-friend-request').attr('data-id', res).html('cancle'));
             },
-            error: function(err) {
-                alert(err);
-            }
+            error: function(data) {
+                errorAlertCenter('Something went wrong :/ Please try again.');
+            },
+            complete: () => $this.prop('disabled', false)
         });
     });
 
-    $('.decline-friend-request').click(function() {
-        const userId = $(this).attr('data-id');
+    $(document).on('click', '.accept-friend-request', function() {
 
-        $.ajax({
-            type: 'POST',
-            url: 'users/declineFriendRequest/'+userId,
-            success: function(res) {
-                $(`#${res}`).remove();
-            },
-            error: function(err) {
-                alert(err);
-            }
-        });
-    });
-
-    $('.accept-friend-request').click(function() {
         const userId = $(this).attr('data-id');
+        $this = $(this)
+        $this.prop('disabled', true)
 
         $.ajax({
             type: 'POST',
             url: 'users/acceptFriendRequest/'+userId,
             success: function(res) {
-                $(`#${res}`).remove();
+                $(`#${res}`).find('button').remove();
+                $(`#${res}`).append($('<button>').addClass('btn btn-success ').html('Friends'));
             },
             error: function(err) {
                 alert(err);
-            }
+            },
+            complete: () => $this.prop('disabled', false)
+        });
+    });
+
+    $(document).on('click', '.decline-friend-request', function() {
+
+        const userId = $(this).attr('data-id');
+        $this = $(this)
+        $this.prop('disabled', true);
+
+        $.ajax({
+            type: 'POST',
+            url: 'users/declineFriendRequest/'+userId,
+            success: function(res) {
+                $(`#${res}`).find('button').remove();
+                $(`#${res}`).append($('<button>').addClass('btn btn-success send-friend-request').attr('data-id', res).html('ADD'));
+            },
+            error: function(err) {
+                alert(err);
+            },
+            complete: () => $this.prop('disabled', false)
+        });
+    });
+
+    $(document).on('click', '.cancel-friend-request', function() {
+        
+        const userId = $(this).attr('data-id');
+        $this = $(this)
+        $this.prop('disabled', true);
+
+        $.ajax({
+            type: 'POST',
+            url: 'users/cancelFriendRequest/'+userId,
+            success: function(res) {
+                $(`#${res}`).find('button').remove();
+                $(`#${res}`).append($('<button>').addClass('btn btn-success send-friend-request').attr('data-id', res).html('ADD'));
+            },
+            error: function(err) {
+                alert(err);
+            },
+            complete: () => $this.prop('disabled', false)
         });
     });
 
@@ -193,7 +228,6 @@ $(function() {
                 alert(err);
             }
         });
-
     });
 
     var pusher = new Pusher('8a344f0f04d1ec9118c7', {
@@ -264,7 +298,7 @@ $(function() {
                 succesAlertCenter(data);
             },
             error: function(data) {
-                errorAlertCenter(data);
+                errorAlertCenter('Something went wrong :/ Please try again.');
             },
             complete: function() {
                 $('.ajax-loader-wrapper').addClass('invisible');
@@ -284,8 +318,8 @@ $(function() {
             success: function(data) {
                 succesAlertCenter(data);
             },
-            error: function(data) {
-                errorAlertCenter(data);
+            error: function() {
+                errorAlertCenter('Something went wrong :/ Please try again.');
             },
             complete: function() {
                 $('.ajax-loader-wrapper').addClass('invisible');
@@ -333,7 +367,7 @@ iziToast.settings({
     messageLineHeight: '1.5'
 });
 
-function succesAlertCenter(message) {
+function succesAlertCenter(message, position) {
     iziToast.show({
         titleColor: 'green',
         iconColor: 'green',
@@ -352,7 +386,7 @@ function errorAlertCenter(message) {
         iconColor: 'red',
         icon: 'fa fa-exclamation-triangle',
         title: 'Error: ',
-        message: message.responseJSON,
+        message,//message.responseJSON,
         position: 'center',
         overlay: true,
         overlayClose: true,
@@ -373,14 +407,21 @@ socket.on('friendRequest', (user) => {
     iziToast.show({
         title: 'Friend Request',
         message: `<a href="/users/${user}">${user}</a> sent you a friend request`,
-        color: 'yellow',
-        position: 'topRight'
+        icon: 'fa fa-user'
     });
 });
 
-socket.on('acceptFriendRequest', (data) => {
-    $('#modal').iziModal('open');
-    $('#success-alerts').html(data)
+socket.on('acceptFriendRequest', (user) => {
+    iziToast.show({
+        message: `You and <a href="/users/${user}">${user}</a> are now friends!`,
+        titleColor: 'green',
+        iconColor: 'green',
+        icon: 'fa fa-check',
+        title: 'Success: ',
+        position: 'center',
+        overlay: true,
+        overlayClose: true,
+    });
 });
 
 function fixPopover() {

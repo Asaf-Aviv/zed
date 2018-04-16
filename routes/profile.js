@@ -15,6 +15,15 @@ router.get('/messages', auth.isLogged(), (req, res) => {
     });
 });
 
+router.get('/friends', auth.isLogged(), (req, res) => {
+    Legend.find({ _id: req.user._id }, {friends: 1, _id: 0}).then(user => {
+        console.log(user[0].friends)
+    });
+    res.render('friends', {
+        title: `Friends | Legends`
+    });
+});
+
 router.get('/:userName', (req, res) => {
     console.log(req.params.userName)
     console.log('searching')

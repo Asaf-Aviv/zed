@@ -26,48 +26,4 @@ router.get('/', (req, res) => {
     });
 });
 
-router.post('/sendFriendRequest/:id', (req, res) => {
-    let requestExist;
-    const friendRequestSent = {
-        to: req.params.id
-    };
-    const friendRequest = {
-        requester: req.user._id,
-        username: req.user.username,
-        profilePicture: req.user.profilePicture
-    };
-    Legend.findById(req.params.id).then(result => {
-        for (let request of result.friendRequests) {
-            if (request.requester == req.user._id) {
-                requestExist = true;
-                break;
-            }
-        }
-        if (!requestExist) {
-            Legend.findByIdAndUpdate(
-                req.params.id,
-                { $push: { friendRequests: friendRequest }},
-                { safe: true, new: true },
-                (err, updatedUser) => {
-                    if (err) console.log(err);
-                }
-            );
-
-            Legend.findByIdAndUpdate(
-                req.user._id,
-                { $push: { friendRequestsSent: friendRequestSent }},
-                { safe: true, new: true },
-                (err, updatedUser) => {
-                    if (err) console.log(err);
-                    // req.session.passport.user = updatedUser;
-                    res.send(req.params.id);
-                }
-            );
-            io.to(connectedUsers[req.params.id]).emit('friendRequest', req.user.username);
-        } else {
-            console.log('Request already exists');
-        }
-    });
-});
-
 module.exports = router;

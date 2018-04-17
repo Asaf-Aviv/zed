@@ -1,2 +1,160 @@
+- champStats = champStats[0]
 h1.text-center indepth stats here
-p= champStats.length
+div(style="width: 100px; height: 100px; background: rgba(255, 255, 25, 1)")
+div(style="width: 100px; height: 100px; background: rgba(65, 35, 255, 1)")
+div(style="width: 100px; height: 100px; background: rgba(45, 255, 85, 1)")
+div(style="width: 100px; height: 100px; background: rgba(255, 14, 14, 1)")
+div(style="width: 100px; height: 100px; background: rgba(110, 35, 255, 1)")
+#charts-wrapper
+    .row
+        .col-md-3.col-sm-12
+            h6 Games Played On Champion
+            canvas#exp-chart
+        .col-md-3.col-sm-12
+            h6 Games By Game Length
+            canvas#game-length-chart
+        .col-md-3.col-sm-12
+            h6 Damage Composition
+            canvas#damage-comp-chart
+script.
+    Chart.defaults.global.elements.responsive = true;
+    Chart.defaults.global.tooltips.xPadding = 10;
+    Chart.defaults.global.tooltips.yPadding = 10;
+    Chart.defaults.global.tooltips.titleMarginBottom = 10;
+    Chart.defaults.global.tooltips.position = 'average';
+    var copy = !{JSON.stringify(champStats)}
+    var ctxD = document.getElementById("exp-chart").getContext('2d');
+    var gameCount = Object.keys(copy.winsByMatchesPlayed).map(game => copy.winsByMatchesPlayed[game].gamesPlayed)
+
+    console.log(gameCount)
+    var myLineChart = new Chart(ctxD, {
+        type: 'bar',
+        data: {
+            labels: ["1-50", "51-100", "101-150", "151-200", "200+"],
+            datasets: [
+                {
+                    label: ' Winrate',
+                    data: [
+                        (!{champStats.winsByMatchesPlayed.oneToFifty.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchesPlayed.fiftyOneToHundred.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchesPlayed.hundredOneToHundredFifty.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchesPlayed.hundredFiftyOneToTwoHundred.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchesPlayed.twoHundredOnePlus.winRate}*100).toFixed(2)
+                        ],
+                    backgroundColor: [
+                        'rgba(255, 255, 25)',
+                        'rgba(65, 35, 255)',
+                        'rgba(45, 255, 85)',
+                        'rgba(255, 14, 14)',
+                        'rgba(110, 35, 255)'
+                    ],
+                    hoverBackgroundColor: [
+                        'rgb(150, 150, 0)',
+                        'rgb(20, 10, 100)',
+                        'rgb(7, 123, 29)',
+                        'rgb(121, 15, 15)',
+                        'rgb(57, 5, 158)'
+                    ]
+                }
+            ]
+        },
+        options: {
+            legend: {display: false},
+            responsive: true,
+            tooltips: {
+                bodySpacing: 5,
+                bodyFontStyle: 'bold',
+                titleMarginBottom: 5,
+                callbacks: {
+                    title: (tooltipItem, data) => '      '+data['labels'][tooltipItem[0]['index']] + ' Games',
+                    label: (dataItem, data) => '  '+data['datasets'][0]['data'][dataItem['index']] + '%',
+                    afterLabel: game => '  '+gameCount[game['index']] + ' Total Games'
+                }
+            },
+            scales: {
+                yAxes: [{
+                    display: true,
+                    ticks: {suggestedMin: 40}
+                }],
+                xAxes: [{barPercentage: 0.6}]
+            }
+        }
+    });
+
+    var ctxD2 = document.getElementById("game-length-chart").getContext('2d');
+    var myLineChart1 = new Chart(ctxD2, {
+        type: 'line',
+        data: {
+            labels: ["0-15", "15-20", "20-25", "25-30", "30-35", "35-40", "40+"],
+            datasets: [
+                {
+                    label: ' Winrate',
+                    data: [
+                        (!{champStats.winsByMatchLength.zeroToFifteen.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchLength.fifteenToTwenty.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchLength.twentyToTwentyFive.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchLength.twentyFiveToThirty.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchLength.thirtyToThirtyFive.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchLength.thirtyFiveToForty.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchLength.fortyPlus.winRate}*100).toFixed(2)
+                    ],
+                    pointBackgroundColor: 'rgb(45, 255, 85)',
+                    pointBorderColor: 'rgb(45, 255, 85)',
+                    borderWidth: 1,
+                    pointRadius: 6,
+                    borderColor: 'rgb(255,255,255)'
+                }
+            ]
+        },
+        options: {
+            legend: {display: false},
+            responsive: true,
+            tooltips: {
+                bodySpacing: 5,
+                bodyFontStyle: 'bold',
+                titleMarginBottom: 5,
+                callbacks: {
+                    title: (tooltipItem, data) => '      '+data['labels'][tooltipItem[0]['index']] + ' Minutes',
+                    label: (dataItem, data) => '  '+data['datasets'][0]['data'][dataItem['index']] + '%',
+                    afterLabel: game => '  '+gameCount[game['index']] + ' Total Games'
+                }
+            },
+            scales: {
+                yAxes: [{
+                    display: true,
+                    ticks: {suggestedMin: 40}
+                }],
+                xAxes: [{barPercentage: 0.6}]
+            }
+        }
+    });
+
+    var ctxD3 = document.getElementById("damage-comp-chart").getContext('2d');
+        var myLineChart2 = new Chart(ctxD3, {
+        type: 'pie',
+        data: {
+            labels: ["Physical", "Magic", "True"],
+            datasets: [
+                {
+                    data: [
+                        (!{champStats.damageComposition.percentPhysical}*100).toFixed(2),
+                        (!{champStats.damageComposition.percentMagical}*100).toFixed(2),
+                        (!{champStats.damageComposition.percentTrue}*100).toFixed(2)
+                    ],
+                    backgroundColor: ["rgb(255, 14, 14)", "rgba(65, 35, 255, 1)","#949FB1"],
+                    hoverBackgroundColor: ['rgb(121, 15, 15)', 'rgb(20, 10, 100)']
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            tooltips: {
+                bodyFontStyle: 'bold',
+                titleMarginBottom: 5,
+                callbacks: {
+                    title: (tooltipItem, data) => '      '+ data['labels'][tooltipItem[0]['index']] + ' Damage',
+                    label: (dataItem, data) => '  ' + data['datasets'][0]['data'][dataItem['index']] + '%'
+                }
+            },
+        }
+    });

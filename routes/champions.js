@@ -13,22 +13,18 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:champName', (req, res) => {
-    zed.getChampionStats(req.params.champName).then(champStats => {
-        if (champStats.length === 0) return res.redirect('/champions');
-        Promise.all([
-            zed.getChampDesc(champStats[0].championId),
-            zed.getItems(),
-            zed.getRunesReforged(),
-            zed.getSummonerSpells()
-        ]).then(([champ, items, runes, summonerSpells]) =>{
-            res.render('champion', {
-                title: `${champ.name} | Legends`,
-                champStats,
-                champ,
-                items,
-                runes,
-                summonerSpells,
-            });
+    Promise.all([
+        zed.getChampDesc(req.params.champName),
+        zed.getItems(),
+        zed.getRunesReforged(),
+        zed.getSummonerSpells()
+    ]).then(([champ, items, runes, summonerSpells]) =>{
+        res.render('champion', {
+            title: `${champ.name} | Legends`,
+            champ,
+            items,
+            runes,
+            summonerSpells,
         });
     });
 });

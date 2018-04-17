@@ -73,7 +73,7 @@ const LegendSchema = new Schema({
 
 // Authenticate input against database
 LegendSchema.statics.authenticate = function (email, password, callback) {
-    Legend.findOne({ lowerCaseEmail: email })
+    Legend.findOne({ lowerCaseEmail: email.toLowerCase() })
         .exec((err, user) => {
             if (err) return callback(err)
             if (!user) {
@@ -82,25 +82,26 @@ LegendSchema.statics.authenticate = function (email, password, callback) {
                 console.log('user not found sending err');
                 return callback(err);
             } else {
-                bcrypt.compare(password, user.password, function (err, result) {
-                    return result ? callback(null, user) : callback();
-                });
+                password == user.password ? callback(null, user) : (console.log('wrong password'), callback());
+                // bcrypt.compare(password, user.password, function (err, result) {
+                //     return result ? callback(null, user) : (console.log('wrong password'), callback());
+                // });
             }
     });
 }
 
 // Hashing the password before saving it to the database
-LegendSchema.pre('save', function(next) {
-    const user = this;
-    bcrypt.hash(user.password, 10, function(err, hashedPassword) {
-        if (err) {
-            next(err);
-        } else {
-            user.password = hashedPassword;
-            next();
-        }
-    });
-});
+// LegendSchema.pre('save', function(next) {
+//     const user = this;
+//     bcrypt.hash(user.password, 10, function(err, hashedPassword) {
+//         if (err) {
+//             next(err);
+//         } else {
+//             user.password = hashedPassword;
+//             next();
+//         }
+//     });
+// });
 
 LegendSchema.plugin(uniqueValidator, { message: '{PATH} already exists' });
 

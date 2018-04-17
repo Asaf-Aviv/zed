@@ -102,7 +102,7 @@ router.post('/declineFriendRequest/:id', (req, res) => {
             res.send(req.params.id);
     });
 });
-// FIXME 
+
 router.post('/cancelFriendRequest/:id', (req, res) => {
     Legend.update(
         { _id: req.user._id },
@@ -119,7 +119,7 @@ router.post('/cancelFriendRequest/:id', (req, res) => {
     });
     res.send(req.params.id);
 });
-
+// FIXME 
 router.post('/removeFriend/:id', (req, res) => {
     console.log('remove')
     Legend.update(

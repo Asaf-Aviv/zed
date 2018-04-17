@@ -122,9 +122,9 @@ function getAllChampionsStats(elo) {
 }
 
 function getChampionStats(champName) {
+    champName = Object.keys(championIds).filter(k => k.toLowerCase() === champName.toLowerCase())
     const allData = `kda,damage,minions,wins,positions,wards,normalized,averageGames,overallPerformanceScore,goldEarned,sprees,hashes,wins,maxMins` //,matchups
-    const champId = championIds[`${champName[0].toUpperCase() + champName.slice(1).toLowerCase()}`];
-    const getChampsData = `${champGG}/champions/${champId}?champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
+    const getChampsData = `${champGG}/champions/${championIds[champName]}?champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
     console.log(getChampsData)
     return rp({ uri: getChampsData, json: true })
         .catch(function(err) {
@@ -136,13 +136,13 @@ async function getIndepthStats(champName, elo, position) {
     console.log(champName)
     console.log(elo)
     console.log(position)
-    champName = championIds[champName[0].toUpperCase() + champName.slice(1).toLowerCase()];
+    champName = Object.keys(championIds).filter(k => k.toLowerCase() === champName.toLowerCase())
     if (!champName) return;
 
     elo = (elo.toLowerCase() == 'platplus') ? '' : elo.toUpperCase();
     position = position.toUpperCase().replace('SUPPORT', 'DUO_SUPPORT').replace('ADC','DUO_CARRY');
-    const allData = 'kda,damage,averageGames,killingSpree,minions,gold,positions,normalized,groupedWins,trinkets,runes,firstItems,summoners,skills,finalitems,masteries,matchups'
-    const getIndepthData = `${champGG}/champions/${champName}?elo=${elo}&champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
+    const allData = 'kda,damage,goldEarned,sprees,hashes,wards,averageGames,totalHeal,killingSpree,minions,wins,gold,positions,normalized,groupedWins,trinkets,runes,firstitems,summoners,skills,finalItems,masteries,maxMins,matchups'
+    const getIndepthData = `${champGG}/champions/${championIds[champName]}?elo=${elo}&champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
     console.log(getIndepthData)
     let indepthStats = await rp({ 
         uri: getIndepthData, 
@@ -175,9 +175,11 @@ function getOverallPatch(elo) {
 // CHAMPION
 
 // STATIC DATA
-function getChampDesc(champId) {
+function getChampDesc(champ) {
+    champ = Object.keys(championIds).filter(k => k.toLowerCase() === champ.toLowerCase())
+    const id = championIds[champ[0]];
     return new Promise((resolve, reject) => {
-        resolve(champions.data[championIds[champId]]);
+        resolve(champions.data[championIds[id]]);
     });
 }
 

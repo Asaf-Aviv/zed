@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
-const Schema   = mongoose.Schema;
+const mongoose   = require('mongoose');
+const Schema     = mongoose.Schema;
+const LikeSchema = require('./like');
 
 const PostSchema = new Schema({
     author: String,
@@ -8,10 +9,11 @@ const PostSchema = new Schema({
     },
     body: String,
     comments: [],
-    likes: {
+    likeCount: {
         type: Number,
         default: 0
     },
+    likes: [ LikeSchema ],
     shares: {
         type: Number,
         default: 0

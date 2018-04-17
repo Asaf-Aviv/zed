@@ -11,7 +11,7 @@ body
             div(id=post.id).post-wrapper
                 
                 p= post.body
-                a(href="javascript:void(0)", data-id=post.id).like-post= post.likes
+                a(href="javascript:void(0)", data-id=post.id).like-post= post.likes.length
                 br
                 a(href="javascript:void(0)", data-id=post.id).share-post= post.shares
 

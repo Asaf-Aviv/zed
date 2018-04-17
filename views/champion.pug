@@ -2,15 +2,15 @@ include partials/head
 body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' ', '').replace("'", '')}.jpg);`)
     include partials/nav
     include partials/sidenav
-    .container
+    .container(style="background-color: rgba(0, 0, 0, 0.75)")
         h1.champion-name.text-center.pt-3.mb-2= champ.name
         .champion-title.text-center.mb-2: q.lead= champ.title
         .champion-role.text-center.mb-2: span= champ.tags.join(', ')
         hr
         .row
             .col-md-2.pl-3.text-center.pt-4
-                a(href="/champions/" + champ.name.replace(/_/g,'').replace(/ /g, '').replace("'", ''))
-                    img(src=`/assets/league/img/champion-base-tile/${champ.name.replace("'", "").replace(' ', '')}.png`)
+                a(href="/champions/" + champ.name.replace('_','').replace(' ', '').replace("'", '').replace('.', ''))
+                    img(src=`/assets/league/img/champion-base-tile/${champ.name.replace("'", "").replace(' ', '').replace('.', '')}.png`)
             .col-md-5.col-sm-12
                 table.table
                     tr
@@ -45,237 +45,15 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                     tr
                         td= champ.stats.mpregen ? `${champ.partype} Regen`: ''
                         td.font-weight-bold= champ.stats.mpregen || '', champ.stats.mpregenperlevel ? `(+${champ.stats.mpregenperlevel})` : ''
-        hr
-        section#champion-statistics.row.col-12
-            #champ-patch-stats.col-md-4.col-sm-12.pt-3
-                table.table
-                    tr
-                        td Games Played
-                        td.font-weight-bold= champStats[0].gamesPlayed
-                    tr
-                        td Win Rate
-                        td.font-weight-bold= +String(champStats[0].winRate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
-                    tr
-                        td Play Rate
-                        td.font-weight-bold= +String(champStats[0].playRate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
-                    tr
-                        td Ban Rate
-                        td.font-weight-bold= +String(champStats[0].banRate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
-                    tr
-                        td Kills
-                        td.font-weight-bold= +String(champStats[0].kills).slice(0, 4)
-                    tr
-                        td Gold Earned
-                        td.font-weight-bold= champStats[0].goldEarned.toFixed(0)
-                    tr
-                        td Deaths
-                        td.font-weight-bold= +String(champStats[0].deaths).slice(0, 4)
-                    tr
-                        td Assists
-                        td.font-weight-bold= +String(champStats[0].assists).slice(0, 4)
-                    tr
-                        td Damage Dealt
-                        td.font-weight-bold= +String(champStats[0].damageComposition.total).split('.')[0]
-                    tr
-                        td Damage Taken
-                        td.font-weight-bold= +String(champStats[0].totalDamageTaken).split('.')[0]
-                    tr
-                        td Minions Killed
-                        td.font-weight-bold= +champStats[0].minionsKilled.toFixed(2)
-                    tr
-                        td Wards Placed
-                        td.font-weight-bold= champStats[0].wardPlaced.toFixed(2)
-                    tr
-                        td Wards Killed
-                        td.font-weight-bold= champStats[0].wardsKilled.toFixed(2)
-                    tr
-                        td Largest Killing Spree
-                        td.font-weight-bold= champStats[0].largestKillingSpree
-                    tr
-                        td Killing Sprees
-                        td.font-weight-bold= champStats[0].killingSprees.toFixed(2)
-               
-        
-            #item-sets.col-md-4.col-sm-12.pt-3
-                - let highestCountItems = champStats[0].hashes.finalitemshashfixed.highestCount.hash.split('-').splice(1)
-                - let highestWinrateItems = champStats[0].hashes.finalitemshashfixed.highestWinrate.hash.split('-').splice(1)
-
-                h5.text-center Must Common Build
-                
-                .row.text-center
-                    p.col-4 Games 
-                        span.font-weight-bold= champStats[0].hashes.finalitemshashfixed.highestCount.count
-                    p.col-4 Wins 
-                        span.font-weight-bold= champStats[0].hashes.finalitemshashfixed.highestCount.wins
-                    p.col-4 Win Rate  
-                        span.font-weight-bold= +String(champStats[0].hashes.finalitemshashfixed.highestCount.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
-                
-                .items-tile.d-flex.justify-content-around.flex-wrap.mb-4
-                    each item in highestCountItems
-                        .item-tile
-                            a(href=`/items/${item}`)
-                                img(src=`/assets/league/img/item/${item}.png`, data-toggle="tooltip", title=items.data[item].plaintext)
-                
-                h5.text-center Highest Win Rate Build
-                
-                .row.text-center
-                    p.col-4 Games 
-                        span.font-weight-bold= champStats[0].hashes.finalitemshashfixed.highestWinrate.count
-                    p.col-4 Wins 
-                        span.font-weight-bold= champStats[0].hashes.finalitemshashfixed.highestWinrate.wins
-                    p.col-4 Win Rate  
-                        span.font-weight-bold= +String(champStats[0].hashes.finalitemshashfixed.highestWinrate.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
-                
-                .items-tiles.d-flex.justify-content-around.flex-wrap.pb-5
-                    each item in highestWinrateItems
-                        .item-tile
-                            a(href=`/items/${item}`)
-                                img(src=`/assets/league/img/item/${item}.png` data-toggle="tooltip" title=items.data[item].plaintext)
-
-                - let highestSummonerCount = champStats[0].hashes.summonershash.highestCount.hash.split('-')
-                - let highesSummonertWinrateS = champStats[0].hashes.summonershash.highestWinrate.hash.split('-')
-                .row
-                    .col-md-6.col-sm-12.pb-3
-                        h5.text-center.pb-2 Must Common Summoners
-                        p.font-weight-bold.text-center= +String(champStats[0].hashes.summonershash.highestCount.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
-                        .start-items.row.justify-content-around.text-center
-                            each item in highestSummonerCount
-                                each val, key in summonerSpells.data
-                                    if (summonerSpells.data[key].key == item)
-                                        .item-tile: img(src=`/assets/league/img/spell/${summonerSpells.data[key].image.full}`,
-                                        data-toggle="tooltip", title=summonerSpells.data[key].description)
-                    .col-md-6.col-sm-12
-                        h5.text-center.pb-2 Highest Win Rate Summoners
-                        p.font-weight-bold.text-center= +String(champStats[0].hashes.summonershash.highestWinrate.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
-                        .start-items.row.justify-content-around.text-center
-                            each item in highesSummonertWinrateS
-                                each val, key in summonerSpells.data
-                                    if (summonerSpells.data[key].key == item)
-                                        .item-tile: img(src=`/assets/league/img/spell/${summonerSpells.data[key].image.full}`, data-toggle="tooltip",
-                                        title=summonerSpells.data[key].description)
-            #summoner-sets.col-md-4.pt-3
-                
-                - let highestTrinketCount = champStats[0].hashes.trinkethash.highestCount.hash
-                - let highestTrinketWinrate = champStats[0].hashes.trinkethash.highestWinrate.hash
-                - let highestStartItemCount = champStats[0].hashes.firstitemshash.highestCount.hash.split('-').slice(1)
-                - let highestStartItemWinrate = champStats[0].hashes.firstitemshash.highestWinrate.hash.split('-').slice(1)
-
-                h5.text-center Trinkets
-                .trinkets.row.justify-content-around.text-center
-                    .trinket
-                        p.font-weight-bold= +String(champStats[0].hashes.trinkethash.highestCount.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
-                        .item-tile: img(src=`/assets/league/img/item/${highestTrinketCount}.png`, data-toggle="tooltip", title=items.data[highestTrinketCount].plaintext)
-                    .trinket
-                        p.font-weight-bold= +String(champStats[0].hashes.trinkethash.highestWinrate.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
-                        .item-tile: img(src=`/assets/league/img/item/${highestTrinketWinrate}.png`, data-toggle="tooltip", title=items.data[highestTrinketCount].plaintext)
-                hr
-                        
-                h5.text-center.pb-2 Must Common Start Items
-                p.font-weight-bold.text-center= +String(champStats[0].hashes.firstitemshash.highestCount.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
-                .start-items.row.justify-content-around.text-center
-                    each item in highestStartItemCount
-                        .item-tile: img(src=`/assets/league/img/item/${item}.png`, data-toggle="tooltip", title=items.data[item].plaintext)
-                hr
-
-                h5.text-center.pb-2 Highest Win Rate Early Items
-                p.font-weight-bold.text-center= +String(champStats[0].hashes.firstitemshash.highestWinrate.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
-                .start-items.row.justify-content-around.text-center
-                    each item in highestStartItemWinrate
-                        .item-tile: img(src=`/assets/league/img/item/${item}.png`, data-toggle="tooltip", title=items.data[item].plaintext)
-
-            #skill-sets.col-md-6.col-sm-12
-                - let highestCountSkill = champStats[0].hashes.skillorderhash.highestCount.hash.split('-').splice(1)
-                - let highestWinrateSkill = champStats[0].hashes.skillorderhash.highestWinrate.hash.split('-').splice(1)
-                h5.text-center.pt-3 Must Common Skill Order
-
-                .row.text-center
-                    p.col-4 Games 
-                        span.font-weight-bold= champStats[0].hashes.skillorderhash.highestCount.count
-                    p.col-4 Wins 
-                        span.font-weight-bold= champStats[0].hashes.skillorderhash.highestCount.wins
-                    p.col-4 Win rate 
-                        span.font-weight-bold= +String(champStats[0].hashes.skillorderhash.highestCount.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
-
-                .skill-order-table.mb-3
-                    - for (let i = 0; i < 19; i++)
-                        if i
-                            .board-box= i
-                        else
-                            .empty-box
-                    .board-box: img(src=`/assets/league/img/spell/${champ.spells[0].image.full}`, data-toggle="tooltip", data-original-title=champ.spells[0].description)
-                    - for (let i = 0; i < 18; i++)
-                        .board-box.Q= highestCountSkill[i] == 'Q' ? 'Q' : ''
-                    .board-box: img(src=`/assets/league/img/spell/${champ.spells[1].image.full}`, data-toggle="tooltip", data-original-title=champ.spells[1].description)
-                    - for (let i = 0; i < 18; i++)
-                        .board-box.W= highestCountSkill[i] == 'W' ? 'W' : ''
-                    .board-box: img(src=`/assets/league/img/spell/${champ.spells[2].image.full}`, data-toggle="tooltip", data-original-title=champ.spells[2].description)
-                    - for (let i = 0; i < 18; i++)
-                        .board-box.E= highestCountSkill[i] == 'E' ? 'E' : ''
-                    .board-box: img(src=`/assets/league/img/spell/${champ.spells[3].image.full}`, data-toggle="tooltip", data-original-title=champ.spells[3].description)
-                    - for (let i = 0; i < 18; i++)
-                        .board-box.R= highestCountSkill[i] == 'R' ? 'R' : ''
-                
-                h5.text-center Highest Win Rate Skill Order
-
-                .row.text-center
-                    p.col-4 Games 
-                        span.font-weight-bold= champStats[0].hashes.skillorderhash.highestWinrate.count
-                    p.col-4 Wins 
-                        span.font-weight-bold= champStats[0].hashes.skillorderhash.highestWinrate.wins
-                    p.col-4 Win rate 
-                        span.font-weight-bold= +String(champStats[0].hashes.skillorderhash.highestWinrate.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
-
-                .skill-order-table
-                    - for (let i = 0; i < 19; i++)
-                        if i
-                            .board-box= i
-                        else
-                            .empty-box
-                    .board-box: img(src=`/assets/league/img/spell/${champ.spells[0].image.full}`, data-toggle="tooltip", title=champ.spells[0].description)
-                    - for (let i = 0; i < 18; i++)
-                        .board-box.Q= highestWinrateSkill[i] == 'Q' ? 'Q' : ''
-                    .board-box: img(src=`/assets/league/img/spell/${champ.spells[1].image.full}`, data-toggle="tooltip", title=champ.spells[1].description)
-                    - for (let i = 0; i < 18; i++)
-                        .board-box.W= highestWinrateSkill[i] == 'W' ? 'W' : ''
-                    .board-box: img(src=`/assets/league/img/spell/${champ.spells[2].image.full}`, data-toggle="tooltip", title=champ.spells[2].description)
-                    - for (let i = 0; i < 18; i++)
-                        .board-box.E= highestWinrateSkill[i] == 'E' ? 'E' : ''
-                    .board-box: img(src=`/assets/league/img/spell/${champ.spells[3].image.full}`, data-toggle="tooltip", title=champ.spells[3].description)
-                    - for (let i = 0; i < 18; i++)
-                        .board-box.R= highestWinrateSkill[i] == 'R' ? 'R' : ''
-                br
-                br
-            #champion-info.col-md-6.col-sm12
-                span= champ.info.attack
-                span= champ.info.defense
-                span= champ.info.magic
-                span= champ.info.difficulty
-
-            #runes-set.row
-                - let highestRuneCount = champStats[0].hashes.runehash.highestCount.hash.split('-')
-                - let highestRuneWinrate = champStats[0].hashes.runehash.highestWinrate.hash.split('-')
-                p= highestRuneCount
-                p= highestRuneWinrate
-                //- champStats[0].hashes.runehash.highestCount.hash.split('-')
-                .runes.col-md-6.col-sm-12
-                    .d-flex.justify-content-center.align-items-center
-                        each rune, index in highestRuneCount
-                            //- if (index < 3)
-                            img(src=`/assets/league/img/runesReforged/perk/${rune}.png`, data-toggle="tooltip", title=runes[rune])
-                                //- img(src=`/assets/league/img/runesReforged/perk/${highestRuneCount[index+4]}.png`, data-toggle="tooltip", title=runes[rune])
-                            //- else if (index > 5 && index < 8)
-                                img(src=`/assets/league/img/runesReforged/perk/${rune}.png`, data-toggle="tooltip", title=runes[rune])
                     
     blockquote.blockquote.text-center.mb-0= champ.blurb
         = champ.blurb
     </blockquote>
         section.champion-abilities
-            .container
-                br
-                br
+            .container(style="background-color: rgba(0, 0, 0, 0.75)")
+                h3.text-center.mb-4 Champion Abilities
                 .ability-wrapper.row.col-10.offset-1
-                    .passive-name.col-12.text-center.mb-1: h5.pt-4= champ.passive.name
-                
+                    .passive-name.col-12.text-center.mb-1: h5.bold.general-color.pt-4= champ.passive.name
                     .ability-tile.col-lg-1.col-md-2.d-flex.justify-content-center.align-items-center.mb-4: img(src=`/assets/league/img/passive/${champ.passive.image.full}`)
                     -
                         let passiveDesc = champ.passive.description
@@ -288,35 +66,26 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                             passiveDesc = passiveDesc.replace(/magic/gi, '<span class="color99FF99">Magic</span>')
                             passiveDesc = passiveDesc.replace(/armor/gi, '<span class="colorFFFF00">Armor</span>')
                             passiveDesc = passiveDesc.replace(/physical/gi, '<span class="colorFF8C00">Physical</span>')
-                            
                     .ability-desc.col-lg-11.col-md-10.px-4.mb-4: span.lead!= passiveDesc
-                br
                 br
                 - for (let i = 0; i < 4; i++)
                     .ability-wrapper.row.col-10.offset-1
-
-                        .ability-name.col-12.text-center.mb-1: h5.pt-4= champ.spells[i].name
-
-                        .row.col-12.mb-4.px-4.text-center
-
+                        .ability-name.col-12.text-center.mb-1: h5.bold.general-color.pt-4= champ.spells[i].name
+                        .row.col-12.mb-4.px-4.text-center.bold.general-color
                             .cooldown.col-lg-4.col-sm-4.text-xs-center: span= 'Cooldown ' + champ.spells[i].cooldownBurn
                     
-                            if (champ.spells.resourse)
-                            -
-                                let res = champ.spells[i].resource.replace('{{ cost }}', champ.spells[i].costBurn)
-                                let resEffect = res.match(/{{ ..+? }}/g)
-                                if (resEffect) 
-                                    res = res.replace(resEffect[0], champ.spells[i].effectBurn[resEffect[0].slice(4, resEffect[0].lastIndexOf(' '))])
-                            -
-                        
-                            .cost-type.col-lg-4.col-sm-4.text-xs-center: span= res
-                            
+                            if champ.spells[i].resource
+                                -let res = champ.spells[i].resource.replace('{{ cost }}', champ.spells[i].costBurn) || 'No Cost'
+                                -let resEffect = res.match(/{{ ..+? }}/g)
+                                if resEffect
+                                    -res = res.replace(resEffect[0], champ.spells[i].effectBurn[resEffect[0].slice(4, resEffect[0].lastIndexOf(' '))])
+                                .cost-type.col-lg-4.col-sm-4.text-xs-center: span= res
+                            else 
+                                .cost-type.col-lg-4.col-sm-4.text-xs-center: span No Cost
+                                
                             .range.col-lg-4.col-sm-4.text-xs-center: span= 'Range ' + champ.spells[i].rangeBurn
-                        
                         .ability-tile.col-lg-1.d-flex.justify-content-center.align-items-center.mb-4: img(src=`/assets/league/img/spell/${champ.spells[i].image.full}`)
-
                         .ability-desc.col-lg-11.px-4.mb-4: span.lead!= champ.spells[i].description
-
                         -
                             let tooltip = champ.spells[i].tooltip
                             let damageAmp
@@ -359,9 +128,6 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                             tooltip = tooltip.replace(/armor/gi, '<span class="colorFFFF00">Armor</span>')
                             tooltip = tooltip.replace(/physical/gi, '<span class="colorFF8C00">Physical</span>')
                             }
-
                         .ability-tooltip.col-lg-11.offset-lg-1.px-4.mb-4: span.lead!= tooltip
                     br
-                    br
-
                 include partials/footer

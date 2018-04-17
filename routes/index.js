@@ -27,13 +27,12 @@ router.post('/contact', (req, res) => {
 router.post('/feedback', (req, res) => {
     if (req.body.feedback === 'idea') {
         new Idea({message: req.body.message}).save(err => {
-            console.log(err.message.split('Path')[1])
-            if (err) res.status(400).json();
+            if (err) res.status(400).send();
             else res.send('Thanks for your awesome idea !');
         });
     } else {
         new Bug({message: req.body.message}).save(err => {
-            if (err) res.status(400).json();
+            if (err) res.status(400).send();
             else res.send('Thanks for reporting a bug ! :)');
         });
     }

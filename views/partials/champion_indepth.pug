@@ -1,2 +1,379 @@
+//- - champStats = champStats[0]
+section#champion-statistics.row.col-12
+    #champ-patch-stats.col-md-4.col-sm-12.pt-3
+        table.table
+            tr
+                td Games Played
+                td.font-weight-bold= champStats[0].gamesPlayed
+            tr
+                td Win Rate
+                td.font-weight-bold= +String(champStats[0].winRate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
+            tr
+                td Play Rate
+                td.font-weight-bold= +String(champStats[0].playRate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
+            tr
+                td Ban Rate
+                td.font-weight-bold= +String(champStats[0].banRate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
+            tr
+                td Kills
+                td.font-weight-bold= +String(champStats[0].kills).slice(0, 4)
+            tr
+                td Gold Earned
+                td.font-weight-bold= champStats[0].goldEarned.toFixed(0)
+            tr
+                td Deaths
+                td.font-weight-bold= +String(champStats[0].deaths).slice(0, 4)
+            tr
+                td Assists
+                td.font-weight-bold= +String(champStats[0].assists).slice(0, 4)
+            tr
+                td Damage Dealt
+                td.font-weight-bold= +String(champStats[0].damageComposition.total).split('.')[0]
+            tr
+                td Damage Taken
+                td.font-weight-bold= +String(champStats[0].totalDamageTaken).split('.')[0]
+            tr
+                td Minions Killed
+                td.font-weight-bold= +champStats[0].minionsKilled.toFixed(2)
+            tr
+                td Wards Placed
+                td.font-weight-bold= champStats[0].wardPlaced.toFixed(2)
+            tr
+                td Wards Killed
+                td.font-weight-bold= champStats[0].wardsKilled.toFixed(2)
+            tr
+                td Largest Killing Spree
+                td.font-weight-bold= champStats[0].largestKillingSpree
+            tr
+                td Killing Sprees
+                td.font-weight-bold= champStats[0].killingSprees.toFixed(2)
+    #item-sets.col-md-4.col-sm-12.pt-3
+        - let highestCountItems = champStats[0].hashes.finalitemshashfixed.highestCount.hash.split('-').splice(1)
+        - let highestWinrateItems = champStats[0].hashes.finalitemshashfixed.highestWinrate.hash.split('-').splice(1)
+
+        h5.text-center Must Common Build
+        
+        .row.text-center
+            p.col-4 Games 
+                span.font-weight-bold= champStats[0].hashes.finalitemshashfixed.highestCount.count
+            p.col-4 Wins 
+                span.font-weight-bold= champStats[0].hashes.finalitemshashfixed.highestCount.wins
+            p.col-4 Win Rate  
+                span.font-weight-bold= +String(champStats[0].hashes.finalitemshashfixed.highestCount.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
+        
+        .items-tile.d-flex.justify-content-around.flex-wrap.mb-4
+            each item in highestCountItems
+                .item-tile
+                    a(href=`/items/${item}`)
+                        img(src=`/assets/league/img/item/${item}.png`, data-toggle="tooltip", title=items.data[item].plaintext)
+        
+        h5.text-center Highest Win Rate Build
+        
+        .row.text-center
+            p.col-4 Games 
+                span.font-weight-bold= champStats[0].hashes.finalitemshashfixed.highestWinrate.count
+            p.col-4 Wins 
+                span.font-weight-bold= champStats[0].hashes.finalitemshashfixed.highestWinrate.wins
+            p.col-4 Win Rate  
+                span.font-weight-bold= +String(champStats[0].hashes.finalitemshashfixed.highestWinrate.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
+        
+        .items-tiles.d-flex.justify-content-around.flex-wrap.pb-5
+            each item in highestWinrateItems
+                .item-tile
+                    a(href=`/items/${item}`)
+                        img(src=`/assets/league/img/item/${item}.png` data-toggle="tooltip" title=items.data[item].plaintext)
+
+        - let highestSummonerCount = champStats[0].hashes.summonershash.highestCount.hash.split('-')
+        - let highesSummonertWinrateS = champStats[0].hashes.summonershash.highestWinrate.hash.split('-')
+        .row
+            .col-md-6.col-sm-12.pb-3
+                h5.text-center.pb-2 Must Common Summoners
+                p.font-weight-bold.text-center= +String(champStats[0].hashes.summonershash.highestCount.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
+                .start-items.row.justify-content-around.text-center
+                    each item in highestSummonerCount
+                        each val, key in summonerSpells.data
+                            if (summonerSpells.data[key].key == item)
+                                .item-tile: img(src=`/assets/league/img/spell/${summonerSpells.data[key].image.full}`,
+                                data-toggle="tooltip", title=summonerSpells.data[key].description)
+            .col-md-6.col-sm-12
+                h5.text-center.pb-2 Highest Win Rate Summoners
+                p.font-weight-bold.text-center= +String(champStats[0].hashes.summonershash.highestWinrate.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
+                .start-items.row.justify-content-around.text-center
+                    each item in highesSummonertWinrateS
+                        each val, key in summonerSpells.data
+                            if (summonerSpells.data[key].key == item)
+                                .item-tile: img(src=`/assets/league/img/spell/${summonerSpells.data[key].image.full}`, data-toggle="tooltip",
+                                title=summonerSpells.data[key].description)
+    #summoner-sets.col-md-4.pt-3
+        
+        - let highestTrinketCount = champStats[0].hashes.trinkethash.highestCount.hash
+        - let highestTrinketWinrate = champStats[0].hashes.trinkethash.highestWinrate.hash
+        - let highestStartItemCount = champStats[0].hashes.firstitemshash.highestCount.hash.split('-').slice(1)
+        - let highestStartItemWinrate = champStats[0].hashes.firstitemshash.highestWinrate.hash.split('-').slice(1)
+
+        h5.text-center Trinkets
+        .trinkets.row.justify-content-around.text-center
+            .trinket
+                p.font-weight-bold= +String(champStats[0].hashes.trinkethash.highestCount.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
+                .item-tile: img(src=`/assets/league/img/item/${highestTrinketCount}.png`, data-toggle="tooltip", title=items.data[highestTrinketCount].plaintext)
+            .trinket
+                p.font-weight-bold= +String(champStats[0].hashes.trinkethash.highestWinrate.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
+                .item-tile: img(src=`/assets/league/img/item/${highestTrinketWinrate}.png`, data-toggle="tooltip", title=items.data[highestTrinketCount].plaintext)
+        hr
+                
+        h5.text-center.pb-2 Must Common Start Items
+        p.font-weight-bold.text-center= +String(champStats[0].hashes.firstitemshash.highestCount.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
+        .start-items.row.justify-content-around.text-center
+            each item in highestStartItemCount
+                .item-tile: img(src=`/assets/league/img/item/${item}.png`, data-toggle="tooltip", title=items.data[item].plaintext)
+        hr
+
+        h5.text-center.pb-2 Highest Win Rate Early Items
+        p.font-weight-bold.text-center= +String(champStats[0].hashes.firstitemshash.highestWinrate.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
+        .start-items.row.justify-content-around.text-center
+            each item in highestStartItemWinrate
+                .item-tile: img(src=`/assets/league/img/item/${item}.png`, data-toggle="tooltip", title=items.data[item].plaintext)
+
+    #skill-sets.col-md-6.col-sm-12
+        - let highestCountSkill = champStats[0].hashes.skillorderhash.highestCount.hash.split('-').splice(1)
+        - let highestWinrateSkill = champStats[0].hashes.skillorderhash.highestWinrate.hash.split('-').splice(1)
+        h5.text-center.pt-3 Must Common Skill Order
+
+        .row.text-center
+            p.col-4 Games 
+                span.font-weight-bold= champStats[0].hashes.skillorderhash.highestCount.count
+            p.col-4 Wins 
+                span.font-weight-bold= champStats[0].hashes.skillorderhash.highestCount.wins
+            p.col-4 Win rate 
+                span.font-weight-bold= +String(champStats[0].hashes.skillorderhash.highestCount.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
+
+        .skill-order-table.mb-3
+            - for (let i = 0; i < 19; i++)
+                if i
+                    .board-box= i
+                else
+                    .empty-box
+            .board-box: img(src=`/assets/league/img/spell/${champ.spells[0].image.full}`, data-toggle="tooltip", data-original-title=champ.spells[0].description)
+            - for (let i = 0; i < 18; i++)
+                .board-box.Q= highestCountSkill[i] == 'Q' ? 'Q' : ''
+            .board-box: img(src=`/assets/league/img/spell/${champ.spells[1].image.full}`, data-toggle="tooltip", data-original-title=champ.spells[1].description)
+            - for (let i = 0; i < 18; i++)
+                .board-box.W= highestCountSkill[i] == 'W' ? 'W' : ''
+            .board-box: img(src=`/assets/league/img/spell/${champ.spells[2].image.full}`, data-toggle="tooltip", data-original-title=champ.spells[2].description)
+            - for (let i = 0; i < 18; i++)
+                .board-box.E= highestCountSkill[i] == 'E' ? 'E' : ''
+            .board-box: img(src=`/assets/league/img/spell/${champ.spells[3].image.full}`, data-toggle="tooltip", data-original-title=champ.spells[3].description)
+            - for (let i = 0; i < 18; i++)
+                .board-box.R= highestCountSkill[i] == 'R' ? 'R' : ''
+        
+        h5.text-center Highest Win Rate Skill Order
+
+        .row.text-center
+            p.col-4 Games 
+                span.font-weight-bold= champStats[0].hashes.skillorderhash.highestWinrate.count
+            p.col-4 Wins 
+                span.font-weight-bold= champStats[0].hashes.skillorderhash.highestWinrate.wins
+            p.col-4 Win rate 
+                span.font-weight-bold= +String(champStats[0].hashes.skillorderhash.highestWinrate.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
+
+        .skill-order-table
+            - for (let i = 0; i < 19; i++)
+                if i
+                    .board-box= i
+                else
+                    .empty-box
+            .board-box: img(src=`/assets/league/img/spell/${champ.spells[0].image.full}`, data-toggle="tooltip", title=champ.spells[0].description)
+            - for (let i = 0; i < 18; i++)
+                .board-box.Q= highestWinrateSkill[i] == 'Q' ? 'Q' : ''
+            .board-box: img(src=`/assets/league/img/spell/${champ.spells[1].image.full}`, data-toggle="tooltip", title=champ.spells[1].description)
+            - for (let i = 0; i < 18; i++)
+                .board-box.W= highestWinrateSkill[i] == 'W' ? 'W' : ''
+            .board-box: img(src=`/assets/league/img/spell/${champ.spells[2].image.full}`, data-toggle="tooltip", title=champ.spells[2].description)
+            - for (let i = 0; i < 18; i++)
+                .board-box.E= highestWinrateSkill[i] == 'E' ? 'E' : ''
+            .board-box: img(src=`/assets/league/img/spell/${champ.spells[3].image.full}`, data-toggle="tooltip", title=champ.spells[3].description)
+            - for (let i = 0; i < 18; i++)
+                .board-box.R= highestWinrateSkill[i] == 'R' ? 'R' : ''
+        br
+        br
+    #champion-info.col-md-6.col-sm12
+        span= champ.info.attack
+        span= champ.info.defense
+        span= champ.info.magic
+        span= champ.info.difficulty
+
+    #runes-set.row
+        - let highestRuneCount = champStats[0].hashes.runehash.highestCount.hash.split('-')
+        - let highestRuneWinrate = champStats[0].hashes.runehash.highestWinrate.hash.split('-')
+        p= highestRuneCount
+        p= highestRuneWinrate
+        //- champStats[0].hashes.runehash.highestCount.hash.split('-')
+        .runes.col-md-6.col-sm-12
+            .d-flex.justify-content-center.align-items-center
+                each rune, index in highestRuneCount
+                    //- if (index < 3)
+                    img(src=`/assets/league/img/runesReforged/perk/${rune}.png`, data-toggle="tooltip", title=runes[rune])
+                        //- img(src=`/assets/league/img/runesReforged/perk/${highestRuneCount[index+4]}.png`, data-toggle="tooltip", title=runes[rune])
+                    //- else if (index > 5 && index < 8)
+                    img(src=`/assets/league/img/runesReforged/perk/${rune}.png`, data-toggle="tooltip", title=runes[rune])
+                            
 h1.text-center indepth stats here
-p= champStats.length
+div(style="width: 100px; height: 100px; background: rgba(255, 255, 25, 1)")
+div(style="width: 100px; height: 100px; background: rgba(65, 35, 255, 1)")
+div(style="width: 100px; height: 100px; background: rgba(45, 255, 85, 1)")
+div(style="width: 100px; height: 100px; background: rgba(255, 14, 14, 1)")
+div(style="width: 100px; height: 100px; background: rgba(110, 35, 255, 1)")
+#charts-wrapper
+    .row
+        .col-md-3.col-sm-12
+            h6 Games Played On Champion
+            canvas#exp-chart
+        .col-md-3.col-sm-12
+            h6 Games By Game Length
+            canvas#game-length-chart
+        .col-md-3.col-sm-12
+            h6 Damage Composition
+            canvas#damage-comp-chart
+-champStats = champStats[0]
+script.
+    Chart.defaults.global.elements.responsive = true;
+    Chart.defaults.global.tooltips.xPadding = 10;
+    Chart.defaults.global.tooltips.yPadding = 10;
+    Chart.defaults.global.tooltips.titleMarginBottom = 10;
+    Chart.defaults.global.tooltips.position = 'average';
+    var copy = !{JSON.stringify(champStats)}
+    var ctxD = document.getElementById("exp-chart").getContext('2d');
+    var gameCount = Object.keys(copy.winsByMatchesPlayed).map(game => copy.winsByMatchesPlayed[game].gamesPlayed)
+
+    console.log(gameCount)
+    var myLineChart = new Chart(ctxD, {
+        type: 'bar',
+        data: {
+            labels: ["1-50", "51-100", "101-150", "151-200", "200+"],
+            datasets: [
+                {
+                    label: ' Winrate',
+                    data: [
+                        (!{champStats.winsByMatchesPlayed.oneToFifty.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchesPlayed.fiftyOneToHundred.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchesPlayed.hundredOneToHundredFifty.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchesPlayed.hundredFiftyOneToTwoHundred.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchesPlayed.twoHundredOnePlus.winRate}*100).toFixed(2)
+                        ],
+                    backgroundColor: [
+                        'rgba(255, 255, 25)',
+                        'rgba(65, 35, 255)',
+                        'rgba(45, 255, 85)',
+                        'rgba(255, 14, 14)',
+                        'rgba(110, 35, 255)'
+                    ],
+                    hoverBackgroundColor: [
+                        'rgb(150, 150, 0)',
+                        'rgb(20, 10, 100)',
+                        'rgb(7, 123, 29)',
+                        'rgb(121, 15, 15)',
+                        'rgb(57, 5, 158)'
+                    ]
+                }
+            ]
+        },
+        options: {
+            legend: {display: false},
+            responsive: true,
+            tooltips: {
+                bodySpacing: 5,
+                bodyFontStyle: 'bold',
+                titleMarginBottom: 5,
+                callbacks: {
+                    title: (tooltipItem, data) => '      '+data['labels'][tooltipItem[0]['index']] + ' Games',
+                    label: (dataItem, data) => '  '+data['datasets'][0]['data'][dataItem['index']] + '%',
+                    afterLabel: game => '  '+gameCount[game['index']] + ' Total Games'
+                }
+            },
+            scales: {
+                yAxes: [{
+                    display: true,
+                    ticks: {suggestedMin: 40}
+                }],
+                xAxes: [{barPercentage: 0.6}]
+            }
+        }
+    });
+
+    var ctxD2 = document.getElementById("game-length-chart").getContext('2d');
+    var myLineChart1 = new Chart(ctxD2, {
+        type: 'line',
+        data: {
+            labels: ["0-15", "15-20", "20-25", "25-30", "30-35", "35-40", "40+"],
+            datasets: [
+                {
+                    label: ' Winrate',
+                    data: [
+                        (!{champStats.winsByMatchLength.zeroToFifteen.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchLength.fifteenToTwenty.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchLength.twentyToTwentyFive.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchLength.twentyFiveToThirty.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchLength.thirtyToThirtyFive.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchLength.thirtyFiveToForty.winRate}*100).toFixed(2),
+                        (!{champStats.winsByMatchLength.fortyPlus.winRate}*100).toFixed(2)
+                    ],
+                    pointBackgroundColor: 'rgb(45, 255, 85)',
+                    pointBorderColor: 'rgb(45, 255, 85)',
+                    borderWidth: 1,
+                    pointRadius: 6,
+                    borderColor: 'rgb(255,255,255)'
+                }
+            ]
+        },
+        options: {
+            legend: {display: false},
+            responsive: true,
+            tooltips: {
+                bodySpacing: 5,
+                bodyFontStyle: 'bold',
+                titleMarginBottom: 5,
+                callbacks: {
+                    title: (tooltipItem, data) => '      '+data['labels'][tooltipItem[0]['index']] + ' Minutes',
+                    label: (dataItem, data) => '  '+data['datasets'][0]['data'][dataItem['index']] + '%',
+                    afterLabel: game => '  '+gameCount[game['index']] + ' Total Games'
+                }
+            },
+            scales: {
+                yAxes: [{
+                    display: true,
+                    ticks: {suggestedMin: 40}
+                }],
+                xAxes: [{barPercentage: 0.6}]
+            }
+        }
+    });
+
+    var ctxD3 = document.getElementById("damage-comp-chart").getContext('2d');
+        var myLineChart2 = new Chart(ctxD3, {
+        type: 'pie',
+        data: {
+            labels: ["Physical", "Magic", "True"],
+            datasets: [
+                {
+                    data: [
+                        (!{champStats.damageComposition.percentPhysical}*100).toFixed(2),
+                        (!{champStats.damageComposition.percentMagical}*100).toFixed(2),
+                        (!{champStats.damageComposition.percentTrue}*100).toFixed(2)
+                    ],
+                    backgroundColor: ["rgb(255, 14, 14)", "rgba(65, 35, 255, 1)","#949FB1"],
+                    hoverBackgroundColor: ['rgb(121, 15, 15)', 'rgb(20, 10, 100)']
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            tooltips: {
+                bodyFontStyle: 'bold',
+                titleMarginBottom: 5,
+                callbacks: {
+                    title: (tooltipItem, data) => '      '+ data['labels'][tooltipItem[0]['index']] + ' Damage',
+                    label: (dataItem, data) => '  ' + data['datasets'][0]['data'][dataItem['index']] + '%'
+                }
+            },
+        }
+    });

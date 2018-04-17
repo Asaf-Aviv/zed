@@ -45,15 +45,32 @@ router.delete('/:id', (req, res) => {
         });
 });
 
-
 router.post('/like/:id', (req, res) => {
-    Legend.update(
-        { "posts._id" : req.params.id },
-        { $inc: { "posts.$.likes": 1 }},
+    console.log(req.params.id)
+    console.log(req.user._id);
+    Legend.find(
+        {
+            "posts._id": req.params.id
+        },
+        
         (err, result) => {
-            if (err) console.log(err);
-            res.send();
-    });
+            if(err) console.log(err)
+            console.log(result)
+        }
+    )
+    res.send()
+    // Legend.update(
+    //     { "posts._id" : req.params.id },
+    //     { $push: { "posts.$.likes": { _id: req.user._id } }},
+    //     err => {
+    //         if (err) return res.status(400).send();
+    //         res.send();
+    //         Legend.find(
+    //             { "posts._id" : req.params.id },
+    //             (err, user) => {
+    //                 io.to(connectedUsers[user[0]._id]).emit('likePost', req.user.username);
+    //             });
+    //     });
 });
 
 module.exports = router;

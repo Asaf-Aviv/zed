@@ -5,50 +5,56 @@ body
     .container
         #profile-wrapper
             .row
-                .col-3.row
-                    .col-12.d-flex.flex-column.flex-grow.p-md-4
-                        #profile-picture
-                            img(src=currentUser.profilePicture)
-                        h1= currentUser.username
-                        #profile-menu.d-flex.flex-column.flex-grow.general-color.text-center
-                            .profile-nav-item
-                                a.d-flex.align-items-center(href="/")
-                                    i.fa.fa-lg.fa-home(style="margin-left: 1px; margin-right: 22px")
-                                    span Home
-                            .profile-nav-item
-                                a.d-flex.align-items-center(href="/profile")
-                                    i.fa.fa-lg.fa-user-o(style="margin-left: 1px; margin-right: 22px")
-                                    span Profile
-                            .profile-nav-item
-                                    a.d-flex.align-items-center(href="/profile/messages")
-                                        i.fa.fa-lg.fa-envelope-o(style="margin-right: 19px")
-                                        span Messages
-                            .profile-nav-item
+                .col-3.d-flex.flex-column.flex-grow.p-md-4
+                    #profile-picture
+                        img(src=currentUser.profilePicture)
+                    h1= currentUser.username
+                    #profile-menu.d-flex.flex-column.flex-grow.general-color.text-center
+                        .profile-nav-item
+                            a.d-flex.align-items-center(href="/")
+                                i.fa.fa-lg.fa-home(style="margin-left: 1px; margin-right: 22px")
+                                span Home
+                        .profile-nav-item
+                            a.d-flex.align-items-center(href="/profile")
+                                i.fa.fa-lg.fa-user-o(style="margin-left: 1px; margin-right: 22px")
+                                span Profile
+                        .profile-nav-item
                                 a.d-flex.align-items-center(href="/profile/messages")
-                                    i.fa.fa-lg.fa-user-plus(style="margin-right: 19px")
-                                    span Friends
-                            .profile-nav-item
-                                a.d-flex.align-items-center(href="/profile/messages")
-                                    i.fa.fa-lg.fa-camera(style="margin-right: 19px")
-                                    span Images
-                            .profile-nav-item
-                                a.d-flex.align-items-center(href="/settings")
-                                    i.fa.fa-lg.fa-wrench(style="margin-right: 19px")
-                                    span Settings
-                            .profile-nav-item
-                                a.d-flex.align-items-center(href="/logout")
-                                    i.fa.fa-lg.fa-sign-out(style="margin-right: 19px")
-                                    span Logout
-
-                .col-md-4.col-sm-5.offset-1.row
-                    .col-12
+                                    i.fa.fa-lg.fa-envelope-o(style="margin-right: 19px")
+                                    span Messages
+                        .profile-nav-item
+                            a.d-flex.align-items-center(href="/profile/messages")
+                                i.fa.fa-lg.fa-user-plus(style="margin-right: 19px")
+                                span Friends
+                        .profile-nav-item
+                            a.d-flex.align-items-center(href="/profile/messages")
+                                i.fa.fa-lg.fa-camera(style="margin-right: 19px")
+                                span Images
+                        .profile-nav-item
+                            a.d-flex.align-items-center(href="/settings")
+                                i.fa.fa-lg.fa-wrench(style="margin-right: 19px")
+                                span Settings
+                        .profile-nav-item
+                            a.d-flex.align-items-center(href="/logout")
+                                i.fa.fa-lg.fa-sign-out(style="margin-right: 19px")
+                                span Logout
+                #profile-content.col-6.pt-5
+                    .profile-post-wrapper.mb-4
                         form(method="POST", action="/post")
-                            .form-group.m-1
-                                textarea.form-control.rounded-0.md-textarea-auto(name="postBody", placeholder="Post something nice ...", rows="3", required)
+                            .form-group
+                                textarea.form-control.rounded-0(name="postBody", placeholder="Post something nice ...", rows="5", required)
                             button.btn.btn-sm.btn-success Post
-
-        hr
-
+                    #posts
+                        each post in currentUser.posts
+                            .post-wrapper.mb-4
+                                div(id=post._id)
+                                    .post-body.p-2
+                                        p= post.body
+                                    .post-controls.d-flex.align-items-center.p-2
+                                        i.clearfix.fa.fa-thumbs-up.fa-lg= post.likes.length
+                                        .post-buttons.ml-auto
+                                            a.btn.btn-sm.btn-success(href="/post/edit/"+post._id) Edit
+                                            button.btn.btn-sm.btn-danger.delete-post(data-id=post._id) Delete
         #suhdude
             button.btn.btn-success
 
@@ -62,17 +68,5 @@ body
                         br
                         a.btn.btn-success.accept-friend-request(href="javascript:void(0)", data-id=request.requester) Accept
                         a.btn.btn-danger.decline-friend-request(href="javascript:void(0)", data-id=request.requester) Decline
-        #posts
-            each post in currentUser.posts
-                div(id=post._id)
-                    h1= post.author
-                    br
-                    p= post.body
-                    br
-                    p= 'Likes:' + post.likes
-                    p= 'Shares:' + post.shares
-                    br
-                    a.btn.btn-success(href="/post/edit/"+post._id) Edit
-                    a.btn.btn-danger.delete-post(href="javascript:void(0)", data-id=post._id) Delete
-                    hr
+        
         include partials/footer

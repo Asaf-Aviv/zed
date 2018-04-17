@@ -15,14 +15,10 @@ $(function() {
 
     $('.fa-search').click( () => $('#navbar-search-form').submit());
 
-    $(".icon-arrow-up2").click(function() {
-        $("html, body").animate({ scrollTop: 0 }, 1000, 'easeInOutCubic');
-        return false;
-    });
-
-    $(document).scroll(function() {
-        $(this).scrollTop() > 200 ? $('.icon-arrow-up2').fadeIn() : $('.icon-arrow-up2').fadeOut();
-    });
+    // $(".icon-arrow-up2").click(function() {
+    //     $("html, body").animate({ scrollTop: 0 }, 1000, 'easeInOutCubic');
+    //     return false;
+    // });
 
     $('#filter-items input').click(function() {
         let values = [],
@@ -75,8 +71,6 @@ $(function() {
         });
     }
 
-    
-
     $('.delete-post').click(function() {
         const postId = $(this).attr('data-id');
 
@@ -120,6 +114,7 @@ $(function() {
             success: function(res) {
                 $(`[data-id=${res}]`).replaceWith($('<button>').addClass('btn btn-warning').html('Pending'));
                 $(`#${res}`).append($('<button>').addClass('btn btn-danger cancel-friend-request').attr('data-id', res).html('cancle'));
+                successAlert('Request sent', 'topRight', 'fa fa-user')
             },
             error: function(data) {
                 errorAlertCenter('Something went wrong :/ Please try again.');
@@ -129,7 +124,6 @@ $(function() {
     });
 
     $(document).on('click', '.accept-friend-request', function() {
-
         const userId = $(this).attr('data-id');
         $this = $(this)
         $this.prop('disabled', true)
@@ -295,7 +289,7 @@ $(function() {
             url: '/contact',
             data: $('#contact-form').serialize(),
             success: function(data) {
-                succesAlertCenter(data);
+                successAlert(data, 'center', 'fa fa-thumps-up');
             },
             error: function(data) {
                 errorAlertCenter('Something went wrong :/ Please try again.');
@@ -316,9 +310,10 @@ $(function() {
             url: '/feedback',
             data: $('#feedback-form').serialize(),
             success: function(data) {
-                succesAlertCenter(data);
+                successAlert(data, 'topRight', 'fa fa-thumps-up');
             },
-            error: function() {
+            error: function(data) {
+                console.log(data)
                 errorAlertCenter('Something went wrong :/ Please try again.');
             },
             complete: function() {
@@ -350,8 +345,6 @@ $(function() {
     $('.sidebar-item a[href="/' + pgurl + '"]').parent().addClass('sidebar-active');
 });
 
-
-
 iziToast.settings({
     class: 'izi-alert',
     titleSize: '18px',
@@ -367,16 +360,13 @@ iziToast.settings({
     messageLineHeight: '1.5'
 });
 
-function succesAlertCenter(message, position) {
+function successAlert(message, position, icon) {
     iziToast.show({
         titleColor: 'green',
         iconColor: 'green',
-        icon: 'fa fa-check',
-        title: 'Success: ',
+        icon,
         message,
-        position: 'center',
-        overlay: true,
-        overlayClose: true,
+        position,
     });
 }
 
@@ -386,7 +376,7 @@ function errorAlertCenter(message) {
         iconColor: 'red',
         icon: 'fa fa-exclamation-triangle',
         title: 'Error: ',
-        message,//message.responseJSON,
+        message,
         position: 'center',
         overlay: true,
         overlayClose: true,
@@ -398,29 +388,6 @@ $('#suhdude').click( () => {
         title: 'Friend Request',
         message: `<a href="/users/yojimbozx">yojimbozx</a> sent you a friend request`,
         icon: 'fa fa-user',
-    });
-});
-
-var socket = io();
-
-socket.on('friendRequest', (user) => {
-    iziToast.show({
-        title: 'Friend Request',
-        message: `<a href="/users/${user}">${user}</a> sent you a friend request`,
-        icon: 'fa fa-user'
-    });
-});
-
-socket.on('acceptFriendRequest', (user) => {
-    iziToast.show({
-        message: `You and <a href="/users/${user}">${user}</a> are now friends!`,
-        titleColor: 'green',
-        iconColor: 'green',
-        icon: 'fa fa-check',
-        title: 'Success: ',
-        position: 'center',
-        overlay: true,
-        overlayClose: true,
     });
 });
 

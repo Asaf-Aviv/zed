@@ -14,6 +14,7 @@ const morgan           = require('morgan');
 const path             = require('path');
 const expressValidator = require('express-validator');
 const flash            = require('connect-flash');
+const moment           = require('moment');
 // Authentication utils
 const session          = require('express-session');
 const sharedsession    = require("express-socket.io-session");
@@ -41,8 +42,9 @@ const runes            = require('./routes/runes');
 const spectate         = require('./routes/spectate');
 
 // MongoDB
+mongoose.set('debug', true);
 mongoose.connect(process.env.MONGO_ADMIN);
-const db = mongoose.connection;
+global.db = mongoose.connection;
 db.on('error', console.error.bind(console, 'DB connection error:'));
 db.once('open', () => {
     console.log("Conneted to DB");
@@ -99,6 +101,8 @@ app
 .use('/runes', runes)
 .use('/spectate', spectate)
 .use('/', index)
+
+app.locals.moment = moment;
 
 io.use(sharedsession(session({
     secret: 'EFK9AqwLKR932',

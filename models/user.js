@@ -8,6 +8,8 @@ const FriendRequestSchema     = require('./friendRequest');
 const FriendRequestSentSchema = require('./friendRequestSent');
 const FriendSchema            = require('./friend');
 const MessageSchema           = require('./message');
+const MyCommentsSchema        = require('./myComments');
+const LikeSchema              = require('./like');
 
 const LegendSchema = new Schema({
     username: {
@@ -61,8 +63,8 @@ const LegendSchema = new Schema({
     posts: [ PostSchema ],
     messages: [ MessageSchema ],
     messagesSent: [ MessageSchema ],
-    comments: [],
-    likes: [],
+    myComments: [ MyCommentsSchema ],
+    myLikes: [ LikeSchema ],
     shares: [],
     notifications: [],
     profileViews: {

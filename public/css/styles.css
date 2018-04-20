@@ -811,6 +811,12 @@ table.table th {
 .post-controls {
     background: #444;
 }
+/* COMMENTS */
+.comment-wrapper {
+    margin: 10px;
+    background: #363636;
+}
+/* COMMENTS END */
 /* POSTS END */
 
 /* PROFILE END */

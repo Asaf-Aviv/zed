@@ -94,11 +94,48 @@ $(function() {
             type: 'POST',
             url: '/post/like/'+postId,
             success: function(res) {
-                $(`#${postId} .like-post`).text(++likes);
+                $(`#${postId} .like-post`).text(Number(likes)+(+res));
+            },
+            error: function(err) {
+                errorAlert(err.responseText, 'center')
+            }
+        });
+    });
+
+    $('.comment-form').submit(function(e) {
+        e.preventDefault();
+
+        console.log($(this).attr('data-id'))
+        const postId = $(this).attr('data-id');
+
+        $.ajax({
+            type: 'POST',
+            data: $(this).serialize(),
+            url: '/post/comment/'+postId,
+            success: function(res) {
+                successAlert('success', 'center', 'fa fa-comment');
+            },
+            error: function(err) {
+                errorAlert(err.responseText, 'center')
+            }
+        });
+    });
+
+    $(document).on('click', '.delete-comment', function() {
+        const commentId = $(this).attr('data-id');
+        $this = $(this)
+        $this.prop('disabled', true);
+
+        $.ajax({
+            type: 'DELETE',
+            url: '/post/comment/'+commentId,
+            success: function(res) {
+                successAlert('Message deleted', 'topRight', 'fa fa-check');
             },
             error: function(err) {
                 alert(err);
-            }
+            },
+            complete: () => $this.prop('disabled', false)
         });
     });
 
@@ -117,7 +154,7 @@ $(function() {
                 successAlert('Request sent', 'topRight', 'fa fa-user')
             },
             error: function(data) {
-                errorAlertCenter('Something went wrong :/ Please try again.');
+                errorAlert('Something went wrong :/ Please try again.', 'center');
             },
             complete: () => $this.prop('disabled', false)
         });
@@ -292,7 +329,7 @@ $(function() {
                 successAlert(data, 'center', 'fa fa-thumps-up');
             },
             error: function(data) {
-                errorAlertCenter('Something went wrong :/ Please try again.');
+                errorAlert('Something went wrong :/ Please try again.', 'center');
             },
             complete: function() {
                 $('.ajax-loader-wrapper').addClass('invisible');
@@ -314,7 +351,7 @@ $(function() {
             },
             error: function(data) {
                 console.log(data)
-                errorAlertCenter('Something went wrong :/ Please try again.');
+                errorAlert('Something went wrong :/ Please try again.', 'center');
             },
             complete: function() {
                 $('.ajax-loader-wrapper').addClass('invisible');
@@ -370,14 +407,14 @@ function successAlert(message, position, icon) {
     });
 }
 
-function errorAlertCenter(message) {
+function errorAlert(message, position) {
     iziToast.show({
         titleColor: 'red',
         iconColor: 'red',
         icon: 'fa fa-exclamation-triangle',
         title: 'Error: ',
         message,
-        position: 'center',
+        position,
         overlay: true,
         overlayClose: true,
     });

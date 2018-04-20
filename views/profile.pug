@@ -5,10 +5,12 @@ body
     .container
         #profile-wrapper
             .row
+            
                 .col-3.d-flex.flex-column.flex-grow.p-md-4
                     #profile-picture
                         img(src=currentUser.profilePicture)
                     h1= currentUser.username
+
                     #profile-menu.d-flex.flex-column.flex-grow.general-color.text-center
                         .profile-nav-item
                             a.d-flex.align-items-center(href="/")
@@ -38,6 +40,7 @@ body
                             a.d-flex.align-items-center(href="/logout")
                                 i.fa.fa-lg.fa-sign-out(style="margin-right: 19px")
                                 span Logout
+
                 #profile-content.col-6.pt-5
                     .profile-post-wrapper.mb-4
                         form(method="POST", action="/post")
@@ -51,7 +54,7 @@ body
                                     .post-body.p-2
                                         p= post.body
                                     .post-controls.d-flex.align-items-center.p-2
-                                        i.clearfix.fa.fa-thumbs-up.fa-lg= post.likes.length
+                                        i.clearfix.fa.fa-thumbs-up.fa-lg= post.likeCount
                                         .post-buttons.ml-auto
                                             a.btn.btn-sm.btn-success(href="/post/edit/"+post._id) Edit
                                             button.btn.btn-sm.btn-danger.delete-post(data-id=post._id) Delete

@@ -16,6 +16,14 @@ socket.on('likePost', (user) => {
     );
 });
 
+socket.on('comment', (user) => {
+    successAlert(
+        `<a href="/users/${user}">${user}</a> commented on your post`,
+        'topRight',
+        'fa fa-comment'
+    );
+});
+
 socket.on('acceptFriendRequest', (user) => {
     successAlert(
         `You and <a href="/users/${user}">${user}</a> are now friends!`,

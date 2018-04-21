@@ -23,8 +23,7 @@ body
                     .comment-wrapper(data-id=comment._id)
                         h6= comment.from._id
                         h6= comment.from.username
-                        - let created = moment(comment.created).subtract().fromNow()
-                        span= created
+                        span= moment(comment.created).subtract().fromNow()
                         p=comment.body
                         if comment.from._id.toString() == currentUser._id
                             button.delete-comment.btn.btn-danger(data-id=comment._id) Delete

@@ -58,6 +58,16 @@ body
                                         .post-buttons.ml-auto
                                             a.btn.btn-sm.btn-success(href="/post/edit/"+post._id) Edit
                                             button.btn.btn-sm.btn-danger.delete-post(data-id=post._id) Delete
+                            each comment in post.comments
+                                .comment-wrapper
+                                    button.report-comment(data-id=comment._id)
+                                        i.fa.fa-flag-o.fa-lg.color-danger
+                                    h6= comment.from.username
+                                    span= moment(comment.created).subtract().fromNow()
+                                    p=comment.body
+                                    if comment.from._id.toString() == currentUser._id
+                                        button.delete-comment.btn.btn-danger(data-id=comment._id) Delete
+
         #suhdude
             button.btn.btn-success
 

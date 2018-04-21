@@ -141,11 +141,7 @@ async function getIndepthStats(champName, elo, position) {
 
     elo = (elo.toLowerCase() == 'platplus') ? '' : elo.toUpperCase();
     position = position.toUpperCase().replace('SUPPORT', 'DUO_SUPPORT').replace('ADC','DUO_CARRY');
-<<<<<<< HEAD
     const allData = 'kda,damage,goldEarned,sprees,hashes,wards,averageGames,totalHeal,killingSpree,minions,wins,gold,positions,normalized,groupedWins,trinkets,runes,firstitems,summoners,skills,finalItems,masteries,maxMins,matchups'
-=======
-    const allData = 'kda,damage,averageGames,totalHeal,killingSpree,minions,wins,gold,positions,normalized,groupedWins,trinkets,runes,firstitems,summoners,skills,finalItems,masteries,maxMins,matchups'
->>>>>>> 971ad1c95f423167707ec7d7db755d24b6f6ae06
     const getIndepthData = `${champGG}/champions/${championIds[champName]}?elo=${elo}&champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
     console.log(getIndepthData)
     let indepthStats = await rp({ 

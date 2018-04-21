@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const Post = require('../models/post');
-const Legend = require('../models/user');
+const express  = require('express');
+const router   = express.Router();
+const Post     = require('../models/post');
+const Legend   = require('../models/user');
 const mongoose = require('mongoose');
 
 // Edit post route
@@ -80,10 +80,9 @@ router.post('/like/:id', (req, res) => {
         },
         'posts.$',
         (err, doc) => {
-            if (err) console.log(err)
-            res.status(400).send("It looks like this post has been deleted");
-            const alreadyLike = doc[0].posts[0].likes.some(like => like._id == req.user._id);
-
+            if (err || !doc) res.status(400).send("It looks like this post has been deleted");
+            const alreadyLike = doc[0].posts[0].likes.some(like => like._id.toString() == req.user._id);
+            console.log(alreadyLike);
             if (alreadyLike) {
                 Legend.update({
                         'posts._id': req.params.id

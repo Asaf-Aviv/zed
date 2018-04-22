@@ -54,11 +54,11 @@ body
                                     .post-body.p-2
                                         p= post.body
                                     .post-controls.d-flex.align-items-center.p-2
-                                        a(href="javascript:void(0)", data-id=post.id).like-post
+                                        button(data-id=post.id).like-post
                                             i.clearfix.fa.fa-thumbs-up.fa-lg
                                             = post.likeCount
                                         .post-buttons.ml-auto
-                                            a.btn.btn-sm.btn-success(href="/post/edit/"+post._id) Edit
+                                            button.btn.btn-sm.btn-success(href="/post/edit/"+post._id) Edit
                                             button.btn.btn-sm.btn-danger.delete-post(data-id=post._id) Delete
                             each comment in post.comments
                                 .comment-wrapper

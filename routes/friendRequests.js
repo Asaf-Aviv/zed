@@ -119,6 +119,7 @@ router.post('/cancelFriendRequest/:id', (req, res) => {
     });
     res.send(req.params.id);
 });
+
 // FIXME 
 router.post('/removeFriend/:id', (req, res) => {
     console.log('remove')
@@ -137,4 +138,5 @@ router.post('/removeFriend/:id', (req, res) => {
     });
     res.send(req.params.id);
 });
+
 module.exports = router;

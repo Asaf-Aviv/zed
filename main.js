@@ -38,6 +38,7 @@ const legendSearch     = require('./routes/legendSearch');
 const friendRequests   = require('./routes/friendRequests');
 const index            = require('./routes/index');
 const items            = require('./routes/items');
+const message          = require('./routes/message');
 const runes            = require('./routes/runes');
 const spectate         = require('./routes/spectate');
 
@@ -99,6 +100,7 @@ app
 .use('/users', friendRequests)
 .use('/items', items)
 .use('/runes', runes)
+.use('/message', message)
 .use('/spectate', spectate)
 .use('/', index)
 

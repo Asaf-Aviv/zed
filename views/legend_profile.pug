@@ -3,11 +3,18 @@ body
     include partials/nav
     include partials/sidenav
     .container
-
         p= currentUser._id
 
+        form.message-form.ui.form(method='POST' data-id=user._id)
+            .field
+                label Subject
+                input(type="text", name="subject")
+            .field
+                label Message
+                textarea(rows="4", name="message")
+            button.ui.submit.button Send Message
 
-        button.btn.btn-primary Send Message
+
         h1.text-center= user.username
         h1.text-center= user.profileViews
 
@@ -33,8 +40,4 @@ body
                         .form-group
                             textarea.form-control.rounded-0(name="commentBody", rows="5", required)
                         button.btn.btn-sm.btn-success Comment
-
     include partials/footer
-    script.
-        var copy = !{JSON.stringify(user)}
-        console.log(moment(copy.created).subtract().fromNow())

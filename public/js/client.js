@@ -120,6 +120,28 @@ $(function() {
             }
         });
     });
+    
+    $('.message-form').submit(function(e) {
+        e.preventDefault();
+        $this = $(this);
+        $this.addClass('loading');
+        const userId = $('.message-form').attr('data-id');
+
+        $.ajax({
+            type: 'POST',
+            data: $(this).serialize(),
+            url: '/message/'+userId,
+            success: function(res) {
+                successAlert('success', 'center', 'fa fa-comment');
+            },
+            error: function(err) {
+                errorAlert(err.responseText, 'center')
+            },
+            complete: function() {
+                $this.removeClass('loading');
+            }
+        });
+    });
 
     $(document).on('click', '.delete-comment', function() {
         const commentId = $(this).attr('data-id');

@@ -859,10 +859,12 @@ table.table th {
     background: #474747;
     color: #b1a0ff;
 }
+
 .close-feedback:focus,
 .remove-feedback:focus {
     outline-color: #b1a0ff;
 }
+
 .close-feedback:active,
 .remove-feedback:active {
     background: #101010;

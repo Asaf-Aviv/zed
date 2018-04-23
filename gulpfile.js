@@ -1,9 +1,8 @@
-const gulp = require('gulp');
-const nodemon = require('gulp-nodemon');
+const gulp        = require('gulp');
+const sass        = require('gulp-sass');
+const nodemon     = require('gulp-nodemon');
 const browserSync = require('browser-sync');
-const reload = browserSync.reload;
-
-
+const reload      = browserSync.reload;
 
 gulp.task('browser-sync', ['nodemon'], () => {
     browserSync({
@@ -11,6 +10,12 @@ gulp.task('browser-sync', ['nodemon'], () => {
         port: 5000, // use *different* port than above
         notify: true
     });
+});
+
+gulp.task('sass', () => {
+    gulp.src('./public/sass/*.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('dist/css/'))
 });
 
 gulp.task('nodemon', function (cb) {
@@ -36,8 +41,9 @@ gulp.task('nodemon', function (cb) {
     });
 });
 
-gulp.task('default', ['browser-sync'], function () {
-    gulp.watch(['public/css/*.css'], reload);
-    gulp.watch(['views/*.pug'], reload);
-    gulp.watch(['views/partials/*.pug'], reload);
+gulp.task('default', ['sass', 'browser-sync', 'nodemon'], () => {
+    gulp.watch('public/sass/*.scss', ['sass']);
+    gulp.watch('public/sass/*.scss', reload);
+    gulp.watch('public/css/*.css', reload);
+    gulp.watch('views/**/*.pug', reload);
 });

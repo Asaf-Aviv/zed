@@ -2,46 +2,66 @@ include partials/head
 body
     include partials/nav
     include partials/sidenav
-    .container
-        form#main-form(method="GET", action="/summoner")
-            .form-group.col-md-8
-                .input-group.mb-3
-                    input.form-control(type="text", name="userName", placeholder="Enter Summoner")
-                    button.btn.btn-outline-secondary(type="submit") Search
-            
-            .index-regions.col-md-4
-                .form-check.form-check-inline
-                    input.NA(type="radio", name="region", value="NA", checked)
-                    | NA
-                .form-check.form-check-inline
-                    input(type="radio", name="region", value="EUW1")
-                    | EUW
-                .form-check.form-check-inline
-                    input(type="radio", name="region", value="EUN1")
-                    | EUNE
-                .form-check.form-check-inline
-                    input(type="radio", name="region", value="BR1")
-                    | BRAZIL
-                .form-check.form-check-inline
-                    input(type="radio", name="region", value="KR")
-                    | KOREA
-                .form-check.form-check-inline
-                    input(type="radio", name="region", value="JP1")
-                    | JAPAN
-                .form-check.form-check-inline
-                    input(type="radio", name="region", value="LA1")
-                    | LAN
-                .form-check.form-check-inline
-                    input(type="radio", name="region", value="LA2")
-                    | LAS
-                .form-check.form-check-inline
-                    input(type="radio", name="region", value="TR1")
-                    | TURKEY
-                .form-check.form-check-inline
-                    input(type="radio", name="region", value="OC1")
-                    | OCE
-                .form-check.form-check-inline
-                    input(type="radio", name="region", value="RU")
-                    | RUSSIA
-
+    .ui.container
+        form#summoner-search.ui.form(method="GET", action="/summoner")
+            .field
+                input(type="text", name="userName", placeholder="Enter Summoner")
+                button.ui.button(type="submit") Search
+            .ui.basic.buttons
+                .ui.button.active(data-region="NA") NA
+                .ui.button(data-region="EUW1") EUW
+                .ui.button(data-region="EUN1") EUNE
+                .ui.button(data-region="KR") KOREA
+                .ui.button(data-region="BR1") BRAZIL
+                .ui.button(data-region="RU") RUSSIA
+                .ui.button(data-region="JP1") JAPAN
+                .ui.button(data-region="LA1") LAN
+                .ui.button(data-region="LA2") LAS
+                .ui.button(data-region="OC1") OCE
+                .ui.button(data-region="TR1") TURKEY
+                //- .inline.fields
+                    .field
+                        .ui.radio.checkbox
+                            input(type="radio", name="region", value="NA", checked) 
+                            label NA
+                    .field
+                        .ui.radio.checkbox
+                            input(type="radio", name="region", value="EUW1")
+                            label(for="region") EUW
+                    .field
+                        .ui.radio.checkbox
+                            input(type="radio", name="region", value="EUN1")
+                            label EUNE
+                    .field
+                        .ui.radio.checkbox
+                            input(type="radio", name="region", value="BR1")
+                            label BRAZIL
+                    .field
+                        .ui.radio.checkbox
+                            input(type="radio", name="region", value="KR")
+                            label KOREA
+                    .field
+                        .ui.radio.checkbox
+                            input(type="radio", name="region", value="JP1")
+                            label JAPAN
+                    .field
+                        .ui.radio.checkbox
+                            input(type="radio", name="region", value="LA1")
+                            label LAN
+                    .field
+                        .ui.radio.checkbox
+                            input(type="radio", name="region", value="LA2")
+                            label LAS
+                    .field
+                        .ui.radio.checkbox
+                            input(type="radio", name="region", value="TR1")
+                            label TURKEY
+                    .field
+                        .ui.radio.checkbox
+                            input(type="radio", name="region", value="OC1")
+                            label OCE
+                    .field
+                        .ui.radio.checkbox
+                            input(type="radio", name="region", value="RU")
+                            label RUSSIA
         include partials/footer

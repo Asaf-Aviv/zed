@@ -1,21 +1,20 @@
 include partials/head
-body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
+body
     include partials/nav
     include partials/sidenav
-    .container
-        .row.justify-content-center
-            .col-10
-                nav.leaderboard-regions
-                    a(href="/leaderboards?region=NA1") NA
-                    a(href="/leaderboards?region=EUW1") EUW
-                    a(href="/leaderboards?region=EUN1") EUNE
-                    a(href="/leaderboards?region=BR1") BRAZIL
-                    a(href="/leaderboards?region=KR") KOREA
-                    a(href="/leaderboards?region=JP1") JAPAN
-                    a(href="/leaderboards?region=LA1") LAN
-                    a(href="/leaderboards?region=LA2") LAS
-                    a(href="/leaderboards?region=TR1") TURKEY
-                    a(href="/leaderboards?region=OC1") OCE
-                    a(href="/leaderboards?region=RU") RUSSIA
+    .ui.container
+        .d-flex.justify-content-center
+            .leaderboard-regions.ui.inverted
+                a.ui.inverted.violet.basic.button(href="/leaderboards?region=NA1") NA
+                a.ui.inverted.violet.basic.button(href="/leaderboards?region=EUW1") EUW
+                a.ui.inverted.violet.basic.button(href="/leaderboards?region=EUN1") EUNE
+                a.ui.inverted.violet.basic.button(href="/leaderboards?region=BR1") BRAZIL
+                a.ui.inverted.violet.basic.button(href="/leaderboards?region=KR") KOREA
+                a.ui.inverted.violet.basic.button(href="/leaderboards?region=JP1") JAPAN
+                a.ui.inverted.violet.basic.button(href="/leaderboards?region=LA1") LAN
+                a.ui.inverted.violet.basic.button(href="/leaderboards?region=LA2") LAS
+                a.ui.inverted.violet.basic.button(href="/leaderboards?region=TR1") TURKEY
+                a.ui.inverted.violet.basic.button(href="/leaderboards?region=OC1") OCE
+                a.ui.inverted.violet.basic.button(href="/leaderboards?region=RU") RUSSIA
         include partials/leaderboard
         include partials/footer

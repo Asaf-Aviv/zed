@@ -2,18 +2,17 @@
     .d-flex.flex-column.text-center.p-3
         .d-flex.pb-3
             h4.m-0 Send feedback
-            button.close-feedback.ml-auto.px-2 &#x2715
+            button.close-feedback &#x2715
         form#feedback-form(action="/feedback", method="POST")
             select.mb-4(name="feedback").custom-select
                 option(value="idea" selected) Hey check out my awesome &#xf0eb; !
                 option(value="bug") I would like to report an issue
             .md-form.m-0
-                textarea#feedback-label.form-control.md-textarea.mb-4(
+                textarea#feedback-label.form-control.md-textarea(
                     type="text" name="message" placeholder="Describe your issue or share your awesome ideas!" required)
             .d-flex.justify-content-around
                 button.btn.btn-sm.btn-outline-primary Send
                     i.fa.fa-paper-plane-o.pl-2
-                button.close-feedback.btn.btn-sm.btn-outline-danger(type="button") Cancel
 .feedback-btns
     button.feedback-btn.btn.btn-sm.btn-primary Feedback
-    button.remove-feedback.ml-auto.px-2 &#x2715
+    button.remove-feedback &#x2715

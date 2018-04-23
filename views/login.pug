@@ -1,23 +1,22 @@
 include partials/head
-body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
+body
     include partials/nav
     include partials/sidenav
-    .container
-        .form-wrapper.mt-5
-            form#login-form.form-group(action="/login" method="POST" autocomplete="off")
-                legend.text-center Log In
-                .md-form
-                    i.fa.fa-at.prefix
-                    input.form-control.pb-3(type="text" id="login-email" name="email" required)
-                    label(for="login-email") Email
-
-                .md-form.mb-4
-                    i.fa.fa-lock.prefix
-                    input.form-control.pb-3(type="password" id="login-password" name="password" required)
-                    label(for="login-password") Password
-                .text-center
-                    button.btn.btn-outline-success
-                        i.fa.fa-sign-in.fa-5x.mr-2
-                        | Log In
-
+    .ui.container
+        .ui.centered.grid
+            .seven.wide.computer.ten.wide.tablet.sixteen.wide.mobile.column
+                form#login-form.mt-3(action="/login" method="POST" autocomplete="off")
+                    legend.text-center Log In
+                    .md-form
+                        i.fa.fa-at.prefix
+                        input.form-control(type="text" id="login-email" name="email" required)
+                        label(for="login-email") Email
+                    .md-form
+                        i.fa.fa-lock.prefix
+                        input.form-control.pb-3(type="password" id="login-password" name="password" required)
+                        label(for="login-password") Password
+                    .text-center
+                        button.btn.btn-outline-success.mt-3
+                            i.fa.fa-sign-in.fa-5x.mr-2
+                            | Log In
         include partials/footer

@@ -1,0 +1,76 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+body {
+  padding-top: 50px;
+  background: #2c2c2c;
+  color: #e8e8e8; }
+
+a {
+  color: #e8e8e8; }
+  a:hover {
+    color: #e8e8e8; }
+
+input, textarea {
+  caret-color: #e8e8e8 !important;
+  color: #fff !important; }
+  input::selection, textarea::selection {
+    background: #b1a0ff;
+    color: #fff; }
+
+.ui.container {
+  width: 1400px; }
+
+.ui.grid {
+  margin: 0; }
+
+::selection {
+  background: #b1a0ff;
+  color: #fff; }
+
+::-webkit-input-placeholder {
+  color: #cacaca !important; }
+
+::-moz-placeholder {
+  color: #cacaca !important; }
+
+:-ms-input-placeholder {
+  color: #cacaca !important; }
+
+:-moz-placeholder:focus {
+  color: #cacaca !important; }
+
+.d-flex {
+  display: flex !important; }
+
+.d-none {
+  display: none; }
+
+.align-items-center {
+  align-items: center; }
+
+.justify-content-center {
+  justify-content: center; }
+
+.text-center {
+  text-align: center !important; }
+
+.h-100 {
+  height: 100%; }
+
+.w-100 {
+  width: 100%; }
+
+.m-0 {
+  margin: 0 !important; }
+
+@media (max-width: 1400px) {
+  .ui.container {
+    padding-left: 117px !important; }
+  .iziToast-capsule {
+    padding-left: 55px !important; } }
+
+table.dataTable tbody tr {
+  background-color: inherit; }

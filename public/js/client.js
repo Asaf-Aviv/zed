@@ -1,6 +1,6 @@
 $(function() {
     fixPopover();
-
+    $('.checkbox').checkbox();
     $('#tier-1 table, #tier-2 table, #tier-3 table, #tier-4 table, #tier-5 table').DataTable();
 
     $('#leaderboard-table').DataTable();
@@ -12,8 +12,6 @@ $(function() {
     $('.lb-summoner').on('click', function() {
         window.location = `/summoner?userName=${$(this).text()}&region=${location.href.slice(location.href.lastIndexOf('=')+1)}`;
     });
-
-    $('.fa-search').click( () => $('#navbar-search-form').submit());
 
     // $(".icon-arrow-up2").click(function() {
     //     $("html, body").animate({ scrollTop: 0 }, 1000, 'easeInOutCubic');
@@ -262,6 +260,8 @@ $(function() {
         });
     });
 
+
+
     $('#spectate').click(function() {
         const gameId = $(this).attr('data-id');
         const region = $(this).attr('data-region');
@@ -336,9 +336,15 @@ $(function() {
                 }
             }
         });
-
-
     });
+
+    
+    
+    $('#summoner-search').on('click', 'button', function(e) {
+        const query = window.location.href+`/summoner?${$('#summoner-search').serialize()}&region=${$('#summoner-search .active').attr('data-region')}`
+        window.location = query
+    });
+
     $('#contact-form').submit(function(e) {
         e.preventDefault();
         $('.ajax-loader-wrapper').removeClass('invisible');

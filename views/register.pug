@@ -1,32 +1,29 @@
 include partials/head
-body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
+body
     include partials/nav
     include partials/sidenav
-    .container
-        .form-wrapper.mt-5
-            form#register-form.form-group(action="/register" method="POST" autocomplete="off")
-                legend.text-center Register
-                .md-form
-                    i.fa.fa-user.prefix
-                    input.form-control.pb-3(type="text" id="reg-username" name="username" required)
-                    label(for="reg-username") Username
-
-                .md-form
-                    i.fa.fa-at.prefix
-                    input.form-control.pb-3(type="text" id="reg-email" name="email" required)
-                    label(for="reg-email") Email
-
-                .md-form.mb-4
-                    i.fa.fa-lock.prefix
-                    input.form-control.pb-3(type="password" id="reg-password" name="password" required)
-                    label(for="login-password") Password
-                
-                .md-form.mb-4
-                    i.fa.fa-lock.prefix
-                    input.form-control.pb-3(type="password" id="reg-conPass" name="confirmPassword" required)
-                    label(for="reg-conPass") Confirm Password
-                
-                .text-center
-                    button.btn.btn-outline-success Become a Legend
+    .ui.container
+        .ui.centered.grid
+            .seven.wide.computer.ten.wide.tablet.sixteen.wide.mobile.column
+                form#register-form.mt-3(action="/register" method="POST" autocomplete="off")
+                    legend.text-center Register
+                    .md-form
+                        i.fa.fa-user.prefix
+                        input.form-control.pb-3(type="text" id="reg-username" name="username" required)
+                        label(for="reg-username") Username
+                    .md-form
+                        i.fa.fa-at.prefix
+                        input.form-control.pb-3(type="text" id="reg-email" name="email" required)
+                        label(for="reg-email") Email
+                    .md-form
+                        i.fa.fa-lock.prefix
+                        input.form-control.pb-3(type="password" id="reg-password" name="password" required)
+                        label(for="login-password") Password
+                    .md-form.mb-4
+                        i.fa.fa-lock.prefix
+                        input.form-control.pb-3(type="password" id="reg-conPass" name="confirmPassword" required)
+                        label(for="reg-conPass") Confirm Password
+                    .text-center
+                        button.btn.btn-outline-success Become a Legend
 
         include partials/footer

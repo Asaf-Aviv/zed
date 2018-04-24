@@ -1,48 +1,45 @@
-nav#nav-wrapper
-    .ui.container.d-flex(style="height: 100%")
-        #inner-nav-wrapper
-            .nav-section
-                a.item(href="/") Home
-                a.item(href="/leaderboards?region=NA1") Leaderboards
-                a.item(href="/statistics") Statistics
-                .ui.compact.d-flex.align-items-center(style="padding: 0 20px")
-                    .ui.simple.dropdown.item.h-100.d-flex.align-items-center Database
-                        i.dropdown.icon
-                        .menu
-                            a.item(href="/champions") Champions
-                            a.item(href="/runes") Runes
-                            a.item(href="/items") Items
-            #nav-search.nav-section.align-items-center
-                form#navbar-search-form.ui.form(method="GET", action="/summoner")
-                    .inline.fields(style="margin: 0")
-                        .field
-                            select#region-select(name="region")
-                                option(value="NA1") NA
-                                option(value="EUW1") EUW
-                                option(value="EUN1") EUNE
-                                option(value="KR") KOREA
-                                option(value="JP1") JAPAN
-                                option(value="LA1") LAN
-                                option(value="BR1") BRAZIL
-                                option(value="LA2") LAS
-                                option(value="TR1") TURKEY
-                                option(value="OC1") OCE
-                                option(value="RU") RUSSIA
-                        .field
-                            .ui.action.transparent.input
-                                input(type="text", name="userName", placeholder="Enter Username")
-                                button.ui.icon.button
-                                    i.search.icon
-            #nav-bar-util.align-items-center
-                i.bell.outline.icon
-                i.envelope.outline.icon
-                i.user.plus.icon
-            #nav-bar-login
-                if currentUser
-                    a(href="/profile")= currentUser.username
-                    a.icon(href="/logout") Logout
-                        i.sign.out.alternate.icon(style="padding:0 10px;")
-                else
-                    a(href="/register") Register
-                    a(href="/login") Login
-                        i.sign.in.alternate.icon(style="padding:0 10px;")
+nav#main-nav-bar
+    #main-left-nav-bar.d-flex
+        a.d-flex.align-items-center(href="/") Home
+        a.d-flex.align-items-center(href="/leaderboards?region=NA1") Leaderboards
+        a.d-flex.align-items-center(href="/statistics") Statistics
+        .dropdown.d-flex
+            a.dropdown-toggle.d-flex.align-items-center(data-toggle="dropdown") Database
+            .dropdown-menu
+                a.dropdown-item(href="/champions") Champions
+                a.dropdown-item(href="/runes") Runes
+                a.dropdown-item(href="/items") Items
+    #nav-search
+        form#navbar-search-form(method="GET", action="/summoner")
+            select#region-select(name="region")
+                option(value="NA1") NA
+                option(value="EUW1") EUW
+                option(value="EUN1") EUNE
+                option(value="KR") KOREA
+                option(value="JP1") JAPAN
+                option(value="LA1") LAN
+                option(value="BR1") BRAZIL
+                option(value="LA2") LAS
+                option(value="TR1") TURKEY
+                option(value="OC1") OCE
+                option(value="RU") RUSSIA
+            input(type="text", name="userName", placeholder="Enter Username")
+            i.fa.fa-search
+    #nav-bar-util.d-flex
+        a.d-flex.align-items-center(href="#")
+            i.fa.fa-lg.fa-bell-o
+            span.badge.badge-danger 6
+        a.d-flex.align-items-center(href="#")
+            i.fa.fa-lg.fa-envelope-o
+        a.d-flex.align-items-center(href="#")
+            i.fa.fa-lg.fa-user-plus
+    #nav-bar-login.d-flex
+        a.d-flex.align-items-center(href="/users") Find Legends
+        if currentUser
+            a.d-flex.align-items-center(href="/profile")= currentUser.username
+            //- img(style="width: 50px; height: 50px;", src=currentUser.profilePicture)
+            a.d-flex.align-items-center(href="/logout") Logout
+                i.fa.fa-logout
+        else
+            a.d-flex.align-items-center(href="/register") Register
+            a.d-flex.align-items-center(href="/login") Login

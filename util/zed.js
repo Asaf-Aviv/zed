@@ -6,8 +6,8 @@ const items          = require('../assets/league/data/en_US/item');
 const runes          = require('../assets/league/data/en_US/runesReforged');
 const summonerSpells = require('../assets/league/data/en_US/summoner');
 
-const ddragon = '8.7.1';
-const riot     = '.api.riotgames.com/lol/';
+const ddragon = '8.8.1';
+const riot    = '.api.riotgames.com/lol/';
 const champGG = 'http://api.champion.gg/v2';
 
 const specGrid = {
@@ -40,7 +40,7 @@ global.regionNameFix = {
 };
 
 // SPECTATE
-function makeSpecBatch(specObject) {
+async function makeSpecBatch(specObject) {
     const specBat = String.raw`CD /D D:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\0.0.1.210\deploy`;
     const batch = `${specBat}\n\t${specGrid.start}${specGrid[specObject.region]}${specObject.key} ${specObject.gameId} ${specObject.region}"`;
     return batch;

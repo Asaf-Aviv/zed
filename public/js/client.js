@@ -1,6 +1,7 @@
 $(function() {
     fixPopover();
     $('.checkbox').checkbox();
+    $('.dimmer').dimmer({closable:true, on:'click'})
     $('#tier-1 table, #tier-2 table, #tier-3 table, #tier-4 table, #tier-5 table').DataTable();
 
     $('#leaderboard-table').DataTable();
@@ -86,16 +87,17 @@ $(function() {
 
     $('.like-post').click(function() {
         const postId = $(this).attr('data-id');
-        let likes = $(this).text();
+        let likes = $(`#${postId} .like-count`).text();
 
         $.ajax({
             type: 'POST',
             url: '/post/like/'+postId,
             success: function(res) {
-                $(`#${postId} .like-post`).text(Number(likes)+(+res));
+                $(`#${postId} .like-post > button`).toggleClass('red');
+                $(`#${postId} .like-count`).text(+likes + +res);
             },
             error: function(err) {
-                errorAlert(err.responseText, 'center')
+                errorAlert(err.responseText, 'center');
             }
         });
     });

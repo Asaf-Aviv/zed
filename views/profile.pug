@@ -5,83 +5,126 @@ body
     .container
         #profile-wrapper
             .row
-            
-                .col-3.d-flex.flex-column.flex-grow.p-md-4
-                    #profile-picture
-                        img(src=currentUser.profilePicture)
-                    h1= currentUser.username
+                .col-xl-2.col-lg-3.col-md-5.col-sm-12.pt-5
+                    .ui.card
+                        .image
+                            img(src=currentUser.profilePicture)
+                        .content
+                            a.header= currentUser.username
+                            .meta
+                                p Owner of Legends
+                            .description
+                                p Asaf is the creator of this site
+                        .extra.content
+                            i.user.icon
+                            | 22 Friends
+                    #profile-menu(style="max-width: 290px;")
+                        .ui.vertical.menu
+                            a.item(href="/") Home
+                            a.item(href="/profile") Profile
+                            a.item(href="/profile/messages") Messages
+                            a.item(href="/profile/friends") Friends
+                            a.item(href="/profile/images") Images
+                            a.item(href="/profile/information") Information
+                            a.item(href="/profile/settings") Settings
+                            a.item(href="/profile/logout") Logout
 
-                    #profile-menu.d-flex.flex-column.flex-grow.general-color.text-center
-                        .profile-nav-item
-                            a.d-flex.align-items-center(href="/")
-                                i.fa.fa-lg.fa-home(style="margin-left: 1px; margin-right: 22px")
-                                span Home
-                        .profile-nav-item
-                            a.d-flex.align-items-center(href="/profile")
-                                i.fa.fa-lg.fa-user-o(style="margin-left: 1px; margin-right: 22px")
-                                span Profile
-                        .profile-nav-item
-                                a.d-flex.align-items-center(href="/profile/messages")
-                                    i.fa.fa-lg.fa-envelope-o(style="margin-right: 19px")
-                                    span Messages
-                        .profile-nav-item
-                            a.d-flex.align-items-center(href="/profile/messages")
-                                i.fa.fa-lg.fa-user-plus(style="margin-right: 19px")
-                                span Friends
-                        .profile-nav-item
-                            a.d-flex.align-items-center(href="/profile/messages")
-                                i.fa.fa-lg.fa-camera(style="margin-right: 19px")
-                                span Images
-                        .profile-nav-item
-                            a.d-flex.align-items-center(href="/settings")
-                                i.fa.fa-lg.fa-wrench(style="margin-right: 19px")
-                                span Settings
-                        .profile-nav-item
-                            a.d-flex.align-items-center(href="/logout")
-                                i.fa.fa-lg.fa-sign-out(style="margin-right: 19px")
-                                span Logout
-
-                #profile-content.col-6.pt-5
+                #profile-content.col-md-7.offset-lg-1.col-sm-12.pt-5.ml-auto
                     .profile-post-wrapper.mb-4
                         form(method="POST", action="/post")
                             .form-group
-                                textarea.form-control.rounded-0(name="postBody", placeholder="Post something nice ...", rows="5", required)
-                            button.btn.btn-sm.btn-success Post
+                                textarea.form-control.rounded-0.mb-3(name="postBody", placeholder="Post something nice ...", rows="5", required)
+                            button.ui.tiny.violet.button.w-100 Post
                     #posts
                         each post in currentUser.posts
                             .post-wrapper.mb-4
-                                div(id=post._id)
-                                    .post-body.p-2
-                                        p= post.body
-                                    .post-controls.d-flex.align-items-center.p-2
-                                        button(data-id=post.id).like-post
-                                            i.clearfix.fa.fa-thumbs-up.fa-lg
-                                            = post.likeCount
-                                        .post-buttons.ml-auto
-                                            button.btn.btn-sm.btn-success(href="/post/edit/"+post._id) Edit
-                                            button.btn.btn-sm.btn-danger.delete-post(data-id=post._id) Delete
-                            each comment in post.comments
-                                .comment-wrapper
-                                    button.report-comment(data-id=comment._id)
-                                        i.fa.fa-flag-o.fa-lg.color-danger
-                                    h6= comment.from.username
-                                    span= moment(comment.created).subtract().fromNow()
-                                    p=comment.body
-                                    if comment.from._id.toString() == currentUser._id
-                                        button.delete-comment.btn.btn-danger(data-id=comment._id) Delete
-
-        #suhdude
-            button.btn.btn-success
-
-        #friend-requests
-            each request in currentUser.friendRequests
-                if (request.pending)
-                    div(id=request.requester)
-                        h3= request.requester
-                        img(src=request.profilePicture)
-                        h2= request.pending
-                        br
-                        a.btn.btn-success.accept-friend-request(href="javascript:void(0)", data-id=request.requester) Accept
-                        a.btn.btn-danger.decline-friend-request(href="javascript:void(0)", data-id=request.requester) Decline
+                                .ui.raised.segment
+                                    div(id=post._id)
+                                        .post-body.p-2
+                                            p= post.body
+                                        .post-controls.d-flex.align-items-center.p-2
+                                            .ui.labeled.button.like-post(data-id=post.id)
+                                                button.ui.tiny.button(class=post.likes.some(like => like._id.toString() == currentUser._id) ? 'red' : '')
+                                                    i.heart.icon
+                                                    | Like
+                                                .like-count.ui.basic.red.left.pointing.label= post.likeCount
+                                            .post-buttons.ml-auto
+                                                button.ui.tiny.blue.button(href="/post/edit/"+post._id) Edit
+                                                button.ui.tiny.red.button.delete-post(data-id=post._id) Delete
+                                    if post.comments.length > 0
+                                        .ui.threaded.comments
+                                            h3.ui.dividing.header Comments
+                                            each comment in post.comments
+                                                .comment(data-id=comment._id)
+                                                    a.avatar: img(src=currentUser.profilePicture)
+                                                    .content
+                                                        a.author(href=`/profile/${comment.from.username}`)= comment.from.username
+                                                        .metadata
+                                                            span.date= moment(comment.created).subtract().fromNow()
+                                                        .text= comment.body
+                                                        .actions 
+                                                            a.reply(data-id=comment._id) Reply
+                                                            a.report(data-id=comment._id) Report
+                                                        if comment.from._id.toString() == currentUser._id
+                                                            button.delete-comment.btn.btn-danger(data-id=comment._id) Delete
+                #friend-requests.col-2.pt-5
+                    each request in currentUser.friendRequests
+                        .profile-friend-request.text-center
+                            a.bold.d-block(href=`/users/${request.username}`)= request.username
+                            .ui.image
+                                img(src=request.profilePicture)
+                            .ui.buttons
+                                button.ui.tiny.basic.red.button.decline-friend-request(data-id=request.requester) Decline
+                                button.ui.tiny.basic.green.button.accept-friend-request(data-id=request.requester) Accept
         
-        include partials/footer
+    .ui.dimmer
+        .d-flex.flex-gap
+            img(src=currentUser.profilePicture)
+            img(src=currentUser.profilePicture)
+            img(src=currentUser.profilePicture)
+        form#myAwesomeDropzone.dropzone.d-flex.align-items-center.justify-content-center(
+            action="/upload/photos" method="POST" style="height: 15%; width: 40%; border: 2px dashed #fff; color: #fff; position:fixed; bottom: 20px")
+            .dz-message Drag and drop files here or click to upload
+
+    #suhdude
+        button.btn.btn-success
+    include partials/footer
+script.
+    $(function(){
+        Dropzone.options.myAwesomeDropzone = {
+            maxFilesize: 5,
+            addRemoveLinks: true,
+            dictResponseError: 'Server not Configured',
+            acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",
+            init:function(){
+            var self = this;
+            // config
+            self.options.addRemoveLinks = true;
+            self.options.dictRemoveFile = "Delete";
+            //New file added
+            self.on("addedfile", function (file) {
+                console.log('new file added ', file);
+            });
+            // Send file starts
+            self.on("sending", function (file) {
+                console.log('upload started', file);
+                $('.meter').show();
+            });
+            
+            // File upload Progress
+            self.on("totaluploadprogress", function (progress) {
+                console.log("progress ", progress);
+                $('.roller').width(progress + '%');
+            });
+
+            self.on("queuecomplete", function (progress) {
+                $('.meter').delay(999).slideUp(999);
+            });
+            
+            // On removing file
+            self.on("removedfile", function (file) {
+                console.log(file);
+            });
+            }
+        };
+    });

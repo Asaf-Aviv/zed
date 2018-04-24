@@ -30,6 +30,7 @@ const champions        = require('./routes/champions');
 const summoner         = require('./routes/summoner');
 const statistics       = require('./routes/statistics');
 const logout           = require('./routes/logout');
+const userProfile      = require('./routes/users');
 const profile          = require('./routes/profile');
 const login            = require('./routes/login');
 const register         = require('./routes/register');
@@ -41,6 +42,7 @@ const items            = require('./routes/items');
 const message          = require('./routes/message');
 const runes            = require('./routes/runes');
 const spectate         = require('./routes/spectate');
+const upload           = require('./routes/upload');
 
 // MongoDB
 mongoose.set('debug', true);
@@ -92,6 +94,7 @@ app
 .use('/champions', champions)
 .use('/summoner', summoner)
 .use('/profile', profile)
+.use('/users', userProfile)
 .use('/statistics', statistics)
 .use('/register', register)
 .use('/login', login)
@@ -100,6 +103,7 @@ app
 .use('/users', legendSearch)
 .use('/users', friendRequests)
 .use('/items', items)
+.use('/upload', upload)
 .use('/runes', runes)
 .use('/message', message)
 .use('/spectate', spectate)

@@ -1,5 +1,5 @@
 include partials/head
-body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
+body
     include partials/nav
     include partials/sidenav
     .container
@@ -15,7 +15,7 @@ body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
                     input(type="checkbox", value="data-price")
                     | Price
         .row
-            #filter-items.col-xl-2.col-lg-3.col-md-3.col-sm-4
+            #filter-items.col-xl-3.col-lg-3.col-md-4
                 p.lead.pl-4 Filter By
                 .filter-option
                     label.checkbox-inline.mr-3
@@ -114,7 +114,7 @@ body(style=`background-image: url(/assets/league/img/bgs/face.jpg);`)
                         input(type="checkbox", value="NonbootsMovement")
                         | Movement Speed
             
-            .col-xl-10.col-lg-9.col-md-9.col-sm-8
+            .col-xl-9.col-lg-9.col-md-8
                 .league-item-wrapper.d-flex.flex-wrap
                     each item in items.data
                         if (item.gold.purchasable && item.maps["11"])

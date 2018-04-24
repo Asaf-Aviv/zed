@@ -8,8 +8,8 @@
 
 body {
     padding-top: 50px;
-    background: $primary-bg-color;
-    color: $light-grey;
+    background: $light-grey;
+    color: $black;
 }
 
 a {
@@ -19,78 +19,68 @@ a {
     }
 }
 input, textarea {
-    caret-color: $light-grey !important;
-    color: $white !important;
+    // caret-color: $light-grey !important;
+    // color: $white !important;
     &::selection {
         background: #b1a0ff;
         color: #fff;
     }
 }
-.ui.container {
-    width: 1400px;
+.container {
+    max-width: 1400px;
 }
-.ui.grid {
-    margin: 0;
-}
+
 ::selection {
     background: #b1a0ff;
     color: #fff;
 }
 
-::-webkit-input-placeholder {
-    color: $dark-grey !important;
-}
-
-::-moz-placeholder {
-    color: $dark-grey !important;
-}
-
-:-ms-input-placeholder {
-    color: $dark-grey !important;
-}
-
-:-moz-placeholder:focus {
-    color: $dark-grey !important;
-}
-
-// UTILS 
-.d-flex {
-    display: flex !important;
-}
-.d-none {
-    display: none;
-}
-.align-items-center {
-    align-items: center;
-}
-.justify-content-center {
-    justify-content: center;
-}
-.text-center {
-    text-align: center !important;
-}
-.h-100 {
-    height: 100%;
-}
-.w-100 {
+.ui.vertical.menu {
     width: 100%;
 }
+// ::-webkit-input-placeholder {
+//     color: $dark-grey !important;
+// }
 
-.m-0 {
-    margin: 0 !important;
-}
+// ::-moz-placeholder {
+//     color: $dark-grey !important;
+// }
+
+// :-ms-input-placeholder {
+//     color: $dark-grey !important;
+// }
+
+// :-moz-placeholder:focus {
+//     color: $dark-grey !important;
+// }
+
+// UTILS 
+// .d-flex {
+//     display: flex !important;
+// }
+// .d-none {
+//     display: none;
+// }
+// .align-items-center {
+//     align-items: center;
+// }
+// .justify-content-center {
+//     justify-content: center;
+// }
+// .text-center {
+//     text-align: center !important;
+// }
+// .h-100 {
+//     height: 100%;
+// }
+// .w-100 {
+//     width: 100%;
+// }
+
+// .m-0 {
+//     margin: 0 !important;
+// }
 // UTILS END
-
-// MEDIA QUERIES
-@media (max-width: 1400px) {
-    .ui.container {
-        padding-left: 117px !important;
-    }
-    .iziToast-capsule {
-        padding-left: 55px !important;
-    }
-}
-// MEDIA QUERIES END
 
 // DATA TABLES
 table.dataTable tbody tr {

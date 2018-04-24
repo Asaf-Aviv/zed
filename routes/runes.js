@@ -3,9 +3,10 @@ const router  = express.Router();
 const zed     = require('../util/zed');
 
 router.get('/', (req, res) => {
-    zed.getItems().then(items => {
+    zed.getRunesReforged().then(runes => {
         res.render('runes', {
             title: 'Runes | Legends',
+            runes,
         });    
     });
 });

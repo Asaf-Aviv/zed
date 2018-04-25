@@ -340,7 +340,42 @@ $(function() {
         });
     });
 
-    
+    $('.delete-photo').click(function() {
+        const photoId = $(this).data('id')
+        const photoUuid = $(this).data('uuid')
+
+        $.confirm({
+            draggable: true,
+            closeIcon: true,
+            icon: 'fa fa-warning',
+            type: 'red',
+            title: 'Confirm',
+            content: 'Are you sure you want to delete this photo ?',
+            theme: 'dark',
+            buttons: {
+                Yes: {
+                    action: function() {
+                        $.ajax({
+                            url: `/profile/image/${photoId}`,
+                            type: 'DELETE',
+                            data: {uuid: photoUuid},
+                            success: function() {
+                                alert('success');
+                            },
+                            error: function() {
+                                alert('error');
+                            }
+                        })
+                    },
+                    btnClass: 'btn btn-outline-success'
+                },
+                No:{
+                    action: () => {},
+                    btnClass: 'btn btn-outline-danger'
+                }
+            }
+        });
+    });
     
     $('#summoner-search').on('click', 'button', function(e) {
         const query = window.location.href+`/summoner?${$('#summoner-search').serialize()}&region=${$('#summoner-search .active').attr('data-region')}`

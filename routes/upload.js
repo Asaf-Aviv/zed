@@ -5,6 +5,7 @@ const Legend  = require('../models/user');
 router.post('/images', (req, res) => {
     console.log('photo recived');
     console.log(req.body);
+    // req.body.numberOfPhotos = req.body.uuid.split('~')[1]
     Legend.findByIdAndUpdate(
         req.user._id,
         {
@@ -12,7 +13,6 @@ router.post('/images', (req, res) => {
                 images: {
                     $each: [{
                         ...req.body
-                    
                     }],
                     $position: 0
                 }

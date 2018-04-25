@@ -1,8 +1,14 @@
-const express = require('express');
-const router  = express.Router();
-const moment  = require('moment');
-const Legend  = require('../models/user');
-const auth    = require('../middlewares/auth');
+const express    = require('express');
+const router     = express.Router();
+const moment     = require('moment');
+const Legend     = require('../models/user');
+const auth       = require('../middlewares/auth');
+const uploadcare = require('uploadcare')(process.env.UPLOADCARE_PUB_KEY, process.env.UPLOADCARE_PR_KEY);
+
+console.log(process.env.UPLOADCARE_PUB_KEY);
+console.log(process.env.UPLOADCARE_PR_KEY);
+
+
 
 router.get('/', auth.isLogged(), (req, res) => {
     res.render('profile', {
@@ -30,6 +36,24 @@ router.get('/images', auth.isLogged(), (req, res) => {
         title: `${req.user.username} Images | Legends`
     });
 });
+
+router.delete('/image/:id', (req, res) => {
+    Legend.findByIdAndUpdate(
+        req.user._id,
+        {
+            $pull: { images: { _id: req.params.id }},
+            remove: true, new: false
+        },
+        (err, doc) => {
+            if (err) return res.status(500).send();
+            res.status(200).send();
+            uploadcare.files.remove(req.body.uuid, (err, data) => {
+                if (err) console.log(err);
+            });
+        }
+    );
+});
+
 
 router.get('/info', auth.isLogged(), (req, res) => {
     res.render('info', {

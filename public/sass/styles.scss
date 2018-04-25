@@ -886,3 +886,13 @@ table.table th {
     width: 36px;
     height: 36px;
 }
+
+// IMAGES
+.delete-photo {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    background: rgba(0, 0, 0, 0.15) !important;
+    z-index: 2;
+}
+// IMAGES END

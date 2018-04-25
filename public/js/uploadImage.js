@@ -5,9 +5,7 @@ UPLOADCARE_PUBLIC_KEY = "3d33781c577953db2ccb";
 function uploadImage() {
     uploadcare.openDialog(null, {
         crop: "disabled",
-        imagesOnly: true,
-        multiple: true,
-        multipleMax: 10,
+        imagesOnly: true
         }).done(function(file) {
             file.promise().done(fileInfo => {
                 console.log(fileInfo)

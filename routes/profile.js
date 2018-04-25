@@ -25,6 +25,12 @@ router.get('/friends', auth.isLogged(), (req, res) => {
     });
 });
 
+router.get('/images', auth.isLogged(), (req, res) => {
+    res.render('images', {
+        title: `${req.user.username} Images | Legends`
+    });
+});
+
 router.get('/info', auth.isLogged(), (req, res) => {
     res.render('info', {
         title: `${req.user.username} Info | Legends`

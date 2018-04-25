@@ -76,55 +76,28 @@ body
                             .ui.buttons
                                 button.ui.tiny.basic.red.button.decline-friend-request(data-id=request.requester) Decline
                                 button.ui.tiny.basic.green.button.accept-friend-request(data-id=request.requester) Accept
-        
-    //- .ui.dimmer
-        .d-flex.flex-gap
-            img(src=currentUser.profilePicture)
-            img(src=currentUser.profilePicture)
-            img(src=currentUser.profilePicture)
-        form#myAwesomeDropzone.dropzone.d-flex.align-items-center.justify-content-center(
-            action="/upload/photos" method="POST" style="height: 15%; width: 40%; border: 2px dashed #fff; color: #fff; position:fixed; bottom: 20px")
-            .dz-message Drag and drop files here or click to upload
-
-    #suhdude
-        button.btn.btn-success
+            button(onClick="uploadImage()") Upload Images
+                            //- .ui.dimmer
+                                .ui.modal.w-75.h-75.m-auto
+                                    .d-flex.flex-wrap
+                                        img.p-md-3(src=currentUser.profilePicture)
+                                        img.p-md-3(src=currentUser.profilePicture)
+                                        img.p-md-3(src=currentUser.profilePicture)
+                                        img.p-md-3(src=currentUser.profilePicture)
+                                        img.p-md-3(src=currentUser.profilePicture)
+                                        img.p-md-3(src=currentUser.profilePicture)
+                                        img.p-md-3(src=currentUser.profilePicture)
+                                        img.p-md-3(src=currentUser.profilePicture)
+                                    //- form#myAwesomeDropzone.dropzone.d-flex.align-items-center.justify-content-center(
+                                    //- action="/upload/photos" method="POST" style="height: 20%; width: 100%; border: 2px dashed #000;position:fixed; bottom: 5px")
+                                        .dz-message Drag and drop files here or click to upload
+                                script.
+                                    $('.ui.modal')
+                                        .modal({
+                                            closable: true
+                                        }).modal('show');
+                    
+        #suhdude
+            button.btn.btn-success(onclick="successAlert('Upload complete', 'topRight', 'fa fa-check')")
+            button.btn.btn-success(onclick="errorAlert('Something went wrong :/ Please try again.', 'center')")
     include partials/footer
-script.
-    $(function(){
-        Dropzone.options.myAwesomeDropzone = {
-            maxFilesize: 5,
-            addRemoveLinks: true,
-            dictResponseError: 'Server not Configured',
-            acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",
-            init:function(){
-            var self = this;
-            // config
-            self.options.addRemoveLinks = true;
-            self.options.dictRemoveFile = "Delete";
-            //New file added
-            self.on("addedfile", function (file) {
-                console.log('new file added ', file);
-            });
-            // Send file starts
-            self.on("sending", function (file) {
-                console.log('upload started', file);
-                $('.meter').show();
-            });
-            
-            // File upload Progress
-            self.on("totaluploadprogress", function (progress) {
-                console.log("progress ", progress);
-                $('.roller').width(progress + '%');
-            });
-
-            self.on("queuecomplete", function (progress) {
-                $('.meter').delay(999).slideUp(999);
-            });
-            
-            // On removing file
-            self.on("removedfile", function (file) {
-                console.log(file);
-            });
-            }
-        };
-    });

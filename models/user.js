@@ -11,6 +11,7 @@ const MessageSchema           = require('./message');
 const MyCommentsSchema        = require('./myComments');
 const LikeSchema              = require('./like');
 const InfoSchema              = require('./info');
+const ImageSchema             = require('./image');
 
 const LegendSchema = new Schema({
     username: {
@@ -61,7 +62,8 @@ const LegendSchema = new Schema({
     profilePicture: {
         type: String,
         default: '/assets/img/user_profile_icons/glasses.png'
-    },
+    }
+    ,images: [ ImageSchema ],
     posts: [ PostSchema ],
     messages: [ MessageSchema ],
     messagesSent: [ MessageSchema ],

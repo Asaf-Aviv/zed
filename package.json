@@ -33,6 +33,7 @@
     "pusher": "^1.5.1",
     "request-promise": "^4.2.2",
     "socket.io": "^2.1.0",
+    "uploadcare": "^0.4.5",
     "validator": "^9.4.1"
   },
   "devDependencies": {

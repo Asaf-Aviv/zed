@@ -12,6 +12,7 @@ router.get('/', auth.isNotLogged(), (req, res) => {
 router.post('/', (req, res) => {
     req.body.lowerCaseUsername = req.body.username.toLowerCase();
     req.body.lowerCaseEmail = req.body.email.toLowerCase();
+    req.body.info = {};
 
     if (req.body.password === req.body.confirmPassword) {
         Legend.create(req.body, (err, user) => {

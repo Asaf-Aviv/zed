@@ -10,6 +10,7 @@ const FriendSchema            = require('./friend');
 const MessageSchema           = require('./message');
 const MyCommentsSchema        = require('./myComments');
 const LikeSchema              = require('./like');
+const InfoSchema              = require('./info');
 
 const LegendSchema = new Schema({
     username: {
@@ -38,6 +39,7 @@ const LegendSchema = new Schema({
         uniqueCaseInsensitive: true,
         validate: [validator.isEmail, "The email you've entered is invalid, Please try again" ]
     },
+    info: InfoSchema,
     active: {
         type: Boolean,
         default: true

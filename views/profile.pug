@@ -25,7 +25,7 @@ body
                             a.item(href="/profile/messages") Messages
                             a.item(href="/profile/friends") Friends
                             a.item(href="/profile/images") Images
-                            a.item(href="/profile/information") Information
+                            a.item(href="/profile/info") Information
                             a.item(href="/profile/settings") Settings
                             a.item(href="/profile/logout") Logout
 
@@ -77,7 +77,7 @@ body
                                 button.ui.tiny.basic.red.button.decline-friend-request(data-id=request.requester) Decline
                                 button.ui.tiny.basic.green.button.accept-friend-request(data-id=request.requester) Accept
         
-    .ui.dimmer
+    //- .ui.dimmer
         .d-flex.flex-gap
             img(src=currentUser.profilePicture)
             img(src=currentUser.profilePicture)

@@ -1,5 +1,4 @@
 const debug            = require('debug')('legends');
-const fs               = require('fs');
 require('dotenv').config();
 const express          = require('express');
 const app              = express();
@@ -11,6 +10,7 @@ require('./io');
 const compression      = require('compression');
 const bodyParser       = require("body-parser");
 const morgan           = require('morgan');
+const fs               = require('fs');
 const path             = require('path');
 const expressValidator = require('express-validator');
 const flash            = require('connect-flash');
@@ -44,22 +44,21 @@ const runes            = require('./routes/runes');
 const spectate         = require('./routes/spectate');
 const upload           = require('./routes/upload');
 
+app.locals.moment = moment;
+
 // MongoDB
 mongoose.set('debug', true);
 mongoose.connect(process.env.MONGO_ADMIN);
+
 global.db = mongoose.connection;
+
 db.on('error', console.error.bind(console, 'DB connection error:'));
 db.once('open', () => {
     console.log("Conneted to DB");
 });
-// Logs
+
 const accessLogStream = fs.createWriteStream(path.join(__dirname+'/logs', 'access.log'), {flags: 'a'});
-// Compress files
-// Serve Static files
-// Parse incoming requests
-// Use sessions
-// Authentication
-// Flash messages
+
 app
 .use(compression())
 .use('/dist', express.static(path.join(__dirname, 'dist')))
@@ -109,19 +108,20 @@ app
 .use('/spectate', spectate)
 .use('/', index)
 
-app.locals.moment = moment;
 
 io.use(sharedsession(session({
     secret: 'EFK9AqwLKR932',
     resave: false,
     saveUninitialized: false,
-    store: new MongoStore({
+    store: new MongoStore(
+    {
         mongooseConnection: db
     })
 })));
 
-passport.use(new LocalStrategy({
-    usernameField: 'email'
+passport.use(new LocalStrategy(
+    {
+        usernameField: 'email'
     },
     function(email, password, done) {
         Legend.authenticate(email.toLowerCase(), password, function (err, user) {

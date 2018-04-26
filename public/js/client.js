@@ -191,8 +191,9 @@ $(function() {
             type: 'POST',
             url: 'users/acceptFriendRequest/'+userId,
             success: function(res) {
-                $(`#${res}`).find('button').remove();
-                $(`#${res}`).append($('<button>').addClass('btn btn-success ').html('Friends'));
+                $(`#${userId}`).remove();
+                // $(`#${res}`).find('button').remove();
+                // $(`#${res}`).append($('<button>').addClass('btn btn-success ').html('Friends'));
             },
             error: function(err) {
                 alert(err);

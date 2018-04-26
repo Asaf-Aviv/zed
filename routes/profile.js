@@ -23,12 +23,19 @@ router.get('/messages', auth.isLogged(), (req, res) => {
 });
 
 router.get('/friends', auth.isLogged(), (req, res) => {
-    Legend.find({ _id: req.user._id }, {friends: 1, _id: 0}).then(user => {
-        console.log(user[0].friends)
-    });
-    res.render('friends', {
-        title: `Friends | Legends`
-    });
+    Legend.findById(req.user._id, {
+        friends: 1,
+        },
+        async (err, user) => {
+            const friendsList = await Promise.all(
+                user.friends.map(({ _id }) => Legend.findById(_id))
+            );
+        res.render('friends', {
+            title: 'Friends | Legends',
+            friendsList,
+        });
+        }
+    );
 });
 
 router.get('/images', auth.isLogged(), (req, res) => {

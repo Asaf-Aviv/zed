@@ -69,7 +69,7 @@ body
                                                             button.delete-comment.btn.btn-danger(data-id=comment._id) Delete
                 #friend-requests.col-2.pt-5
                     each request in currentUser.friendRequests
-                        .profile-friend-request.text-center
+                        .requester.profile-friend-request.text-center(id=request.requester)
                             a.bold.d-block(href=`/users/${request.username}`)= request.username
                             .ui.image
                                 img(src=request.profilePicture)

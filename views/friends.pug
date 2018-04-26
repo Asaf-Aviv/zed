@@ -3,6 +3,25 @@ body
     include partials/nav
     include partials/sidenav
     .container
-        #friends-list-wrapper
-        
+        p= friendsList.length
+        p= friendsList[0]
+        .row
+            #friends-list-wrapper
+                .ui.six.doubling.cards
+                    each friend in friendsList
+                        .card
+                            .image
+                                img(src=friend.profilePicture)
+                            .content
+                                .center.aligned.header
+                                    a(href=`/users/${friend.username}`)= friend.username
+                            .content
+                                .meta
+                                    i.mr-2.il.flag
+                                    | Israel
+                                .description I love to proggram
+                                .description 28
+                            .extra.content
+                                i.user.icon
+                                | 22 friends
         include partials/footer

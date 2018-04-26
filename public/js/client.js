@@ -93,7 +93,7 @@ $(function() {
             type: 'POST',
             url: '/post/like/'+postId,
             success: function(res) {
-                $(`#${postId} .like-post > button`).toggleClass('red');
+                $(`#${postId} .like-post > button`).toggleClass('violet');
                 $(`#${postId} .like-count`).text(+likes + +res);
             },
             error: function(err) {
@@ -121,11 +121,11 @@ $(function() {
         });
     });
     
-    $('.message-form').submit(function(e) {
+    $('#message-form').submit(function(e) {
         e.preventDefault();
         $this = $(this);
         $this.addClass('loading');
-        const userId = $('.message-form').attr('data-id');
+        const userId = $('#message-form').attr('data-id');
 
         $.ajax({
             type: 'POST',

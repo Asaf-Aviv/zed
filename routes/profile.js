@@ -38,9 +38,9 @@ router.get('/friends', auth.isLogged(), (req, res) => {
     );
 });
 
-router.get('/images', auth.isLogged(), (req, res) => {
-    res.render('images', {
-        title: `${req.user.username} Images | Legends`
+router.get('/photos', auth.isLogged(), (req, res) => {
+    res.render('photos', {
+        title: `${req.user.username} Photos | Legends`
     });
 });
 
@@ -60,7 +60,6 @@ router.delete('/image/:id', (req, res) => {
         }
     );
 });
-
 
 router.get('/info', auth.isLogged(), (req, res) => {
     res.render('info', {

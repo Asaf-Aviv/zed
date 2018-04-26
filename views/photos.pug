@@ -5,9 +5,10 @@ body
     .container
         #photos-wrapper.d-flex.flex-wrap.justify-content-lg-start.justify-content-center.mt-4
             each image in currentUser.images
-                .ui.raised.segment.position-relative.m-3(style="width: 200px; height: 200px;")
+                .ui.raised.segment.position-relative.m-3(style="width: 240px; height: 240px;")
                     button.delete-photo.ui.circular.icon.button(data-id=image._id data-uuid=image.uuid)
                         i.close.icon(style="font-size: 1.2em;")
-                    a.w-100.h-100.d-flex.align-items-center.justify-content-center(href=`${image.cdnUrl}` target="_blank")
-                        img(src=`${image.cdnUrl}-/resize/128x128/`)
+                    a.d-flex.align-items-center.justify-content-center(href=`${image.cdnUrl}` target="_blank")
+                        img(src=`${image.cdnUrl}-/resize/200x200/`)
+                    .text-center= moment(image.created).subtract().fromNow()
         include partials/footer

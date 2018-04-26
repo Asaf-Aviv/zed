@@ -24,12 +24,12 @@ body
                             a.item(href="/profile") Profile
                             a.item(href="/profile/messages") Messages
                             a.item(href="/profile/friends") Friends
-                            a.item(href="/profile/images") Images
+                            a.item(href="/profile/photos") Photos
                             a.item(href="/profile/info") Information
                             a.item(href="/profile/settings") Settings
                             a.item(href="/profile/logout") Logout
 
-                #profile-content.col-md-7.offset-lg-1.col-sm-12.pt-5.ml-auto
+                #profile-content.col-md-7.offset-lg-1.col-sm-12.pt-5
                     .profile-post-wrapper.mb-4
                         form(method="POST", action="/post")
                             .form-group
@@ -44,10 +44,10 @@ body
                                             p= post.body
                                         .post-controls.d-flex.align-items-center.p-2
                                             .ui.labeled.button.like-post(data-id=post.id)
-                                                button.ui.tiny.button(class=post.likes.some(like => like._id.toString() == currentUser._id) ? 'red' : '')
+                                                button.ui.tiny.button(class=post.likes.some(like => like._id.toString() == currentUser._id) ? 'violet' : '')
                                                     i.heart.icon
                                                     | Like
-                                                .like-count.ui.basic.red.left.pointing.label= post.likeCount
+                                                .like-count.ui.basic.violet.left.pointing.label= post.likeCount
                                             .post-buttons.ml-auto
                                                 button.ui.tiny.blue.button(href="/post/edit/"+post._id) Edit
                                                 button.ui.tiny.red.button.delete-post(data-id=post._id) Delete

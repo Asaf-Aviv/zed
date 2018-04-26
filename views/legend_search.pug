@@ -8,7 +8,7 @@ body
                 if (legend._id != currentUser._id)
                     .legend-wrapper
                         div(id=legend._id)
-                            a(href=`/profile/${legend.username}`): h3= legend.username
+                            a(href=`/users/${legend.username}`): h3= legend.username
                             img(src=legend.profilePicture)
                             if (pendingRequests.includes(legend._id.toString()))
                                 button.btn.btn-success.accept-friend-request(data-id=legend._id) Accept

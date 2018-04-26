@@ -2,19 +2,23 @@ const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
 const MessageSchema = new Schema({
+    from: {
+        type: Schema.Types.ObjectId,
+        require: true
+    },
     to: {
         type: Schema.Types.ObjectId,
         require: true
     },
-    from: {
-        type: Schema.Types.ObjectId,
+    subject: {
+        type: String,
         require: true
     },
     body: {
         type: String,
         require: true
     },
-    date: {
+    created: {
         type: Date,
         default: Date.now
     },
@@ -29,6 +33,10 @@ const MessageSchema = new Schema({
     new: {
         type: Boolean,
         default: true
+    },
+    deleted: {
+        type: Boolean,
+        default: false
     }
 });
 

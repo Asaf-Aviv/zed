@@ -18,7 +18,8 @@ router.get('/edit/:id', (req, res) => {
 // Publish a post
 router.post('/', (req, res) => {
     Legend.findByIdAndUpdate(
-        req.user._id, {
+        req.user._id, 
+        {
             $push: {
                 posts: {
                     $each: [{
@@ -29,7 +30,8 @@ router.post('/', (req, res) => {
                     $position: 0
                 }
             }
-        }, {
+        }, 
+        {
             safe: true,
             new: true
         },

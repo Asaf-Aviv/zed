@@ -10,8 +10,21 @@ router.get('/:userName', (req, res) => {
             console.log('users found')
             user.profileViews++;
             user.save();
-            res.render('legend_profile', {
+            res.render('user_profile', {
                 title: `${user.username} | Legends`,
+                user,
+            });
+        } else {
+            res.redirect('/users');
+        }
+    });
+});
+
+router.get('/:userName/photos', (req, res) => {
+    Legend.findOne({ username: req.params.userName }).then(user => {
+        if (user) {
+            res.render('user_photos', {
+                title: `${user.username} Photos | Legends`,
                 user,
             });
         } else {

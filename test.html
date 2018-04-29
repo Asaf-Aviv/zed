@@ -1,25 +1,240 @@
-<button class="feedback-btn">
-    TOGGLE
-</button>
+<div tabindex="0" class="plyr plyr--full-ui plyr--video plyr--html5 plyr--captions-enabled plyr--captions-active plyr--fullscreen-enabled plyr--stopped"
+    aria-label="View From A Blue Moon">
+    <div class="plyr__video-wrapper">
+        <video crossorigin="" playsinline="" poster="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg" id="player"
+            src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1440p.mp4">
+            <!-- Video files -->
+            <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4" size="576">
+            <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4" type="video/mp4" size="720">
+            <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4" type="video/mp4" size="1080">
+            <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1440p.mp4" type="video/mp4" size="1440">
 
-<div id="feedback-wrapper">
-    <div class="d-flex flex-column text-center p-3">
-        <div class="d-flex pb-3">
-            <h4 class="m-0">Send feedback</h4>
-            <button class="close-feedback-btn ml-auto px-2">✕</button>
+            <!-- Caption files -->
+            <track kind="captions" label="English" srclang="en" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt"
+                default="">
+            <track kind="captions" label="Français" srclang="fr" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt">
+
+            <!-- Fallback for browsers that don't support the <video> element -->
+            <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download="">Download</a>
+        </video>
+    </div>
+    <div class="plyr__captions"></div>
+    <button type="button" class="plyr__control plyr__control--overlaid" data-plyr="play" aria-pressed="false">
+        <svg role="presentation" focusable="false">
+            <use xlink:href="#plyr-play"></use>
+        </svg>
+        <span class="plyr__sr-only">Play</span>
+    </button>
+    <div class="plyr__controls">
+        <button type="button" class="plyr__control" aria-pressed="false" data-plyr="play">
+            <svg class="icon--pressed" role="presentation" focusable="false">
+                <use xlink:href="#plyr-pause"></use>
+            </svg>
+            <svg class="icon--not-pressed" role="presentation" focusable="false">
+                <use xlink:href="#plyr-play"></use>
+            </svg>
+            <span class="label--pressed plyr__tooltip" role="tooltip">Pause</span>
+            <span class="label--not-pressed plyr__tooltip" role="tooltip">Play</span>
+        </button>
+        <div class="plyr__progress">
+            <label for="plyr-seek-703" id="plyr-seek-703-label" class="plyr__sr-only">Seek</label>
+            <input data-plyr="seek" type="range" min="0" max="100" step="0.01" value="0" autocomplete="off" role="slider"
+                aria-labelledby="plyr-seek-703-label" aria-valuemin="0" aria-valuemax="100" aria-valuenow="1.11" id="plyr-seek-703"
+                style="--value:1.11%;">
+            <progress class="plyr__progress--buffer" min="0" max="100" value="3.83779" role="presentation" aria-hidden="true">% buffered</progress>
+            <span role="tooltip" class="plyr__tooltip" style="left: 52.7296%;">01:36</span>
         </div>
-        <form id="feedback-form" action="/feedback" method="POST">
-            <select class="mb-4 custom-select" name="feedback">
-                <option value="idea" selected="selected">Hey check out my awesome  !</option>
-                <option value="bug">I would like to report a </option>
-            </select>
-            <div class="md-form m-0">
-                <textarea class="form-control md-textarea md-textarea-auto mb-4" id="feedback-label" type="text" name="message"
-                    placeholder="Describe your issue or share your awesome ideas!" style="height: 72px;"></textarea>
-            </div>
-            <button class="btn btn-sm btn-outline-primary waves-effect waves-light">Send
-                <i class="fa fa-paper-plane-o pl-2"></i>
+        <div class="plyr__time plyr__time--current" aria-label="Current time">-03:01</div>
+        <button type="button" class="plyr__control" aria-pressed="false" data-plyr="mute">
+            <svg class="icon--pressed" role="presentation" focusable="false">
+                <use xlink:href="#plyr-muted"></use>
+            </svg>
+            <svg class="icon--not-pressed" role="presentation" focusable="false">
+                <use xlink:href="#plyr-volume"></use>
+            </svg>
+            <span class="label--pressed plyr__tooltip" role="tooltip">Unmute</span>
+            <span class="label--not-pressed plyr__tooltip" role="tooltip">Mute</span>
+        </button>
+        <div class="plyr__volume">
+            <label for="plyr-volume-703" id="plyr-volume-703-label" class="plyr__sr-only">Volume</label>
+            <input data-plyr="volume" type="range" min="0" max="1" step="0.05" value="1" autocomplete="off"
+                role="slider" aria-labelledby="plyr-volume-703-label" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0.2"
+                id="plyr-volume-703" style="--value:20%;">
+        </div>
+        <button type="button" class="plyr__control" aria-pressed="true" data-plyr="captions">
+            <svg class="icon--pressed" role="presentation" focusable="false">
+                <use xlink:href="#plyr-captions-on"></use>
+            </svg>
+            <svg class="icon--not-pressed" role="presentation" focusable="false">
+                <use xlink:href="#plyr-captions-off"></use>
+            </svg>
+            <span class="label--pressed plyr__tooltip" role="tooltip">Disable captions</span>
+            <span class="label--not-pressed plyr__tooltip" role="tooltip">Enable captions</span>
+        </button>
+        <div class="plyr__menu">
+            <button id="plyr-settings-toggle-703" aria-haspopup="true" aria-controls="plyr-settings-703" aria-expanded="false"
+                type="button" class="plyr__control" data-plyr="settings">
+                <svg role="presentation" focusable="false">
+                    <use xlink:href="#plyr-settings"></use>
+                </svg>
+                <span class="plyr__tooltip" role="tooltip">Settings</span>
             </button>
-        </form>
+            <form class="plyr__menu__container" id="plyr-settings-703" hidden="" aria-labelled-by="plyr-settings-toggle-703"
+                role="tablist" tabindex="-1">
+                <div>
+                    <div id="plyr-settings-703-home" aria-labelled-by="plyr-settings-toggle-703" role="tabpanel">
+                        <ul role="tablist">
+                            <li role="tab">
+                                <button data-plyr="settings" type="button" class="plyr__control plyr__control--forward" id="plyr-settings-703-captions-tab"
+                                    aria-haspopup="true" aria-controls="plyr-settings-703-captions" aria-expanded="false">Captions
+                                    <span class="plyr__menu__value">English</span>
+                                </button>
+                            </li>
+                            <li role="tab">
+                                <button data-plyr="settings" type="button" class="plyr__control plyr__control--forward" id="plyr-settings-703-quality-tab"
+                                    aria-haspopup="true" aria-controls="plyr-settings-703-quality" aria-expanded="false">Quality
+                                    <span class="plyr__menu__value">1440p</span>
+                                </button>
+                            </li>
+                            <li role="tab">
+                                <button data-plyr="settings" type="button" class="plyr__control plyr__control--forward" id="plyr-settings-703-speed-tab"
+                                    aria-haspopup="true" aria-controls="plyr-settings-703-speed" aria-expanded="false">Speed
+                                    <span class="plyr__menu__value">Normal</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="plyr-settings-703-captions" hidden="" aria-labelled-by="plyr-settings-703-captions-tab" role="tabpanel"
+                        tabindex="-1">
+                        <button type="button" class="plyr__control plyr__control--back" aria-haspopup="true" aria-controls="plyr-settings-703-home"
+                            aria-expanded="false">Captions</button>
+                        <ul>
+                            <li>
+                                <label class="plyr__control">
+                                    <input data-plyr="language" type="radio" name="plyr-language" value="" checked="false" class="plyr__sr-only">
+                                    <span hidden=""></span>Disabled</label>
+                            </li>
+                            <li>
+                                <label class="plyr__control">
+                                    <input data-plyr="language" type="radio" name="plyr-language" value="en" checked="false"
+                                        class="plyr__sr-only">
+                                    <span hidden=""></span>English
+                                    <span class="plyr__menu__value">
+                                        <span class="plyr__badge">EN</span>
+                                    </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="plyr__control">
+                                    <input data-plyr="language" type="radio" name="plyr-language" value="fr" checked="false"
+                                        class="plyr__sr-only">
+                                    <span hidden=""></span>Français
+                                    <span class="plyr__menu__value">
+                                        <span class="plyr__badge">FR</span>
+                                    </span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="plyr-settings-703-quality" hidden="" aria-labelled-by="plyr-settings-703-quality-tab" role="tabpanel"
+                        tabindex="-1">
+                        <button type="button" class="plyr__control plyr__control--back" aria-haspopup="true" aria-controls="plyr-settings-703-home"
+                            aria-expanded="false">Quality</button>
+                        <ul>
+                            <li>
+                                <label class="plyr__control">
+                                    <input data-plyr="quality" type="radio" name="plyr-quality" value="1440" checked="false"
+                                        class="plyr__sr-only">
+                                    <span hidden=""></span>1440p
+                                    <span class="plyr__menu__value">
+                                        <span class="plyr__badge">HD</span>
+                                    </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="plyr__control">
+                                    <input data-plyr="quality" type="radio" name="plyr-quality" value="1080" checked="false"
+                                        class="plyr__sr-only">
+                                    <span hidden=""></span>1080p
+                                    <span class="plyr__menu__value">
+                                        <span class="plyr__badge">HD</span>
+                                    </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="plyr__control">
+                                    <input data-plyr="quality" type="radio" name="plyr-quality" value="720" checked="false" class="plyr__sr-only">
+                                    <span hidden=""></span>720p
+                                    <span class="plyr__menu__value">
+                                        <span class="plyr__badge">HD</span>
+                                    </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="plyr__control">
+                                    <input data-plyr="quality" type="radio" name="plyr-quality" value="576" checked="false" class="plyr__sr-only">
+                                    <span hidden=""></span>576p
+                                    <span class="plyr__menu__value">
+                                        <span class="plyr__badge">SD</span>
+                                    </span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="plyr-settings-703-speed" hidden="" aria-labelled-by="plyr-settings-703-speed-tab" role="tabpanel"
+                        tabindex="-1">
+                        <button type="button" class="plyr__control plyr__control--back" aria-haspopup="true" aria-controls="plyr-settings-703-home"
+                            aria-expanded="false">Speed</button>
+                        <ul>
+                            <li>
+                                <label class="plyr__control">
+                                    <input data-plyr="speed" type="radio" name="plyr-speed" value="0.5" checked="false" class="plyr__sr-only">
+                                    <span hidden=""></span>0.5×</label>
+                            </li>
+                            <li>
+                                <label class="plyr__control">
+                                    <input data-plyr="speed" type="radio" name="plyr-speed" value="0.75" checked="false" class="plyr__sr-only">
+                                    <span hidden=""></span>0.75×</label>
+                            </li>
+                            <li>
+                                <label class="plyr__control">
+                                    <input data-plyr="speed" type="radio" name="plyr-speed" value="1" checked="false" class="plyr__sr-only">
+                                    <span hidden=""></span>Normal</label>
+                            </li>
+                            <li>
+                                <label class="plyr__control">
+                                    <input data-plyr="speed" type="radio" name="plyr-speed" value="1.25" checked="false" class="plyr__sr-only">
+                                    <span hidden=""></span>1.25×</label>
+                            </li>
+                            <li>
+                                <label class="plyr__control">
+                                    <input data-plyr="speed" type="radio" name="plyr-speed" value="1.5" checked="false" class="plyr__sr-only">
+                                    <span hidden=""></span>1.5×</label>
+                            </li>
+                            <li>
+                                <label class="plyr__control">
+                                    <input data-plyr="speed" type="radio" name="plyr-speed" value="1.75" checked="false" class="plyr__sr-only">
+                                    <span hidden=""></span>1.75×</label>
+                            </li>
+                            <li>
+                                <label class="plyr__control">
+                                    <input data-plyr="speed" type="radio" name="plyr-speed" value="2" checked="false" class="plyr__sr-only">
+                                    <span hidden=""></span>2×</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <button type="button" class="plyr__control" aria-pressed="false" data-plyr="fullscreen">
+            <svg class="icon--pressed" role="presentation" focusable="false">
+                <use xlink:href="#plyr-exit-fullscreen"></use>
+            </svg>
+            <svg class="icon--not-pressed" role="presentation" focusable="false">
+                <use xlink:href="#plyr-enter-fullscreen"></use>
+            </svg>
+            <span class="label--pressed plyr__tooltip" role="tooltip">Exit fullscreen</span>
+            <span class="label--not-pressed plyr__tooltip" role="tooltip">Enter fullscreen</span>
+        </button>
     </div>
 </div>

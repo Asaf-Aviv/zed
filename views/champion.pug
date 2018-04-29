@@ -1,133 +1,193 @@
 include partials/head
-body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' ', '').replace("'", '')}.jpg);`)
+body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' ', '').replace("'", '')}.jpg); color: #efefef;`)
     include partials/nav
     include partials/sidenav
-    .container(style="background-color: rgba(0, 0, 0, 0.75)")
-        h1.champion-name.text-center.pt-3.mb-2= champ.name
+    header.container(style="background-color: rgba(0, 0, 0, 0.75);")
+        //- p= JSON.stringify(champ)
+        h1.champion-name.bold.text-center.pt-3.mb-2= champ.name
         .champion-title.text-center.mb-2: q= champ.title
-        .champion-role.text-center.mb-2: span= champ.tags.join(', ')
+        .champion-role.text-center.mb-2: span= 'Role: ' + champ.tags.join(', ')
+        #champ-base-stats
+            .row
+                .d-flex.justify-content-center.col-md-2.pl-3.text-center.pt-4
+                    a(href="/champions/" + champ.name.replace('_','').replace(' ', '').replace("'", '').replace('.', ''))
+                        img(src=`/assets/league/img/champion-base-tile/${champ.name.replace("'", "").replace(' ', '').replace('.', '')}.png`)
+                .col-md-5.col-sm-12
+                    table.table
+                        tr
+                            td.colorFF0000 Health
+                            td.bold= `${champ.stats.hp}(+${champ.stats.hpperlevel})`
+                        tr
+                            td.colorFF0000 Health Regen
+                            td.bold= `${champ.stats.hpregen}(+${champ.stats.hpregenperlevel})`
+                        tr    
+                            td.colorFF8C00 Attack Damage
+                            td.bold= `${champ.stats.attackdamage}(+${champ.stats.attackdamageperlevel})`
+                        tr
+                            td.colorFFFF00 Armor
+                            td.bold= `${champ.stats.armor}(+${champ.stats.armorperlevel})`
+                        tr
+                            td.colorFF00FF Magic Resist
+                            td.bold= Math.trunc(champ.stats.spellblock) + `(+${champ.stats.spellblockperlevel})`
+                .col-md-5.col-sm-12
+                    table.table.general-color
+                        tr
+                            td Attack Speed
+                            td.bold= `${(champ.stats.attackspeedoffset * 10).toFixed(3)}(+${champ.stats.attackspeedperlevel})`
+                        tr
+                            td Range
+                            td.bold= champ.stats.attackrange
+                        tr
+                            td Movement Speed
+                            td.bold= champ.stats.movespeed
+                        tr
+                            td= champ.partype !== 'None' ? champ.partype : ''
+                            td.bold= champ.stats.mp ? Math.trunc(champ.stats.mp) : '', champ.stats.mpperlevel ? `(+${champ.stats.mpperlevel})` : ''
+                        tr
+                            td= champ.stats.mpregen ? `${champ.partype} Regen`: ''
+                            td.bold= champ.stats.mpregen || '', champ.stats.mpregenperlevel ? `(+${champ.stats.mpregenperlevel})` : ''
+        p= champ.info.difficulty
+        p= champ.info.attack
+        p= champ.info.defense
+        p= champ.info.magic
         hr
-        .row
-            .col-md-2.pl-3.text-center.pt-4
-                a(href="/champions/" + champ.name.replace('_','').replace(' ', '').replace("'", '').replace('.', ''))
-                    img(src=`/assets/league/img/champion-base-tile/${champ.name.replace("'", "").replace(' ', '').replace('.', '')}.png`)
-            .col-md-5.col-sm-12
-                table.table
-                    tr
-                        td.colorFF0000 Health
-                        td.font-weight-bold= `${champ.stats.hp}(+${champ.stats.hpperlevel})`
-                    tr
-                        td.colorFF0000 Health Regen
-                        td.font-weight-bold= `${champ.stats.hpregen}(+${champ.stats.hpregenperlevel})`
-                    tr    
-                        td.colorFF8C00 Attack Damage
-                        td.font-weight-bold= `${champ.stats.attackdamage}(+${champ.stats.attackdamageperlevel})`
-                    tr
-                        td.colorFFFF00 Armor
-                        td.font-weight-bold= `${champ.stats.armor}(+${champ.stats.armorperlevel})`
-                    tr
-                        td.colorFF00FF Magic Resist
-                        td.font-weight-bold= Math.trunc(champ.stats.spellblock) + `(+${champ.stats.spellblockperlevel})`
-            .col-md-5.col-sm-12
-                table.table.general-color
-                    tr
-                        td Attack Speed
-                        td.font-weight-bold= `${(champ.stats.attackspeedoffset * 10).toFixed(3)}(+${champ.stats.attackspeedperlevel})`
-                    tr
-                        td Range
-                        td.font-weight-bold= champ.stats.attackrange
-                    tr
-                        td Movement Speed
-                        td.font-weight-bold= champ.stats.movespeed
-                    tr
-                        td= champ.partype !== 'None' ? champ.partype : ''
-                        td.font-weight-bold= champ.stats.mp ? Math.trunc(champ.stats.mp) : '', champ.stats.mpperlevel ? `(+${champ.stats.mpperlevel})` : ''
-                    tr
-                        td= champ.stats.mpregen ? `${champ.partype} Regen`: ''
-                        td.font-weight-bold= champ.stats.mpregen || '', champ.stats.mpregenperlevel ? `(+${champ.stats.mpregenperlevel})` : ''
-                    
-    blockquote.blockquote.text-center.mb-0= champ.blurb
+        .pb-2
+        
+    blockquote.blockquote.text-center.mb-0
         = champ.blurb
     </blockquote>
-        section.champion-abilities
-            .container(style="background-color: rgba(0, 0, 0, 0.75)")
-                h3.text-center.mb-4 Champion Abilities
-                .ability-wrapper.row.col-10.offset-1
-                    .passive-name.col-12.text-center.mb-1: h5.bold.general-color.pt-4= champ.passive.name
-                    .ability-tile.col-lg-1.col-md-2.d-flex.justify-content-center.align-items-center.mb-4: img(src=`/assets/league/img/passive/${champ.passive.image.full}`)
-                    -
-                        let passiveDesc = champ.passive.description
-                            passiveDesc = passiveDesc.replace(/bonus/g, 'Bonus ').replace(/spelldamage/g, 'AP').replace(/attackdamage/g, 'AD').replace(/armor/g, 'Armor')
-                            passiveDesc = passiveDesc.replace(/magic damage/gi, '<span class="color99FF99">Magic Damage</span>')
-                            passiveDesc = passiveDesc.replace(/physical damage/gi, '<span class="colorFF8C00">Physical Damage</span>')
-                            passiveDesc = passiveDesc.replace(/maximum health/gi, '<span class="colorFF0000">Maximum Health</span>')
-                            passiveDesc = passiveDesc.replace(/health/gi, '<span class="colorFF0000">Health</span>')
-                            passiveDesc = passiveDesc.replace(/energy/gi, '<span class="colorFFFF00">Energy</span>')
-                            passiveDesc = passiveDesc.replace(/magic/gi, '<span class="color99FF99">Magic</span>')
-                            passiveDesc = passiveDesc.replace(/armor/gi, '<span class="colorFFFF00">Armor</span>')
-                            passiveDesc = passiveDesc.replace(/physical/gi, '<span class="colorFF8C00">Physical</span>')
-                    .ability-desc.col-lg-11.col-md-10.px-4.mb-4: span!= passiveDesc
-                br
-                - for (let i = 0; i < 4; i++)
-                    .ability-wrapper.row.col-10.offset-1
-                        .ability-name.col-12.text-center.mb-1: h5.bold.general-color.pt-4= champ.spells[i].name
-                        .row.col-12.mb-4.px-4.text-center.bold.general-color
-                            .cooldown.col-lg-4.col-sm-4.text-xs-center: span= 'Cooldown ' + champ.spells[i].cooldownBurn
+
+        main.container(style="background-color: rgba(0, 0, 0, 0.75)")
+            nav#champ-nav.row.mb-5
+                .col-10.offset-1.px-0
+                    nav.nav.nav-pills.nav-justified.flex-column.flex-sm-row(role="tablist")
+                        a.nav-item.nav-link.active(href="#abilities"
+                            data-toggle="pill" role="tab") 
+                            span.bold Abilities
+                        a.nav-item.nav-link(href="#tips"
+                            data-toggle="pill" role="tab") 
+                            span.bold Tips
+                        a.nav-item.nav-link(href="#lore"
+                            data-toggle="pill" role="lore") 
+                            span.bold Lore
+            
+            .tab-content
+                section#lore.tab-pane.fade(role="tabpanel")
+                    h3.general-color.bold.text-center.mb-4= champ.name + ' Lore'
+                    .row.col-10.offset-1.mx-auto
+                        blockquote.blockquote(style="background-color: rgba(0,0,0,0);")= champ.lore
+
+                section#tips.tab-pane.fade(role="tabpanel")
+                    h3.general-color.bold.text-center.mb-4= champ.name + ' Tips'
+                    .row.col-10.offset-1.mx-auto
+                        #ally-tips.bold.mb-4
+                            h4.bold.mb-4(style="color: #02d800;")= 'Playing as ' + champ.name
+                            for tip in champ.allytips
+                                .champ-tip.pl-5.my-3= tip
+                        #enemy-tips.bold.mb-4
+                            h4.bold.mb-4(style="color: #f11e1e;")= 'Playing against ' + champ.name
+                            for tip in champ.enemytips
+                                .champ-tip.pl-5.my-3= tip
                     
-                            if champ.spells[i].resource
-                                -let res = champ.spells[i].resource.replace('{{ cost }}', champ.spells[i].costBurn) || 'No Cost'
-                                -let resEffect = res.match(/{{ ..+? }}/g)
-                                if resEffect
-                                    -res = res.replace(resEffect[0], champ.spells[i].effectBurn[resEffect[0].slice(4, resEffect[0].lastIndexOf(' '))])
-                                .cost-type.col-lg-4.col-sm-4.text-xs-center: span= res
-                            else 
-                                .cost-type.col-lg-4.col-sm-4.text-xs-center: span No Cost
-                                
-                            .range.col-lg-4.col-sm-4.text-xs-center: span= 'Range ' + champ.spells[i].rangeBurn
-                        .ability-tile.col-lg-1.d-flex.justify-content-center.align-items-center.mb-4: img(src=`/assets/league/img/spell/${champ.spells[i].image.full}`)
-                        .ability-desc.col-lg-11.px-4.mb-4: span!= champ.spells[i].description
+                section#abilities.champion-abilities.tab-pane.fade.show.active(role="tabpanel")
+                    h3.general-color.bold.text-center.mb-5= champ.name + ' Abilities'
+                    .ability-wrapper.row.col-10.offset-1.align-items-start
+                        .passive-name.col-12.text-center.mb-1: h5.bold.general-color.pt-4.mb-4= champ.passive.name
+                        .ability-tile.col-md-1.d-flex.justify-content-center.align-items-center.mb-4: img(src=`/assets/league/img/passive/${champ.passive.image.full}`)
                         -
-                            let tooltip = champ.spells[i].tooltip
-                            let damageAmp
+                            let passiveDesc = champ.passive.description
+                                passiveDesc = passiveDesc.replace(/bonus/g, 'Bonus ').replace(/spelldamage/g, 'AP').replace(/attackdamage/g, 'AD').replace(/armor/g, 'Armor')
+                                passiveDesc = passiveDesc.replace(/magic damage/gi, '<span class="color99FF99">Magic Damage</span>')
+                                passiveDesc = passiveDesc.replace(/physical damage/gi, '<span class="colorFF8C00">Physical Damage</span>')
+                                passiveDesc = passiveDesc.replace(/maximum health/gi, '<span class="colorFF0000">Maximum Health</span>')
+                                passiveDesc = passiveDesc.replace(/health/gi, '<span class="colorFF0000">Health</span>')
+                                passiveDesc = passiveDesc.replace(/energy/gi, '<span class="colorFFFF00">Energy</span>')
+                                passiveDesc = passiveDesc.replace(/magic/gi, '<span class="color99FF99">Magic</span>')
+                                passiveDesc = passiveDesc.replace(/armor/gi, '<span class="colorFFFF00">Armor</span>')
+                                passiveDesc = passiveDesc.replace(/physical/gi, '<span class="colorFF8C00">Physical</span>')
+                        .ability-desc.d-flex.align-items-start.col-md-7.px-4.mb-4
+                            p!= passiveDesc
 
-                            if (tooltip) {
-                                let champEffects = tooltip.match(/{{ ..+? }}/g)
-                                
-                                if(champEffects) {
-                                    champEffects.map(effect => {
+                        - const CID = cmpId[champ.name.replace(' ','').replace("'", '')].padStart(4, '0');
+                        - const abilityUrl = `//d28xe8vt774jo5.cloudfront.net/champion-abilities/${CID}/ability_${CID}_`;
+                        - const videoUrls = [`${abilityUrl}Q1`,`${abilityUrl}W1`,`${abilityUrl}E1`,`${abilityUrl}R1`];
+                        .d-flex.col-md-4.mb-4
+                            video.playerP.w-100.h-100(controls playsinline poster=`${abilityUrl}P1.jpg`)
+                                source(src=`${abilityUrl}P1.webm` type="video/webm")
+
+                    - for (let i = 0; i < 4; i++)
+                        .ability-wrapper.row.col-10.offset-1
+                            .ability-name.col-12.text-center.mb-1: h5.bold.general-color.pt-4.mb-4= champ.spells[i].name
+                            .row.col-12.mb-4.px-4.text-center.bold.general-color.mb-4
+                                .cooldown.col-lg-4.col-sm-4.text-xs-center: span= 'Cooldown ' + champ.spells[i].cooldownBurn
+                        
+                                if champ.spells[i].resource
+                                    -let res = champ.spells[i].resource.replace('{{ cost }}', champ.spells[i].costBurn) || 'No Cost'
+                                    -let resEffect = res.match(/{{ ..+? }}/g)
+                                    if resEffect
+                                        -res = res.replace(resEffect[0], champ.spells[i].effectBurn[resEffect[0].slice(4, resEffect[0].lastIndexOf(' '))])
+                                    .cost-type.col-lg-4.col-sm-4.text-xs-center: span= res
+                                else 
+                                    .cost-type.col-lg-4.col-sm-4.text-xs-center: span No Cost
                                     
-                                    if (effect.includes('e')) {
-                                        tooltip = tooltip.replace(effect, champ.spells[i].effectBurn[effect.slice(4, effect.lastIndexOf(' '))])
+                                .range.col-lg-4.col-sm-4.text-xs-center: span= 'Range ' + champ.spells[i].rangeBurn
+
+                            .ability-tile.col-md-1.d-flex.justify-content-center.align-items-start.mb-4: img(src=`/assets/league/img/spell/${champ.spells[i].image.full}`)
+                            -
+                                let tooltip = champ.spells[i].tooltip
+                                let damageAmp
+
+                                if (tooltip) {
+                                    let champEffects = tooltip.match(/{{ ..+? }}/g)
+                                    
+                                    if(champEffects) {
+                                        champEffects.map(effect => {
+                                        
+                                        if (effect.includes('e')) {
+                                            tooltip = tooltip.replace(effect, champ.spells[i].effectBurn[effect.slice(4, effect.lastIndexOf(' '))])
+                                        }
+
+                                        if (effect.includes('a')) {
+                                            spellObj = champ.spells[i].vars ? champ.spells[i].vars.filter(obj => obj.key === effect.slice(3, 5))[0] : ''
+                                            damageAmp = spellObj ? `(+${spellObj.coeff * 100}% ${spellObj.link})` : ''
+                                            tooltip = tooltip.includes(`(+${effect})`) ? tooltip.replace(`(+${effect})`, damageAmp) : tooltip.replace(`(+${effect}%)`, damageAmp)
+
+                                            if (tooltip.includes(`(+${effect})`)) tooltip = tooltip.replace(`(+${effect})`, damageAmp)
+                                            if (tooltip.includes(`(+${effect}%)`)) tooltip = tooltip.replace(`(+${effect}%)`, damageAmp)
+                                            if (tooltip.includes(effect)) tooltip = tooltip.replace(effect, damageAmp)
+                                        }
+
+                                        if (effect.includes('f')) {
+                                            spellObj = champ.spells[i].vars ? champ.spells[i].vars.filter(obj => obj.key === effect.slice(3, 5))[0] : ''
+                                            damageAmp = spellObj ? `(+${spellObj.coeff * 100}% ${spellObj.link})` : ''
+
+                                            if (tooltip.includes(`(+${effect})`)) tooltip = tooltip.replace(`(+${effect})`, damageAmp)
+                                            if (tooltip.includes(`(+${effect}%)`)) tooltip = tooltip.replace(`(+${effect}%)`, damageAmp)
+                                            if (tooltip.includes(effect)) tooltip = tooltip.replace(effect, damageAmp)
+                                        }})
                                     }
-
-                                    if (effect.includes('a')) {
-                                        spellObj = champ.spells[i].vars ? champ.spells[i].vars.filter(obj => obj.key === effect.slice(3, 5))[0] : ''
-                                        damageAmp = spellObj ? `(+${spellObj.coeff * 100}% ${spellObj.link})` : ''
-                                        tooltip = tooltip.includes(`(+${effect})`) ? tooltip.replace(`(+${effect})`, damageAmp) : tooltip.replace(`(+${effect}%)`, damageAmp)
-
-                                        if (tooltip.includes(`(+${effect})`)) tooltip = tooltip.replace(`(+${effect})`, damageAmp)
-                                        if (tooltip.includes(`(+${effect}%)`)) tooltip = tooltip.replace(`(+${effect}%)`, damageAmp)
-                                        if (tooltip.includes(effect)) tooltip = tooltip.replace(effect, damageAmp)
-                                    }
-
-                                    if (effect.includes('f')) {
-                                        spellObj = champ.spells[i].vars ? champ.spells[i].vars.filter(obj => obj.key === effect.slice(3, 5))[0] : ''
-                                        damageAmp = spellObj ? `(+${spellObj.coeff * 100}% ${spellObj.link})` : ''
-
-                                        if (tooltip.includes(`(+${effect})`)) tooltip = tooltip.replace(`(+${effect})`, damageAmp)
-                                        if (tooltip.includes(`(+${effect}%)`)) tooltip = tooltip.replace(`(+${effect}%)`, damageAmp)
-                                        if (tooltip.includes(effect)) tooltip = tooltip.replace(effect, damageAmp)
-                                    }})
+                                tooltip = tooltip.replace(/bonus/g, 'Bonus ').replace(/spelldamage/g, 'AP').replace(/attackdamage/g, 'AD')
+                                tooltip = tooltip.replace(/magic damage/gi, '<span class="color99FF99">Magic Damage</span>')
+                                tooltip = tooltip.replace(/physical damage/gi, '<span class="colorFF8C00">Physical Damage</span>')
+                                tooltip = tooltip.replace(/maximum health/gi, '<span class="colorFF0000">Maximum Health</span>')
+                                tooltip = tooltip.replace(/health/gi, '<span class="colorFF0000">Health</span>')
+                                tooltip = tooltip.replace(/energy/gi, '<span class="colorFFFF00">Energy</span>')
+                                tooltip = tooltip.replace(/armor/gi, '<span class="colorFFFF00">Armor</span>')
+                                tooltip = tooltip.replace(/physical/gi, '<span class="colorFF8C00">Physical</span>')
                                 }
-                            tooltip = tooltip.replace(/bonus/g, 'Bonus ').replace(/spelldamage/g, 'AP').replace(/attackdamage/g, 'AD')
-                            tooltip = tooltip.replace(/magic damage/gi, '<span class="color99FF99">Magic Damage</span>')
-                            tooltip = tooltip.replace(/physical damage/gi, '<span class="colorFF8C00">Physical Damage</span>')
-                            tooltip = tooltip.replace(/maximum health/gi, '<span class="colorFF0000">Maximum Health</span>')
-                            tooltip = tooltip.replace(/health/gi, '<span class="colorFF0000">Health</span>')
-                            tooltip = tooltip.replace(/energy/gi, '<span class="colorFFFF00">Energy</span>')
-                            tooltip = tooltip.replace(/armor/gi, '<span class="colorFFFF00">Armor</span>')
-                            tooltip = tooltip.replace(/physical/gi, '<span class="colorFF8C00">Physical</span>')
-                            }
-                        .ability-tooltip.col-lg-11.offset-lg-1.px-4.mb-4: span!= tooltip
-                    br
-                include partials/footer
+                            //- .ability-tooltip.col-lg-7.offset-lg-1.px-4.mb-4: span!= tooltip
+                            .ability-desc.d-flex.align-items-start.col-md-7.px-4.mb-4
+                                p!= champ.spells[i].description
+                                    br
+                                    != tooltip
+                            
+                            .d-flex.align-items-start.col-md-4.mb-4
+                                video.player.w-100.h-100(class=`player${i}` controls playsinline poster=`${videoUrls[i]}.jpg`)
+                                    source(src=`${videoUrls[i]}.webm` type="video/webm")
+        include partials/footer
+        script.
+            const playerP = new Plyr('.playerP');
+            const playerQ = new Plyr('.player0');
+            const playerW = new Plyr('.player1');
+            const playerE = new Plyr('.player2');
+            const playerR = new Plyr('.player3');

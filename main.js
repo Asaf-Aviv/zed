@@ -15,6 +15,7 @@ const path             = require('path');
 const expressValidator = require('express-validator');
 const flash            = require('connect-flash');
 const moment           = require('moment');
+const championIds      = require('./assets/data/champions/championIds');
 // Authentication utils
 const session          = require('express-session');
 const sharedsession    = require("express-socket.io-session");
@@ -45,6 +46,7 @@ const spectate         = require('./routes/spectate');
 const upload           = require('./routes/upload');
 
 app.locals.moment = moment;
+app.locals.cmpId = championIds;
 
 // MongoDB
 mongoose.set('debug', true);

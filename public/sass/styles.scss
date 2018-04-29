@@ -111,9 +111,8 @@
 
     &:hover {
         background: #101010;
-        color: #b1a0ff;    
+        color: #b1a0ff;
     }
-    
 }
 
 .feedback-btns {
@@ -133,8 +132,35 @@
         height: 64px;
     }
 }
-
 // CHAMPIONS END
+
+// CHAMPION
+#champ-base-stats {
+    table {
+        tr > th, td {
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+    }
+}
+
+.ability-tile {
+    padding-top: 6px;
+}
+// PILLS
+#champ-nav .nav-pills {
+    .nav-link.active {
+        background-color: rgba(255, 255, 255, 0.25);
+    }
+    a {
+        border-radius: 0;
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+        }
+    }
+}
+// PILLS END
+// CHAMPION END
 
 // SIDEBAR
 #sidebar {
@@ -200,6 +226,8 @@ body::-webkit-scrollbar-thumb {
 body {
     /* color: #fff; */
     /* background: #2c2c2c; */
+    font-family: "Montserrat", sans-serif;
+    font-size: 18px;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -250,8 +278,7 @@ table.table a {
 }
 .table {
     max-width: none;
-    /* text-transform: uppercase; */
-    letter-spacing: 0.1em;
+    text-transform: uppercase;
 }
 .table td,
 .table th {
@@ -479,12 +506,9 @@ table.dataTable tbody td {
 }
 /* LEADERBOARDS */
 
-.ability-tile img {
-    box-shadow: 7px 7px 2px 0px rgba(0, 0, 0, 0.75);
-}
 .ability-wrapper {
     border: 1px solid #5a1483;
-    margin: 0 auto !important;
+    margin: 0 auto 40px !important;
 }
 
 .blockquote {
@@ -635,10 +659,12 @@ table.dataTable tbody td {
 .league-item {
     width: 48px;
     height: 48px;
-    padding: 1px;
 }
-.filter-option input {
-    margin-right: 1em;
+.filter-option {
+    user-select: none;
+    input {
+        margin-right: 1em;
+    }
 }
 /* ITEMS */
 
@@ -817,7 +843,7 @@ table.table th {
         font-weight: 500;
         padding: 10px 20px;
         cursor: pointer;
-        
+
         &:hover {
             background: #eee;
             color: $primary-colored-text;
@@ -851,3 +877,13 @@ table.table th {
     z-index: 2;
 }
 // IMAGES END
+
+// VIDEO PLAYER
+.plyr {
+    border-radius: 5px;
+    min-width: 100px !important;
+}
+.plyr--full-ui.plyr--video .plyr__control--overlaid {
+    background: 0;
+}
+// VIDEO PLAYER END

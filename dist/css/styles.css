@@ -110,6 +110,21 @@
     width: 64px;
     height: 64px; }
 
+#champ-base-stats table tr > th, #champ-base-stats table td {
+  font-size: 0.8em;
+  font-weight: 600; }
+
+.ability-tile {
+  padding-top: 6px; }
+
+#champ-nav .nav-pills .nav-link.active {
+  background-color: rgba(255, 255, 255, 0.25); }
+
+#champ-nav .nav-pills a {
+  border-radius: 0; }
+  #champ-nav .nav-pills a:hover {
+    background-color: rgba(255, 255, 255, 0.25); }
+
 #sidebar {
   user-select: none;
   letter-spacing: 0.1em;
@@ -160,6 +175,8 @@ body::-webkit-scrollbar-thumb {
 body {
   /* color: #fff; */
   /* background: #2c2c2c; */
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -206,8 +223,7 @@ table.table a {
 
 .table {
   max-width: none;
-  /* text-transform: uppercase; */
-  letter-spacing: 0.1em; }
+  text-transform: uppercase; }
 
 .table td,
 .table th {
@@ -411,12 +427,9 @@ table.dataTable tbody td {
   background-color: rgba(255, 255, 255, 0.4); }
 
 /* LEADERBOARDS */
-.ability-tile img {
-  box-shadow: 7px 7px 2px 0px rgba(0, 0, 0, 0.75); }
-
 .ability-wrapper {
   border: 1px solid #5a1483;
-  margin: 0 auto !important; }
+  margin: 0 auto 40px !important; }
 
 .blockquote {
   font-style: italic;
@@ -548,11 +561,12 @@ table.dataTable tbody td {
 /* ITEMS */
 .league-item {
   width: 48px;
-  height: 48px;
-  padding: 1px; }
+  height: 48px; }
 
-.filter-option input {
-  margin-right: 1em; }
+.filter-option {
+  user-select: none; }
+  .filter-option input {
+    margin-right: 1em; }
 
 /* ITEMS */
 /* FOOTER */
@@ -744,3 +758,10 @@ table.table th {
   right: -20px;
   background: rgba(0, 0, 0, 0.15) !important;
   z-index: 2; }
+
+.plyr {
+  border-radius: 5px;
+  min-width: 100px !important; }
+
+.plyr--full-ui.plyr--video .plyr__control--overlaid {
+  background: 0; }

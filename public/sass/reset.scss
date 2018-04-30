@@ -7,15 +7,26 @@
 }
 
 body {
+    font-family: "Montserrat", sans-serif;
+    font-size: 15px;
     padding-top: 50px;
-    background: $light-grey;
-    color: $black;
+    color: $light-grey;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    letter-spacing: 0.03em;
+}
+
+hr {
+    background: #b1a0ff;
 }
 
 a {
     color: $light-grey;
     &:hover {
         color: $light-grey;
+        text-decoration: none;
     }
 }
 input, textarea {
@@ -25,6 +36,13 @@ input, textarea {
         background: #b1a0ff;
         color: #fff;
     }
+}
+
+.row {
+    margin: 0;
+}
+.bold {
+    font-weight: 600 !important;
 }
 .container {
     max-width: 1400px;
@@ -38,49 +56,6 @@ input, textarea {
 .ui.vertical.menu {
     width: 100%;
 }
-// ::-webkit-input-placeholder {
-//     color: $dark-grey !important;
-// }
-
-// ::-moz-placeholder {
-//     color: $dark-grey !important;
-// }
-
-// :-ms-input-placeholder {
-//     color: $dark-grey !important;
-// }
-
-// :-moz-placeholder:focus {
-//     color: $dark-grey !important;
-// }
-
-// UTILS 
-// .d-flex {
-//     display: flex !important;
-// }
-// .d-none {
-//     display: none;
-// }
-// .align-items-center {
-//     align-items: center;
-// }
-// .justify-content-center {
-//     justify-content: center;
-// }
-// .text-center {
-//     text-align: center !important;
-// }
-// .h-100 {
-//     height: 100%;
-// }
-// .w-100 {
-//     width: 100%;
-// }
-
-// .m-0 {
-//     margin: 0 !important;
-// }
-// UTILS END
 
 // DATA TABLES
 table.dataTable tbody tr {

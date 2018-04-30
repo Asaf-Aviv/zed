@@ -1,0 +1,11 @@
+body {
+    /* background-image: linear-gradient(to right bottom, #a966ff, #814bc9, #5b3195, #371964, #180037); */
+    background-image: linear-gradient(
+        to left top,
+        #593981,
+        #4c2e71,
+        #3e2261,
+        #321852,
+        #250d43
+    );
+}

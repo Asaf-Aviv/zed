@@ -3,7 +3,7 @@ body
     include partials/nav
     include partials/sidenav
     .container
-        .champions-squares-wrapper.d-flex.flex-wrap.justify-content-between
+        .champions-squares-wrapper.d-flex.flex-wrap.mt-4
             each champName in champs
                 .champion-square.text-center
                     a(href=`/champions/${champName.replace("'", '')}`)

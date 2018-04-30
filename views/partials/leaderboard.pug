@@ -1,34 +1,33 @@
-.ui.grid
-    .row
-        .four.wide.computer.column.text-center
-            img(src=`/assets/league/img/base_rank_icons/${LB.tier}.png` alt=LB.tier)
-            p.lead.bold= LB.name
-            p= LB.queue.replace(/_/g, ' ')
-            p= region
-        .twelve.wide.computer.column.text-center
-            table#leaderboard-table.ui.inverted.table.text-center
-                thead
-                    tr
-                        th Rank
-                        th Summoner
-                        th LP
-                        th Emblems
-                        th Games
-                        th Win Ratio
+.row
+    .col-md-3.text-center
+        img(src=`/assets/league/img/base_rank_icons/${LB.tier}.png` alt=LB.tier)
+        p.lead.bold= LB.name
+        p= LB.queue.replace(/_/g, ' ')
+        p= region
+    .col-md-6.text-center
+        table#leaderboard-table.table.text-center
+            thead
+                tr
+                    th Rank
+                    th Summoner
+                    th LP
+                    th Emblems
+                    th Games
+                    th Win Ratio
 
-                - for (let i = 0, x = LB.entries.length; i < x; i++) {
-                    - let winrate = ((LB.entries[i].wins / (LB.entries[i].wins + LB.entries[i].losses)) * 100).toFixed(0)
-                    tr
-                        td(style)= i + 1
-                        td(style): span.lb-summoner= LB.entries[i].playerOrTeamName
-                        td(style)= LB.entries[i].leaguePoints
-                        td(style).hot-streak
-                            .d-flex.justify-content-around
-                                i.fa.fa-fire(title="This player is on a hot streak")
-                                i.fa.fa-angle-double-up(title="Veteran: played more then 100 games in this league")
-                                i.fa.fa-ribbon(title="Recently joined the league")
-                        td(style): span.lb-wins= LB.entries[i].wins + '/'
-                            span.lb-losses=LB.entries[i].losses + ' '
-                        td(style)
-                            span.bold.lb-winrate(class=winrate > 49 ? 'greenC' : 'colorCC3300')= winrate + '%'
-                - }
+            - for (let i = 0, x = LB.entries.length; i < x; i++) {
+                - let winrate = ((LB.entries[i].wins / (LB.entries[i].wins + LB.entries[i].losses)) * 100).toFixed(0)
+                tr
+                    td(style)= i + 1
+                    td(style): span.lb-summoner= LB.entries[i].playerOrTeamName
+                    td(style)= LB.entries[i].leaguePoints
+                    td(style).hot-streak
+                        .d-flex.justify-content-around
+                            i.fa.fa-fire(title="This player is on a hot streak")
+                            i.fa.fa-angle-double-up(title="Veteran: played more then 100 games in this league")
+                            i.fa.fa-ribbon(title="Recently joined the league")
+                    td(style): span.lb-wins= LB.entries[i].wins + '/'
+                        span.lb-losses=LB.entries[i].losses + ' '
+                    td(style)
+                        span.bold.lb-winrate(class=winrate > 49 ? 'greenC' : 'colorCC3300')= winrate + '%'
+            - }

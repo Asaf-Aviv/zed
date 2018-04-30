@@ -443,9 +443,6 @@ $(function() {
             $(`#${divToShow}`).show();
         }
     });
-    var href = location.href;
-    var pgurl = href.substr(href.lastIndexOf('/') + 1);
-    $('.sidebar-item a[href="/' + pgurl + '"]').parent().addClass('sidebar-active');
 });
 
 iziToast.settings({

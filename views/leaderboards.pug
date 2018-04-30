@@ -2,19 +2,18 @@ include partials/head
 body
     include partials/nav
     include partials/sidenav
-    .ui.container
-        .d-flex.justify-content-center
-            .leaderboard-regions.ui.inverted
-                a.ui.inverted.violet.basic.button(href="/leaderboards?region=NA1") NA
-                a.ui.inverted.violet.basic.button(href="/leaderboards?region=EUW1") EUW
-                a.ui.inverted.violet.basic.button(href="/leaderboards?region=EUN1") EUNE
-                a.ui.inverted.violet.basic.button(href="/leaderboards?region=BR1") BRAZIL
-                a.ui.inverted.violet.basic.button(href="/leaderboards?region=KR") KOREA
-                a.ui.inverted.violet.basic.button(href="/leaderboards?region=JP1") JAPAN
-                a.ui.inverted.violet.basic.button(href="/leaderboards?region=LA1") LAN
-                a.ui.inverted.violet.basic.button(href="/leaderboards?region=LA2") LAS
-                a.ui.inverted.violet.basic.button(href="/leaderboards?region=TR1") TURKEY
-                a.ui.inverted.violet.basic.button(href="/leaderboards?region=OC1") OCE
-                a.ui.inverted.violet.basic.button(href="/leaderboards?region=RU") RUSSIA
+    .container
+        .leaderboard-regions
+            a.btn(href="/leaderboards?region=NA1") NA
+            a.btn(href="/leaderboards?region=EUW1") EUW
+            a.btn(href="/leaderboards?region=EUN1") EUNE
+            a.btn(href="/leaderboards?region=BR1") BRAZIL
+            a.btn(href="/leaderboards?region=KR") KOREA
+            a.btn(href="/leaderboards?region=JP1") JAPAN
+            a.btn(href="/leaderboards?region=LA1") LAN
+            a.btn(href="/leaderboards?region=LA2") LAS
+            a.btn(href="/leaderboards?region=TR1") TURKEY
+            a.btn(href="/leaderboards?region=OC1") OCE
+            a.btn(href="/leaderboards?region=RU") RUSSIA
         include partials/leaderboard
         include partials/footer

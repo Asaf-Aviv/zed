@@ -3,66 +3,25 @@ body
     include partials/nav
     include partials/sidenav
     include partials/chat
-    .ui.container
-        form#summoner-search.ui.form(method="GET", action="/summoner")
-            .field
-                input(type="text", name="userName", placeholder="Enter Summoner")
-                button.ui.button(type="submit") Search
-            .ui.basic.buttons
-                .ui.button.active(data-region="NA") NA
-                .ui.button(data-region="EUW1") EUW
-                .ui.button(data-region="EUN1") EUNE
-                .ui.button(data-region="KR") KOREA
-                .ui.button(data-region="BR1") BRAZIL
-                .ui.button(data-region="RU") RUSSIA
-                .ui.button(data-region="JP1") JAPAN
-                .ui.button(data-region="LA1") LAN
-                .ui.button(data-region="LA2") LAS
-                .ui.button(data-region="OC1") OCE
-                .ui.button(data-region="TR1") TURKEY
-                //- .inline.fields
-                    .field
-                        .ui.radio.checkbox
-                            input(type="radio", name="region", value="NA", checked) 
-                            label NA
-                    .field
-                        .ui.radio.checkbox
-                            input(type="radio", name="region", value="EUW1")
-                            label(for="region") EUW
-                    .field
-                        .ui.radio.checkbox
-                            input(type="radio", name="region", value="EUN1")
-                            label EUNE
-                    .field
-                        .ui.radio.checkbox
-                            input(type="radio", name="region", value="BR1")
-                            label BRAZIL
-                    .field
-                        .ui.radio.checkbox
-                            input(type="radio", name="region", value="KR")
-                            label KOREA
-                    .field
-                        .ui.radio.checkbox
-                            input(type="radio", name="region", value="JP1")
-                            label JAPAN
-                    .field
-                        .ui.radio.checkbox
-                            input(type="radio", name="region", value="LA1")
-                            label LAN
-                    .field
-                        .ui.radio.checkbox
-                            input(type="radio", name="region", value="LA2")
-                            label LAS
-                    .field
-                        .ui.radio.checkbox
-                            input(type="radio", name="region", value="TR1")
-                            label TURKEY
-                    .field
-                        .ui.radio.checkbox
-                            input(type="radio", name="region", value="OC1")
-                            label OCE
-                    .field
-                        .ui.radio.checkbox
-                            input(type="radio", name="region", value="RU")
-                            label RUSSIA
+    .container
+        .row
+            .col-lg-6.col-md-7.mx-auto
+                form#search-form(method="GET", action="/summoner")
+                    .input-group
+                        .input-group-prepend
+                            select#region-select(name="region")
+                                option(value="NA1") NA
+                                option(value="EUW1") EUW
+                                option(value="EUN1") EUNE
+                                option(value="KR") KOREA
+                                option(value="JP1") JAPAN
+                                option(value="LA1") LAN
+                                option(value="BR1") BRAZIL
+                                option(value="LA2") LAS
+                                option(value="TR1") TURKEY
+                                option(value="OC1") OCE
+                                option(value="RU") RUSSIA
+                        input.form-control(type="text" name="userName" maxlength="16" placeholder="Summoner Name")
+                        .input-group-append
+                            button.btn.btn-outline-secondary button
         include partials/footer

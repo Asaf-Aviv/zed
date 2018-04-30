@@ -86,7 +86,7 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
             .tab-content
                 section#lore.tab-pane.fade(role="tabpanel")
                     .row.col-10.offset-1.mx-auto
-                        blockquote.blockquote.text-center.p-0.m-0(style="background-color: rgba(0,0,0,0);")= champ.lore
+                        blockquote.blockquote.text-center.p-0.pb-5.m-0(style="background-color: rgba(0,0,0,0);")= champ.lore
 
                 section#tips.tab-pane.fade(role="tabpanel")
                     .row.col-10.offset-1.mx-auto
@@ -98,6 +98,8 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                             h4.bold.mb-4(style="color: #f11e1e;")= 'Playing against ' + champ.name
                             for tip in champ.enemytips
                                 .champ-tip.pl-5.my-3= tip
+                        br
+                            
                     
                 section#abilities.champion-abilities.tab-pane.fade.show.active(role="tabpanel")
                     .ability-wrapper.row.col-10.offset-1.align-items-start
@@ -194,7 +196,7 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                                 video.player.w-100.h-100(class=`player${i}` controls playsinline poster=`${videoUrls[i]}.jpg`)
                                     source(src=`${videoUrls[i]}.webm` type="video/webm")
                         br
-        include partials/footer
+                include partials/footer
         script.
             const playerP = new Plyr('.playerP');
             const playerQ = new Plyr('.player0');

@@ -1,4 +1,5 @@
 nav#main-nav-bar
+    
     #main-left-nav-bar.d-flex
         a.d-flex.align-items-center(href="/") Home
         a.d-flex.align-items-center(href="/leaderboards?region=NA1") Leaderboards
@@ -9,22 +10,7 @@ nav#main-nav-bar
                 a.dropdown-item(href="/champions") Champions
                 a.dropdown-item(href="/runes") Runes
                 a.dropdown-item(href="/items") Items
-    #nav-search
-        form#navbar-search-form(method="GET", action="/summoner")
-            select#region-select(name="region")
-                option(value="NA1") NA
-                option(value="EUW1") EUW
-                option(value="EUN1") EUNE
-                option(value="KR") KOREA
-                option(value="JP1") JAPAN
-                option(value="LA1") LAN
-                option(value="BR1") BRAZIL
-                option(value="LA2") LAS
-                option(value="TR1") TURKEY
-                option(value="OC1") OCE
-                option(value="RU") RUSSIA
-            input(type="text", name="userName", placeholder="Enter Username")
-            i.fa.fa-search
+
     #nav-bar-util.d-flex
         a.d-flex.align-items-center(href="#")
             i.fa.fa-lg.fa-bell-o

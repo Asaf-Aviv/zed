@@ -17,14 +17,14 @@
             span.bold Champion Analyzed: 
                 span.general-color= overallPatch[0].championCount.toLocaleString()
     .row
-        #overall-winrate.col-lg-5.col-md-12.col-sm-12
+        #overall-winrate.col-xl-5.lg-6.col-md-12
             h6.text-center.bold.general-color WIN RATES
-            table.table.text-center
+            table.table
                 thead
                     tr
-                        th.pb-2(style="width: 10px") Role
-                        th.text-center.pb-2.greenC(colspan="2") Highest
-                        th.text-center.pb-2.colorFF0000(colspan="2") Lowest
+                        th Role
+                        th.text-center.greenC(colspan="2") Highest
+                        th.text-center.colorFF0000(colspan="2") Lowest
                 tbody
                     tr
                         td.general-color Top
@@ -107,14 +107,14 @@
                         td
                             span.colorFF0000= (pos.DUO_SUPPORT.winrate.worst.score * 100).toFixed(2) + '%'
 
-        #overall-perf.col-lg-3.col-md-12.col-sm-12
+        #overall-perf.col-xl-3.lg-6.col-md-12
             h6.text-center.bold.general-color OVERALL PERFORMANCE
-            table.table.text-center
+            table.table
                 thead
                     tr
-                        th.pb-2(style="width: 10px") Role
-                        th.pb-2.pl-3.greenC Best
-                        th.pb-2.pl-3.colorFF0000 Worst
+                        th Role
+                        th.greenC Best
+                        th.colorFF0000 Worst
                 tbody
                     tr
                         td.general-color Top
@@ -177,14 +177,14 @@
                                         style=` background-image: url(//ddragon.leagueoflegends.com/cdn/8.7.1/img/champion/${ids[pos.DUO_SUPPORT.performanceScore.worst.championId]}.png)`)
                                     span.t-champ-name= ids[pos.DUO_SUPPORT.performanceScore.worst.championId]
 
-        #overall-score.col-lg-4.col-md-12.col-sm-12
+        #overall-score.col-xl-4
             h6.text-center.bold.general-color CHAMPION RANKING CHANGES
-            table.table.text-center
+            table.table
                 thead
                     tr
-                        th.pb-2(style="width: 10px") Role
-                        th.pb-2.pl-3.greenC Most Improved
-                        th.colorFF0000.pb-2.pl-3 Least Improved
+                        th Role
+                        th.greenC Most Improved
+                        th.colorFF0000 Least Improved
                 tbody
                     tr
                         td.general-color Top

@@ -133,23 +133,25 @@ function getChampionStats(champName) {
 }
 
 async function getIndepthStats(champName, elo, position) {
-    console.log(champName)
-    console.log(elo)
-    console.log(position)
-    champName = Object.keys(championIds).filter(k => k.toLowerCase() === champName.toLowerCase())
+    champName = String(Object.keys(championIds).filter(k => k.toLowerCase() === champName.toLowerCase()))
     if (!champName) return;
 
-    elo = (elo.toLowerCase() == 'platplus') ? '' : elo.toUpperCase();
-    position = position.toUpperCase().replace('SUPPORT', 'DUO_SUPPORT').replace('ADC','DUO_CARRY');
+    elo = (elo && elo.toLowerCase() !== 'platplus') ? elo.toUpperCase() : '';
+    
     const allData = 'kda,damage,goldEarned,sprees,hashes,wards,averageGames,totalHeal,killingSpree,minions,wins,gold,positions,normalized,groupedWins,trinkets,runes,firstitems,summoners,skills,finalItems,masteries,maxMins,matchups'
     const getIndepthData = `${champGG}/champions/${championIds[champName]}?elo=${elo}&champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
-    console.log(getIndepthData)
+    
     let indepthStats = await rp({ 
         uri: getIndepthData, 
         json: true 
     });
+
     if (position) {
+        position = position.toUpperCase().replace('SUPPORT', 'DUO_SUPPORT').replace('ADC','DUO_CARRY');
         indepthStats = indepthStats.filter(champ => champ.role == position);
+    } else {
+        indepthStats = [indepthStats
+            .reduce((positionA, positionB) => positionA.gamesPlayed > positionB.gamesPlayed ? positionA : positionB)]
     }
     return indepthStats;
 }

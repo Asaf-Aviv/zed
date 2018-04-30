@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/champion/:champName', (req, res) => {
+router.get('/:champName', (req, res) => {
     console.log('indepth request')
     Promise.all([
         zed.getChampDesc(req.params.champName),

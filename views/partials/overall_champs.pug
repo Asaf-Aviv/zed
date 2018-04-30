@@ -33,7 +33,7 @@
                 tr
                     td
                         a.d-flex.align-items-center(
-                            href=`/statistics/champion/${ids[allChampsStats[i].championId]}?position=${role.toLowerCase()}&elo=${champElo}`)
+                            href=`/statistics/${ids[allChampsStats[i].championId]}?position=${role.toLowerCase()}&elo=${champElo}`)
                             .overall-table-champ-tile(
                                 style=`background-image: url(//ddragon.leagueoflegends.com/cdn/8.7.1/img/champion/${ids[allChampsStats[i].championId]}.png)`)
                             span.bold.ml-2= ids[allChampsStats[i].championId]

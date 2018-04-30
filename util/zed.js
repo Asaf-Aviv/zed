@@ -148,7 +148,9 @@ async function getIndepthStats(champName, elo, position) {
         uri: getIndepthData, 
         json: true 
     });
-    indepthStats = indepthStats.filter(champ => champ.role == position);
+    if (position) {
+        indepthStats = indepthStats.filter(champ => champ.role == position);
+    }
     return indepthStats;
 }
 

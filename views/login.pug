@@ -2,19 +2,17 @@ include partials/head
 body
     include partials/nav
     include partials/sidenav
-    .ui.container
-        .ui.centered.grid
-            .seven.wide.computer.ten.wide.tablet.sixteen.wide.mobile.column
+    .container
+        .row
+            .col-lg-6.col-md-7.mx-auto
                 form#login-form.mt-3(action="/login" method="POST" autocomplete="off")
                     legend.text-center Log In
                     .md-form
                         i.fa.fa-at.prefix
-                        input.form-control(type="text" id="login-email" name="email" required)
-                        label(for="login-email") Email
+                        input.form-control(type="text" id="login-email" name="email" placeholder="Email" required)
                     .md-form
                         i.fa.fa-lock.prefix
-                        input.form-control.pb-3(type="password" id="login-password" name="password" required)
-                        label(for="login-password") Password
+                        input.form-control.pb-3(type="password" id="login-password" name="password" placeholder="Password" required)
                     .text-center
                         button.btn.btn-outline-success.mt-3
                             i.fa.fa-sign-in.fa-5x.mr-2

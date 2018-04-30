@@ -1,0 +1,47 @@
+.md-form {
+    position: relative;
+    margin-top: 1.5rem;
+    .prefix {
+        position: absolute;
+        -webkit-transition: color 0.2s;
+        -o-transition: color 0.2s;
+        transition: color 0.2s;
+        top: 0.25rem;
+        font-size: 1.75rem;
+    }
+    .form-control {
+        background-image: none;
+        background-color: transparent;
+        margin: 0px 0px 0.5rem;
+        border-radius: 0px;
+        padding: 0.3rem 0px 0.55rem;
+    }
+}
+.md-form .prefix ~ input, .md-form .prefix ~ textarea {
+    margin-left: 2.5rem;
+    width: calc(100% - 2.5rem);
+}
+.md-form input[type="text"], .md-form input[type="password"], .md-form input[type="email"], .md-form input[type="url"], .md-form input[type="time"], .md-form input[type="date"], .md-form input[type="datetime-local"], .md-form input[type="tel"], .md-form input[type="number"], .md-form input[type="search-md"], .md-form input[type="search"], .md-form textarea.md-textarea {
+    box-shadow: none;
+    border-top-width: initial;
+    border-right-width: initial;
+    border-left-width: initial;
+    border-top-color: initial;
+    border-right-color: initial;
+    border-left-color: initial;
+    box-sizing: content-box;
+    background-color: transparent;
+    transition: all 0.3s;
+    outline: none;
+    border-style: none none solid;
+    border-image: initial;
+    border-bottom: 1px solid rgb(206, 212, 218);
+    border-radius: 0px;
+}
+.md-form .form-control {
+    background-image: none;
+    background-color: transparent;
+    margin: 0px 0px 0.5rem;
+    border-radius: 0px;
+    padding: 0.3rem 0px 0.55rem;
+}

@@ -135,11 +135,19 @@
 // CHAMPIONS END
 
 // CHAMPION
+
+#base-info {
+    word-spacing: -0.1em;
+}
+
 #champ-base-stats {
     table {
         tr > th, td {
-            font-size: 0.8em;
+            padding: 3px;
             font-weight: 600;
+        }
+        td {
+            width: 240px;
         }
     }
 }
@@ -210,24 +218,9 @@
 
 // SIDEBAR END
 
-body::-webkit-scrollbar {
-    width: 0.5em;
-}
-
-body::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
-body::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: #797979;
-}
-
 body {
-    /* color: #fff; */
-    /* background: #2c2c2c; */
     font-family: "Montserrat", sans-serif;
-    font-size: 18px;
+    font-size: 17px;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -278,7 +271,6 @@ table.table a {
 }
 .table {
     max-width: none;
-    text-transform: uppercase;
 }
 .table td,
 .table th {
@@ -507,19 +499,12 @@ table.dataTable tbody td {
 /* LEADERBOARDS */
 
 .ability-wrapper {
-    border: 1px solid #5a1483;
+    border-radius: 5px;
+    border: 1px solid #686868;
     margin: 0 auto 40px !important;
 }
 
-.blockquote {
-    font-style: italic;
-    line-height: 1.5em;
-    letter-spacing: 0.2em;
-    font-size: 1.3rem;
-    background-color: rgba(0, 0, 0, 0.75);
-    padding: 30px;
-    margin-left: 55px;
-}
+
 .form-wrapper {
     width: 30%;
     margin: 0 auto;
@@ -705,6 +690,7 @@ footer p {
     padding: 15px 0px;
     color: #fff;
 }
+// POPOVER END
 
 .cost {
     border-top: 1px solid #b1a0ff;
@@ -806,22 +792,8 @@ yellow {
     cursor: pointer;
 }
 /* FONT AWESOME */
-::placeholder {
-    /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #fff;
-    opacity: 1; /* Firefox */
-}
 
-:-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: #fff;
-}
-
-::-ms-input-placeholder {
-    /* Microsoft Edge */
-    color: #fff;
-}
-/* INBOX */
+// INBOX */
 #inbox tr:hover {
     cursor: pointer;
 }
@@ -833,6 +805,7 @@ table.table th {
 #inbox .fa-star:hover {
     color: #f78a09;
 }
+
 #inbox-controls {
     user-select: none;
     padding: 0;
@@ -855,18 +828,13 @@ table.table th {
     border-left: 5px solid $primary-colored-text !important;
     color: $primary-colored-text;
 }
-/* INBOX */
+// INBOX END
 
 /* POSTS */
 .post-wrapper {
     word-wrap: break-word;
 }
 /* POSTS END */
-
-.ajax-loader-wrapper img {
-    width: 36px;
-    height: 36px;
-}
 
 // IMAGES
 .delete-photo {
@@ -887,3 +855,21 @@ table.table th {
     background: 0;
 }
 // VIDEO PLAYER END
+
+.green-text {
+    color: $green-text;
+}
+.yellow-text {
+    color: $yellow-text;
+}
+.red-text {
+    color: $red-text;
+}
+
+.blockquote {
+    font-style: italic;
+    font-size: 1.1em;
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 30px;
+    margin-left: 55px;
+}

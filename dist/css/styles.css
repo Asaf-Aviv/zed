@@ -110,9 +110,15 @@
     width: 64px;
     height: 64px; }
 
+#base-info {
+  word-spacing: -0.1em; }
+
 #champ-base-stats table tr > th, #champ-base-stats table td {
-  font-size: 0.8em;
+  padding: 3px;
   font-weight: 600; }
+
+#champ-base-stats table td {
+  width: 240px; }
 
 .ability-tile {
   padding-top: 6px; }
@@ -162,21 +168,9 @@
   border-left: 5px solid #b1a0ff;
   color: #b1a0ff; }
 
-body::-webkit-scrollbar {
-  width: 0.5em; }
-
-body::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); }
-
-body::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: #797979; }
-
 body {
-  /* color: #fff; */
-  /* background: #2c2c2c; */
   font-family: "Montserrat", sans-serif;
-  font-size: 18px;
+  font-size: 17px;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -222,8 +216,7 @@ table.table a {
   color: inherit; }
 
 .table {
-  max-width: none;
-  text-transform: uppercase; }
+  max-width: none; }
 
 .table td,
 .table th {
@@ -428,17 +421,9 @@ table.dataTable tbody td {
 
 /* LEADERBOARDS */
 .ability-wrapper {
-  border: 1px solid #5a1483;
+  border-radius: 5px;
+  border: 1px solid #686868;
   margin: 0 auto 40px !important; }
-
-.blockquote {
-  font-style: italic;
-  line-height: 1.5em;
-  letter-spacing: 0.2em;
-  font-size: 1.3rem;
-  background-color: rgba(0, 0, 0, 0.75);
-  padding: 30px;
-  margin-left: 55px; }
 
 .form-wrapper {
   width: 30%;
@@ -700,21 +685,6 @@ yellow {
   cursor: pointer; }
 
 /* FONT AWESOME */
-::placeholder {
-  /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #fff;
-  opacity: 1;
-  /* Firefox */ }
-
-:-ms-input-placeholder {
-  /* Internet Explorer 10-11 */
-  color: #fff; }
-
-::-ms-input-placeholder {
-  /* Microsoft Edge */
-  color: #fff; }
-
-/* INBOX */
 #inbox tr:hover {
   cursor: pointer; }
 
@@ -742,16 +712,11 @@ table.table th {
   border-left: 5px solid #b1a0ff !important;
   color: #b1a0ff; }
 
-/* INBOX */
 /* POSTS */
 .post-wrapper {
   word-wrap: break-word; }
 
 /* POSTS END */
-.ajax-loader-wrapper img {
-  width: 36px;
-  height: 36px; }
-
 .delete-photo {
   position: absolute;
   top: -20px;
@@ -765,3 +730,19 @@ table.table th {
 
 .plyr--full-ui.plyr--video .plyr__control--overlaid {
   background: 0; }
+
+.green-text {
+  color: #00ff00; }
+
+.yellow-text {
+  color: #ffff00; }
+
+.red-text {
+  color: #f11e1e; }
+
+.blockquote {
+  font-style: italic;
+  font-size: 1.1em;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 30px;
+  margin-left: 55px; }

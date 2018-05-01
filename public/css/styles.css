@@ -1,11 +1,14 @@
 body {
     /* background-image: linear-gradient(to right bottom, #a966ff, #814bc9, #5b3195, #371964, #180037); */
-    background-image: linear-gradient(
+    /* background-image: linear-gradient(
         to left top,
         #593981,
         #4c2e71,
         #3e2261,
         #321852,
         #250d43
-    );
+    ); */
+    background-image: linear-gradient(to top, #260246, #22033f, #1e0339, #1b0232, #19002c);
+    background-image: linear-gradient(to bottom, #020202, #373737, #6b6b6b, #a5a5a5, #e3e3e3);
+    background-image: linear-gradient(to bottom, #1e1e1e, #242424, #2a2a2a, #303030, #363636);
 }

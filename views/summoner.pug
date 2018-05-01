@@ -1,5 +1,6 @@
 include partials/head
 body
+    - summonerRank = summonerRank[0]
     include partials/nav
     include partials/sidenav
     .container
@@ -8,21 +9,27 @@ body
             include partials/match
         if league
             include partials/league
-        .profile-wrapper
-            header
-                h1.text-center= summoner.name
 
-            main#summoner-main
-                h3.text-center= summoner.summonerLevel
-
-                if (league && typeof league[0] != 'undefined')
-                    img.league-icon(src=`/assets/league/img/tier_icons/${league[0].tier}${league[0].rank}.png`)
-                else
-                    img.league-icon(src="/assets/league/img/base_rank_icons/PROVISIONAL.png")
-                
-                img.profile-icon(
-                    src=`//ddragon.leagueoflegends.com/cdn/8.7.1/img/profileicon/${summoner.profileIconId}.png`
-                    width="80", height="80")
+        main#summoner-main
+            .row
+                .col-4
+                    if (summonerRank && typeof summonerRank != 'undefined')
+                        img.league-icon(src=`/assets/league/img/tier_icons/${summonerRank.tier}${summonerRank.rank}.png`)
+                    else
+                        img.league-icon(src="/assets/league/img/base_rank_icons/PROVISIONAL.png")
+                    img.profile-icon(
+                        src=`//ddragon.leagueoflegends.com/cdn/8.8.2/img/profileicon/${summoner.profileIconId}.png`
+                        width="80", height="80")
+                    h3.prof-name= summoner.name
+                    span.level=summoner.summonerLevel
+                    span.league-name=summonerRank.leagueName
+                    span.tier=summonerRank.tier
+                    span.rank=summonerRank.rank
+                    span.leaguePoints=summonerRank.leaguePoints
+                    span= JSON.stringify(summonerRank)
+                    
+                    
+                    
 
                     
     include partials/footer

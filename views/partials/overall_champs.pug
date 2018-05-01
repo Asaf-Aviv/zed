@@ -1,6 +1,6 @@
 - const champElo = allChampsStats[0].elo.length > 10 ? 'platplus' : allChampsStats[0].elo.toLowerCase()
 #overall-champs
-    .row
+    .row.py-4
         .league-info.col-md-3.col-sm-12.justify-content-center
             select#overall-table-elo
                 option(value="platplus" selected=allChampsStats[0].elo.length > 10) Platinum+
@@ -30,10 +30,11 @@
         tbody
             - for (let i = 0, x = allChampsStats.length; i < x; i++) {
                 - const role = allChampsStats[i].role.replace('DUO_CARRY', 'ADC').replace('DUO_SUPPORT', 'Support')
-                tr
+                
+                tr(style="cursor: pointer;" 
+                    data-href=`/statistics/${ids[allChampsStats[i].championId]}?position=${role.toLowerCase()}&elo=${champElo}`)
                     td
-                        a.d-flex.align-items-center(
-                            href=`/statistics/${ids[allChampsStats[i].championId]}?position=${role.toLowerCase()}&elo=${champElo}`)
+                        .d-flex.align-items-center
                             .overall-table-champ-tile(
                                 style=`background-image: url(//ddragon.leagueoflegends.com/cdn/8.7.1/img/champion/${ids[allChampsStats[i].championId]}.png)`)
                             span.bold.ml-2= ids[allChampsStats[i].championId]
@@ -50,6 +51,10 @@
             - }
 
 script.
+    $('#overall-table tbody tr').click(function() {
+        window.location = $(this).data('href');
+    });
+
     $('#overall-table').DataTable({
         "searching": false,
         "ordering": true,

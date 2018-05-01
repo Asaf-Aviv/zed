@@ -1,10 +1,14 @@
 $(function() {
     fixPopover();
-    $('.checkbox').checkbox();
-    $('.dimmer').dimmer({closable:true, on:'click'})
-    $('#tier-1 table, #tier-2 table, #tier-3 table, #tier-4 table, #tier-5 table').DataTable();
+    $('#tier-1 table, #tier-2 table, #tier-3 table, #tier-4 table, #tier-5 table').DataTable({
+        "iDisplayLength": -1,
+        "paging": false,
+    });
 
-    $('#leaderboard-table').DataTable();
+    $('#leaderboard-table').DataTable({
+        "iDisplayLength": -1,
+        "paging": false,
+    });
 
     $('[data-toggle="tooltip"]').tooltip().click(function(e) {
         e.preventDefault()
@@ -263,8 +267,6 @@ $(function() {
         });
     });
 
-
-
     $('#spectate').click(function() {
         const gameId = $(this).attr('data-id');
         const region = $(this).attr('data-region');
@@ -284,15 +286,6 @@ $(function() {
                 alert(err);
             }
         });
-    });
-
-    var pusher = new Pusher('8a344f0f04d1ec9118c7', {
-        cluster: 'mt1'
-    });
-    var channel = pusher.subscribe('my-channel');
-    
-    channel.bind('my-event', function(data) {
-        alert('An event was triggered with message: ' + data.message);
     });
 
     $('.move-to-trash').click(function() {

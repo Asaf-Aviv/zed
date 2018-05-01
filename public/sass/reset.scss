@@ -8,8 +8,8 @@
 
 body {
     font-family: "Montserrat", sans-serif;
-    font-size: 15px;
-    padding-top: 50px;
+    font-size: 16px;
+    // padding-top: 50px;
     color: $light-grey;
     background-attachment: fixed;
     background-position: center;
@@ -17,7 +17,9 @@ body {
     background-size: cover;
     letter-spacing: 0.03em;
 }
-
+label {
+    color: $light-grey;
+}
 hr {
     background: #b1a0ff;
 }
@@ -60,5 +62,14 @@ input, textarea {
 // DATA TABLES
 table.dataTable tbody tr {
     background-color: inherit;
+}
+.dataTables_wrapper .dataTables_filter input {
+    border: 0;
+    background: transparent;
+    border-bottom: 1px solid $light-grey;
+    color: $light-grey;
+    &:focus {
+        outline: 0;
+    }
 }
 // DATA TABLES END

@@ -26,14 +26,14 @@ each player in league.entries
 #leagues.row.justify-content-center
     .col-6
         ul.nav.nav-pills
-            li.nav-item: a.nav-link(class=summonerRank[0].rank == 'I' ? 'active' : '', data-toggle="pill" href="#tier-1") I
-            li.nav-item: a.nav-link(class=summonerRank[0].rank == 'II' ? 'active' : '', data-toggle="pill" href="#tier-2") II
-            li.nav-item: a.nav-link(class=summonerRank[0].rank == 'III' ? 'active' : '', data-toggle="pill" href="#tier-3") II
-            li.nav-item: a.nav-link(class=summonerRank[0].rank == 'IV' ? 'active' : '', data-toggle="pill" href="#tier-4") IV
-            li.nav-item: a.nav-link(class=summonerRank[0].rank == 'V' ? 'active' : '', data-toggle="pill" href="#tier-5") V
+            li.nav-item: a.nav-link(class=summonerRank.rank == 'I' ? 'active' : '', data-toggle="pill" href="#tier-1") I
+            li.nav-item: a.nav-link(class=summonerRank.rank == 'II' ? 'active' : '', data-toggle="pill" href="#tier-2") II
+            li.nav-item: a.nav-link(class=summonerRank.rank == 'III' ? 'active' : '', data-toggle="pill" href="#tier-3") II
+            li.nav-item: a.nav-link(class=summonerRank.rank == 'IV' ? 'active' : '', data-toggle="pill" href="#tier-4") IV
+            li.nav-item: a.nav-link(class=summonerRank.rank == 'V' ? 'active' : '', data-toggle="pill" href="#tier-5") V
 
         .tab-content
-            #tier-1.tab-pane(class=summonerRank[0].rank == 'I' ? 'active' : '')
+            #tier-1.tab-pane(class=summonerRank.rank == 'I' ? 'active' : '')
                 table.table.text-center
                     thead
                         tr
@@ -69,7 +69,7 @@ each player in league.entries
                                 else
                                     td
                         - }
-            #tier-2.tab-pane(class=summonerRank[0].rank == 'II' ? 'active' : '')
+            #tier-2.tab-pane(class=summonerRank.rank == 'II' ? 'active' : '')
                 table.table.text-center
                     thead
                         tr
@@ -105,7 +105,7 @@ each player in league.entries
                                 else
                                     td
                         - }
-            #tier-3.tab-pane(class=summonerRank[0].rank == 'III' ? 'active' : '')
+            #tier-3.tab-pane(class=summonerRank.rank == 'III' ? 'active' : '')
                 table.table.text-center
                     thead
                         tr
@@ -141,7 +141,7 @@ each player in league.entries
                                 else
                                     td
                         - }
-            #tier-4.tab-pane(class=summonerRank[0].rank == 'IV' ? 'active' : '')
+            #tier-4.tab-pane(class=summonerRank.rank == 'IV' ? 'active' : '')
                 table.table.text-center
                     thead
                         tr
@@ -177,7 +177,7 @@ each player in league.entries
                                 else
                                     td
                         - }
-            #tier-5.tab-pane(class=summonerRank[0].rank == 'V' ? 'active' : '')
+            #tier-5.tab-pane(class=summonerRank.rank == 'V' ? 'active' : '')
                 table.table.text-center
                     thead
                         tr

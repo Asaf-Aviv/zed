@@ -31,7 +31,7 @@ router.get('/:champName', (req, res) => {
     ]).then(([champ, champStats, items, runes, summonerSpells]) => {
         if(!champStats || champStats.length === 0) return res.redirect('/statistics');
         res.render('champion_statistics', {
-            title: 'janna champion Stats',
+            title: `${champ.name} Statistics| Legends`,
             champ,
             champStats,
             items,

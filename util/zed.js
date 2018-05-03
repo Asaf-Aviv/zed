@@ -6,7 +6,7 @@ const items          = require('../assets/league/data/en_US/item');
 const runes          = require('../assets/league/data/en_US/runesReforged');
 const summonerSpells = require('../assets/league/data/en_US/summoner');
 
-const ddragon = '8.8.1';
+const ddragon = '//ddragon.leagueoflegends.com/cdn/8.9.1';
 const riot    = '.api.riotgames.com/lol/';
 const champGG = 'http://api.champion.gg/v2';
 
@@ -254,4 +254,5 @@ module.exports = {
     getSummonerLeague,
     getAllChampionsStats,
     getIndepthStats,
+    ddragon,
 };

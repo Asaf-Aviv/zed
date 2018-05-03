@@ -1,31 +1,25 @@
 nav#main-nav-bar
-    
-    #main-left-nav-bar.d-flex
-        a.d-flex.align-items-center(href="/") Home
-        a.d-flex.align-items-center(href="/leaderboards?region=NA1") Leaderboards
-        a.d-flex.align-items-center(href="/statistics") Statistics
-        .dropdown.d-flex
-            a.dropdown-toggle.d-flex.align-items-center(data-toggle="dropdown") Database
-            .dropdown-menu
-                a.dropdown-item(href="/champions") Champions
-                a.dropdown-item(href="/runes") Runes
-                a.dropdown-item(href="/items") Items
+    .wrapper
+        #main-left-nav-bar.d-flex
+            a.d-flex.align-items-center(href="/") Home
+            a.d-flex.align-items-center(href="/leaderboards?region=NA1") Leaderboards
+            a.d-flex.align-items-center(href="/statistics") Statistics
+            a.d-flex.align-items-center(href="/champions") Champions
+            a.d-flex.align-items-center(href="/runes") Runes
+            a.d-flex.align-items-center(href="/items") Items
 
-    #nav-bar-util.d-flex
-        a.d-flex.align-items-center(href="#")
-            i.fa.fa-lg.fa-bell-o
-            span.badge.badge-danger 6
-        a.d-flex.align-items-center(href="#")
-            i.fa.fa-lg.fa-envelope-o
-        a.d-flex.align-items-center(href="#")
-            i.fa.fa-lg.fa-user-plus
-    #nav-bar-login.d-flex
-        a.d-flex.align-items-center(href="/users") Find Legends
-        if currentUser
-            a.d-flex.align-items-center(href="/profile")= currentUser.username
-            //- img(style="width: 50px; height: 50px;", src=currentUser.profilePicture)
-            a.d-flex.align-items-center(href="/logout") Logout
-                i.fa.fa-logout
-        else
-            a.d-flex.align-items-center(href="/register") Register
-            a.d-flex.align-items-center(href="/login") Login
+        #nav-bar-login.d-flex.ml-auto
+            //- a.d-flex.align-items-center(href="/users") Find Legends
+            if currentUser
+                #nav-bar-util.d-flex
+                    a.d-flex.justify-content-center.align-items-center(style="width: 50px;" href="#")
+                        i.far.fa-lg.fa-bell
+                        //- span.badge.badge-danger 6
+                    a.d-flex.justify-content-center.align-items-center(style="width: 50px;" href="#")
+                        i.far.fa-lg.fa-envelope
+                    a.d-flex.justify-content-center.align-items-center(style="width: 50px;" href="#")
+                        i.fa.fa-lg.fa-user-plus
+                a.logged-user.name.d-flex.align-items-center(href="/profile")= currentUser.username
+            else
+                a.d-flex.align-items-center(href="/register") Register
+                a.d-flex.align-items-center(href="/login") Login

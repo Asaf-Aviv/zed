@@ -16,6 +16,7 @@ const expressValidator = require('express-validator');
 const flash            = require('connect-flash');
 const moment           = require('moment');
 const championIds      = require('./assets/data/champions/championIds');
+const zed              = require('./util/zed');
 // Authentication utils
 const session          = require('express-session');
 const sharedsession    = require("express-socket.io-session");
@@ -45,8 +46,9 @@ const runes            = require('./routes/runes');
 const spectate         = require('./routes/spectate');
 const upload           = require('./routes/upload');
 
-app.locals.moment = moment;
+app.locals.ddragon = zed.ddragon;
 app.locals.cmpId = championIds;
+app.locals.moment = moment;
 
 // MongoDB
 mongoose.set('debug', true);
@@ -109,7 +111,6 @@ app
 .use('/message', message)
 .use('/spectate', spectate)
 .use('/', index)
-
 
 io.use(sharedsession(session({
     secret: 'EFK9AqwLKR932',

@@ -3,10 +3,16 @@ body
     include partials/nav
     include partials/sidenav
     .container
-        .champions-squares-wrapper.d-flex.flex-wrap.mt-4
-            each champName in champs
-                .champion-square.text-center
-                    a(href=`/champions/${champName.replace("'", '')}`)
-                        img(src=`//ddragon.leagueoflegends.com/cdn/8.5.2/img/champion/${champName}.png`)
-                        p.pt-1.m-0.text-center= champName
+        .row
+            .col-md-7.mx-auto
+                .champions-squares-wrapper.d-flex.justify-content-center.flex-wrap.text-center.mt-4
+                    each champName in champs
+                        .champion-square
+                            a(href=`/champions/${champName.replace("'", '')}`)
+                                img.lazy(data-src=`${ddragon}/img/champion/${champName}.png`)
+                                p.bold.pt-2= champName
+                script.
+                    $(function() {
+                        $('.lazy').Lazy();
+                    });
         include partials/footer

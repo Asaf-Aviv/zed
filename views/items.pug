@@ -119,6 +119,6 @@ body
                             data-content=`<span><img src=/assets/league/img/item/${item.image.full}></span>${item.description}<br><br>
                             <div class=cost><span>Cost <yellow>${item.gold.total}</yellow>
                             </span><span>Sell <yellow>${item.gold.sell}</yellow></span></div>`)
-                                img.league-item(src=`//ddragon.leagueoflegends.com/cdn/8.7.1/img/item/${item.image.full}`)
+                                .league-item(style=`background: url(//ddragon.leagueoflegends.com/cdn/8.9.1/img/sprite/${item.image.sprite}) -${item.image.x}px -${item.image.y}px no-repeat`)
         
         include partials/footer

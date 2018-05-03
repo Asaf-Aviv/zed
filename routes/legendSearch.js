@@ -1,8 +1,9 @@
 const express = require('express');
 const router  = express.Router();
 const Legend  = require('../models/user');
+const auth    = require('../middlewares/auth');
 
-router.get('/', (req, res) => {
+router.get('/', auth.isLogged(), (req, res) => {
     Legend.find({}).then(result => {
         let usersList = [];
         let sentRequests = req.user.friendRequestsSent.map(req => req.to.toString());

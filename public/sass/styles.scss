@@ -178,30 +178,40 @@
 #runes-wrapper {
     width: 1162px;
     height: 720px;
-    display: flex;
     background-repeat: no-repeat;
-    
-    & > div {
-        width: 90px;
-        height: 90px;
-        background: rgba(0, 0, 0, 0.7);
-        cursor: pointer;
-        margin: 10px;
-        border: 2px solid transparent;
-        border-radius: 50%;
-        transition: 0.5s;
-        img {
-            -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-            filter: grayscale(100%);
+    #runes-paths {
+        display: flex;
+        justify-content: center;
+        & > div {
+            width: 90px;
+            height: 90px;
+            background: rgba(0, 0, 0, 0.7);
+            cursor: pointer;
+            margin: 10px;
+            border: 2px solid transparent;
             border-radius: 50%;
             transition: 0.5s;
-        }
-        &:hover {
             img {
-                -webkit-filter: grayscale(0); /* Safari 6.0 - 9.0 */
-                filter: grayscale(0)
+                -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+                filter: grayscale(100%);
+                border-radius: 50%;
+                transition: 0.5s;
+            }
+            &:hover {
+                img {
+                    -webkit-filter: grayscale(0); /* Safari 6.0 - 9.0 */
+                    filter: grayscale(0)
+                }
             }
         }
+    }
+}
+
+.perk-wrapper {
+    img {
+        margin: 20px;
+        width: 64px;
+        height: 64px;
     }
 }
 .active-rune {
@@ -209,9 +219,6 @@
         -webkit-filter: grayscale(0) !important; /* Safari 6.0 - 9.0 */
         filter: grayscale(0) !important;
     }
-}
-.perk-wrapper {
-    background-repeat: no-repeat;
 }
 
 .runes {

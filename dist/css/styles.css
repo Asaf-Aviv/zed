@@ -136,35 +136,39 @@
 #runes-wrapper {
   width: 1162px;
   height: 720px;
-  display: flex;
   background-repeat: no-repeat; }
-  #runes-wrapper > div {
-    width: 90px;
-    height: 90px;
-    background: rgba(0, 0, 0, 0.7);
-    cursor: pointer;
-    margin: 10px;
-    border: 2px solid transparent;
-    border-radius: 50%;
-    transition: 0.5s; }
-    #runes-wrapper > div img {
-      -webkit-filter: grayscale(100%);
-      /* Safari 6.0 - 9.0 */
-      filter: grayscale(100%);
+  #runes-wrapper #runes-paths {
+    display: flex;
+    justify-content: center; }
+    #runes-wrapper #runes-paths > div {
+      width: 90px;
+      height: 90px;
+      background: rgba(0, 0, 0, 0.7);
+      cursor: pointer;
+      margin: 10px;
+      border: 2px solid transparent;
       border-radius: 50%;
       transition: 0.5s; }
-    #runes-wrapper > div:hover img {
-      -webkit-filter: grayscale(0);
-      /* Safari 6.0 - 9.0 */
-      filter: grayscale(0); }
+      #runes-wrapper #runes-paths > div img {
+        -webkit-filter: grayscale(100%);
+        /* Safari 6.0 - 9.0 */
+        filter: grayscale(100%);
+        border-radius: 50%;
+        transition: 0.5s; }
+      #runes-wrapper #runes-paths > div:hover img {
+        -webkit-filter: grayscale(0);
+        /* Safari 6.0 - 9.0 */
+        filter: grayscale(0); }
+
+.perk-wrapper img {
+  margin: 20px;
+  width: 64px;
+  height: 64px; }
 
 .active-rune img {
   -webkit-filter: grayscale(0) !important;
   /* Safari 6.0 - 9.0 */
   filter: grayscale(0) !important; }
-
-.perk-wrapper {
-  background-repeat: no-repeat; }
 
 .runes {
   background-image: linear-gradient(to bottom, #120629, #160a34, #1d0b3f, #260949, #310453);

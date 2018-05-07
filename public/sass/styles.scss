@@ -175,50 +175,86 @@
 //PROFILE END
 
 // RUNES
-#runes-wrapper {
-    width: 1162px;
-    height: 720px;
-    background-repeat: no-repeat;
-    #runes-paths {
-        display: flex;
-        justify-content: center;
-        & > div {
-            width: 90px;
-            height: 90px;
-            background: rgba(0, 0, 0, 0.7);
-            cursor: pointer;
-            margin: 10px;
-            border: 2px solid transparent;
+
+#runes-paths {
+    display: flex;
+    justify-content: space-evenly;
+    & > div {
+        width: 90px;
+        height: 90px;
+        background: rgba(0, 0, 0, 0.7);
+        cursor: pointer;
+        margin: 30px;
+        border: 2px solid transparent;
+        border-radius: 50%;
+        transition: 0.5s;
+        img {
+            -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+            filter: grayscale(100%);
             border-radius: 50%;
             transition: 0.5s;
+        }
+        &:hover {
             img {
-                -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-                filter: grayscale(100%);
-                border-radius: 50%;
-                transition: 0.5s;
-            }
-            &:hover {
-                img {
-                    -webkit-filter: grayscale(0); /* Safari 6.0 - 9.0 */
-                    filter: grayscale(0)
-                }
+                -webkit-filter: grayscale(0); /* Safari 6.0 - 9.0 */
+                filter: grayscale(0)
             }
         }
     }
 }
 
-.perk-wrapper {
+#runes-wrapper {
+    width: 1162px;
+    height: 720px;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+    border: 5px solid transparent;
+}
+
+#rune-trees {
+    li {
+        list-style: none;
+        font-size: inherit;
+    }
+    width: 60%;
+    h5 {
+        color: $primary-colored-text;
+        font-size: 0.85em;
+        font-weight: 600;
+    }
+    p {
+        font-size: 0.7em;
+        margin: 0;
+    }
+    > div {
+        display: none;
+        margin-left: 40px;
+    }
     img {
-        margin: 20px;
-        width: 64px;
-        height: 64px;
+        cursor: pointer;
+        margin: 5px 20px;
+        width: 40px;
+        height: 40px;
+        -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+        filter: grayscale(100%);
+        border-radius: 50%;
+        transition: 0.5s;
+        &:hover {
+            -webkit-filter: grayscale(0); /* Safari 6.0 - 9.0 */
+            filter: grayscale(0)
+        }
     }
 }
-.active-rune {
+
+.active-path {
     img {
         -webkit-filter: grayscale(0) !important; /* Safari 6.0 - 9.0 */
         filter: grayscale(0) !important;
     }
+}
+.active-rune {
+    -webkit-filter: grayscale(0) !important; /* Safari 6.0 - 9.0 */
+    filter: grayscale(0) !important;
 }
 
 .runes {

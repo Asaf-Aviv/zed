@@ -3,396 +3,416 @@ body
     include partials/nav
     include partials/sidenav
     .container
-        p= JSON.stringify(runes)
+        #runes-paths
+            .precision(data-color="#ba8851" data-bg="/assets/league/img/runesReforged/perk/8000.jpg" 
+                data-path="precision" title=runes["8000"].shortDesc data-toggle="tooltip")
+                img(src="/assets/league/img/runesReforged/perk/8000.png")
+                
+            .domination(data-color="#f26574" data-bg="/assets/league/img/runesReforged/perk/8100.jpg" 
+                data-path="domination" title=runes["8100"].shortDesc data-toggle="tooltip")
+                img(src="/assets/league/img/runesReforged/perk/8100.png")
+
+            .sorcery(data-color="#a274fa" data-bg="/assets/league/img/runesReforged/perk/8200.jpg" 
+                data-path="sorcery" title=runes["8200"].shortDesc data-toggle="tooltip")
+                img(src="/assets/league/img/runesReforged/perk/8200.png")
+
+            .resolve(data-color="#49ce4c" data-bg="/assets/league/img/runesReforged/perk/8300.jpg" 
+                data-path="resolve" title=runes["8300"].shortDesc data-toggle="tooltip")
+                img(src="/assets/league/img/runesReforged/perk/8300.png")
+
+            .inspiration(data-color="#4dafc5" data-bg="/assets/league/img/runesReforged/perk/8400.jpg" 
+                data-path="inspiration" title=runes["8400"].shortDesc data-toggle="tooltip")
+                img(src="/assets/league/img/runesReforged/perk/8400.png")
+
         #runes-wrapper.mx-auto
-            #runes-paths
-                .precision(data-color="#ba8851" data-bg="/assets/league/img/runesReforged/perk/8000.jpg" 
-                    title=runes["8000"].shortDesc data-toggle="tooltip")
-                    img(src="/assets/league/img/runesReforged/perk/8000.png")
-                    
-                .domination(data-color="#f26574" data-bg="/assets/league/img/runesReforged/perk/8100.jpg" 
-                    title=runes["8100"].shortDesc data-toggle="tooltip")
-                    img(src="/assets/league/img/runesReforged/perk/8100.png")
+            #rune-trees
+                #precision
+                    .path.active-path
+                        img.invisible
+                        img(src="/assets/league/img/runesReforged/perk/8000.png" style="cursor: default;")
+                        #8000
+                            h5=runes["8000"].name
+                            p!=runes["8000"].shortDesc
 
-                .sorcery(data-color="#a274fa" data-bg="/assets/league/img/runesReforged/perk/8200.jpg" 
-                    title=runes["8200"].shortDesc data-toggle="tooltip")
-                    img(src="/assets/league/img/runesReforged/perk/8200.png")
+                    #precision-KS
+                        img(src="/assets/league/img/runesReforged/perk/8005.png" data-toggle="collapse" data-target="#8005")
+                        img(src="/assets/league/img/runesReforged/perk/8008.png" data-toggle="collapse" data-target="#8008")
+                        img(src="/assets/league/img/runesReforged/perk/8021.png" data-toggle="collapse" data-target="#8021")
+                        img(src="/assets/league/img/runesReforged/perk/8010.png" data-toggle="collapse" data-target="#8010")
 
-                .resolve(data-color="#49ce4c" data-bg="/assets/league/img/runesReforged/perk/8300.jpg" 
-                    title=runes["8300"].shortDesc data-toggle="tooltip")
-                    img(src="/assets/league/img/runesReforged/perk/8300.png")
-
-                .inspiration(data-color="#4dafc5" data-bg="/assets/league/img/runesReforged/perk/8400.jpg" 
-                    title=runes["8400"].shortDesc data-toggle="tooltip")
-                    img(src="/assets/league/img/runesReforged/perk/8400.png")
-            
-            #precision
-                .path
-                    img.invisible
-                    img(src="/assets/league/img/runesReforged/perk/8000.png" data-target="#8000" data-toggle="collapse")
-                    
-                    #8000.collapse
-                        h5=runes["8000"].name
-                        p!=runes["8000"].shortDesc
-
-                #precision-KS
-                    img(src="/assets/league/img/runesReforged/perk/8005.png" data-toggle="collapse" data-target="#8005")
-                    img(src="/assets/league/img/runesReforged/perk/8008.png" data-toggle="collapse" data-target="#8008")
-                    img(src="/assets/league/img/runesReforged/perk/8021.png" data-toggle="collapse" data-target="#8021")
-
-                    #8005.collapse(data-parent="#precision-KS")
-                        h5=runes["8005"].name
-                        p!=runes["8005"].longDesc
-                    #8008.collapse(data-parent="#precision-KS")
-                        h5=runes["8008"].name
-                        p!=runes["8008"].longDesc
-                    #8021.collapse(data-parent="#precision-KS")
-                        h5=runes["8021"].name
+                        #8005.collapse(data-parent="#precision-KS")
+                            h5=runes["8005"].name
+                            p!=runes["8005"].longDesc
+                        #8008.collapse(data-parent="#precision-KS")
+                            h5=runes["8008"].name
+                            p!=runes["8008"].longDesc
+                        #8021.collapse(data-parent="#precision-KS")
+                            h5=runes["8021"].name
                             p!=runes["8021"].longDesc
-                    
-                #precision-block1
-                    img(src="/assets/league/img/runesReforged/perk/9101.png" data-toggle="collapse" data-target="#9101")
-                    img(src="/assets/league/img/runesReforged/perk/9111.png" data-toggle="collapse" data-target="#9111")
-                    img(src="/assets/league/img/runesReforged/perk/8009.png" data-toggle="collapse" data-target="#8009")
-                    
-                    #9101.collapse(data-parent="#precision-block1")
-                        h5=runes["9101"].name
-                        p!=runes["9101"].longDesc
-                    
-                    #9111.collapse(data-parent="#precision-block1")
-                        h5=runes["9111"].name
-                        p!=runes["9111"].longDesc
-                    #8009.collapse(data-parent="#precision-block1")
-                        h5=runes["8009"].name
-                        p!=runes["8009"].longDesc
-
-                #precision-block2
-                    img(src="/assets/league/img/runesReforged/perk/9104.png" data-toggle="collapse" data-target="#9104")
-                    img(src="/assets/league/img/runesReforged/perk/9105.png" data-toggle="collapse" data-target="#9105")
-                    img(src="/assets/league/img/runesReforged/perk/9103.png" data-toggle="collapse" data-target="#9103")
-                    
-                    #9104.collapse(data-parent="#precision-block2")
-                        h5=runes["9104"].name
-                        p!=runes["9104"].longDesc
-                    #9105.collapse(data-parent="#precision-block2")
-                        h5=runes["9105"].name
-                        p!=runes["9105"].longDesc
-                    #9103.collapse(data-parent="#precision-block2")
-                        h5=runes["9103"].name
-                        p!=runes["9103"].longDesc
+                        #8010.collapse(data-parent="#precision-KS")
+                            h5=runes["8010"].name
+                            p!=runes["8010"].longDesc
                         
-                #precision-block3
-                    img(src="/assets/league/img/runesReforged/perk/8014.png" data-target="#8014" data-toggle="collapse")
-                    img(src="/assets/league/img/runesReforged/perk/8017.png" data-target="#8017" data-toggle="collapse")
-                    img(src="/assets/league/img/runesReforged/perk/8299.png" data-target="#8299" data-toggle="collapse")
-                    
-                    #8014.collapse(data-parent="#precision-block3")
-                        h5=runes["8014"].name
-                        p!=runes["8014"].longDesc
-                    #8017.collapse(data-parent="#precision-block3")
-                        h5=runes["8017"].name
-                        p!=runes["8017"].longDesc
-                    #8299.collapse(data-parent="#precision-block3")
-                        h5=runes["8299"].name
-                        p!=runes["8299"].longDesc
+                    #precision-block1
+                        img(src="/assets/league/img/runesReforged/perk/9101.png" data-toggle="collapse" data-target="#9101")
+                        img(src="/assets/league/img/runesReforged/perk/9111.png" data-toggle="collapse" data-target="#9111")
+                        img(src="/assets/league/img/runesReforged/perk/8009.png" data-toggle="collapse" data-target="#8009")
                         
-            #domination
-                .path
-                    img.invisible
-                    img(src="/assets/league/img/runesReforged/perk/8100.png" data-target="#8100" data-toggle="collapse")
-                    
-                    #8100.collapse
-                        h5=runes["8100"].name
-                        p!=runes["8100"].shortDesc
+                        #9101.collapse(data-parent="#precision-block1")
+                            h5=runes["9101"].name
+                            p!=runes["9101"].longDesc
+                        
+                        #9111.collapse(data-parent="#precision-block1")
+                            h5=runes["9111"].name
+                            p!=runes["9111"].longDesc
+                        #8009.collapse(data-parent="#precision-block1")
+                            h5=runes["8009"].name
+                            p!=runes["8009"].longDesc
 
-                #domination-KS
-                    img(src="/assets/league/img/runesReforged/perk/8112.png" data-toggle="collapse" data-target="#8112")
-                    img(src="/assets/league/img/runesReforged/perk/8124.png" data-toggle="collapse" data-target="#8124")
-                    img(src="/assets/league/img/runesReforged/perk/8128.png" data-toggle="collapse" data-target="#8128")
+                    #precision-block2
+                        img(src="/assets/league/img/runesReforged/perk/9104.png" data-toggle="collapse" data-target="#9104")
+                        img(src="/assets/league/img/runesReforged/perk/9105.png" data-toggle="collapse" data-target="#9105")
+                        img(src="/assets/league/img/runesReforged/perk/9103.png" data-toggle="collapse" data-target="#9103")
+                        
+                        #9104.collapse(data-parent="#precision-block2")
+                            h5=runes["9104"].name
+                            p!=runes["9104"].longDesc
+                        #9105.collapse(data-parent="#precision-block2")
+                            h5=runes["9105"].name
+                            p!=runes["9105"].longDesc
+                        #9103.collapse(data-parent="#precision-block2")
+                            h5=runes["9103"].name
+                            p!=runes["9103"].longDesc
+                            
+                    #precision-block3
+                        img(src="/assets/league/img/runesReforged/perk/8014.png" data-target="#8014" data-toggle="collapse")
+                        img(src="/assets/league/img/runesReforged/perk/8017.png" data-target="#8017" data-toggle="collapse")
+                        img(src="/assets/league/img/runesReforged/perk/8299.png" data-target="#8299" data-toggle="collapse")
+                        
+                        #8014.collapse(data-parent="#precision-block3")
+                            h5=runes["8014"].name
+                            p!=runes["8014"].longDesc
+                        #8017.collapse(data-parent="#precision-block3")
+                            h5=runes["8017"].name
+                            p!=runes["8017"].longDesc
+                        #8299.collapse(data-parent="#precision-block3")
+                            h5=runes["8299"].name
+                            p!=runes["8299"].longDesc
+                            
+                #domination
+                    .path.active-path
+                        img.invisible
+                        img(src="/assets/league/img/runesReforged/perk/8100.png" data-target="#8100" data-toggle="collapse")
+                        
+                        #8100.collapse
+                            h5=runes["8100"].name
+                            p!=runes["8100"].shortDesc
 
-                    #8112.collapse(data-parent="#domination-KS")
-                        h5=runes["8112"].name
-                        p!=runes["8112"].longDesc
-                    #8124.collapse(data-parent="#domination-KS")
-                        h5=runes["8124"].name
-                        p!=runes["8124"].longDesc
-                    #8128.collapse(data-parent="#domination-KS")
-                        h5=runes["8128"].name
+                    #domination-KS
+                        img(src="/assets/league/img/runesReforged/perk/8112.png" data-toggle="collapse" data-target="#8112")
+                        img(src="/assets/league/img/runesReforged/perk/8124.png" data-toggle="collapse" data-target="#8124")
+                        img(src="/assets/league/img/runesReforged/perk/8128.png" data-toggle="collapse" data-target="#8128")
+
+                        #8112.collapse(data-parent="#domination-KS")
+                            h5=runes["8112"].name
+                            p!=runes["8112"].longDesc
+                        #8124.collapse(data-parent="#domination-KS")
+                            h5=runes["8124"].name
+                            p!=runes["8124"].longDesc
+                        #8128.collapse(data-parent="#domination-KS")
+                            h5=runes["8128"].name
                             p!=runes["8128"].longDesc
-                    
-                #domination-block1
-                    img(src="/assets/league/img/runesReforged/perk/8126.png" data-toggle="collapse" data-target="#8126")
-                    img(src="/assets/league/img/runesReforged/perk/8139.png" data-toggle="collapse" data-target="#8139")
-                    img(src="/assets/league/img/runesReforged/perk/8299.png" data-toggle="collapse" data-target="#8299")
-                    
-                    #8126.collapse(data-parent="#domination-block1")
-                        h5=runes["8126"].name
-                        p!=runes["8126"].longDesc
-                    
-                    #8139.collapse(data-parent="#domination-block1")
-                        h5=runes["8139"].name
-                        p!=runes["8139"].longDesc
-                    #8299.collapse(data-parent="#domination-block1")
-                        h5=runes["8299"].name
-                        p!=runes["8299"].longDesc
-
-                #domination-block2
-                    img(src="/assets/league/img/runesReforged/perk/8136.png" data-toggle="collapse" data-target="#8136")
-                    img(src="/assets/league/img/runesReforged/perk/8120.png" data-toggle="collapse" data-target="#8120")
-                    img(src="/assets/league/img/runesReforged/perk/8138.png" data-toggle="collapse" data-target="#8138")
-                    
-                    #8136.collapse(data-parent="#domination-block2")
-                        h5=runes["8136"].name
-                        p!=runes["8136"].longDesc
-                    #8120.collapse(data-parent="#domination-block2")
-                        h5=runes["8120"].name
-                        p!=runes["8120"].longDesc
-                    #8138.collapse(data-parent="#domination-block2")
-                        h5=runes["8138"].name
-                        p!=runes["8138"].longDesc
                         
-                #domination-block3
-                    img(src="/assets/league/img/runesReforged/perk/8135.png" data-target="#8135" data-toggle="collapse")
-                    img(src="/assets/league/img/runesReforged/perk/8134.png" data-target="#8134" data-toggle="collapse")
-                    img(src="/assets/league/img/runesReforged/perk/8105.png" data-target="#8105" data-toggle="collapse")
-                    
-                    #8135.collapse(data-parent="#domination-block3")
-                        h5=runes["8135"].name
-                        p!=runes["8135"].longDesc
-                    #8134.collapse(data-parent="#domination-block3")
-                        h5=runes["8134"].name
-                        p!=runes["8134"].longDesc
-                    #8105.collapse(data-parent="#domination-block3")
-                        h5=runes["8105"].name
-                        p!=runes["8105"].longDesc
-
-            #sorcery
-                .path
-                    img.invisible
-                    img(src="/assets/league/img/runesReforged/perk/8200.png" data-target="#8200" data-toggle="collapse")
-                    
-                    #8200.collapse
-                        h5=runes["8200"].name
-                        p!=runes["8200"].shortDesc
-
-                #sorcery-KS
-                    img(src="/assets/league/img/runesReforged/perk/8214.png" data-toggle="collapse" data-target="#8214")
-                    img(src="/assets/league/img/runesReforged/perk/8229.png" data-toggle="collapse" data-target="#8229")
-                    img(src="/assets/league/img/runesReforged/perk/8230.png" data-toggle="collapse" data-target="#8230")
-
-                    #8214.collapse(data-parent="#sorcery-KS")
-                        h5=runes["8214"].name
-                        p!=runes["8214"].longDesc
-                    #8229.collapse(data-parent="#sorcery-KS")
-                        h5=runes["8229"].name
-                        p!=runes["8229"].longDesc
-                    #8230.collapse(data-parent="#sorcery-KS")
-                        h5=runes["8230"].name
-                        p!=runes["8230"].longDesc
-                    
-                #sorcery-block1
-                    img(src="/assets/league/img/runesReforged/perk/8224.png" data-toggle="collapse" data-target="#8224")
-                    img(src="/assets/league/img/runesReforged/perk/8226.png" data-toggle="collapse" data-target="#8226")
-                    img(src="/assets/league/img/runesReforged/perk/8243.png" data-toggle="collapse" data-target="#8243")
-                    
-                    #8224.collapse(data-parent="#sorcery-block1")
-                        h5=runes["8224"].name
-                        p!=runes["8224"].longDesc
-                    
-                    #8226.collapse(data-parent="#sorcery-block1")
-                        h5=runes["8226"].name
-                        p!=runes["8226"].longDesc
-                    #8243.collapse(data-parent="#sorcery-block1")
-                        h5=runes["8243"].name
-                        p!=runes["8243"].longDesc
-
-                #sorcery-block2
-                    img(src="/assets/league/img/runesReforged/perk/8210.png" data-toggle="collapse" data-target="#8210")
-                    img(src="/assets/league/img/runesReforged/perk/8234.png" data-toggle="collapse" data-target="#8234")
-                    img(src="/assets/league/img/runesReforged/perk/8233.png" data-toggle="collapse" data-target="#8233")
-                    
-                    #8210.collapse(data-parent="#sorcery-block2")
-                        h5=runes["8210"].name
-                        p!=runes["8210"].longDesc
-                    #8234.collapse(data-parent="#sorcery-block2")
-                        h5=runes["8234"].name
-                        p!=runes["8234"].longDesc
-                    #8233.collapse(data-parent="#sorcery-block2")
-                        h5=runes["8233"].name
-                        p!=runes["8233"].longDesc
+                    #domination-block1
+                        img(src="/assets/league/img/runesReforged/perk/8126.png" data-toggle="collapse" data-target="#8126")
+                        img(src="/assets/league/img/runesReforged/perk/8139.png" data-toggle="collapse" data-target="#8139")
+                        img(src="/assets/league/img/runesReforged/perk/8299.png" data-toggle="collapse" data-target="#8299")
                         
-                #sorcery-block3
-                    img(src="/assets/league/img/runesReforged/perk/8237.png" data-target="#8237" data-toggle="collapse")
-                    img(src="/assets/league/img/runesReforged/perk/8232.png" data-target="#8232" data-toggle="collapse")
-                    img(src="/assets/league/img/runesReforged/perk/8236.png" data-target="#8236" data-toggle="collapse")
-                    
-                    #8237.collapse(data-parent="#sorcery-block3")
-                        h5=runes["8237"].name
-                        p!=runes["8237"].longDesc
-                    #8232.collapse(data-parent="#sorcery-block3")
-                        h5=runes["8232"].name
-                        p!=runes["8232"].longDesc
-                    #8236.collapse(data-parent="#sorcery-block3")
-                        h5=runes["8236"].name
-                        p!=runes["8236"].longDesc
-
-            #resolve
-                .path
-                    img.invisible
-                    img(src="/assets/league/img/runesReforged/perk/8300.png" data-target="#8300" data-toggle="collapse")
-                    
-                    #8300.collapse
-                        h5=runes["8300"].name
-                        p!=runes["8300"].shortDesc
-
-                #resolve-KS
-                    img(src="/assets/league/img/runesReforged/perk/8437.png" data-toggle="collapse" data-target="#8437")
-                    img(src="/assets/league/img/runesReforged/perk/8439.png" data-toggle="collapse" data-target="#8439")
-                    img(src="/assets/league/img/runesReforged/perk/8465.png" data-toggle="collapse" data-target="#8465")
-
-                    #8437.collapse(data-parent="#resolve-KS")
-                        h5=runes["8437"].name
-                        p!=runes["8437"].longDesc
-                    #8439.collapse(data-parent="#resolve-KS")
-                        h5=runes["8439"].name
-                        p!=runes["8439"].longDesc
-                    #8465.collapse(data-parent="#resolve-KS")
-                        h5=runes["8465"].name
-                        p!=runes["8465"].longDesc
-                    
-                #resolve-block1
-                    img(src="/assets/league/img/runesReforged/perk/8446.png" data-toggle="collapse" data-target="#8446")
-                    img(src="/assets/league/img/runesReforged/perk/8463.png" data-toggle="collapse" data-target="#8463")
-                    img(src="/assets/league/img/runesReforged/perk/8473.png" data-toggle="collapse" data-target="#8473")
-                    
-                    #8446.collapse(data-parent="#resolve-block1")
-                        h5=runes["8446"].name
-                        p!=runes["8446"].longDesc
-                    
-                    #8463.collapse(data-parent="#resolve-block1")
-                        h5=runes["8463"].name
-                        p!=runes["8463"].longDesc
-                    #8473.collapse(data-parent="#resolve-block1")
-                        h5=runes["8473"].name
-                        p!=runes["8473"].longDesc
-
-                #resolve-block2
-                    img(src="/assets/league/img/runesReforged/perk/8429.png" data-toggle="collapse" data-target="#8429")
-                    img(src="/assets/league/img/runesReforged/perk/8444.png" data-toggle="collapse" data-target="#8444")
-                    img(src="/assets/league/img/runesReforged/perk/8472.png" data-toggle="collapse" data-target="#8472")
-                    
-                    #8429.collapse(data-parent="#resolve-block2")
-                        h5=runes["8429"].name
-                        p!=runes["8429"].longDesc
-                    #8444.collapse(data-parent="#resolve-block2")
-                        h5=runes["8444"].name
-                        p!=runes["8444"].longDesc
-                    #8472.collapse(data-parent="#resolve-block2")
-                        h5=runes["8472"].name
-                        p!=runes["8472"].longDesc
+                        #8126.collapse(data-parent="#domination-block1")
+                            h5=runes["8126"].name
+                            p!=runes["8126"].longDesc
                         
-                #resolve-block3
-                    img(src="/assets/league/img/runesReforged/perk/8451.png" data-target="#8451" data-toggle="collapse")
-                    img(src="/assets/league/img/runesReforged/perk/8453.png" data-target="#8453" data-toggle="collapse")
-                    img(src="/assets/league/img/runesReforged/perk/8242.png" data-target="#8242" data-toggle="collapse")
-                    
-                    #8451.collapse(data-parent="#resolve-block3")
-                        h5=runes["8451"].name
-                        p!=runes["8451"].longDesc
-                    #8453.collapse(data-parent="#resolve-block3")
-                        h5=runes["8453"].name
-                        p!=runes["8453"].longDesc
-                    #8242.collapse(data-parent="#resolve-block3")
-                        h5=runes["8242"].name
-                        p!=runes["8242"].longDesc
+                        #8139.collapse(data-parent="#domination-block1")
+                            h5=runes["8139"].name
+                            p!=runes["8139"].longDesc
+                        #8299.collapse(data-parent="#domination-block1")
+                            h5=runes["8299"].name
+                            p!=runes["8299"].longDesc
 
-            #inspiration
-                .path
-                    img.invisible
-                    img(src="/assets/league/img/runesReforged/perk/8400.png" data-target="#8400" data-toggle="collapse")
-                    
-                    #8400.collapse
-                        h5=runes["8400"].name
-                        p!=runes["8400"].shortDesc
-
-                #inspiration-KS
-                    img(src="/assets/league/img/runesReforged/perk/8351.png" data-toggle="collapse" data-target="#8351")
-                    img(src="/assets/league/img/runesReforged/perk/8359.png" data-toggle="collapse" data-target="#8359")
-                    img(src="/assets/league/img/runesReforged/perk/8360.png" data-toggle="collapse" data-target="#8360")
-
-                    #8351.collapse(data-parent="#inspiration-KS")
-                        h5=runes["8351"].name
-                        p!=runes["8351"].longDesc
-                    #8359.collapse(data-parent="#inspiration-KS")
-                        h5=runes["8359"].name
-                        p!=runes["8359"].longDesc
-                    #8360.collapse(data-parent="#inspiration-KS")
-                        h5=runes["8360"].name
-                        p!=runes["8360"].longDesc
-                    
-                #inspiration-block1
-                    img(src="/assets/league/img/runesReforged/perk/8306.png" data-toggle="collapse" data-target="#8306")
-                    img(src="/assets/league/img/runesReforged/perk/8304.png" data-toggle="collapse" data-target="#8304")
-                    img(src="/assets/league/img/runesReforged/perk/8313.png" data-toggle="collapse" data-target="#8313")
-                    
-                    #8306.collapse(data-parent="#inspiration-block1")
-                        h5=runes["8306"].name
-                        p!=runes["8306"].longDesc
-                    
-                    #8304.collapse(data-parent="#inspiration-block1")
-                        h5=runes["8304"].name
-                        p!=runes["8304"].longDesc
-                    #8313.collapse(data-parent="#inspiration-block1")
-                        h5=runes["8313"].name
-                        p!=runes["8313"].longDesc
-
-                #inspiration-block2
-                    img(src="/assets/league/img/runesReforged/perk/8321.png" data-toggle="collapse" data-target="#8321")
-                    img(src="/assets/league/img/runesReforged/perk/8316.png" data-toggle="collapse" data-target="#8316")
-                    img(src="/assets/league/img/runesReforged/perk/8345.png" data-toggle="collapse" data-target="#8345")
-                    
-                    #8321.collapse(data-parent="#inspiration-block2")
-                        h5=runes["8321"].name
-                        p!=runes["8321"].longDesc
-                    #8316.collapse(data-parent="#inspiration-block2")
-                        h5=runes["8316"].name
-                        p!=runes["8316"].longDesc
-                    #8345.collapse(data-parent="#inspiration-block2")
-                        h5=runes["8345"].name
-                        p!=runes["8345"].longDesc
+                    #domination-block2
+                        img(src="/assets/league/img/runesReforged/perk/8136.png" data-toggle="collapse" data-target="#8136")
+                        img(src="/assets/league/img/runesReforged/perk/8120.png" data-toggle="collapse" data-target="#8120")
+                        img(src="/assets/league/img/runesReforged/perk/8138.png" data-toggle="collapse" data-target="#8138")
                         
-                #inspiration-block3
-                    img(src="/assets/league/img/runesReforged/perk/8347.png" data-target="#8347" data-toggle="collapse")
-                    img(src="/assets/league/img/runesReforged/perk/8410.png" data-target="#8410" data-toggle="collapse")
-                    img(src="/assets/league/img/runesReforged/perk/8352.png" data-target="#8352" data-toggle="collapse")
-                    
-                    #8347.collapse(data-parent="#inspiration-block3")
-                        h5=runes["8347"].name
-                        p!=runes["8347"].longDesc
-                    #8410.collapse(data-parent="#inspiration-block3")
-                        h5=runes["8410"].name
-                        p!=runes["8410"].longDesc
-                    #8352.collapse(data-parent="#inspiration-block3")
-                        h5=runes["8352"].name
-                        p!=runes["8352"].longDesc
+                        #8136.collapse(data-parent="#domination-block2")
+                            h5=runes["8136"].name
+                            p!=runes["8136"].longDesc
+                        #8120.collapse(data-parent="#domination-block2")
+                            h5=runes["8120"].name
+                            p!=runes["8120"].longDesc
+                        #8138.collapse(data-parent="#domination-block2")
+                            h5=runes["8138"].name
+                            p!=runes["8138"].longDesc
+                            
+                    #domination-block3
+                        img(src="/assets/league/img/runesReforged/perk/8135.png" data-target="#8135" data-toggle="collapse")
+                        img(src="/assets/league/img/runesReforged/perk/8134.png" data-target="#8134" data-toggle="collapse")
+                        img(src="/assets/league/img/runesReforged/perk/8105.png" data-target="#8105" data-toggle="collapse")
+                        
+                        #8135.collapse(data-parent="#domination-block3")
+                            h5=runes["8135"].name
+                            p!=runes["8135"].longDesc
+                        #8134.collapse(data-parent="#domination-block3")
+                            h5=runes["8134"].name
+                            p!=runes["8134"].longDesc
+                        #8105.collapse(data-parent="#domination-block3")
+                            h5=runes["8105"].name
+                            p!=runes["8105"].longDesc
+
+                #sorcery
+                    .path.active-path
+                        img.invisible
+                        img(src="/assets/league/img/runesReforged/perk/8200.png" data-target="#8200" data-toggle="collapse")
+                        
+                        #8200.collapse
+                            h5=runes["8200"].name
+                            p!=runes["8200"].shortDesc
+
+                    #sorcery-KS
+                        img(src="/assets/league/img/runesReforged/perk/8214.png" data-toggle="collapse" data-target="#8214")
+                        img(src="/assets/league/img/runesReforged/perk/8229.png" data-toggle="collapse" data-target="#8229")
+                        img(src="/assets/league/img/runesReforged/perk/8230.png" data-toggle="collapse" data-target="#8230")
+
+                        #8214.collapse(data-parent="#sorcery-KS")
+                            h5=runes["8214"].name
+                            p!=runes["8214"].longDesc
+                        #8229.collapse(data-parent="#sorcery-KS")
+                            h5=runes["8229"].name
+                            p!=runes["8229"].longDesc
+                        #8230.collapse(data-parent="#sorcery-KS")
+                            h5=runes["8230"].name
+                            p!=runes["8230"].longDesc
+                        
+                    #sorcery-block1
+                        img(src="/assets/league/img/runesReforged/perk/8224.png" data-toggle="collapse" data-target="#8224")
+                        img(src="/assets/league/img/runesReforged/perk/8226.png" data-toggle="collapse" data-target="#8226")
+                        img(src="/assets/league/img/runesReforged/perk/8243.png" data-toggle="collapse" data-target="#8243")
+                        
+                        #8224.collapse(data-parent="#sorcery-block1")
+                            h5=runes["8224"].name
+                            p!=runes["8224"].longDesc
+                        
+                        #8226.collapse(data-parent="#sorcery-block1")
+                            h5=runes["8226"].name
+                            p!=runes["8226"].longDesc
+                        #8243.collapse(data-parent="#sorcery-block1")
+                            h5=runes["8243"].name
+                            p!=runes["8243"].longDesc
+
+                    #sorcery-block2
+                        img(src="/assets/league/img/runesReforged/perk/8210.png" data-toggle="collapse" data-target="#8210")
+                        img(src="/assets/league/img/runesReforged/perk/8234.png" data-toggle="collapse" data-target="#8234")
+                        img(src="/assets/league/img/runesReforged/perk/8233.png" data-toggle="collapse" data-target="#8233")
+                        
+                        #8210.collapse(data-parent="#sorcery-block2")
+                            h5=runes["8210"].name
+                            p!=runes["8210"].longDesc
+                        #8234.collapse(data-parent="#sorcery-block2")
+                            h5=runes["8234"].name
+                            p!=runes["8234"].longDesc
+                        #8233.collapse(data-parent="#sorcery-block2")
+                            h5=runes["8233"].name
+                            p!=runes["8233"].longDesc
+                            
+                    #sorcery-block3
+                        img(src="/assets/league/img/runesReforged/perk/8237.png" data-target="#8237" data-toggle="collapse")
+                        img(src="/assets/league/img/runesReforged/perk/8232.png" data-target="#8232" data-toggle="collapse")
+                        img(src="/assets/league/img/runesReforged/perk/8236.png" data-target="#8236" data-toggle="collapse")
+                        
+                        #8237.collapse(data-parent="#sorcery-block3")
+                            h5=runes["8237"].name
+                            p!=runes["8237"].longDesc
+                        #8232.collapse(data-parent="#sorcery-block3")
+                            h5=runes["8232"].name
+                            p!=runes["8232"].longDesc
+                        #8236.collapse(data-parent="#sorcery-block3")
+                            h5=runes["8236"].name
+                            p!=runes["8236"].longDesc
+
+                #resolve
+                    .path.active-path
+                        img.invisible
+                        img(src="/assets/league/img/runesReforged/perk/8300.png" data-target="#8300" data-toggle="collapse")
+                        
+                        #8300.collapse
+                            h5=runes["8300"].name
+                            p!=runes["8300"].shortDesc
+
+                    #resolve-KS
+                        img(src="/assets/league/img/runesReforged/perk/8437.png" data-toggle="collapse" data-target="#8437")
+                        img(src="/assets/league/img/runesReforged/perk/8439.png" data-toggle="collapse" data-target="#8439")
+                        img(src="/assets/league/img/runesReforged/perk/8465.png" data-toggle="collapse" data-target="#8465")
+
+                        #8437.collapse(data-parent="#resolve-KS")
+                            h5=runes["8437"].name
+                            p!=runes["8437"].longDesc
+                        #8439.collapse(data-parent="#resolve-KS")
+                            h5=runes["8439"].name
+                            p!=runes["8439"].longDesc
+                        #8465.collapse(data-parent="#resolve-KS")
+                            h5=runes["8465"].name
+                            p!=runes["8465"].longDesc
+                        
+                    #resolve-block1
+                        img(src="/assets/league/img/runesReforged/perk/8446.png" data-toggle="collapse" data-target="#8446")
+                        img(src="/assets/league/img/runesReforged/perk/8463.png" data-toggle="collapse" data-target="#8463")
+                        img(src="/assets/league/img/runesReforged/perk/8473.png" data-toggle="collapse" data-target="#8473")
+                        
+                        #8446.collapse(data-parent="#resolve-block1")
+                            h5=runes["8446"].name
+                            p!=runes["8446"].longDesc
+                        
+                        #8463.collapse(data-parent="#resolve-block1")
+                            h5=runes["8463"].name
+                            p!=runes["8463"].longDesc
+                        #8473.collapse(data-parent="#resolve-block1")
+                            h5=runes["8473"].name
+                            p!=runes["8473"].longDesc
+
+                    #resolve-block2
+                        img(src="/assets/league/img/runesReforged/perk/8429.png" data-toggle="collapse" data-target="#8429")
+                        img(src="/assets/league/img/runesReforged/perk/8444.png" data-toggle="collapse" data-target="#8444")
+                        img(src="/assets/league/img/runesReforged/perk/8472.png" data-toggle="collapse" data-target="#8472")
+                        
+                        #8429.collapse(data-parent="#resolve-block2")
+                            h5=runes["8429"].name
+                            p!=runes["8429"].longDesc
+                        #8444.collapse(data-parent="#resolve-block2")
+                            h5=runes["8444"].name
+                            p!=runes["8444"].longDesc
+                        #8472.collapse(data-parent="#resolve-block2")
+                            h5=runes["8472"].name
+                            p!=runes["8472"].longDesc
+                            
+                    #resolve-block3
+                        img(src="/assets/league/img/runesReforged/perk/8451.png" data-target="#8451" data-toggle="collapse")
+                        img(src="/assets/league/img/runesReforged/perk/8453.png" data-target="#8453" data-toggle="collapse")
+                        img(src="/assets/league/img/runesReforged/perk/8242.png" data-target="#8242" data-toggle="collapse")
+                        
+                        #8451.collapse(data-parent="#resolve-block3")
+                            h5=runes["8451"].name
+                            p!=runes["8451"].longDesc
+                        #8453.collapse(data-parent="#resolve-block3")
+                            h5=runes["8453"].name
+                            p!=runes["8453"].longDesc
+                        #8242.collapse(data-parent="#resolve-block3")
+                            h5=runes["8242"].name
+                            p!=runes["8242"].longDesc
+
+                #inspiration
+                    .path.active-path
+                        img.invisible
+                        img(src="/assets/league/img/runesReforged/perk/8400.png" data-target="#8400" data-toggle="collapse")
+                        
+                        #8400.collapse
+                            h5=runes["8400"].name
+                            p!=runes["8400"].shortDesc
+
+                    #inspiration-KS
+                        img(src="/assets/league/img/runesReforged/perk/8351.png" data-toggle="collapse" data-target="#8351")
+                        img(src="/assets/league/img/runesReforged/perk/8359.png" data-toggle="collapse" data-target="#8359")
+                        img(src="/assets/league/img/runesReforged/perk/8360.png" data-toggle="collapse" data-target="#8360")
+
+                        #8351.collapse(data-parent="#inspiration-KS")
+                            h5=runes["8351"].name
+                            p!=runes["8351"].longDesc
+                        #8359.collapse(data-parent="#inspiration-KS")
+                            h5=runes["8359"].name
+                            p!=runes["8359"].longDesc
+                        #8360.collapse(data-parent="#inspiration-KS")
+                            h5=runes["8360"].name
+                            p!=runes["8360"].longDesc
+                        
+                    #inspiration-block1
+                        img(src="/assets/league/img/runesReforged/perk/8306.png" data-toggle="collapse" data-target="#8306")
+                        img(src="/assets/league/img/runesReforged/perk/8304.png" data-toggle="collapse" data-target="#8304")
+                        img(src="/assets/league/img/runesReforged/perk/8313.png" data-toggle="collapse" data-target="#8313")
+                        
+                        #8306.collapse(data-parent="#inspiration-block1")
+                            h5=runes["8306"].name
+                            p!=runes["8306"].longDesc
+                        
+                        #8304.collapse(data-parent="#inspiration-block1")
+                            h5=runes["8304"].name
+                            p!=runes["8304"].longDesc
+                        #8313.collapse(data-parent="#inspiration-block1")
+                            h5=runes["8313"].name
+                            p!=runes["8313"].longDesc
+
+                    #inspiration-block2
+                        img(src="/assets/league/img/runesReforged/perk/8321.png" data-toggle="collapse" data-target="#8321")
+                        img(src="/assets/league/img/runesReforged/perk/8316.png" data-toggle="collapse" data-target="#8316")
+                        img(src="/assets/league/img/runesReforged/perk/8345.png" data-toggle="collapse" data-target="#8345")
+                        
+                        #8321.collapse(data-parent="#inspiration-block2")
+                            h5=runes["8321"].name
+                            p!=runes["8321"].longDesc
+                        #8316.collapse(data-parent="#inspiration-block2")
+                            h5=runes["8316"].name
+                            p!=runes["8316"].longDesc
+                        #8345.collapse(data-parent="#inspiration-block2")
+                            h5=runes["8345"].name
+                            p!=runes["8345"].longDesc
+                            
+                    #inspiration-block3
+                        img(src="/assets/league/img/runesReforged/perk/8347.png" data-target="#8347" data-toggle="collapse")
+                        img(src="/assets/league/img/runesReforged/perk/8410.png" data-target="#8410" data-toggle="collapse")
+                        img(src="/assets/league/img/runesReforged/perk/8352.png" data-target="#8352" data-toggle="collapse")
+                        
+                        #8347.collapse(data-parent="#inspiration-block3")
+                            h5=runes["8347"].name
+                            p!=runes["8347"].longDesc
+                        #8410.collapse(data-parent="#inspiration-block3")
+                            h5=runes["8410"].name
+                            p!=runes["8410"].longDesc
+                        #8352.collapse(data-parent="#inspiration-block3")
+                            h5=runes["8352"].name
+                            p!=runes["8352"].longDesc
                     
         script.
             $('#runes-paths > div').mouseover(function() {
-                if (!$(this).hasClass('active-rune')) {
+                if (!$(this).hasClass('active-path')) {
                     $(this).css('border-color', $(this).data('color'));
                 }
             });
+
             $('#runes-paths > div').mouseout(function() {
-                if (!$(this).hasClass('active-rune')) {
+                if (!$(this).hasClass('active-path')) {
                     $(this).css('border-color', 'transparent');
                 }
             });
+
             $('#runes-paths > div').click(function() {
-                if (!$(this).hasClass('active-rune')) {
-                    $('#runes-paths').children().css({'border-color': 'transparent'}).removeClass('active-rune');
-                    $('#runes-wrapper').css('background-image', `url(${$(this).data('bg')})`)
-                    $(this).addClass('active-rune');
+                if (!$(this).hasClass('active-path')) {
+                    $('#runes-wrapper').css({
+                        'background-image': `url(${$(this).data('bg')})`,
+                        'border-color': `${$(this).data('color')}`
+                    });
+
+                    $('#runes-paths').children().css('border-color', 'transparent').removeClass('active-path');
+                    $(this).addClass('active-path');
                     $(this).attr('style', `border-color: ${$(this).data('color')} !important`);
+                    $('#rune-trees').children().css('display', 'none');
+                    $(`#${$(this).data('path')}`).show();
+                }
+            });
+
+            $('#rune-trees img').click(function() {
+                if (!$(this).hasClass('active-rune')) {
+                    $(this).siblings().removeClass('active-rune');
+                    $(this).addClass('active-rune');
+                } else {
+                    $(this).removeClass('active-rune');
                 }
             });
         include partials/footer

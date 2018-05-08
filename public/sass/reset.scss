@@ -8,7 +8,7 @@
 
 body {
     font-family: "Montserrat", sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     // padding-top: 50px;
     color: $light-grey;
     background-attachment: fixed;
@@ -52,6 +52,7 @@ input, textarea {
 
 .btn {
     border: 0;
+    font-size: 1em;
 }
 
 .btn.focus, .btn:focus {
@@ -67,17 +68,29 @@ input, textarea {
     color: #fff;
 }
 
-
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: transparent;
+    border-radius: 0;
+    border-bottom: 5px solid $primary-colored-text;
+}
 // DATA TABLES
+#overall-table_filter {
+    float: left;
+    margin-left: 10px;
+}
 table.dataTable tbody tr {
     background-color: inherit;
 }
 .dataTables_wrapper .dataTables_filter input {
+    transition: 0.4s;
+    padding: 5px;
     border: 0;
     background: transparent;
-    border-bottom: 1px solid $light-grey;
+    border-bottom: 2px solid $light-grey;
     color: $light-grey;
     &:focus {
+        border-color: $primary-colored-text;
         outline: 0;
     }
 }

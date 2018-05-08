@@ -46,90 +46,102 @@ async function makeSpecBatch(specObject) {
     return batch;
 }
 
-function getSummonerGame(summonerId, region) {
-    const summonerGameData = `https://${region}${riot}spectator/v3/active-games/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`;
-    return rp({ uri: summonerGameData, json: true })
-        .catch(function(err) {
-            console.log("getSummonerGame ERROR: " + err);
-        });
+async function getSummonerGame(summonerId, region) {
+    const summonerGameData = await rp({
+        uri: `https://${region}${riot}spectator/v3/active-games/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`,
+        json: true
+    })
+    .catch(err => console.log("getSummonerGame ERROR: " + err));
+    return summonerGameData;
 }
 // SPECTATE
 
 // RIOT
-function getSummoner(summonerName, region) {
-    const getSummonerData = `https://${region}${riot}summoner/v3/summoners/by-name/${summonerName}?api_key=${process.env.LOL_KEY}`;
-    return rp({ uri: getSummonerData, json: true })
-        .catch(err => {
-            console.log("getSummoner ERROR: " + err);
-        });
+async function getSummoner(summonerName, region) {
+    const summonerData = await rp({
+        uri: `https://${region}${riot}summoner/v3/summoners/by-name/${summonerName}?api_key=${process.env.LOL_KEY}`,
+        json: true 
+    })
+    .catch(err => console.log("getSummoner ERROR: " + err));
+    return summonerData;
 }
 
 async function getSummonerLeague(summonerId, region) {
     const summonerLeague = await rp({
         uri: `https://${region}${riot}league/v3/positions/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`,
-        json: true});
+        json: true
+    })
+    .catch(err => console.log("getSummonerLeague ERROR: " + err));
     return summonerLeague;
 }
 
 async function getLeague(summonerId, region) {
-    const getLeagueData = `https://${region}${riot}league/v3/positions/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`;
-    const leagueData = await rp({ uri: getLeagueData, json: true })
-        .catch(function(err) {
-            console.log("getLeague ERROR: " + err);
-        });
+    const leagueData = await rp({
+        uri: `https://${region}${riot}league/v3/positions/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`,
+        json: true
+    })
+    .catch(err => console.log("getLeague ERROR: " + err));
     return rp({
-        uri: `https://${region}${riot}league/v3/leagues/${leagueData[0].leagueId}?api_key=${process.env.LOL_KEY}`, json: true
-    }).catch(err => {
-        console.log('getLeague error: ', err);
-    });
+        uri: `https://${region}${riot}league/v3/leagues/${leagueData[0].leagueId}?api_key=${process.env.LOL_KEY}`,
+        json: true
+    })
+    .catch(err => console.log('getLeague error: ', err));
 }
-function getMastery(summonerId, region) {
-    const getMasteryData = `https://${region}${riot}champion-mastery/v3/champion-masteries/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`;
-    return rp({ uri: getMasteryData, json: true })
-        .catch(function(err) {
-            console.log("getMastery ERROR: " + err);
-        });
+
+async function getMastery(summonerId, region) {
+    const masteryData = await rp({
+        uri: `https://${region}${riot}champion-mastery/v3/champion-masteries/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`,
+        json: true 
+    })
+    .catch(err => console.log("getMastery ERROR: " + err));
+    return masteryData;
 }
-function getLeaderboards(region) {
-    region = region || 'NA1'
-    const getLeaderboardData = `https://${region}${riot}league/v3/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=${process.env.LOL_KEY}`;
-    return rp({ uri: getLeaderboardData, json: true })
-        .catch(function(err) {
-            console.log("getLeaderboards ERROR: " + err);
-        });
+
+async function getLeaderboards(region) {
+    region = region || 'NA1';
+    const leaderboardData = await rp({
+        uri: `https://${region}${riot}league/v3/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=${process.env.LOL_KEY}`,
+        json: true 
+    })
+    .catch(err => console.log("getLeaderboards ERROR: " + err));
+    return leaderboardData;
 }
-function getMatches(summonerId, region) {
-    const getMatchesData = `https://${region}${riot}match/v3/matchlists/by-account/${summonerId}/recent?api_key=${process.env.LOL_KEY}`;
-    return rp({ uri: getMatchesData, json: true })
-        .catch(function(err) {
-            console.log("getMatches ERROR: " + err);
-        });
+
+async function getMatches(summonerId, region) {
+    const matchesData = rp({
+        uri: `https://${region}${riot}match/v3/matchlists/by-account/${summonerId}/recent?api_key=${process.env.LOL_KEY}`,
+        json: true
+    })
+    .catch(err => console.log("getMatches ERROR: " + err));
+    return matchesData;
 }
 // RIOT
 
 // CHAMPION
-function getAllChampionsStats(elo) {
+async function getAllChampionsStats(elo) {
     const allData = `kda,wins,minions,positions,wards,goldEarned,hashes`
     const getChampsData = elo && elo !== 'platplus' ? 
-        `http://api.champion.gg/v2/champions?limit=250&elo=${elo.toUpperCase()}&champData=${allData}&api_key=${process.env.CHAMPION_KEY}` :
-        `http://api.champion.gg/v2/champions?limit=250&champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
-
-    console.log('allchamops ', getChampsData)
-    return rp({ uri: getChampsData, json: true })
-        .catch(function(err) {
-            console.log("getAllChampionsStats ERROR: " + err);
-        });
+        `${champGG}/champions?limit=250&elo=${elo.toUpperCase()}&champData=${allData}&api_key=${process.env.CHAMPION_KEY}` :
+        `${champGG}/champions?limit=250&champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
+    const champData = await rp({
+        uri: getChampsData,
+        json: true
+    })
+    .catch(err => console.log("getAllChampionsStats ERROR: " + err));
+    return champData;
 }
 
-function getChampionStats(champName) {
-    champName = Object.keys(championIds).filter(k => k.toLowerCase() === champName.toLowerCase())
-    const allData = `kda,damage,minions,wins,positions,wards,normalized,averageGames,overallPerformanceScore,goldEarned,sprees,hashes,wins,maxMins` //,matchups
+async function getChampionStats(champName) {
+    champName = Object.keys(championIds).filter(k => k.toLowerCase() === champName.toLowerCase());
+    const allData = `kda,damage,minions,wins,positions,wards,normalized,averageGames,overallPerformanceScore,goldEarned,sprees,hashes,wins,maxMins`; //,matchups
     const getChampsData = `${champGG}/champions/${championIds[champName]}?champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
     console.log(getChampsData)
-    return rp({ uri: getChampsData, json: true })
-        .catch(function(err) {
-            console.log("getChampionStats ERROR: " + err);
-        });
+    const champsData = await rp({
+        uri: getChampsData,
+        json: true
+    })
+    .catch(err => console.log("getChampionStats ERROR: " + err));
+    return champsData;
 }
 
 async function getIndepthStats(champName, elo, position) {
@@ -156,25 +168,29 @@ async function getIndepthStats(champName, elo, position) {
     return indepthStats;
 }
 
-function getOverallStatistics(elo) {
+async function getOverallStatistics(elo) {
     const getOverallData = elo && elo !== 'platplus' ? 
         `${champGG}/overall?elo=${elo.toUpperCase()}&api_key=${process.env.CHAMPION_KEY}` :
         `${champGG}/v2/overall?&api_key=${process.env.CHAMPION_KEY}`;
-    return rp({ uri: getOverallData, json: true })
-        .catch(function(err) {
-            console.log("getOverallStatistics ERROR: " + err);
-        });
+    const overallStats = await rp({
+        uri: getOverallData,
+        json: true
+    })
+    .catch(err => console.log("getOverallStatistics ERROR: " + err));
+    return overallStats;
 }
 
-function getOverallPatch(elo) {
+async function getOverallPatch(elo) {
     const getOverallPatchData = elo && elo !== 'platplus' ? 
         `${champGG}/v2/general?elo=${elo.toUpperCase()}&api_key=${process.env.CHAMPION_KEY}` :
         `${champGG}/v2/general?&api_key=${process.env.CHAMPION_KEY}`;
     console.log(getOverallPatchData)
-    return rp({ uri: getOverallPatchData, json: true })
-        .catch(function(err) {
-            console.log("getOverallStatistics ERROR: " + err);
-        });
+    const overallPatch = await rp({ uri:
+        getOverallPatchData,
+        json: true
+    })
+    .catch(err => console.log("getOverallStatistics ERROR: " + err));
+    return overallPatch;
 }
 // CHAMPION
 

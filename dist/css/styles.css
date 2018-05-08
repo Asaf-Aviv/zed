@@ -164,25 +164,17 @@
   border: 5px solid transparent; }
 
 #rune-trees {
-  width: 60%; }
-  #rune-trees li {
-    list-style: none;
-    font-size: inherit; }
-  #rune-trees h5 {
-    color: #b1a0ff;
-    font-size: 0.85em;
-    font-weight: 600; }
+  width: 35%; }
   #rune-trees p {
-    font-size: 0.7em;
     margin: 0; }
   #rune-trees > div {
     display: none;
-    margin-left: 40px; }
+    margin-left: 20px; }
   #rune-trees img {
     cursor: pointer;
-    margin: 5px 20px;
-    width: 40px;
-    height: 40px;
+    margin: 20px;
+    width: 48px;
+    height: 48px;
     -webkit-filter: grayscale(100%);
     /* Safari 6.0 - 9.0 */
     filter: grayscale(100%);

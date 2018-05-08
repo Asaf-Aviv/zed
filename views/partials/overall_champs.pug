@@ -36,7 +36,7 @@
                     td
                         .d-flex.align-items-center
                             .overall-table-champ-tile(
-                                style=`background-image: url(//ddragon.leagueoflegends.com/cdn/8.7.1/img/champion/${ids[allChampsStats[i].championId]}.png)`)
+                                style=`background-image: url(${ddragon}/img/champion/${ids[allChampsStats[i].championId]}.png)`)
                             span.bold.ml-2= ids[allChampsStats[i].championId]
                     td= role
                     td= allChampsStats[i].gamesPlayed
@@ -56,7 +56,6 @@ script.
     });
 
     $('#overall-table').DataTable({
-        "searching": false,
         "ordering": true,
         "paging":   false,
         "info": false,

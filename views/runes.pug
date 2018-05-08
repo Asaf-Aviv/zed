@@ -24,7 +24,7 @@ body
                 data-path="inspiration" title=runes["8400"].shortDesc data-toggle="tooltip")
                 img(src="/assets/league/img/runesReforged/perk/8400.png")
 
-        #runes-wrapper.mx-auto
+        #runes-wrapper.d-flex.mx-auto
             #rune-trees
                 #precision
                     .path.active-path
@@ -378,6 +378,8 @@ body
                         #8352.collapse(data-parent="#inspiration-block3")
                             h5=runes["8352"].name
                             p!=runes["8352"].longDesc
+                .suh
+                    p suh dude
                     
         script.
             $('#runes-paths > div').mouseover(function() {

@@ -10,9 +10,9 @@ section.row
                     if player.teamId == 100
                         tr
                             td: .player-profile-icon
-                                img(src=`//ddragon.leagueoflegends.com/cdn/8.7.1/img/profileicon/${player.profileIconId}.png`)
+                                img(src=`${ddragon}/img/profileicon/${player.profileIconId}.png`)
                             td: .player-champ-icon: a(href=`/champions/${championIds[player.championId]}`)
-                                img(src=`//ddragon.leagueoflegends.com/cdn/8.7.1/img/champion/${championIds[player.championId]}.png`)
+                                img(src=`${ddragon}/img/champion/${championIds[player.championId]}.png`)
                             td: a(href=`/summoner?userName=${player.summonerName}&region=${match.platformId}`): span= player.summonerName
                             td: .player-rune-icon
                                 img(src=`/assets/league/img/runesReforged/perk/${player.perks.perkStyle}.png`)
@@ -22,13 +22,13 @@ section.row
                                 each val, key in summonerSpells.data
                                     if (summonerSpells.data[key].key == player.spell1Id)
                                         .player-ss-icon
-                                            img(src=`//ddragon.leagueoflegends.com/cdn/8.7.1/img/spell/${summonerSpells.data[key].image.full}`,
+                                            img(src=`${ddragon}/img/spell/${summonerSpells.data[key].image.full}`,
                                             data-toggle="tooltip", title=summonerSpells.data[key].description)
                             td
                                 each val, key in summonerSpells.data
                                     if (summonerSpells.data[key].key == player.spell2Id)
                                         .player-ss-icon
-                                            img(src=`//ddragon.leagueoflegends.com/cdn/8.7.1/img/spell/${summonerSpells.data[key].image.full}`,
+                                            img(src=`${ddragon}/img/spell/${summonerSpells.data[key].image.full}`,
                                             data-toggle="tooltip", title=summonerSpells.data[key].description)
             
             #match-clock= match.gameLength > 3599 ? new Date(1000 * match.gameLength).toISOString().substr(11, 8) : new Date(1000 * match.gameLength).toISOString().substr(14, 5)
@@ -38,9 +38,9 @@ section.row
                     if player.teamId == 200
                         tr
                             td: .player-profile-icon
-                                img(src=`//ddragon.leagueoflegends.com/cdn/8.7.1/img/profileicon/${player.profileIconId}.png`)
+                                img(src=`${ddragon}/img/profileicon/${player.profileIconId}.png`)
                             td: .player-champ-icon: a(href=`/champions/${championIds[player.championId]}`)
-                                img(src=`//ddragon.leagueoflegends.com/cdn/8.7.1/img/champion/${championIds[player.championId]}.png`)
+                                img(src=`${ddragon}/img/champion/${championIds[player.championId]}.png`)
                             td: a(href=`/summoner?userName=${player.summonerName}&region=${match.platformId}`): span= player.summonerName
                             td: .player-rune-icon
                                 img(src=`/assets/league/img/runesReforged/perk/${player.perks.perkStyle}.png`)
@@ -50,13 +50,13 @@ section.row
                                 each val, key in summonerSpells.data
                                     if (summonerSpells.data[key].key == player.spell1Id)
                                         .player-ss-icon
-                                            img(src=`//ddragon.leagueoflegends.com/cdn/8.7.1/img/spell/${summonerSpells.data[key].image.full}`,
+                                            img(src=`${ddragon}/img/spell/${summonerSpells.data[key].image.full}`,
                                             data-toggle="tooltip", title=summonerSpells.data[key].description)
                             td
                                 each val, key in summonerSpells.data
                                     if (summonerSpells.data[key].key == player.spell2Id)
                                         .player-ss-icon
-                                            img(src=`//ddragon.leagueoflegends.com/cdn/8.7.1/img/spell/${summonerSpells.data[key].image.full}`,
+                                            img(src=`${ddragon}/img/spell/${summonerSpells.data[key].image.full}`,
                                             data-toggle="tooltip", title=summonerSpells.data[key].description)
 script.
     window.onload = function() {

@@ -1,10 +1,10 @@
 const rp             = require('request-promise');
-const championSkins  = require('../assets/data/champions/championSkins');
-const championIds    = require('../assets/data/champions/championIds');
-const champions      = require('../assets/data/champions/champion');
-const items          = require('../assets/league/data/en_US/item');
-const runes          = require('../assets/league/data/en_US/runesReforged');
-const summonerSpells = require('../assets/league/data/en_US/summoner');
+const championSkins  = require('../assets/data/champions/championSkins.json');
+const championIds    = require('../assets/data/champions/championIds.json');
+const champions      = require('../assets/data/champions/champion.json');
+const items          = require('../assets/league/data/en_US/item.json');
+const runes          = require('../assets/league/data/en_US/runesReforged.json');
+const summonerSpells = require('../assets/league/data/en_US/summoner.json');
 
 const ddragon = '//ddragon.leagueoflegends.com/cdn/8.9.1';
 const riot    = '.api.riotgames.com/lol/';

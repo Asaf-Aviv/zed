@@ -179,6 +179,7 @@
 #runes-paths {
     display: flex;
     justify-content: space-evenly;
+
     & > div {
         width: 90px;
         height: 90px;
@@ -204,23 +205,27 @@
 }
 
 #runes-wrapper {
-    width: 1162px;
-    height: 720px;
-    background-repeat: no-repeat;
     border-radius: 20px;
     border: 5px solid transparent;
 }
 
 #rune-trees {
-    width: 35%;
+    h5 {
+        font-weight: 600;    
+    }
     p {
         margin: 0;
     }
+    li {
+        list-style: none;
+    }
     > div {
+        padding: 20px;
         display: none;
         margin-left: 20px;
     }
     img {
+        user-select: none;
         cursor: pointer;
         margin: 20px;
         width: 48px;

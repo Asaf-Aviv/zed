@@ -18,11 +18,6 @@ $(function() {
         window.location = `/summoner?userName=${$(this).text()}&region=${location.href.slice(location.href.lastIndexOf('=')+1)}`;
     });
 
-    // $(".icon-arrow-up2").click(function() {
-    //     $("html, body").animate({ scrollTop: 0 }, 1000, 'easeInOutCubic');
-    //     return false;
-    // });
-
     $('#filter-items input').click(function() {
         let values = [],
             tags,
@@ -33,7 +28,7 @@ $(function() {
         });
 
         if(values.length > 0) {
-            $('.league-item-wrapper div').map(function() {
+            $('.league-item-wrapper > div').map(function() {
                 show = true;
                 tags = $(this).attr('tags').split(' ')
                 for (let val of values) {
@@ -45,14 +40,14 @@ $(function() {
                 show ? $(this).show() : $(this).hide()
             });
         } else {
-            $('.league-item-wrapper div').show()
+            $('.league-item-wrapper > div').show()
         }
     });
 
     $('#search-filter input').keyup(function() {
         let value = $(this).val().toLowerCase()
-        $('.league-item-wrapper div').each(function() {
-            $(this).attr('data-title').search(value) < 0 ? $(this).hide() : $(this).show()
+        $('.league-item-wrapper > div').each(function() {
+            $(this).data('title').search(value) < 0 ? $(this).hide() : $(this).show()
         });
     });
 

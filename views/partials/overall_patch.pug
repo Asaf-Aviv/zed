@@ -1,7 +1,7 @@
 - const pos = overallStats[0].positions
 - const elo = overallStats[0].elo
 #overall-wrapper
-    .league-wrapper.row.py-4.mb-4
+    .league-wrapper.row.py-4.mb-4.main-bg.silent-border
         .league-info.col-md-3.col-sm-12.justify-content-center
             select#overall-league
                 option(value="platplus" selected=elo.length > 10) Platinum+
@@ -16,7 +16,7 @@
                 span.general-color= overallPatch[0].patch
             span.bold Champion Analyzed: 
                 span.general-color= overallPatch[0].championCount.toLocaleString()
-    .row
+    .row.pt-3.main-bg.silent-border
         #overall-winrate.col-xl-5.lg-6.col-md-12
             h6.text-center.bold.general-color WIN RATES
             table.table

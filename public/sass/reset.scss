@@ -32,8 +32,8 @@ a {
     }
 }
 input, textarea {
-    // caret-color: $light-grey !important;
-    // color: $white !important;
+    caret-color: $primary-colored-text !important;
+    color: $light-grey !important;
     &::selection {
         background: #b1a0ff;
         color: #fff;
@@ -96,3 +96,10 @@ table.dataTable tbody tr {
 }
 // DATA TABLES END
 
+.main-bg {
+    background: $primary-bg-color;
+}
+
+.silent-border {
+    border: 1px solid rgba(255, 255, 255, 0.35) !important;
+}

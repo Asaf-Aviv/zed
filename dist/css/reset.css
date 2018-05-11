@@ -25,9 +25,12 @@ a {
     color: #e8e8e8;
     text-decoration: none; }
 
-input::selection, textarea::selection {
-  background: #b1a0ff;
-  color: #fff; }
+input, textarea {
+  caret-color: #b1a0ff !important;
+  color: #e8e8e8 !important; }
+  input::selection, textarea::selection {
+    background: #b1a0ff;
+    color: #fff; }
 
 .row {
   margin: 0; }
@@ -75,3 +78,9 @@ table.dataTable tbody tr {
   .dataTables_wrapper .dataTables_filter input:focus {
     border-color: #b1a0ff;
     outline: 0; }
+
+.main-bg {
+  background: #1e1e1e; }
+
+.silent-border {
+  border: 1px solid rgba(255, 255, 255, 0.35) !important; }

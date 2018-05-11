@@ -181,6 +181,7 @@
     justify-content: space-evenly;
 
     & > div {
+        user-select: none;
         width: 90px;
         height: 90px;
         background: rgba(0, 0, 0, 0.7);
@@ -211,7 +212,7 @@
 
 #rune-trees {
     h5 {
-        font-weight: 600;    
+        font-weight: 600;
     }
     p {
         margin: 0;
@@ -342,6 +343,10 @@
 
 /* OVERALL */
 /* OVERALLTABLE */
+table.dataTable tbody th,
+table.dataTable tbody td {
+    padding: 0;
+}
 .table {
     thead tr {
         th {
@@ -359,7 +364,12 @@
         border: 0;
     }
 }
-#overall-champs .table {
+#overall-champs table {
+    tbody {
+        tr:nth-child(odd) {
+            background: $primary-bg-color !important;
+        }
+    }
     td {
         border: 0;
         vertical-align: middle;
@@ -372,13 +382,12 @@
     background-size: cover;
     float: left;
 }
-#overall-table tbody tr:hover {
-    color: $primary-colored-text;
+#overall-table tbody tr {
+    &:hover {
+        color: $primary-colored-text;
+    }
 }
-table.dataTable tbody th,
-table.dataTable tbody td {
-    padding: 0;
-}
+
 /* OVERALLTABLE END*/
 /* OVERALL PATCH */
 #overall-league,
@@ -434,12 +443,28 @@ table.dataTable tbody td {
         color: $light-grey;
     }
 }
+
 .league-item {
     width: 48px;
     height: 48px;
+    border-radius: 7px;
+    border: 1px solid #393939;
 }
+
+#item-search {
+    border-bottom: 2px solid;
+    transition: border-color 400ms;
+    &:focus {
+        border-color: $primary-colored-text;
+    }
+}
+
 .filter-option {
     user-select: none;
+    cursor: pointer;
+    label {
+        cursor: pointer;
+    }
     input {
         margin-right: 1em;
     }

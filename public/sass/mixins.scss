@@ -1,6 +1,6 @@
 @mixin border-hover($size, $color) {
     border-bottom: $size solid transparent;
-    transition: 0.4s;
+    transition: border-color 0.4s;
     &:hover {
         border-color: $color;
     }

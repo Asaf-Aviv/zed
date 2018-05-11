@@ -5,7 +5,7 @@ body
     .container
         .row
             .col-md-7.mx-auto
-                .champions-squares-wrapper.d-flex.justify-content-center.flex-wrap.text-center.mt-4
+                .main-bg.silent-border.champions-squares-wrapper.d-flex.justify-content-center.flex-wrap.text-center.pt-3.mt-4
                     each champName in champs
                         .champion-square
                             a(href=`/champions/${champName.replace("'", '')}`)

@@ -20,7 +20,7 @@
       padding: 10px 20px;
       letter-spacing: 0.1em;
       border-bottom: 3px solid transparent;
-      transition: 0.4s; }
+      transition: border-color 0.4s; }
       #main-nav-bar .wrapper a:hover {
         border-color: #b1a0ff; }
       #main-nav-bar .wrapper a:focus {
@@ -70,7 +70,7 @@
   padding: 10px;
   letter-spacing: 0.1em;
   border-bottom: 3px solid transparent;
-  transition: 0.4s; }
+  transition: border-color 0.4s; }
   .champion-square:hover {
     border-color: #b1a0ff; }
   .champion-square:focus {
@@ -100,7 +100,7 @@
 #champ-nav .nav-pills a {
   border-radius: 0;
   border-bottom: 3px solid transparent;
-  transition: 0.4s; }
+  transition: border-color 0.4s; }
   #champ-nav .nav-pills a:hover {
     border-color: #b1a0ff; }
   #champ-nav .nav-pills a:focus {
@@ -137,6 +137,7 @@
   display: flex;
   justify-content: space-evenly; }
   #runes-paths > div {
+    user-select: none;
     width: 90px;
     height: 90px;
     background: rgba(0, 0, 0, 0.7);
@@ -275,6 +276,10 @@
 
 /* OVERALL */
 /* OVERALLTABLE */
+table.dataTable tbody th,
+table.dataTable tbody td {
+  padding: 0; }
+
 .table thead tr th {
   padding: 15px 0; }
 
@@ -288,7 +293,10 @@
 .table thead th {
   border: 0; }
 
-#overall-champs .table td {
+#overall-champs table tbody tr:nth-child(odd) {
+  background: #1e1e1e !important; }
+
+#overall-champs table td {
   border: 0;
   vertical-align: middle; }
 
@@ -301,10 +309,6 @@
 
 #overall-table tbody tr:hover {
   color: #b1a0ff; }
-
-table.dataTable tbody th,
-table.dataTable tbody td {
-  padding: 0; }
 
 /* OVERALLTABLE END*/
 /* OVERALL PATCH */
@@ -356,10 +360,21 @@ table.dataTable tbody td {
 
 .league-item {
   width: 48px;
-  height: 48px; }
+  height: 48px;
+  border-radius: 7px;
+  border: 1px solid #393939; }
+
+#item-search {
+  border-bottom: 2px solid;
+  transition: border-color 400ms; }
+  #item-search:focus {
+    border-color: #b1a0ff; }
 
 .filter-option {
-  user-select: none; }
+  user-select: none;
+  cursor: pointer; }
+  .filter-option label {
+    cursor: pointer; }
   .filter-option input {
     margin-right: 1em; }
 

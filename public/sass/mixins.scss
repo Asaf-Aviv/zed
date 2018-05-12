@@ -8,3 +8,9 @@
         outline: 0;
     }
 }
+
+@mixin color-hover($color) {
+    &:hover {
+        color: $color;
+    }
+}

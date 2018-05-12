@@ -14,7 +14,6 @@ const fs               = require('fs');
 const path             = require('path');
 const expressValidator = require('express-validator');
 const flash            = require('connect-flash');
-const moment           = require('moment');
 const championIds      = require('./assets/data/champions/championIds');
 const zed              = require('./util/zed');
 // Authentication utils
@@ -46,9 +45,10 @@ const runes            = require('./routes/runes');
 const spectate         = require('./routes/spectate');
 const upload           = require('./routes/upload');
 
+app.locals.moment = require('moment');
+app.locals._ = require('lodash');
 app.locals.ddragon = zed.ddragon;
 app.locals.cmpId = championIds;
-app.locals.moment = moment;
 
 // MongoDB
 mongoose.set('debug', true);

@@ -1,4 +1,5 @@
 $(function() {
+    $('.lazy').Lazy();
     fixPopover();
     $('#tier-1 table, #tier-2 table, #tier-3 table, #tier-4 table, #tier-5 table').DataTable({
         "iDisplayLength": -1,

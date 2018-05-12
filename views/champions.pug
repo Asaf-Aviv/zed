@@ -11,8 +11,4 @@ body
                             a(href=`/champions/${champName.replace("'", '')}`)
                                 img.lazy(data-src=`${ddragon}/img/champion/${champName}.png`)
                                 p.bold.pt-2= champName
-                script.
-                    $(function() {
-                        $('.lazy').Lazy();
-                    });
         include partials/footer

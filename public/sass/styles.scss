@@ -87,12 +87,16 @@
 
 // CHAMPIONS
 .champion-square {
+    margin: 10px;
     padding:10px;
     letter-spacing: 0.1em;
     @include border-hover(3px, $primary-colored-text);
+    p {
+        margin: 0;
+    }
     img {
-        height: 120px;
-        width: 120px;
+        height: 80px;
+        width: 80px;
     }
 }
 // CHAMPIONS END
@@ -376,11 +380,13 @@ table.dataTable tbody td {
     }
 }
 .overall-table-champ-tile {
-    transform: scale(0.8);
-    width: 64px;
-    height: 64px;
-    background-size: cover;
-    float: left;
+    img {
+        transform: scale(0.8);
+        width: 64px;
+        height: 64px;
+        background-size: cover;
+        float: left;
+    }
 }
 #overall-table tbody tr {
     &:hover {
@@ -472,6 +478,18 @@ table.dataTable tbody td {
 /* ITEMS */
 // LEADERBOARDS
 .leaderboard-regions {
+    a {
+        border-top: 3px solid transparent;
+        border-left: 3px solid transparent;
+        border-right: 3px solid transparent;
+    }
+}
+#leaderboard-table_filter {
+    margin-top: 20px;
+    float: left;
+}
+
+.leaderboard-regions {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
     a {
@@ -484,6 +502,9 @@ table.dataTable tbody td {
     }
 }
 #leaderboard-table {
+    tbody tr {
+        @include color-hover($primary-colored-text);
+    }
     td {
         padding: 10px;
     }

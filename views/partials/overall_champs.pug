@@ -35,8 +35,8 @@
                     data-href=`/statistics/${ids[allChampsStats[i].championId]}?position=${role.toLowerCase()}&elo=${champElo}`)
                     td
                         .d-flex.align-items-center
-                            .overall-table-champ-tile(
-                                style=`background-image: url(${ddragon}/img/champion/${ids[allChampsStats[i].championId]}.png)`)
+                            .overall-table-champ-tile
+                                img.lazy(data-src=`${ddragon}/img/champion/${ids[allChampsStats[i].championId]}.png`)
                             span.bold.ml-2= ids[allChampsStats[i].championId]
                     td= role
                     td= allChampsStats[i].gamesPlayed

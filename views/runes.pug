@@ -393,6 +393,9 @@ body
             });
 
             $('#runes-paths > div').click(function() {
+                if (!$('#runes-wrapper').hasClass('main-bg')){
+                    $('#runes-wrapper').addClass('main-bg');
+                } 
                 if (!$(this).hasClass('active-path')) {
                     $('#runes-wrapper').css({
                         //- 'background-image': `url(${$(this).data('bg')})`,

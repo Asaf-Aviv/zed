@@ -1,25 +1,28 @@
 nav#main-nav-bar
     .wrapper
         #main-left-nav-bar.d-flex
-            a.d-flex.align-items-center(href="/") Home
-            a.d-flex.align-items-center(href="/leaderboards?region=NA1") Leaderboards
-            a.d-flex.align-items-center(href="/statistics") Statistics
-            a.d-flex.align-items-center(href="/champions") Champions
-            a.d-flex.align-items-center(href="/runes") Runes
-            a.d-flex.align-items-center(href="/items") Items
+            a(href="/") Home
+            a(href="/leaderboards?region=NA1") Leaderboards
+            a(href="/statistics") Statistics
+            #nav-dropdown.dropdown.show.d-flex
+                a.dropdown-toggle(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Data
+                .dropdown-menu(aria-labelledby="nav-dropdown")
+                    a.dropdown-item(href="/champions") Champions
+                    a.dropdown-item(href="/runes") Runes
+                    a.dropdown-item(href="/items") Items
 
         #nav-bar-login.d-flex.ml-auto
             //- a.d-flex.align-items-center(href="/users") Find Legends
             if currentUser
                 #nav-bar-util.d-flex
-                    a.d-flex.justify-content-center.align-items-center(style="width: 50px;" href="#")
+                    a.d-flex.justify-content-center(style="width: 50px;" href="#")
                         i.far.fa-lg.fa-bell
                         //- span.badge.badge-danger 6
-                    a.d-flex.justify-content-center.align-items-center(style="width: 50px;" href="#")
+                    a.d-flex.justify-content-center(style="width: 50px;" href="#")
                         i.far.fa-lg.fa-envelope
-                    a.d-flex.justify-content-center.align-items-center(style="width: 50px;" href="#")
+                    a.d-flex.justify-content-center(style="width: 50px;" href="#")
                         i.fa.fa-lg.fa-user-plus
-                a.logged-user.name.d-flex.align-items-center(href="/profile")= currentUser.username
+                a(href="/profile")= currentUser.username
             else
-                a.d-flex.align-items-center(href="/register") Register
-                a.d-flex.align-items-center(href="/login") Login
+                a(href="/register") Register
+                a(href="/login") Login

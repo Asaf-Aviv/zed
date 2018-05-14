@@ -243,6 +243,7 @@ $(function() {
     });
 
     $('#overall-wrapper').on('change', '#overall-league', function() {
+        createLoader('#overall-patch-tables', 'Loading');
         $.ajax({
             type: 'GET',
             url: `/statistics/overall/${$(this).val()}`,
@@ -253,6 +254,7 @@ $(function() {
     });
 
     $('#overall-champs').on('change', '#overall-table-elo', function() {
+        createLoader('#overall-table', 'Loading');
         $.ajax({
             type: 'GET',
             url: `/statistics/overall/champions/${$(this).val()}`,
@@ -487,4 +489,15 @@ function fixPopover() {
     }).blur(function() {
         $(this).popover('hide');
     });
+}
+
+function createLoader(parent, text='') {
+    $(parent)
+        .addClass('position-relative')
+        .prepend(
+            $('<div class="ui active dimmer"></div>')
+                .append(
+                    $(`<div class="ui text loader">${text}</div>`)
+        )
+    );
 }

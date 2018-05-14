@@ -4,14 +4,13 @@ body
     include partials/sidenav
     .container
         .row.justify-content-center
-            
-            .col-md-8.col-lg-6.p-md-2.p-0
+            .col-md-8.col-lg-6.p-md-2.p-0.main-bg.silent-border.mt-5
                 h3.text-center Contact
                 form#contact-form(action="/contact" method="POST")
                     .row
                         .col-md-6
                             .md-form
-                                i.fa.fa-user-o.prefix
+                                i.fa.fa-user.prefix
                                 input#name-label.form-control(type="text" name="name" )
                                 label(for="name-label") Your name
                         .col-md-6
@@ -28,12 +27,12 @@ body
                     .row
                         .col-md-12
                             .md-form
-                                i.fa.fa-pencil.prefix
+                                i.fas.fa-pencil-alt.prefix
                                 textarea#msg-label.form-control.md-textarea.md-textarea-auto.mb-3(type="text" name="message" rows="1" )
                                 label(for="msg-label") Your message
                     .text-center.mb-1
-                        button.btn.btn-success Send
-                            i.fa.fa-paper-plane-o.pl-3
+                        button.btn Send
+                            i.far.fa-paper-plane.pl-2
                     .ajax-loader-wrapper.text-center.invisible
                         img(src="assets/img/ajax-loader-transparent.gif")
         

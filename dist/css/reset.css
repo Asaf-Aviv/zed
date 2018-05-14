@@ -42,6 +42,11 @@ input, textarea {
   max-width: 1400px; }
 
 .btn {
+  min-width: 100px;
+  height: 35px;
+  color: #e8e8e8;
+  letter-spacing: 0.1em;
+  border-radius: 0;
   border: 0;
   font-size: 1em; }
 
@@ -80,7 +85,7 @@ table.dataTable tbody tr {
     outline: 0; }
 
 .main-bg {
-  background: #1e1e1e; }
+  background: #2a2133; }
 
 .silent-border {
   border: 1px solid rgba(255, 255, 255, 0.35) !important; }

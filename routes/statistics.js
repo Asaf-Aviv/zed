@@ -52,6 +52,7 @@ router.get('/overall/:elo', (req, res) => {
             overallPatch,
             overallStats,
             ids,
+            ddragon: zed.ddragon
         }));
     });
 });
@@ -65,6 +66,7 @@ router.get('/overall/champions/:elo', (req, res) => {
         res.send(pug.renderFile('views/partials/overall_champs.pug', {
             allChampsStats,
             ids,
+            ddragon: zed.ddragon
         }));
     });
 });

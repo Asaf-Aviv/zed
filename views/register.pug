@@ -4,7 +4,7 @@ body
     include partials/sidenav
     .container
         .row
-            .col-lg-6.col-md-7.mx-auto
+            .col-lg-6.col-md-7.pb-3.mx-auto.mt-5.main-bg.silent-border
                 form#register-form.mt-3(action="/register" method="POST" autocomplete="off")
                     legend.text-center Register
                     .md-form
@@ -20,5 +20,5 @@ body
                         i.fa.fa-lock.prefix
                         input.form-control.pb-3(type="password" id="reg-conPass" name="confirmPassword" placeholder=" Confirm Password" required)
                     .text-center
-                        button.btn.btn-outline-success Become a Legend
+                        button.btn Become a Legend
         include partials/footer

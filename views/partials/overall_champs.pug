@@ -36,7 +36,7 @@
                     td
                         .d-flex.align-items-center
                             .overall-table-champ-tile
-                                img.lazy(data-src=`${ddragon}/img/champion/${ids[allChampsStats[i].championId]}.png`)
+                                img(src=`${ddragon}/img/champion/${ids[allChampsStats[i].championId]}.png`)
                             span.bold.ml-2= ids[allChampsStats[i].championId]
                     td= role
                     td= allChampsStats[i].gamesPlayed

@@ -4,6 +4,7 @@
   box-sizing: border-box; }
 
 body {
+  background-image: linear-gradient(to top, #26232f, #3c2e49, #2f2939);
   font-family: "Montserrat", sans-serif;
   font-size: 14px;
   color: #e8e8e8;
@@ -32,6 +33,12 @@ input, textarea {
     background: #b1a0ff;
     color: #fff; }
 
+::-webkit-input-placeholder {
+  color: #cacaca !important; }
+
+.shadow {
+  box-shadow: 5px 5px 20px #080708; }
+
 .row {
   margin: 0; }
 
@@ -43,7 +50,7 @@ input, textarea {
 
 .btn {
   min-width: 100px;
-  height: 35px;
+  min-height: 40px;
   color: #e8e8e8;
   letter-spacing: 0.1em;
   border-radius: 0;

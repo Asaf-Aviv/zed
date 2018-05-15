@@ -3,9 +3,9 @@ body
     include partials/nav
     include partials/sidenav
     .container
-        .row
+        .row.mt-5
             .col-md-7.mx-auto
-                .main-bg.silent-border.champions-squares-wrapper.d-flex.justify-content-center.flex-wrap.text-center.pt-3.mt-4
+                .main-bg.silent-border.champions-squares-wrapper.d-flex.justify-content-center.flex-wrap.text-center.pt-3.mt-4.shadow
                     each champName in champs
                         .champion-square
                             a(href=`/champions/${champName.replace("'", '')}`)

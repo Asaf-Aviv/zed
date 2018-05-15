@@ -1,6 +1,6 @@
 - const champElo = allChampsStats[0].elo.length > 10 ? 'platplus' : allChampsStats[0].elo.toLowerCase()
 #overall-champs
-    .row.py-4.main-bg.silent-border.mb-3
+    .row.py-4.main-bg.silent-border.mb-3.shadow
         .league-info.col-md-3.col-sm-12.justify-content-center
             select#overall-table-elo
                 option(value="platplus" selected=allChampsStats[0].elo.length > 10) Platinum+
@@ -13,7 +13,7 @@
                 span.general-color= allChampsStats[0].elo.length > 10 ? 'Platinum+' : allChampsStats[0].elo[0].toUpperCase() + allChampsStats[0].elo.slice(1).toLowerCase()
             span.bold Patch: 
                 span.general-color= allChampsStats[0].patch
-    table#overall-table.table.silent-border
+    table#overall-table.table.silent-border.shadow
         thead
             tr
                 th.pl-3 Champion

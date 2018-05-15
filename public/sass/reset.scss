@@ -7,9 +7,9 @@
 }
 
 body {
+    background-image: linear-gradient(to top, #26232f, #3c2e49, #2f2939);
     font-family: "Montserrat", sans-serif;
     font-size: 14px;
-    // padding-top: 50px;
     color: $light-grey;
     background-attachment: fixed;
     background-position: center;
@@ -39,7 +39,13 @@ input, textarea {
         color: #fff;
     }
 }
+::-webkit-input-placeholder {
+    color: $dark-grey !important;
+}
 // BOOTSTRAP
+.shadow {
+    box-shadow: 5px 5px 20px #080708;
+}
 .row {
     margin: 0;
 }
@@ -52,7 +58,7 @@ input, textarea {
 
 .btn {
     min-width: 100px;
-    height: 35px;
+    min-height: 40px;
     color: $light-grey;
     letter-spacing: 0.1em;
     border-radius: 0;

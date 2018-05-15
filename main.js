@@ -66,7 +66,6 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname+'/logs', 'acces
 app
 .use(compression())
 .use('/dist', express.static(path.join(__dirname, 'dist')))
-.use('/public', express.static(path.join(__dirname, 'public')))
 .use('/assets', express.static(path.join(__dirname, 'assets')))
 .use(bodyParser.json())
 .use(bodyParser.urlencoded({ extended: false }))

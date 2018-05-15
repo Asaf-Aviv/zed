@@ -1,12 +1,14 @@
 $(function() {
-    $('.lazy').Lazy();
-    fixPopover();
-    $('#tier-1 table, #tier-2 table, #tier-3 table, #tier-4 table, #tier-5 table').DataTable({
-        "iDisplayLength": -1,
-        "paging": false,
-    });
 
-    $('#leaderboard-table').DataTable({
+    var path = window.location.pathname.split("/").pop();
+    if (!path) $('#main-nav-bar a[href="/"]').addClass('nav-active');
+    else $('#main-nav-bar a[href*="'+path+'"]').addClass('nav-active');
+
+    $('.lazy').Lazy();
+
+    fixPopover();
+
+    $('#tier-1 table, #tier-2 table, #tier-3 table, #tier-4 table, #tier-5 table, #leaderboard-table').DataTable({
         "iDisplayLength": -1,
         "paging": false,
     });
@@ -14,7 +16,43 @@ $(function() {
     $('[data-toggle="tooltip"]').tooltip().click(function(e) {
         e.preventDefault()
     });
-    
+
+    // NavBar utilities
+    $('.util-box').click(function(e) {
+        e.stopPropagation();
+
+        const $this = $(this);
+        const divToShow = $(`${$(this).data('link')}`);
+
+        $this.find('span').text('');
+
+        $this.siblings('.is-active')
+            .removeClass('is-active');
+
+        $this.toggleClass('is-active')
+
+        $('.util-box')
+            .children()
+            .not(divToShow)
+            .removeClass('is-active');
+
+        if (!divToShow.hasClass('is-active')) divToShow.addClass('is-active');
+        else divToShow.removeClass('is-active').addClass('is-closed');
+    });
+
+    $('.util-content').click(function(e) {
+        e.stopPropagation();
+    });
+
+    $(document).click(function(e) {
+        if (!$(e.target).is('.util-box') || !$(e.target).parents('.util-box').length) {
+            const actives = $('.util-box').find('.is-active')
+            if (actives.length) {
+                actives.removeClass('is-active').addClass('is-closed').parents().removeClass('is-active')
+            }
+        }
+    });
+
     $('.lb-summoner').on('click', function() {
         window.location = `/summoner?userName=${$(this).text()}&region=${location.href.slice(location.href.lastIndexOf('=')+1)}`;
     });

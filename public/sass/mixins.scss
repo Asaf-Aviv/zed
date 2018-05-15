@@ -1,7 +1,7 @@
 @mixin border-hover($size, $color) {
     border-bottom: $size solid transparent;
     &:hover {
-        border-color: $color;
+        border-color: $color !important;
     }
     &:focus {
         outline: 0;

@@ -14,14 +14,23 @@ nav#main-nav-bar
         #nav-bar-login.d-flex.ml-auto
             //- a.d-flex.align-items-center(href="/users") Find Legends
             if currentUser
-                #nav-bar-util.d-flex
-                    a.d-flex.justify-content-center(style="width: 50px;" href="#")
+                #nav-bar-util.d-flex.mr-5
+
+                    .util-box(data-link="#notifications-nav")
                         i.far.fa-lg.fa-bell
-                        //- span.badge.badge-danger 6
-                    a.d-flex.justify-content-center(style="width: 50px;" href="#")
+                        span.badge 5
+                        #notifications-nav.util-content.shadow.p-3 You Don't have any notifications
+                        
+                    .util-box(data-link="#messages-nav")
                         i.far.fa-lg.fa-envelope
-                    a.d-flex.justify-content-center(style="width: 50px;" href="#")
+                        span.badge 5
+                        #messages-nav.util-content.shadow.p-3 You Don't have any messages
+                        
+                    .util-box(data-link="#friend-requests-nav")
                         i.fa.fa-lg.fa-user-plus
+                        span.badge 15
+                        #friend-requests-nav.util-content.shadow.p-3 You Don't have any friend requests
+
                 a(href="/profile")= currentUser.username
             else
                 a(href="/register") Register

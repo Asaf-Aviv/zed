@@ -4,9 +4,9 @@ body
     include partials/sidenav
     .container
         #profile-wrapper
-            .row
-                .col-xl-2.col-lg-3.col-md-5.col-sm-12.pt-5
-                    .ui.card
+            .row.align-items-start
+                .col-xl-2.col-lg-3.col-md-5.col-sm-12.mt-5
+                    .card
                         .image
                             img(src=currentUser.profilePicture)
                         .content
@@ -18,7 +18,7 @@ body
                         .extra.content
                             i.user.icon
                             | 22 Friends
-                    #profile-menu(style="max-width: 290px;")
+                    #profile-menu
                         .ui.vertical.menu
                             a.item(href="/") Home
                             a.item(href="/profile") Profile
@@ -29,7 +29,7 @@ body
                             a.item(href="/profile/settings") Settings
                             a.item(href="/profile/logout") Logout
 
-                #profile-content.col-md-7.offset-lg-1.col-sm-12.pt-5
+                #profile-content.col-md-7.offset-lg-1.col-sm-12.mt-5
                     .profile-post-wrapper.mb-4
                         form(method="POST", action="/post")
                             .form-group
@@ -37,7 +37,7 @@ body
                             button.ui.tiny.violet.button.w-100 Post
                     #posts
                         each post in currentUser.posts
-                            .post-wrapper.mb-4
+                            .post-wrapper.mb-4.main-bg.silent-border.shadow
                                 .ui.raised.segment
                                     div(id=post._id)
                                         .post-body.p-2
@@ -53,7 +53,7 @@ body
                                                 button.ui.tiny.red.button.delete-post(data-id=post._id) Delete
                                     if post.comments.length > 0
                                         .ui.threaded.comments
-                                            h3.ui.dividing.header Comments
+                                            h5.ui.dividing.header Comments
                                             each comment in post.comments
                                                 .comment(data-id=comment._id)
                                                     a.avatar: img(src=currentUser.profilePicture)

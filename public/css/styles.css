@@ -79,7 +79,6 @@
       cursor: pointer;
       align-self: flex-end;
       border-bottom: 3px solid transparent;
-      font-weight: 600;
       text-decoration: none;
       text-align: center;
       padding: 10px 20px;
@@ -185,12 +184,73 @@
   #champ-nav .nav-pills a:focus {
     outline: 0; }
 
-#champ-patch-stats table tr {
-  border-bottom: 3px solid transparent;
-  transition: 0.4s; }
-  #champ-patch-stats table tr:hover {
-    color: #b1a0ff;
-    border-color: #b1a0ff; }
+#champ-header {
+  padding: 30px; }
+
+#build-sets img,
+#summoner-sets img {
+  width: 40px;
+  height: 40px; }
+
+#champ-patch-stats table tr:hover {
+  color: #b1a0ff; }
+
+#summoner-wrapper {
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  word-break: break-word; }
+  #summoner-wrapper .profile-header {
+    width: 100%;
+    display: flex;
+    padding-bottom: 8px;
+    align-items: flex-end;
+    justify-content: space-around;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35); }
+    #summoner-wrapper .profile-header h1 {
+      margin-bottom: 0;
+      font-size: 1.3rem; }
+    #summoner-wrapper .profile-header h4 {
+      line-height: 0.3;
+      font-size: 1.1rem; }
+    #summoner-wrapper .profile-header .profile-icon {
+      width: 40px;
+      height: 40px; }
+      #summoner-wrapper .profile-header .profile-icon img {
+        height: 100%;
+        border-radius: 50%; }
+  #summoner-wrapper .summoner-league-info {
+    display: flex;
+    flex-direction: row;
+    flex: 1; }
+    #summoner-wrapper .summoner-league-info .league-icon {
+      align-self: center;
+      height: 140px;
+      width: 140px; }
+      #summoner-wrapper .summoner-league-info .league-icon img {
+        width: 100%;
+        height: 100%; }
+    #summoner-wrapper .summoner-league-info .league-data {
+      margin: 10px 0 0 30px; }
+      #summoner-wrapper .summoner-league-info .league-data span {
+        color: #cacaca;
+        display: block;
+        margin-bottom: 5px; }
+      #summoner-wrapper .summoner-league-info .league-data .series-progress > div {
+        display: inline-block; }
+      #summoner-wrapper .summoner-league-info .league-data .series-progress .series-W::after, #summoner-wrapper .summoner-league-info .league-data .series-progress .series-L::after, #summoner-wrapper .summoner-league-info .league-data .series-progress .series-N::after {
+        margin: 0 3px;
+        border-radius: 50%;
+        font-family: 'Font Awesome\ 5 Free';
+        content: "\f111"; }
+      #summoner-wrapper .summoner-league-info .league-data .series-progress .series-W::after {
+        background: lime;
+        color: lime; }
+      #summoner-wrapper .summoner-league-info .league-data .series-progress .series-L::after {
+        background: red;
+        color: red; }
+      #summoner-wrapper .summoner-league-info .league-data .series-progress .series-N::after {
+        color: #cacaca; }
 
 .profile-post-wrapper textarea {
   background: #4f3c63;
@@ -200,25 +260,146 @@
     border-color: #7d5bbe;
     box-shadow: 0 0 0 0.2rem #47177c; }
 
+table.dataTable {
+  margin: 0; }
+
+.league-table thead th:first-child {
+  padding-right: 5px; }
+
+.league-table thead th {
+  font-weight: 400; }
+
+.league-table tbody tr:hover {
+  color: #b1a0ff; }
+
+.league-table td {
+  padding: 10px; }
+
+#match-wrapper .series-progress {
+  position: absolute;
+  bottom: 0;
+  left: 43px; }
+  #match-wrapper .series-progress > div {
+    display: inline-block; }
+  #match-wrapper .series-progress .series-W::after, #match-wrapper .series-progress .series-L::after, #match-wrapper .series-progress .series-N::after {
+    margin: 0 3px;
+    border-radius: 50%;
+    font-family: 'Font Awesome\ 5 Free';
+    content: "\f111"; }
+  #match-wrapper .series-progress .series-W::after {
+    background: lime;
+    color: lime; }
+  #match-wrapper .series-progress .series-L::after {
+    background: red;
+    color: red; }
+  #match-wrapper .series-progress .series-N::after {
+    color: #cacaca; }
+
+#match-wrapper .player-rank {
+  height: 36px;
+  width: 36px;
+  margin-right: 10px; }
+
+#match-wrapper table thead tr {
+  border-bottom: 1px solid #424242; }
+
+#match-wrapper table td {
+  padding: 5px 0;
+  border-bottom: 1px solid #424242; }
+
+#match-wrapper table th {
+  padding: 15px 0;
+  font-weight: 400; }
+
 #match-wrapper img {
   height: 100%;
   width: 100%; }
 
-#match-wrapper td {
-  padding: 5px; }
+#match-wrapper .total-games {
+  margin-left: 10px; }
+
+.match-info {
+  display: flex;
+  align-items: center;
+  padding: 20px 4px; }
+  .match-info span:first-of-type {
+    border-right: 1px solid #cacaca;
+    padding-right: 10px; }
+  .match-info span:last-of-type {
+    border-right: 1px solid #cacaca;
+    padding: 0 10px;
+    margin-right: 15px; }
+  .match-info button {
+    flex: 0.2;
+    margin-left: auto; }
+
+.player-champ-icon,
+.match-bans {
+  height: 40px;
+  width: 40px; }
 
 .player-profile-icon,
-.player-champ-icon,
 .player-rune-icon,
 .player-ss-icon {
-  height: 36px;
-  width: 36px; }
+  height: 24px;
+  width: 24px; }
 
-#blue-team {
-  border-right: 2px solid blue; }
+.match-runes-opener {
+  user-select: none;
+  cursor: pointer; }
 
-#red-team {
-  border-left: 2px solid red; }
+.match-runes {
+  cursor: pointer;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 10; }
+  .match-runes .inner-runes {
+    cursor: default;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    background: #323232;
+    border-radius: 10px;
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+    .match-runes .inner-runes #main-perk, .match-runes .inner-runes #sub-perk {
+      padding: 15px;
+      margin-top: 100px; }
+      .match-runes .inner-runes #main-perk > img, .match-runes .inner-runes #sub-perk > img {
+        margin-left: 60px; }
+    .match-runes .inner-runes img {
+      filter: grayscale(1);
+      margin: 8px;
+      height: 36px !important;
+      width: 36px !important; }
+      .match-runes .inner-runes img.active {
+        filter: grayscale(0); }
+
+.not-in-game {
+  padding-top: 30px;
+  min-height: 174px; }
+
+#leagues ul {
+  padding-top: 20px;
+  display: flex; }
+  #leagues ul li {
+    text-align: center;
+    flex: 1; }
+    #leagues ul li a:not(.active) {
+      border-bottom: 3px solid transparent; }
+      #leagues ul li a:not(.active):hover {
+        border-color: #b1a0ff !important; }
+      #leagues ul li a:not(.active):focus {
+        outline: 0; }
 
 #runes-paths {
   display: flex;
@@ -322,17 +503,10 @@
   width: 100%;
   height: 100%; }
 
-.item-tile {
-  padding: 5px 2px; }
-
 .item-tile img {
   width: 50px;
   height: 50px;
-  border: 1px solid #5c6fff;
-  border-radius: 5px; }
-
-.champion-tile img,
-.item-tile img {
+  border-radius: 7px;
   box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.75); }
 
 .lb-summoner:hover {
@@ -359,10 +533,6 @@
 
 /* OVERALL */
 /* OVERALLTABLE */
-table.dataTable tbody th,
-table.dataTable tbody td {
-  padding: 0; }
-
 .table thead tr th {
   padding: 15px 0; }
 
@@ -375,6 +545,12 @@ table.dataTable tbody td {
 
 .table thead th {
   border: 0; }
+
+#overall-patch-tables th {
+  font-weight: 400; }
+
+#overall-champs table thead tr th {
+  font-weight: 400; }
 
 #overall-champs table tbody tr:nth-child(odd) {
   background: #2a2133 !important; }
@@ -390,8 +566,10 @@ table.dataTable tbody td {
   background-size: cover;
   float: left; }
 
-#overall-table tbody tr:hover {
-  color: #b1a0ff; }
+#overall-table tbody tr {
+  cursor: pointer; }
+  #overall-table tbody tr:hover {
+    color: #b1a0ff; }
 
 /* OVERALLTABLE END*/
 /* OVERALL PATCH */
@@ -425,16 +603,6 @@ table.dataTable tbody td {
   padding-left: 0.3rem;
   padding-top: 0.6rem; }
 
-.lg-wins {
-  color: #000;
-  display: inline-block;
-  background: #42ff00; }
-
-.lg-losses {
-  color: #000;
-  display: inline-block;
-  background: #ff0000; }
-
 /* OVERALL PATCH END */
 /* OVERALL */
 /* ITEMS */
@@ -467,9 +635,11 @@ table.dataTable tbody td {
   border-left: 3px solid transparent;
   border-right: 3px solid transparent; }
 
+.dataTables_filter {
+  float: left !important; }
+
 #leaderboard-table_filter {
-  margin-top: 20px;
-  float: left; }
+  margin-top: 20px; }
 
 .leaderboard-regions {
   display: grid;
@@ -480,6 +650,9 @@ table.dataTable tbody td {
     transition: 0.4s; }
     .leaderboard-regions a:hover {
       border-color: #b1a0ff; }
+
+#leaderboard-table thead th {
+  font-weight: 400; }
 
 #leaderboard-table tbody tr:hover {
   color: #b1a0ff; }
@@ -645,7 +818,7 @@ stats {
 
 /* RIOT CLASSES */
 .greenC {
-  color: #42ff00; }
+  color: #50e21e; }
 
 /* AD */
 .colorFF8C00 {
@@ -661,7 +834,7 @@ stats {
 
 /* HEALTH */
 .colorFF0000 {
-  color: #ff0000; }
+  color: #ff4b4b; }
 
 .colorFFFFFF {
   color: #ffffff; }
@@ -788,3 +961,34 @@ yellow {
   letter-spacing: 0.1em;
   min-width: 2.28571429rem;
   padding-top: 3.07142857rem; }
+
+.like-btn {
+  display: block;
+  text-align: center;
+  padding: 5px 20px;
+  font-size: 14px;
+  background: #665a5f;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: 0.3s ease; }
+  .like-btn.active {
+    background: #f0006e; }
+  .like-btn .fa {
+    margin-right: 5px; }
+  .like-btn:hover {
+    transform: translateY(-3px); }
+
+#scroll-top {
+  display: none;
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+  z-index: 50;
+  cursor: pointer; }
+  #scroll-top i {
+    border-radius: 50%;
+    padding: 10px;
+    font-size: 2em;
+    background: rgba(219, 219, 219, 0.1); }

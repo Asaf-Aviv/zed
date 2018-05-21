@@ -30,10 +30,10 @@ router.get('/friends', auth.isLogged(), (req, res) => {
             const friendsList = await Promise.all(
                 user.friends.map(({ _id }) => Legend.findById(_id))
             );
-        res.render('friends', {
-            title: 'Friends | Legends',
-            friendsList,
-        });
+            res.render('friends', {
+                title: 'Friends | Legends',
+                friendsList,
+            });
         }
     );
 });

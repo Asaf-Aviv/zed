@@ -9,12 +9,17 @@ require('./io');
 // Server utils
 const compression      = require('compression');
 const bodyParser       = require("body-parser");
+const moment           = require('moment');
+const momentDuration   = require("moment-duration-format")(moment);
 const morgan           = require('morgan');
 const fs               = require('fs');
 const path             = require('path');
 const expressValidator = require('express-validator');
 const flash            = require('connect-flash');
 const championIds      = require('./assets/data/champions/championIds');
+const runePaths        = require('./assets/league/data/en_US/runes');
+const runeDesc         = require('./assets/data/runeDesc');
+const leagueConstants  = require('./assets/data/leaugeConstants');
 const zed              = require('./util/zed');
 // Authentication utils
 const session          = require('express-session');
@@ -45,10 +50,14 @@ const runes            = require('./routes/runes');
 const spectate         = require('./routes/spectate');
 const upload           = require('./routes/upload');
 
-app.locals.moment = require('moment');
+app.locals.moment = moment;
 app.locals._ = require('lodash');
 app.locals.ddragon = zed.ddragon;
+app.locals.ddragonNoVer = zed.ddragonNoVer;
 app.locals.cmpId = championIds;
+app.locals.runePaths = runePaths;
+app.locals.runeDesc = runeDesc;
+app.locals.leagueConstants = leagueConstants;
 
 // MongoDB
 mongoose.set('debug', true);
@@ -66,6 +75,7 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname+'/logs', 'acces
 app
 .use(compression())
 .use('/dist', express.static(path.join(__dirname, 'dist')))
+.use('/matches', express.static(path.join(__dirname, 'matches')))
 .use('/assets', express.static(path.join(__dirname, 'assets')))
 .use(bodyParser.json())
 .use(bodyParser.urlencoded({ extended: false }))

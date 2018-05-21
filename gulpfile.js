@@ -10,8 +10,8 @@ const reload      = browserSync.reload;
 
 gulp.task('browser-sync', ['nodemon'], () => {
     browserSync({
-        proxy: "localhost:1337", // local node app address
-        port: 5000, // use *different* port than above
+        proxy: "localhost:1337",
+        port: 5000,
         notify: true
     });
 });

@@ -1,35 +1,62 @@
 include partials/head
 body
-    - summonerRank = summonerRank[0]
+    //- - summonerRank = summonerRank[0]
     include partials/nav
     include partials/sidenav
     .container
-        p= JSON.stringify(match)
-        if match
-            include partials/match
-        if league
-            include partials/league
-
-        main#summoner-main
+        p= JSON.stringify(summoner)
+        p= JSON.stringify(summonerRank)
+        p= JSON.stringify(league)
+        #summoner-main.mt-5
             .row
-                .col-4
-                    if (summonerRank && typeof summonerRank != 'undefined')
-                        img.league-icon(src=`/assets/league/img/tier_icons/${summonerRank.tier}${summonerRank.rank}.png`)
-                    else
-                        img.league-icon(src="/assets/league/img/base_rank_icons/PROVISIONAL.png")
-                    img.profile-icon(
-                        src=`${ddragon}/img/profileicon/${summoner.profileIconId}.png`
-                        width="80", height="80")
-                    h3.prof-name= summoner.name
-                    span.level=summoner.summonerLevel
-                    span.league-name=summonerRank.leagueName
-                    span.tier=summonerRank.tier
-                    span.rank=summonerRank.rank
-                    span.leaguePoints=summonerRank.leaguePoints
-                    span= JSON.stringify(summonerRank)
+                .col-lg-4
+                    #summoner-wrapper.main-bg.silent-shadow.silent-border
+                        .profile-header
+                            .profile-icon
+                                img(src=`${ddragon}/img/profileicon/${summoner.profileIconId}.png`)
+                            h1.summoner-name.text-center.ml-1= summoner.name
+                            h4.level= 'level ' + summoner.summonerLevel
+                        .summoner-league-info
+                            if (summonerRank && typeof summonerRank != 'undefined')
+                                .league-icon
+                                    img(src=`/assets/league/img/tier_icons/${summonerRank.tier}${summonerRank.rank}.png`)
+                            else
+                                .league-icon
+                                    img(src="/assets/league/img/base_rank_icons/PROVISIONAL.png")
+                            .league-data
+                                - const winRatio = (summonerRank.wins / (summonerRank.wins + summonerRank.losses) * 100).toFixed(0)
+                                h6.rank= `${_.capitalize(summonerRank.tier)} ${summonerRank.rank}`
+                                if summonerRank.miniSeries
+                                    .series-progress 
+                                        span.d-inline-block.mr-2 Series
+                                        each game in summonerRank.miniSeries.progress
+                                            div(class="series-" + game)
+                                span.leaguePoints= `${summonerRank.leaguePoints} LP`
+                                span= `${summonerRank.wins}W / ${summonerRank.losses}L`
+                                span= `Win Ratio ${winRatio}%`
+                                span= summonerRank.leagueName
+                                
+                .col-lg-8
+                    nav#summoner-nav
+                        .nav.nav-tabs(role="tablist")
+                            a#nav-games-tab.nav-item.nav-link.active(data-toggle="tab" href="#nav-games" role="tab" aria-controls="nav-games" aria-selected="true") Games
+                            a#nav-league-tab.nav-item.nav-link(data-toggle="tab" href="#nav-league" role="tab" aria-controls="nav-league" aria-selected="false") League
+                            a#nav-match-tab.nav-item.nav-link(data-toggle="tab" href="#nav-match" role="tab" aria-controls="nav-match" aria-selected="false") Match
                     
-                    
-                    
-
-                    
+                        //- span= JSON.stringify(summonerRank)
+                    .tab-content.main-bg.silent-shadow
+                        #nav-games.tab-pane.active(role="tabpanel" aria-labelledby="nav-games-tab")
+                            p Recent games here
+                        #nav-league.tab-pane(role="tabpanel" aria-labelledby="nav-league-tab")
+                            if league
+                                include partials/league
+                        #nav-match.tab-pane(role="tabpanel" aria-labelledby="nav-match-tab")
+                            if match
+                                include partials/match
+                            else
+                                .not-in-game
+                                    h4.text-center= `${summoner.name} is not in game`
+    //- p= JSON.stringify(match, 4)
+    script.
+        console.log(test)
     include partials/footer

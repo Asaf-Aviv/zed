@@ -21,7 +21,8 @@ body
                                 option(value="TR1") TURKEY
                                 option(value="OC1") OCE
                                 option(value="RU") RUSSIA
-                        input.form-control(type="text" name="userName" maxlength="16" placeholder="Summoner Name")
+                        input.form-control(type="text" name="userName" maxlength="16" placeholder="Summoner Name" required)
                         .input-group-append
-                            button.btn.btn-outline-secondary button
+                            button.btn
+                                i.fas.fa-search
         include partials/footer

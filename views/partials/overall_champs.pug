@@ -29,16 +29,15 @@
                 th Gold
         tbody
             - for (let i = 0, x = allChampsStats.length; i < x; i++) {
-                - const role = allChampsStats[i].role.replace('DUO_CARRY', 'ADC').replace('DUO_SUPPORT', 'Support')
+                - const role = allChampsStats[i].role.replace('DUO_SUPPORT', 'Support')
                 
-                tr(style="cursor: pointer;" 
-                    data-href=`/statistics/${ids[allChampsStats[i].championId]}?position=${role.toLowerCase()}&elo=${champElo}`)
+                tr(data-href=`/statistics/${ids[allChampsStats[i].championId]}?position=${role.toLowerCase()}&elo=${champElo}`)
                     td
                         .d-flex.align-items-center
                             .overall-table-champ-tile
                                 img(src=`${ddragon}/img/champion/${ids[allChampsStats[i].championId]}.png`)
-                            span.bold.ml-2= ids[allChampsStats[i].championId]
-                    td= role
+                            span.ml-2= ids[allChampsStats[i].championId]
+                    td= role != 'DUO_CARRY' ? _.capitalize(role) : 'ADC'
                     td= allChampsStats[i].gamesPlayed
                     td=(allChampsStats[i].winRate * 100).toFixed(2) + '%'
                     td=(allChampsStats[i].banRate * 100).toFixed(2) + '%'

@@ -63,13 +63,7 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                             td= champ.stats.mpregen || '', champ.stats.mpregenperlevel ? `(+${champ.stats.mpregenperlevel})` : ''
         
         hr
-        .pb-2
-        
-    blockquote.blockquote.text-center.mb-0
-        = champ.blurb
-    </blockquote>
-
-        main.container(style="background-color: rgba(0, 0, 0, 0.75)")
+        main
             nav#champ-nav.row.mb-5
                 .col-10.offset-1.px-0
                     nav.nav.nav-pills.nav-justified.flex-column.flex-sm-row(role="tablist")

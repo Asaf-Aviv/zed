@@ -1,64 +1,196 @@
+- const players = match.participants
+
 section.row
     .col-12
-        h3.text-center Active Game
-        .text-center
-            button#spectate.btn.btn-outline-success(
-                data-id=match.gameId, data-region=match.platformId, data-key=match.observers.encryptionKey) Spectate
-        #match-wrapper.row.justify-content-around
-            table#blue-team
-                each player in match.participants
-                    if player.teamId == 100
-                        tr
-                            td: .player-profile-icon
-                                img(src=`${ddragon}/img/profileicon/${player.profileIconId}.png`)
-                            td: .player-champ-icon: a(href=`/champions/${championIds[player.championId]}`)
-                                img(src=`${ddragon}/img/champion/${championIds[player.championId]}.png`)
-                            td: a(href=`/summoner?userName=${player.summonerName}&region=${match.platformId}`): span= player.summonerName
-                            td: .player-rune-icon
-                                img(src=`/assets/league/img/runesReforged/perk/${player.perks.perkStyle}.png`)
-                            td: .player-rune-icon
-                                img(src=`/assets/league/img/runesReforged/perk/${player.perks.perkSubStyle}.png`)
-                            td
-                                each val, key in summonerSpells.data
-                                    if (summonerSpells.data[key].key == player.spell1Id)
-                                        .player-ss-icon
-                                            img(src=`${ddragon}/img/spell/${summonerSpells.data[key].image.full}`,
-                                            data-toggle="tooltip", title=summonerSpells.data[key].description)
-                            td
-                                each val, key in summonerSpells.data
-                                    if (summonerSpells.data[key].key == player.spell2Id)
-                                        .player-ss-icon
-                                            img(src=`${ddragon}/img/spell/${summonerSpells.data[key].image.full}`,
-                                            data-toggle="tooltip", title=summonerSpells.data[key].description)
+        #match-wrapper
+            .match-info
+                span= leagueConstants.queue[match.gameQueueConfigId].map
+                span= leagueConstants.queue[match.gameQueueConfigId].description
+                #match-clock.d-inline-block.mr-3= moment.duration(moment().diff(moment(match.gameStartTime), 'seconds'), 'seconds').format('mm:ss')
+                button#spectate.btn.btn-turkiz(data-id=match.gameId, data-region=match.platformId, data-key=match.observers.encryptionKey) Spectate
             
-            #match-clock= match.gameLength > 3599 ? new Date(1000 * match.gameLength).toISOString().substr(11, 8) : new Date(1000 * match.gameLength).toISOString().substr(14, 5)
-            
-            table#red-team
-                each player in match.participants
-                    if player.teamId == 200
+            .d-flex.flex-column
+                table#blue-team.mb-5
+                    thead
                         tr
-                            td: .player-profile-icon
-                                img(src=`${ddragon}/img/profileicon/${player.profileIconId}.png`)
-                            td: .player-champ-icon: a(href=`/champions/${championIds[player.championId]}`)
-                                img(src=`${ddragon}/img/champion/${championIds[player.championId]}.png`)
-                            td: a(href=`/summoner?userName=${player.summonerName}&region=${match.platformId}`): span= player.summonerName
-                            td: .player-rune-icon
-                                img(src=`/assets/league/img/runesReforged/perk/${player.perks.perkStyle}.png`)
-                            td: .player-rune-icon
-                                img(src=`/assets/league/img/runesReforged/perk/${player.perks.perkSubStyle}.png`)
-                            td
+                            th.pl-1(colspan="4" style="color: #6182ff") Blue Team
+                            th Rank
+                            th Win Ratio
+                            th Runes
+                            th Ban
+                    - for (let i = 0; i < 5; i++)
+                        - const playerInfo = playerDetails.find(pArr => pArr.find(p => p.playerOrTeamId == players[i].summonerId)).filter(l => l.queueType === 'RANKED_SOLO_5x5')
+                        - const playerWinRatio = (playerInfo[0].wins / (playerInfo[0].wins + playerInfo[0].losses) * 100).toFixed(0)
+                        - const totalGames = playerInfo[0].wins + playerInfo[0].losses
+                        tr
+                            td(width="50"): .player-champ-icon: a(href=`/champions/${cmpId[players[i].championId]}`)
+                                img(src=`${ddragon}/img/champion/${cmpId[players[i].championId]}.png`)
+                            
+                            td(width="170"): a(href=`/summoner?userName=${players[i].summonerName}&region=${match.platformId}`): span= players[i].summonerName
+                            td(width="30")
                                 each val, key in summonerSpells.data
-                                    if (summonerSpells.data[key].key == player.spell1Id)
+                                    if (summonerSpells.data[key].key == players[i].spell1Id)
                                         .player-ss-icon
                                             img(src=`${ddragon}/img/spell/${summonerSpells.data[key].image.full}`,
                                             data-toggle="tooltip", title=summonerSpells.data[key].description)
-                            td
                                 each val, key in summonerSpells.data
-                                    if (summonerSpells.data[key].key == player.spell2Id)
+                                    if (summonerSpells.data[key].key == players[i].spell2Id)
+                                        .player-ss-icon
+                                            img(src=`${ddragon}/img/spell/${summonerSpells.data[key].image.full}`
+                                            data-toggle="tooltip" title=summonerSpells.data[key].description)
+                            td(width="40")
+                                .player-rune-icon
+                                    img(src=`/assets/league/img/runesReforged/perk/${players[i].perks.perkStyle}.png`
+                                        data-title=runeDesc[players[i].perks.perkStyle].name + '<br><br>' + runeDesc[players[i].perks.perkStyle].shortDesc
+                                        data-toggle="tooltip" data-html="true")
+                                .player-rune-icon
+                                    img(src=`/assets/league/img/runesReforged/perk/${players[i].perks.perkSubStyle}.png`
+                                        data-title=runeDesc[players[i].perks.perkSubStyle].name + '<br><br>' + runeDesc[players[i].perks.perkSubStyle].shortDesc
+                                        data-toggle="tooltip" data-html="true")
+                            
+                            td.position-relative(width="200")
+                                img.player-rank(src=`/assets/league/img/tier_icons/${playerInfo[0].tier}${playerInfo[0].rank}.png`
+                                    data-title=_.capitalize(playerInfo[0].tier) + ' ' + playerInfo[0].rank data-toggle="tooltip")
+                                = `${_.capitalize(playerInfo[0].tier)} ${playerInfo[0].rank} ${playerInfo[0].leaguePoints}LP`
+                                if playerInfo[0].miniSeries
+                                    .series-progress 
+                                        each game in playerInfo[0].miniSeries.progress
+                                            div(class="series-" + game)
+                            td(width="140")= `${playerWinRatio}%`
+                                span.total-games= `${totalGames} Games`
+                            td.match-runes-opener(width="80") Runes
+                                .match-runes
+                                    .inner-runes
+                                        - const mainPerk = runePaths.find(r => r.id === players[i].perks.perkStyle)
+                                        - const subPerk = runePaths.find(r => r.id === players[i].perks.perkSubStyle)
+                                        
+                                        #main-perk
+                                            img.active(src=`/assets/league/img/runesReforged/perk/${players[i].perks.perkStyle}.png` 
+                                                data-title=runeDesc[mainPerk.id].name + '<br><br>' + runeDesc[mainPerk.id].shortDesc
+                                                data-toggle="tooltip" data-html="true")
+
+                                            each runeBlock in mainPerk.slots
+                                                .rune-block
+                                                    each rune in runeBlock.runes
+                                                        img(class=players[i].perks.perkIds.includes(rune.id) ? 'active' : ''
+                                                            src=`${ddragonNoVer}/img/${rune.icon}`
+                                                            data-title=rune.name + '<br><br>' + rune.longDesc
+                                                            data-toggle="tooltip" data-html="true")
+                                        #sub-perk
+                                            img.active(src=`/assets/league/img/runesReforged/perk/${players[i].perks.perkSubStyle}.png`
+                                                data-title=runeDesc[subPerk.id].name + '<br><br>' + runeDesc[subPerk.id].shortDesc
+                                                data-toggle="tooltip" data-html="true")
+                                            
+                                            each runeBlock, j in subPerk.slots
+                                                if j
+                                                    .rune-block
+                                                        each rune in runeBlock.runes
+                                                            img(class=players[i].perks.perkIds.includes(rune.id) ? 'active' : ''
+                                                                src=`${ddragonNoVer}/img/${rune.icon}`
+                                                                data-title=rune.name + '<br><br>' + rune.longDesc
+                                                                data-toggle="tooltip" data-html="true")
+                            td(width="50")
+                                .match-bans
+                                    if match.bannedChampions[i].championId != '-1'
+                                        a(href=`/champions/${cmpId[match.bannedChampions[i].championId]}`)
+                                            img(src=`${ddragon}/img/champion/${cmpId[match.bannedChampions[i].championId]}.png`)
+                table#red-team.mb-3
+                    thead
+                        tr
+                            th.pl-1(colspan="4" style="color: #ef6b6b") Red Team
+                            th Rank
+                            th Win Ratio
+                            th Runes
+                            th Ban
+                    - for (let i = 5; i < 10; i++)
+                        - const playerInfo = playerDetails.find(pArr => pArr.find(p => p.playerOrTeamId == players[i].summonerId)).filter(l => l.queueType === 'RANKED_SOLO_5x5')
+                        - const playerWinRatio = (playerInfo[0].wins / (playerInfo[0].wins + playerInfo[0].losses) * 100).toFixed(0)
+                        - const totalGames = playerInfo[0].wins + playerInfo[0].losses
+                        tr
+                            td(width="50"): .player-champ-icon: a(href=`/champions/${cmpId[players[i].championId]}`)
+                                img(src=`${ddragon}/img/champion/${cmpId[players[i].championId]}.png`)
+                            
+                            td(width="170"): a(href=`/summoner?userName=${players[i].summonerName}&region=${match.platformId}`): span= players[i].summonerName
+                            td(width="30")
+                                each val, key in summonerSpells.data
+                                    if (summonerSpells.data[key].key == players[i].spell1Id)
                                         .player-ss-icon
                                             img(src=`${ddragon}/img/spell/${summonerSpells.data[key].image.full}`,
                                             data-toggle="tooltip", title=summonerSpells.data[key].description)
+                                each val, key in summonerSpells.data
+                                    if (summonerSpells.data[key].key == players[i].spell2Id)
+                                        .player-ss-icon
+                                            img(src=`${ddragon}/img/spell/${summonerSpells.data[key].image.full}`
+                                            data-toggle="tooltip" title=summonerSpells.data[key].description)
+                            td(width="40")
+                                .player-rune-icon
+                                    img(src=`/assets/league/img/runesReforged/perk/${players[i].perks.perkStyle}.png`
+                                        data-title=runeDesc[players[i].perks.perkStyle].name + '<br><br>' + runeDesc[players[i].perks.perkStyle].shortDesc
+                                        data-toggle="tooltip" data-html="true")
+                                .player-rune-icon
+                                    img(src=`/assets/league/img/runesReforged/perk/${players[i].perks.perkSubStyle}.png`
+                                        data-title=runeDesc[players[i].perks.perkSubStyle].name + '<br><br>' + runeDesc[players[i].perks.perkSubStyle].shortDesc
+                                        data-toggle="tooltip" data-html="true")
+                            
+                            td.position-relative(width="200")
+                                img.player-rank(src=`/assets/league/img/tier_icons/${playerInfo[0].tier}${playerInfo[0].rank}.png`
+                                    data-title=_.capitalize(playerInfo[0].tier) + ' ' + playerInfo[0].rank data-toggle="tooltip")
+                                = `${_.capitalize(playerInfo[0].tier)} ${playerInfo[0].rank} ${playerInfo[0].leaguePoints}LP`
+                                if playerInfo[0].miniSeries
+                                    .series-progress 
+                                        each game in playerInfo[0].miniSeries.progress
+                                            div(class="series-" + game)
+                            td(width="140")= `${playerWinRatio}%` 
+                                span.total-games= `${totalGames} Games`
+                            td.match-runes-opener(width="80") Runes
+                                .match-runes
+                                    .inner-runes
+                                        - const mainPerk = runePaths.find(r => r.id === players[i].perks.perkStyle)
+                                        - const subPerk = runePaths.find(r => r.id === players[i].perks.perkSubStyle)
+                                        #main-perk
+                                            img.active(src=`/assets/league/img/runesReforged/perk/${players[i].perks.perkStyle}.png` 
+                                                data-title=runeDesc[mainPerk.id].name + '<br><br>' + runeDesc[mainPerk.id].shortDesc
+                                                data-toggle="tooltip" data-html="true")
+
+                                            each runeBlock in mainPerk.slots
+                                                .rune-block
+                                                    each rune in runeBlock.runes
+                                                        img(class=players[i].perks.perkIds.includes(rune.id) ? 'active' : ''
+                                                            src=`${ddragonNoVer}/img/${rune.icon}`
+                                                            data-title=rune.name + '<br><br>' + rune.longDesc
+                                                            data-toggle="tooltip" data-html="true")
+                                        #sub-perk
+                                            img.active(src=`/assets/league/img/runesReforged/perk/${players[i].perks.perkSubStyle}.png`
+                                                data-title=runeDesc[subPerk.id].name + '<br><br>' + runeDesc[subPerk.id].shortDesc
+                                                data-toggle="tooltip" data-html="true")
+                                            
+                                            each runeBlock, j in subPerk.slots
+                                                if j
+                                                    .rune-block
+                                                        each rune in runeBlock.runes
+                                                            img(class=players[i].perks.perkIds.includes(rune.id) ? 'active' : ''
+                                                                src=`${ddragonNoVer}/img/${rune.icon}`
+                                                                data-title=rune.name + '<br><br>' + rune.longDesc
+                                                                data-toggle="tooltip" data-html="true")
+                            td(width="50")
+                                .match-bans
+                                    if match.bannedChampions[i].championId != '-1'
+                                        a(href=`/champions/${cmpId[match.bannedChampions[i].championId]}`)
+                                            img(src=`${ddragon}/img/champion/${cmpId[match.bannedChampions[i].championId]}.png`)                    
+
 script.
+    const test = !{JSON.stringify(match)}
+    //- console.log(test)
+
+    $('.match-runes-opener').click(function() {
+        $(this).children().css('display', 'block')
+    });
+
+    $('.match-runes').click(function(e) {
+        e.stopPropagation();
+        if (e.target.className == 'match-runes') $(this).hide();
+    });
+
     window.onload = function() {
         setInterval(function() {
             incTimer();

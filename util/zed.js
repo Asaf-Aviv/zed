@@ -1,14 +1,14 @@
 const rp             = require('request-promise');
-const championSkins  = require('../assets/data/champions/championSkins.json');
 const championIds    = require('../assets/data/champions/championIds.json');
 const champions      = require('../assets/data/champions/champion.json');
 const items          = require('../assets/league/data/en_US/item.json');
 const runes          = require('../assets/league/data/en_US/runesReforged.json');
 const summonerSpells = require('../assets/league/data/en_US/summoner.json');
 
-const ddragon = '//ddragon.leagueoflegends.com/cdn/8.9.1';
-const riot    = '.api.riotgames.com/lol/';
-const champGG = 'http://api.champion.gg/v2';
+const ddragon      = '//ddragon.leagueoflegends.com/cdn/8.10.1';
+const ddragonNoVer = '//ddragon.leagueoflegends.com/cdn';
+const riot         = '.api.riotgames.com/lol/';
+const champGG      = 'http://api.champion.gg/v2';
 
 const specGrid = {
     start: '"League of Legends.exe" 8394 LoLLauncher.exe "" "spectator ',
@@ -41,7 +41,7 @@ global.regionNameFix = {
 
 // SPECTATE
 async function makeSpecBatch(specObject) {
-    const specBat = String.raw`CD /D D:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\0.0.1.210\deploy`;
+    const specBat = String.raw`CD /D D:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\0.0.1.217\deploy`;
     const batch = `${specBat}\n\t${specGrid.start}${specGrid[specObject.region]}${specObject.key} ${specObject.gameId} ${specObject.region}"`;
     return batch;
 }
@@ -53,6 +53,15 @@ async function getSummonerGame(summonerId, region) {
     })
     .catch(err => console.log("getSummonerGame ERROR: " + err));
     return summonerGameData;
+}
+
+async function getGameDetails(matchId, region) {
+    const gameDetails = await rp({
+        uri: `https://${region}${riot}match/v3/matches/${matchId}?api_key=${process.env.LOL_KEY}`,
+        json: true
+    })
+    .catch(err => console.log("getGameDetails ERROR: " + err));
+    return gameDetails;
 }
 // SPECTATE
 
@@ -266,9 +275,11 @@ module.exports = {
     getSummonerSpells,
     getOverallStatistics,
     makeSpecBatch,
+    getGameDetails,
     getOverallPatch,
     getSummonerLeague,
     getAllChampionsStats,
     getIndepthStats,
     ddragon,
+    ddragonNoVer,
 };

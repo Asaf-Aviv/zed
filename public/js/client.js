@@ -44,6 +44,14 @@ $(function() {
         e.stopPropagation();
     });
 
+    $(document).scroll(function() {
+        const y = $(this).scrollTop();
+        if (y > 900) $('#scroll-top').css({'display': 'block'});
+        else $('#scroll-top').css({'display': 'none'});
+    });
+
+    $('#scroll-top').click( () => $("html, body").animate({ scrollTop: 0 }, 280, 'easeOutCubic'));
+
     $(document).click(function(e) {
         if (!$(e.target).is('.util-box') || !$(e.target).parents('.util-box').length) {
             const actives = $('.util-box').find('.is-active')
@@ -131,7 +139,7 @@ $(function() {
             type: 'POST',
             url: '/post/like/'+postId,
             success: function(res) {
-                $(`#${postId} .like-post > button`).toggleClass('violet');
+                $(`#${postId} .like-post > button`).toggleClass('active');
                 $(`#${postId} .like-count`).text(+likes + +res);
             },
             error: function(err) {
@@ -304,11 +312,13 @@ $(function() {
     });
 
     $('#spectate').click(function() {
-        const gameId = $(this).attr('data-id');
-        const region = $(this).attr('data-region');
-        const key = $(this).attr('data-key')
+        const $this = $(this);
+        const gameId = $this.attr('data-id');
+        const region = $this.attr('data-region');
+        const key = $this.attr('data-key');
+
         $.ajax({
-            type: 'POST',
+            type: 'post',
             url: `/spectate/${gameId}`,
             data: {
                 gameId,
@@ -316,7 +326,8 @@ $(function() {
                 key,
             },
             success: function(res) {
-                window.open(`/spectate/${gameId}`)
+                console.log(res)
+                window.open('/spectate/'+res);
             },
             error: function(err) {
                 alert(err);
@@ -454,9 +465,11 @@ $(function() {
             }
         });
     });
+
     $('.remove-feedback').click(function(){
         $('#feedback-wrapper, .feedback-btns').remove();
     });
+    
     $('.feedback-btn, .close-feedback').click(function() {
         $('#feedback-wrapper').toggleClass('d-none');
         $('#feedback-form textarea').focus();

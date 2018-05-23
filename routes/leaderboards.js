@@ -1,16 +1,26 @@
-const express = require('express');
-const router  = express.Router();
-const zed     = require('../util/zed');
+const express     = require('express');
+const router      = express.Router();
+const zed         = require('../util/zed');
+const redisClient = require('../util/redisClient');
 
 router.get('/', (req, res) => {
-    zed.getLeaderboards(req.query.region).then(LB => {
-        LB.entries.sort((a, b) => {
-            return b.leaguePoints - a.leaguePoints;
-        });
+    const region = req.query.region;
+
+    redisClient.getAsync(`challenger_${region}`).then(async reply => {
+        let LB;
+        
+        if (reply) {
+            LB = JSON.parse(reply);
+        } else {
+            LB = await zed.getLeaderboards(region);
+            LB.entries.sort((a, b) => b.leaguePoints - a.leaguePoints);
+            redisClient.set(`challenger_${region}`, JSON.stringify(LB), 'EX', 3600);
+        }
+
         res.render('leaderboards', {
-            title: `${regionNameFix[req.query.region]}  Leaderboards | League of Legends`,
+            title: `${regionNameFix[region]} Leaderboards | Zed.gg`,
             LB,
-            region: regionNameFix[req.query.region]
+            region: regionNameFix[region]
         });
     });
 });

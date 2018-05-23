@@ -3,7 +3,7 @@ const rp = require('request-promise');
 
 async function getRunes() {
     return rp({
-        uri: 'https://euw1.api.riotgames.com/lol/static-data/v3/reforged-runes?api_key=RGAPI-efd0818d-bc80-4e12-8c4f-73405cef4d7a',
+        uri: 'https://euw1.api.riotgames.com/lol/static-data/v3/reforged-runes?api_key='+process.env.LOL_KEY,
         json: true
     });
 } 

@@ -1,14 +1,8 @@
 const express    = require('express');
 const router     = express.Router();
-const moment     = require('moment');
 const Legend     = require('../models/user');
 const auth       = require('../middlewares/auth');
 const uploadcare = require('uploadcare')(process.env.UPLOADCARE_PUB_KEY, process.env.UPLOADCARE_PR_KEY);
-
-console.log(process.env.UPLOADCARE_PUB_KEY);
-console.log(process.env.UPLOADCARE_PR_KEY);
-
-
 
 router.get('/', auth.isLogged(), (req, res) => {
     res.render('profile', {

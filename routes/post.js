@@ -84,7 +84,6 @@ router.post('/like/:id', (req, res) => {
         (err, doc) => {
             if (err || !doc) res.status(400).send("It looks like this post has been deleted");
             const alreadyLike = doc[0].posts[0].likes.some(like => like._id.toString() == req.user._id);
-            console.log(alreadyLike);
             if (alreadyLike) {
                 Legend.update({
                         'posts._id': req.params.id

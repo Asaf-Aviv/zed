@@ -151,7 +151,6 @@ $(function() {
     $('.comment-form').submit(function(e) {
         e.preventDefault();
 
-        console.log($(this).attr('data-id'))
         const postId = $(this).attr('data-id');
 
         $.ajax({
@@ -305,7 +304,6 @@ $(function() {
             type: 'GET',
             url: `/statistics/overall/champions/${$(this).val()}`,
             success: function(res) {
-                console.log(res)
                 $('#overall-champs').html(res);
             }
         });
@@ -326,7 +324,6 @@ $(function() {
                 key,
             },
             success: function(res) {
-                console.log(res)
                 window.open('/spectate/'+res);
             },
             error: function(err) {
@@ -456,7 +453,6 @@ $(function() {
                 successAlert(data, 'topRight', 'fa fa-thumps-up');
             },
             error: function(data) {
-                console.log(data)
                 errorAlert('Something went wrong :/ Please try again.', 'center');
             },
             complete: function() {

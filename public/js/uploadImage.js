@@ -4,7 +4,6 @@ function uploadImage() {
         imagesOnly: true
         }).done(function(file) {
             file.promise().done(fileInfo => {
-                console.log(fileInfo)
                 $.post('/upload/images', {
                     uuid: fileInfo.uuid,
                     cdnUrl: fileInfo.cdnUrl

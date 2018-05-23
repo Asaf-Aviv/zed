@@ -1,5 +1,5 @@
-const debug            = require('debug')('legends');
 require('dotenv').config();
+const debug            = require('debug')('zed');
 const express          = require('express');
 const app              = express();
 const server           = require('http').Server(app);
@@ -8,11 +8,13 @@ global.io              = require('socket.io')(server);
 require('./io');
 // Server utils
 const compression      = require('compression');
+const _                = require('lodash');
 const bodyParser       = require("body-parser");
 const moment           = require('moment');
 const momentDuration   = require("moment-duration-format")(moment);
 const morgan           = require('morgan');
 const fs               = require('fs');
+const bluebird         = require('bluebird');
 const path             = require('path');
 const expressValidator = require('express-validator');
 const flash            = require('connect-flash');
@@ -28,6 +30,8 @@ const passport         = require('passport');
 const LocalStrategy    = require('passport-local').Strategy;
 // DB utils
 const mongoose         = require('mongoose');
+const redis            = require('redis');
+const redisClient      = require('./util/redisClient');
 const Legend           = require('./models/user');
 const MongoStore       = require('connect-mongo')(session);
 // Routes 
@@ -51,7 +55,7 @@ const spectate         = require('./routes/spectate');
 const upload           = require('./routes/upload');
 
 app.locals.moment = moment;
-app.locals._ = require('lodash');
+app.locals._ = _;
 app.locals.ddragon = zed.ddragon;
 app.locals.ddragonNoVer = zed.ddragonNoVer;
 app.locals.cmpId = championIds;
@@ -60,7 +64,7 @@ app.locals.runeDesc = runeDesc;
 app.locals.leagueConstants = leagueConstants;
 
 // MongoDB
-mongoose.set('debug', true);
+// mongoose.set('debug', true);
 mongoose.connect(process.env.MONGO_ADMIN);
 
 global.db = mongoose.connection;
@@ -70,7 +74,19 @@ db.once('open', () => {
     console.log("Conneted to DB");
 });
 
+// Redis
+redisClient.on('connect', () => {
+    console.log(`Connected to redis`);
+});
+
+redisClient.on('error', err => {
+    console.log(`Error: ${err}`);
+});
+
+// logs
 const accessLogStream = fs.createWriteStream(path.join(__dirname+'/logs', 'access.log'), {flags: 'a'});
+
+app.set('view engine', 'pug');
 
 app
 .use(compression())
@@ -125,14 +141,12 @@ io.use(sharedsession(session({
     secret: 'EFK9AqwLKR932',
     resave: false,
     saveUninitialized: false,
-    store: new MongoStore(
-    {
+    store: new MongoStore({
         mongooseConnection: db
     })
 })));
 
-passport.use(new LocalStrategy(
-    {
+passport.use(new LocalStrategy({
         usernameField: 'email'
     },
     function(email, password, done) {
@@ -153,10 +167,6 @@ passport.deserializeUser((user, done) => {
         done(null, updatedUser);
     });
 });
-console.log(connectedUsers)
-
-// Setup view engine
-app.set('view engine', 'pug');
 
 app.get('*', (req, res) => {
     res.render('404', {
@@ -164,13 +174,13 @@ app.get('*', (req, res) => {
     });
 });
 
-process.on('unhandledRejection', (reason, p) => {
-    console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
-});
+// process.on('unhandledRejection', (reason, p) => {
+//     console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+// });
 
-process.on('uncaughtException', err => {
-    console.log(`Caught exception: ${err}\n`);
-});
+// process.on('uncaughtException', err => {
+//     console.log(`Caught exception: ${err}\n`);
+// });
 
 server.listen('1337', () => {
     console.log(`Listening on port 1337`);

@@ -3,8 +3,6 @@ const router  = express.Router();
 const Legend  = require('../models/user');
 
 router.post('/:id', (req, res) => {
-    console.log(req.body);
-    console.log('sending message to, ' + req.params.id);
     Legend.findByIdAndUpdate(
         req.params.id, 
         {
@@ -35,7 +33,6 @@ router.post('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-    console.log('delete request');
     Legend.findOneAndUpdate(
     {
         _id: req.user._id, 'messages._id': req.params.id

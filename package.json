@@ -46,7 +46,7 @@
     "babel-preset-env": "^1.7.0",
     "browser-sync": "^2.23.6",
     "dotenv": "^5.0.1",
-    "gulp": "^3.9.1",
+    "gulp": "^3.8.11",
     "gulp-babel": "^7.0.1",
     "gulp-clean-css": "^3.9.4",
     "gulp-concat": "^2.6.1",

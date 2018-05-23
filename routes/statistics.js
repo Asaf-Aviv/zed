@@ -1,19 +1,31 @@
-const express = require('express');
-const router  = express.Router();
-const pug     = require('pug');
-const zed     = require('../util/zed');
+const express     = require('express');
+const router      = express.Router();
+const pug         = require('pug');
+const zed         = require('../util/zed');
 const redisClient = require('../util/redisClient');
 
 router.get('/', (req, res) => {
-    Promise.all([
-        zed.getOverallPatch('platplus'),
-        zed.getOverallStatistics(),
-        zed.getAllChampionsStats(),
-        zed.getChampionsIdsAndNames(),
-    ]).then(([overallPatch, overallStats, allChampsStats, ids]) => {
-        console.log(allChampsStats.length);
+    redisClient.mgetAsync(`overall_info_platplus`, `overall_platplus`, `overall_champions_platplus`).then(async reply => {
+        let overallPatch;
+        let overallStats;
+        let allChampsStats;
+
+        if (reply[0]) {
+            overallPatch   = JSON.parse(reply[0]);
+            overallStats   = JSON.parse(reply[1]);
+            allChampsStats = JSON.parse(reply[2]);
+        } else {
+            overallPatch   = await zed.getOverallPatch('platplus');
+            overallStats   = await zed.getOverallStatistics('platplus');
+            allChampsStats = await zed.getAllChampionsStats('platplus');
+
+            redisClient.SET(`overall_platplus`, JSON.stringify(overallStats), 'EX', 3600 * 12);
+            redisClient.SET(`overall_info_platplus`, JSON.stringify(overallPatch), 'EX', 3600 * 12);
+            redisClient.SET(`overall_champions_platplus`, JSON.stringify(allChampsStats), 'EX', 3600 * 12);
+        }
+        const ids = await zed.getChampionsIdsAndNames();
         res.render('statistics', {
-            title: 'Statistics | Legends',
+            title: 'Statistics | Zed.gg',
             overallPatch,
             overallStats,
             allChampsStats,
@@ -23,17 +35,32 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:champName', (req, res) => {
-    console.log('indepth request')
-    Promise.all([
-        zed.getChampDesc(req.params.champName),
-        zed.getIndepthStats(req.params.champName, req.query.elo, req.query.position),
-        zed.getItems(),
-        zed.getRunesReforged(),
-        zed.getSummonerSpells()
-    ]).then(([champ, champStats, items, runes, summonerSpells]) => {
-        if(!champStats || champStats.length === 0) return res.redirect('/statistics');
+    const elo       = req.query.elo;
+    const position  = req.query.position;
+    const champName = req.params.champName;
+
+    redisClient.mgetAsync(`statistics_${champName}_${position}_${elo}`).then(async reply => {
+        let champStats;
+
+        if (reply[0]) {
+            console.log('serving from cache');
+            champStats = JSON.parse(reply[0]);
+        } else {
+            console.log('caching');
+            champStats = await zed.getIndepthStats(champName, position, elo);
+            redisClient.SET(`statistics_${champName}_${position}_${elo}`, JSON.stringify(champStats), 'EX', 3600 * 12);
+        }
+        [champ, items, runes, summonerSpells] = 
+            await Promise.all([
+                zed.getChampDesc(champName),
+                zed.getItems(),
+                zed.getRunesReforged(),
+                zed.getSummonerSpells()
+            ]);
+
+        if(!champStats || !champStats.length) return res.redirect('/statistics');
         res.render('champion_statistics', {
-            title: `${champ.name} Statistics| Legends`,
+            title: `${champ.name} Statistics | Zed.gg`,
             champ,
             champStats,
             items,
@@ -47,22 +74,20 @@ router.get('/overall/:elo', (req, res) => {
     console.log('patch request')
     const elo = req.params.elo;
     
-    redisClient.mgetAsync(`overall_statistics_${elo}`, `overall_statistics_info_${elo}`).then(async reply => {
-        let overallStats;
+    redisClient.mgetAsync(`overall_info_${elo}`, `overall_${elo}`).then(async reply => {
         let overallPatch;
+        let overallStats;
 
         if (reply[0]) {
-            console.log('already cached');
-            overallStats = JSON.parse(reply[0]);
-            overallPatch = JSON.parse(reply[1]);
+            overallPatch = JSON.parse(reply[0]);
+            overallStats = JSON.parse(reply[1]);
         } else {
-            console.log('caching');
-            overallStats = await zed.getOverallStatistics(elo);
             overallPatch = await zed.getOverallPatch(elo);
-            redisClient.SET(`overall_statistics_${elo}`, JSON.stringify(overallStats), 'EX', 3600 * 12);
-            redisClient.SET(`overall_statistics_info_${elo}`, JSON.stringify(overallPatch), 'EX', 3600 * 12);
+            overallStats = await zed.getOverallStatistics(elo);
+            redisClient.SET(`overall_info_${elo}`, JSON.stringify(overallPatch), 'EX', 3600 * 12);
+            redisClient.SET(`overall_${elo}`, JSON.stringify(overallStats), 'EX', 3600 * 12);
         }
-        const ids = await zed.getChampionsIdsAndNames()
+        const ids = await zed.getChampionsIdsAndNames();
         res.send(pug.renderFile('views/partials/overall_patch.pug', {
             overallPatch,
             overallStats,
@@ -78,11 +103,10 @@ router.get('/overall/champions/:elo', (req, res) => {
     
     redisClient.getAsync(`overall_champions_${elo}`).then(async reply => {
         let allChampsStats;
+
         if (reply) {
-            console.log('already cached');
             allChampsStats = JSON.parse(reply);
         } else {
-            console.log('caching');
             allChampsStats = await zed.getAllChampionsStats(elo);
             redisClient.SET(`overall_champions_${elo}`, JSON.stringify(allChampsStats), 'EX', 3600 * 12);
         }

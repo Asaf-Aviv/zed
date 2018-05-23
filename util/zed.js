@@ -153,7 +153,7 @@ async function getChampionStats(champName) {
     return champsData;
 }
 
-async function getIndepthStats(champName, elo, position) {
+async function getIndepthStats(champName, position, elo) {
     champName = String(Object.keys(championIds).filter(k => k.toLowerCase() === champName.toLowerCase()))
     if (!champName) return;
 

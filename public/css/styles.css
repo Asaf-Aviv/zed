@@ -559,15 +559,18 @@ table.dataTable {
   border: 0;
   vertical-align: middle; }
 
-.overall-table-champ-tile img {
-  transform: scale(0.8);
-  width: 64px;
-  height: 64px;
-  background-size: cover;
-  float: left; }
+.overall-table-champ-tile {
+  margin-left: 13px;
+  width: 48px;
+  height: 48px; }
+  .overall-table-champ-tile img {
+    width: 100%;
+    height: 100%; }
 
 #overall-table tbody tr {
   cursor: pointer; }
+  #overall-table tbody tr td, #overall-table tbody tr th {
+    padding: 7px 0; }
   #overall-table tbody tr:hover {
     color: #b1a0ff; }
 

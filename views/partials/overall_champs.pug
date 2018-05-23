@@ -37,7 +37,7 @@
                             .overall-table-champ-tile
                                 img(src=`${ddragon}/img/champion/${ids[allChampsStats[i].championId]}.png`)
                             span.ml-2= ids[allChampsStats[i].championId]
-                    td= role != 'DUO_CARRY' ? _.capitalize(role) : 'ADC'
+                    td= role != 'DUO_CARRY' ? role[0].toUpperCase() + role.slice(1).toLowerCase() : 'ADC'
                     td= allChampsStats[i].gamesPlayed
                     td=(allChampsStats[i].winRate * 100).toFixed(2) + '%'
                     td=(allChampsStats[i].banRate * 100).toFixed(2) + '%'

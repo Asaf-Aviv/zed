@@ -30,7 +30,6 @@ const passport         = require('passport');
 const LocalStrategy    = require('passport-local').Strategy;
 // DB utils
 const mongoose         = require('mongoose');
-const redis            = require('redis');
 const redisClient      = require('./util/redisClient');
 const Legend           = require('./models/user');
 const MongoStore       = require('connect-mongo')(session);
@@ -66,6 +65,8 @@ app.locals.leagueConstants = leagueConstants;
 // MongoDB
 // mongoose.set('debug', true);
 mongoose.connect(process.env.MONGO_ADMIN);
+
+console.log('env', process.env.NODE_ENV);
 
 global.db = mongoose.connection;
 

@@ -236,21 +236,26 @@
         color: #cacaca;
         display: block;
         margin-bottom: 5px; }
-      #summoner-wrapper .summoner-league-info .league-data .series-progress > div {
-        display: inline-block; }
-      #summoner-wrapper .summoner-league-info .league-data .series-progress .series-W::after, #summoner-wrapper .summoner-league-info .league-data .series-progress .series-L::after, #summoner-wrapper .summoner-league-info .league-data .series-progress .series-N::after {
-        margin: 0 3px;
-        border-radius: 50%;
-        font-family: 'Font Awesome\ 5 Free';
-        content: "\f111"; }
-      #summoner-wrapper .summoner-league-info .league-data .series-progress .series-W::after {
-        background: lime;
-        color: lime; }
-      #summoner-wrapper .summoner-league-info .league-data .series-progress .series-L::after {
-        background: red;
-        color: red; }
-      #summoner-wrapper .summoner-league-info .league-data .series-progress .series-N::after {
-        color: #cacaca; }
+
+.series-progress > div {
+  display: inline-block; }
+
+.series-progress .series-W::after, .series-progress .series-L::after, .series-progress .series-N::after {
+  margin: 0 3px;
+  border-radius: 50%;
+  font-family: 'Font Awesome\ 5 Free';
+  content: "\f111"; }
+
+.series-progress .series-W::after {
+  background: lime;
+  color: lime; }
+
+.series-progress .series-L::after {
+  background: red;
+  color: red; }
+
+.series-progress .series-N::after {
+  color: #cacaca; }
 
 .profile-post-wrapper textarea {
   background: #4f3c63;
@@ -341,8 +346,8 @@ table.dataTable {
 .player-profile-icon,
 .player-rune-icon,
 .player-ss-icon {
-  height: 24px;
-  width: 24px; }
+  height: 20px;
+  width: 20px; }
 
 .match-runes-opener {
   user-select: none;
@@ -469,26 +474,45 @@ table.dataTable {
   /* Safari 6.0 - 9.0 */
   filter: grayscale(0) !important; }
 
-.runes {
-  background-image: linear-gradient(to bottom, #120629, #160a34, #1d0b3f, #260949, #310453);
-  border-radius: 10px;
-  border: 1px solid #e8e8e8; }
+#runes-set {
+  width: 100%;
+  display: flex;
+  justify-content: center; }
+  #runes-set .runes {
+    padding: 5px;
+    margin: 0 26px 50px;
+    width: 100%;
+    max-width: 500px; }
+  #runes-set h6 {
+    margin-bottom: 0;
+    padding: 20px; }
+  #runes-set .stats-runes-wrapper {
+    max-width: 500px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    background: #221e33; }
+    #runes-set .stats-runes-wrapper .main-perk {
+      margin-right: auto; }
+    #runes-set .stats-runes-wrapper .main-perk > img, #runes-set .stats-runes-wrapper .sub-perk > img {
+      height: 48px !important;
+      width: 48px !important;
+      margin-left: 75px; }
+    #runes-set .stats-runes-wrapper img {
+      display: inline-block;
+      filter: grayscale(1);
+      margin: 15px;
+      height: 36px !important;
+      width: 36px !important; }
+      #runes-set .stats-runes-wrapper img.active {
+        filter: grayscale(0); }
 
-/* #item-sets {
-    background: #202020;
-}
-#skill-sets {
-    background: #202020;
-}
-#runes-sets {
-    background: #463b6e;
-} */
 .skill-order-table {
   display: grid;
   grid-template-columns: repeat(19, 1fr);
   grid-template-rows: repeat(5, 1fr);
   align-items: center;
-  grid-gap: 3px;
+  grid-gap: 1px;
   user-select: none; }
 
 .board-box {

@@ -19,15 +19,18 @@ section.row
                             th Runes
                             th Ban
                     - for (let i = 0; i < 5; i++)
-                        - const playerInfo = playerDetails.find(pArr => pArr.find(p => p.playerOrTeamId == players[i].summonerId)).filter(l => l.queueType === 'RANKED_SOLO_5x5')
-                        - const playerWinRatio = (playerInfo[0].wins / (playerInfo[0].wins + playerInfo[0].losses) * 100).toFixed(0)
-                        - const totalGames = playerInfo[0].wins + playerInfo[0].losses
+                        - let playerInfo = playerDetails.find(pArr => pArr.find(p => p.playerOrTeamId == players[i].summonerId))
+                        - let playerWinRatio, totalGames
+                        if playerInfo
+                            - playerInfo = playerInfo.filter(l => l.queueType === 'RANKED_SOLO_5x5')
+                            - playerWinRatio = (playerInfo[0].wins / (playerInfo[0].wins + playerInfo[0].losses) * 100).toFixed(0)
+                            - totalGames = playerInfo[0].wins + playerInfo[0].losses
                         tr
                             td(width="50"): .player-champ-icon: a(href=`/champions/${cmpId[players[i].championId]}`)
                                 img(src=`${ddragon}/img/champion/${cmpId[players[i].championId]}.png`)
                             
                             td(width="170"): a(href=`/summoner?userName=${players[i].summonerName}&region=${match.platformId}`): span= players[i].summonerName
-                            td(width="30")
+                            td(width="25")
                                 each val, key in summonerSpells.data
                                     if (summonerSpells.data[key].key == players[i].spell1Id)
                                         .player-ss-icon
@@ -49,15 +52,20 @@ section.row
                                         data-toggle="tooltip" data-html="true")
                             
                             td.position-relative(width="200")
-                                img.player-rank(src=`/assets/league/img/tier_icons/${playerInfo[0].tier}${playerInfo[0].rank}.png`
-                                    data-title=_.capitalize(playerInfo[0].tier) + ' ' + playerInfo[0].rank data-toggle="tooltip")
-                                = `${_.capitalize(playerInfo[0].tier)} ${playerInfo[0].rank} ${playerInfo[0].leaguePoints}LP`
-                                if playerInfo[0].miniSeries
-                                    .series-progress 
-                                        each game in playerInfo[0].miniSeries.progress
-                                            div(class="series-" + game)
-                            td(width="140")= `${playerWinRatio}%`
-                                span.total-games= `${totalGames} Games`
+                                if playerInfo
+                                    img.player-rank(src=`/assets/league/img/tier_icons/${playerInfo[0].tier}${playerInfo[0].rank}.png`
+                                        data-title=_.capitalize(playerInfo[0].tier) + ' ' + playerInfo[0].rank data-toggle="tooltip")
+                                    = `${_.capitalize(playerInfo[0].tier)} ${playerInfo[0].rank} ${playerInfo[0].leaguePoints}LP`
+                                    if playerInfo[0].miniSeries
+                                        .series-progress 
+                                            each game in playerInfo[0].miniSeries.progress
+                                                div(class="series-" + game)
+                                else
+                                    img.player-rank(src=`/assets/league/img/base_rank_icons/provisional.png`
+                                        data-title="Unranked" data-toggle="tooltip")
+                                    | Unranked
+                            td(width="140")= playerWinRatio ? playerWinRatio + '%': ''
+                                span.total-games= totalGames ? `${totalGames} Games` : ''
                             td.match-runes-opener(width="80") Runes
                                 .match-runes
                                     .inner-runes
@@ -103,15 +111,18 @@ section.row
                             th Runes
                             th Ban
                     - for (let i = 5; i < 10; i++)
-                        - const playerInfo = playerDetails.find(pArr => pArr.find(p => p.playerOrTeamId == players[i].summonerId)).filter(l => l.queueType === 'RANKED_SOLO_5x5')
-                        - const playerWinRatio = (playerInfo[0].wins / (playerInfo[0].wins + playerInfo[0].losses) * 100).toFixed(0)
-                        - const totalGames = playerInfo[0].wins + playerInfo[0].losses
+                        - let playerInfo = playerDetails.find(pArr => pArr.find(p => p.playerOrTeamId == players[i].summonerId))
+                        - let playerWinRatio, totalGames
+                        if playerInfo
+                            - playerInfo = playerInfo.filter(l => l.queueType === 'RANKED_SOLO_5x5')
+                            - playerWinRatio = (playerInfo[0].wins / (playerInfo[0].wins + playerInfo[0].losses) * 100).toFixed(0)
+                            - totalGames = playerInfo[0].wins + playerInfo[0].losses
                         tr
                             td(width="50"): .player-champ-icon: a(href=`/champions/${cmpId[players[i].championId]}`)
                                 img(src=`${ddragon}/img/champion/${cmpId[players[i].championId]}.png`)
                             
                             td(width="170"): a(href=`/summoner?userName=${players[i].summonerName}&region=${match.platformId}`): span= players[i].summonerName
-                            td(width="30")
+                            td(width="25")
                                 each val, key in summonerSpells.data
                                     if (summonerSpells.data[key].key == players[i].spell1Id)
                                         .player-ss-icon
@@ -133,15 +144,20 @@ section.row
                                         data-toggle="tooltip" data-html="true")
                             
                             td.position-relative(width="200")
-                                img.player-rank(src=`/assets/league/img/tier_icons/${playerInfo[0].tier}${playerInfo[0].rank}.png`
-                                    data-title=_.capitalize(playerInfo[0].tier) + ' ' + playerInfo[0].rank data-toggle="tooltip")
-                                = `${_.capitalize(playerInfo[0].tier)} ${playerInfo[0].rank} ${playerInfo[0].leaguePoints}LP`
-                                if playerInfo[0].miniSeries
-                                    .series-progress 
-                                        each game in playerInfo[0].miniSeries.progress
-                                            div(class="series-" + game)
-                            td(width="140")= `${playerWinRatio}%` 
-                                span.total-games= `${totalGames} Games`
+                                if playerInfo
+                                    img.player-rank(src=`/assets/league/img/tier_icons/${playerInfo[0].tier}${playerInfo[0].rank}.png`
+                                        data-title=_.capitalize(playerInfo[0].tier) + ' ' + playerInfo[0].rank data-toggle="tooltip")
+                                    = `${_.capitalize(playerInfo[0].tier)} ${playerInfo[0].rank} ${playerInfo[0].leaguePoints}LP`
+                                    if playerInfo[0].miniSeries
+                                        .series-progress 
+                                            each game in playerInfo[0].miniSeries.progress
+                                                div(class="series-" + game)
+                                else
+                                    img.player-rank(src=`/assets/league/img/base_rank_icons/provisional.png`
+                                        data-title="Unranked" data-toggle="tooltip")
+                                    | Unranked
+                            td(width="140")= playerWinRatio ? playerWinRatio + '%': ''
+                                span.total-games= totalGames ? `${totalGames} Games` : ''
                             td.match-runes-opener(width="80") Runes
                                 .match-runes
                                     .inner-runes

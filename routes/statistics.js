@@ -15,9 +15,9 @@ router.get('/', (req, res) => {
             overallStats   = JSON.parse(reply[1]);
             allChampsStats = JSON.parse(reply[2]);
         } else {
-            overallPatch   = await zed.getOverallPatch('platplus');
-            overallStats   = await zed.getOverallStatistics('platplus');
-            allChampsStats = await zed.getAllChampionsStats('platplus');
+            overallPatch   = await zed.getOverallPatchInfo();
+            overallStats   = await zed.getOverallStatistics();
+            allChampsStats = await zed.getAllChampionsStats();
 
             redisClient.SET(`overall_platplus`, JSON.stringify(overallStats), 'EX', 3600 * 12);
             redisClient.SET(`overall_info_platplus`, JSON.stringify(overallPatch), 'EX', 3600 * 12);
@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
         }
         const ids = await zed.getChampionsIdsAndNames();
         res.render('statistics', {
-            title: 'Statistics | Zed.gg',
+            title: 'Statistics | Zed',
             overallPatch,
             overallStats,
             allChampsStats,
@@ -82,7 +82,7 @@ router.get('/overall/:elo', (req, res) => {
             overallPatch = JSON.parse(reply[0]);
             overallStats = JSON.parse(reply[1]);
         } else {
-            overallPatch = await zed.getOverallPatch(elo);
+            overallPatch = await zed.getOverallPatchInfo(elo);
             overallStats = await zed.getOverallStatistics(elo);
             redisClient.SET(`overall_info_${elo}`, JSON.stringify(overallPatch), 'EX', 3600 * 12);
             redisClient.SET(`overall_${elo}`, JSON.stringify(overallStats), 'EX', 3600 * 12);
@@ -92,7 +92,8 @@ router.get('/overall/:elo', (req, res) => {
             overallPatch,
             overallStats,
             ids,
-            ddragon: zed.ddragon
+            ddragon: zed.ddragon,
+            _: req.app.locals._
         }));
     });
 });
@@ -114,7 +115,8 @@ router.get('/overall/champions/:elo', (req, res) => {
         res.send(pug.renderFile('views/partials/overall_champs.pug', {
             allChampsStats,
             ids,
-            ddragon: zed.ddragon
+            ddragon: zed.ddragon,
+            _: req.app.locals._
         }));
     });
 });

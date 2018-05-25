@@ -1,16 +1,12 @@
 include partials/head
 body
-    //- - summonerRank = summonerRank[0]
     include partials/nav
     include partials/sidenav
     .container
-        //- p= JSON.stringify(summoner)
-        //- p= JSON.stringify(summonerRank)
-        //- p= JSON.stringify(league)
         #summoner-main.mt-5
             .row
                 .col-lg-4
-                    #summoner-wrapper.main-bg.silent-shadow.silent-border
+                    #summoner-wrapper.main-bg.silent-shadow.silent-border.mb-5.mb-lg-0
                         .profile-header
                             .profile-icon
                                 img(src=`${ddragon}/img/profileicon/${summoner.profileIconId}.png`)
@@ -20,21 +16,24 @@ body
                             if (summonerRank && typeof summonerRank != 'undefined')
                                 .league-icon
                                     img(src=`/assets/league/img/tier_icons/${summonerRank.tier}${summonerRank.rank}.png`)
+                                .league-data
+                                    - const winRatio = (summonerRank.wins / (summonerRank.wins + summonerRank.losses) * 100).toFixed(0)
+                                    h6.rank= `${_.capitalize(summonerRank.tier)} ${summonerRank.rank}`
+                                    if summonerRank.miniSeries
+                                        .series-progress 
+                                            span.d-inline-block.mr-2 Series
+                                            each game in summonerRank.miniSeries.progress
+                                                div(class="series-" + game)
+                                    span.leaguePoints= `${summonerRank.leaguePoints} LP`
+                                    span= `${summonerRank.wins}W / ${summonerRank.losses}L`
+                                    span= `Win Ratio ${winRatio}%`
+                                    span= summonerRank.leagueName
                             else
                                 .league-icon
                                     img(src="/assets/league/img/base_rank_icons/PROVISIONAL.png")
-                            .league-data
-                                - const winRatio = (summonerRank.wins / (summonerRank.wins + summonerRank.losses) * 100).toFixed(0)
-                                h6.rank= `${_.capitalize(summonerRank.tier)} ${summonerRank.rank}`
-                                if summonerRank.miniSeries
-                                    .series-progress 
-                                        span.d-inline-block.mr-2 Series
-                                        each game in summonerRank.miniSeries.progress
-                                            div(class="series-" + game)
-                                span.leaguePoints= `${summonerRank.leaguePoints} LP`
-                                span= `${summonerRank.wins}W / ${summonerRank.losses}L`
-                                span= `Win Ratio ${winRatio}%`
-                                span= summonerRank.leagueName
+                                .league-data
+                                    h6 Unranked
+                            
                                 
                 .col-lg-8
                     nav#summoner-nav

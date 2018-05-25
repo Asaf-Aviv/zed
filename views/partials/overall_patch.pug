@@ -1,5 +1,5 @@
-- const pos = overallStats[0].positions
-- const elo = overallStats[0].elo
+- const pos = overallStats.positions
+- const elo = overallStats.elo
 #overall-wrapper
     .league-wrapper.row.py-4.mb-4.main-bg.silent-border.shadow
         .league-info.col-md-3.col-sm-12.justify-content-center
@@ -11,11 +11,11 @@
                 option(value="bronze" selected=elo == 'BRONZE') Bronze
         .league-info.col-md-9.justify-content-center.justify-content-md-end.pl-m-3
             span.bold Elo: 
-                span.general-color= overallPatch[0].elo.length > 10 ? 'Platinum+' : overallPatch[0].elo[0].toUpperCase() + overallPatch[0].elo.slice(1).toLowerCase()
+                span.general-color= elo.length > 10 ? 'Platinum+' : _.capitalize(elo)
             span.bold Patch: 
-                span.general-color= overallPatch[0].patch
+                span.general-color= overallPatch.patch
             span.bold Champion Analyzed: 
-                span.general-color= overallPatch[0].championCount.toLocaleString()
+                span.general-color= overallPatch.championCount.toLocaleString()
     #overall-patch-tables.row.pt-3.main-bg.silent-border.shadow
         #overall-winrate.col-xl-5.lg-6.col-md-12
             h6.text-center.bold.general-color WIN RATES

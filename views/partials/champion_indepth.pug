@@ -223,19 +223,47 @@ main#champion-statistics.row.col-12.mt-5.justify-content-between
         br
     
     #runes-set.row
-        - let highestRuneCount = champStats[0].hashes.runehash.highestCount.hash.split('-')
-        - let highestRuneWinrate = champStats[0].hashes.runehash.highestWinrate.hash.split('-')
-        p= highestRuneCount
-        p= highestRuneWinrate
-        //- champStats[0].hashes.runehash.highestCount.hash.split('-')
-        //- p= JSON.stringify(runes)
-        
-        .runes.col-md-4.col-sm-12.text-center.mb-5
-            h6.general-color.p-3 Highest Win Rate Runes
-            each rune, index in highestRuneCount
-                div.rounded-circle(style="width:64px; height: 64px; margin: 10px; border: 2px solid red")
-                    img(style="width: 100%;" src=`/assets/league/img/runesReforged/perk/${rune}.png`, data-toggle="tooltip", title=runes[rune])
-                            
+        //- - const highestRuneWinrate = champStats[0].hashes.runehash.highestWinrate.hash.split('-').map(Number)
+        //- - const highestRuneCount = champStats[0].hashes.runehash.highestCount.hash.split('-').map(Number)
+        - for (let i = 0; i < 2; i++)
+            - let mainPerk, subPerk, perk;
+            if i
+                - perk = champStats[0].hashes.runehash.highestCount.hash.split('-').map(Number)
+                - mainPerk = runePaths.find(r => r.id == perk[0])
+                - subPerk = runePaths.find(r => r.id == perk[5])
+                
+            else
+                - perk = champStats[0].hashes.runehash.highestWinrate.hash.split('-').map(Number)
+                - mainPerk = runePaths.find(r => r.id == perk[0])
+                - subPerk = runePaths.find(r => r.id == perk[5])
+            .runes.main-bg.silent-border.shadow
+                h6.general-color.text-center= i ? 'Highest Win Rate Runes' : 'Must Common Runes'
+                .stats-runes-wrapper
+                    .main-perk
+                        img.active(src=`/assets/league/img/runesReforged/perk/${perk[0]}.png` 
+                            data-title=runeDesc[mainPerk.id].name + '<br><br>' + runeDesc[mainPerk.id].shortDesc
+                            data-toggle="tooltip" data-html="true")
+                        each runeBlock in mainPerk.slots
+                            .rune-block
+                                each rune in runeBlock.runes
+                                    img(class=perk.includes(rune.id) ? 'active' : ''
+                                        src=`${ddragonNoVer}/img/${rune.icon}`
+                                        data-title=rune.name + '<br><br>' + rune.longDesc
+                                        data-toggle="tooltip" data-html="true")
+                    .sub-perk
+                        img.active(src=`/assets/league/img/runesReforged/perk/${perk[5]}.png`
+                            data-title=runeDesc[subPerk.id].name + '<br><br>' + runeDesc[subPerk.id].shortDesc
+                            data-toggle="tooltip" data-html="true")
+                        
+                        each runeBlock, j in subPerk.slots
+                            if j
+                                .rune-block
+                                    each rune in runeBlock.runes
+                                        img(class=perk.includes(rune.id) ? 'active' : ''
+                                            src=`${ddragonNoVer}/img/${rune.icon}`
+                                            data-title=rune.name + '<br><br>' + rune.longDesc
+                                            data-toggle="tooltip" data-html="true")
+
     section#charts-wrapper.col-12.p-0
         .row.p-0
             .col-md-6.col-12.text-center

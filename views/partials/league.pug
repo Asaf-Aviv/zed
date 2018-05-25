@@ -30,7 +30,7 @@ each player in league.entries
                         thead
                             tr
                                 th(width="53") Rank
-                                th(width="180") Summoner
+                                th(width="200") Summoner
                                 th(width="50") LP
                                 th Emblems
                                 th Win / Loss
@@ -57,10 +57,12 @@ each player in league.entries
                                     td: span= tierRank[i].wins + '/'
                                         span= tierRank[i].losses
                                     td: span(class=winrate > 49 ? 'greenC' : 'colorCC3300')= `${winrate}%`
-                                    td
+                                    td(width="130")
                                         if tierRank[i].miniSeries
-                                            each game in tierRank[i].miniSeries.progress
-                                                .series-progress.d-inline-block
+                                            .series-progress
+                                                each game in tierRank[i].miniSeries.progress
+                                                    div(class="series-" + game)
+                                                //- .series-progress.d-inline-block
                                                     if game == 'W'
                                                         i.fa.fa-check-circle(style="color: green; font-size: 18px; padding: 1px")
                                                     else if game == 'L'

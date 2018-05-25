@@ -4,11 +4,12 @@ const Legend  = require('../models/user');
 
 router.post('/sendFriendRequest/:id', (req, res) => {
     let requestExist;
+    const senderId = req.user._id;
+    const receiverId = req.params.id;
 
-    Legend.findById(req.params.id).then(user => {
+    Legend.findById(receiverId).then(user => {
         for (let request of user.friendRequests) {
-            if (request.requester == req.user._id) {
-                requestExist = true;
+            if (receiverId == senderId) {
                 return console.log('Request already exists');
             }
         }
@@ -17,17 +18,17 @@ router.post('/sendFriendRequest/:id', (req, res) => {
     if (!requestExist) {
 
         const friendRequestSent = {
-            to: req.params.id
+            to: receiverId
         };
 
         const friendRequest = {
-            requester: req.user._id,
+            requester: senderId,
             username: req.user.username,
             profilePicture: req.user.profilePicture
         };
 
         Legend.findByIdAndUpdate(
-            req.params.id,
+            receiverId,
             { $push: { friendRequests: friendRequest }},
             { safe: true, new: true },
             err => {
@@ -39,7 +40,7 @@ router.post('/sendFriendRequest/:id', (req, res) => {
         );
 
         Legend.findByIdAndUpdate(
-            req.user._id,
+            senderId,
             { $push: { friendRequestsSent: friendRequestSent }},
             { safe: true, new: true },
             err => {
@@ -47,77 +48,85 @@ router.post('/sendFriendRequest/:id', (req, res) => {
                     console.log(err);
                     return res.status(400).send();
                 }
-                res.send(req.params.id);
+                res.send(receiverId);
             }
         );
-        io.to(connectedUsers[req.params.id]).emit('friendRequest', req.user.username);
+        io.to(connectedUsers[receiverId]).emit('friendRequest', req.user.username);
     }
 });
 
 router.post('/acceptFriendRequest/:id', (req, res) => {
+    const accepterId = req.user._id;
+    const senderId = req.params.id;
+
     Legend.update(
-        { _id: req.user._id },
-        { $pull: { friendRequests : { requester: req.params.id }}},
+        { _id: accepterId },
+        { $pull: { friendRequests : { requester: senderId }}},
         err => {
             if(err) console.log(err);
     });
 
     Legend.update(
-        { _id: req.params.id },
-        { $pull: { friendRequestsSent : { to: req.user._id }}},
+        { _id: senderId },
+        { $pull: { friendRequestsSent : { to: accepterId }}},
         err => {
             if(err) console.log(err);
     });
 
     Legend.update(
-        {_id: req.user._id}, {
-        $push : { friends : { _id: req.params.id }}},
+        {_id: accepterId}, {
+        $push : { friends : { _id: senderId }}},
         (err, doc) => {
             if(err) console.log(err);
     });
 
     Legend.update(
-        {_id: req.params.id},
-        { $push: { friends : { _id: req.user._id }}},
+        {_id: senderId},
+        { $push: { friends : { _id: accepterId }}},
         (err, doc) => {
             if(err) console.log(err);
-            res.send(req.params.id);
+            res.send(senderId);
     });
-    io.to(connectedUsers[req.params.id]).emit('acceptFriendRequest', req.user.username);
+    io.to(connectedUsers[senderId]).emit('acceptFriendRequest', req.user.username);
 });
 
 router.post('/declineFriendRequest/:id', (req, res) => {
+    const declinerId = req.user._id;
+    const senderId = req.params.id;
     Legend.update(
-        { _id: req.user._id },
-        { $pull: { friendRequests : { requester: req.params.id }}},
+        { _id: declinerId },
+        { $pull: { friendRequests : { requester: senderId }}},
         (err, doc) => {
             if(err) console.log(err);
     });
 
     Legend.update(
-        { _id: req.params.id },
-        { $pull: { friendRequestsSent : { to: req.user._id }}},
+        { _id: senderId },
+        { $pull: { friendRequestsSent : { to: declinerId }}},
         (err, doc) => {
             if(err) console.log(err);
-            res.send(req.params.id);
+            res.send(senderId);
     });
 });
 
 router.post('/cancelFriendRequest/:id', (req, res) => {
+    const declinerId = req.user._id;
+    const senderId = req.params.id;
+
     Legend.update(
-        { _id: req.user._id },
-        { $pull: { friendRequestsSent : { to: req.params.id }}},
+        { _id: declinerId },
+        { $pull: { friendRequestsSent : { to: senderId }}},
         (err, doc) => {
             if(err) console.log(err);
     });
 
     Legend.update(
-        { _id: req.params.id },
-        { $pull: { friendRequests: { requester: req.user._id }}},
+        { _id: senderId },
+        { $pull: { friendRequests: { requester: declinerId }}},
         (err, doc) => {
             if(err) console.log(err);
     });
-    res.send(req.params.id);
+    res.send(senderId);
 });
 
 // FIXME 

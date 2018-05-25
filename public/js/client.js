@@ -45,9 +45,7 @@ $(function() {
     });
 
     $(document).scroll(function() {
-        const y = $(this).scrollTop();
-        if (y > 900) $('#scroll-top').css({'display': 'block'});
-        else $('#scroll-top').css({'display': 'none'});
+        $(this).scrollTop() > 900 ? $('#scroll-top').css({'display': 'block'}) : $('#scroll-top').css({'display': 'none'});
     });
 
     $('#scroll-top').click( () => $("html, body").animate({ scrollTop: 0 }, 280, 'easeOutCubic'));

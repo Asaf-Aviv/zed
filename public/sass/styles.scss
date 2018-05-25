@@ -295,29 +295,30 @@
         display: block;
         margin-bottom: 5px;
       }
-      .series-progress {
-        > div {
-          display: inline-block;
-        }
-        .series-W::after, .series-L::after, .series-N::after {
-          margin: 0 3px;
-          border-radius: 50%;
-          font-family: 'Font Awesome\ 5 Free';
-          content: "\f111";
-        }
-        .series-W::after {
-          background: lime;
-          color: lime;
-        }
-        .series-L::after {
-          background: red;
-          color: red;
-        }
-        .series-N::after {
-          color: $dark-grey;
-        }
-      }
     }
+  }
+}
+
+.series-progress {
+  > div {
+    display: inline-block;
+  }
+  .series-W::after, .series-L::after, .series-N::after {
+    margin: 0 3px;
+    border-radius: 50%;
+    font-family: 'Font Awesome\ 5 Free';
+    content: "\f111";
+  }
+  .series-W::after {
+    background: lime;
+    color: lime;
+  }
+  .series-L::after {
+    background: red;
+    color: red;
+  }
+  .series-N::after {
+    color: $dark-grey;
   }
 }
 
@@ -434,8 +435,8 @@ table.dataTable {
 .player-profile-icon,
 .player-rune-icon,
 .player-ss-icon {
-  height: 24px;
-  width: 24px;
+  height: 20px;
+  width: 20px;
 }
 .match-runes-opener {
   user-select: none;
@@ -588,29 +589,56 @@ table.dataTable {
   filter: grayscale(0) !important;
 }
 
-.runes {
-  background-image: linear-gradient(to bottom, #120629, #160a34, #1d0b3f, #260949, #310453);
-  border-radius: 10px;
-  border: 1px solid $light-grey;
-}
-
 // RUNES END
-/* #item-sets {
-    background: #202020;
+#runes-set {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  .runes {
+    padding: 5px;
+    margin: 0 26px 50px;
+    width: 100%;
+    max-width: 500px;
+  }
+  h6 {
+    margin-bottom: 0;
+    padding: 20px;
+  }
+  .stats-runes-wrapper {
+    max-width: 500px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    background: #221e33;
+    .main-perk {
+      margin-right: auto;
+    }
+    .main-perk, .sub-perk {
+      > img {
+        height: 48px !important;
+        width: 48px !important;
+        margin-left: 75px;
+      }
+    }
+    img {
+      display: inline-block;
+      filter: grayscale(1);
+      margin: 15px;
+      height: 36px !important;
+      width: 36px !important;
+      &.active {
+        filter: grayscale(0);
+      }
+    }
+  }
 }
-#skill-sets {
-    background: #202020;
-}
-#runes-sets {
-    background: #463b6e;
-} */
 
 .skill-order-table {
   display: grid;
   grid-template-columns: repeat(19, 1fr);
   grid-template-rows: repeat(5, 1fr);
   align-items: center;
-  grid-gap: 3px;
+  grid-gap: 1px;
   user-select: none;
 }
 

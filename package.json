@@ -1,5 +1,5 @@
 {
-  "name": "Zed",
+  "name": "zed",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.18.0",
     "bcrypt": "^2.0.1",
     "bluebird": "^3.5.1",
     "compression": "^1.7.2",
@@ -31,7 +30,7 @@
     "mongoose": "^5.0.11",
     "mongoose-unique-validator": "^2.0.0",
     "morgan": "^1.9.0",
-    "node-gyp": "^3.4.0",
+    "node-gyp": "^3.6.2",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pug": "^2.0.1",

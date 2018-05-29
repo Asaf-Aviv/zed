@@ -112,7 +112,7 @@ body
                         | Movement Speed
             .col-md-8.col-sm-7.mx-auto.p-0
                 .league-item-wrapper.d-flex.flex-wrap
-                    each item in items.data
+                    each item in leagueItems.data
                         .league-item(tags=item.tags ? item.tags.join(' ') : '', data-price=item.gold.total, data-title=item.name.toLowerCase(), data-colloq=item.colloq)
                             a(tabindex="0", href="#", data-toggle="popover", data-trigger="manual", data-html="true", data-title=item.name, 
                             data-content=`<span><img src=/assets/league/img/item/${item.image.full}></span>${item.description}<br><br>

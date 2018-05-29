@@ -49,6 +49,8 @@ textarea {
 }
 
 img {
+  width: 100%;
+  height: 100%;
   user-select: none;
 }
 
@@ -119,7 +121,9 @@ table.dataTable thead th, table.dataTable tfoot th {
 .dataTables_wrapper .dataTables_paginate {
   color: $light-grey;
 }
-
+table.dataTable thead th, table.dataTable thead td {
+  border: 0;
+}
 ::selection {
   background: #b1a0ff;
   color: #fff;

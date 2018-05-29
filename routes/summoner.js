@@ -5,23 +5,28 @@ const zed         = require('../util/zed');
 router.get('/', async (req, res) => {
     const region = req.query.region;
     const summonerName = req.query.userName.replace(/ /g, '').toLowerCase();
-    let league, playerDetails;
+    let playerDetails;
     
     const summoner = await zed.getSummoner(summonerName, region);
     if (!summoner) return res.redirect('/');
 
-    const [ summonerRank, match, summonerSpells ] = await Promise.all([
-        zed.getSummonerLeague(summoner.id, region),
-        zed.getSummonerGame(summoner.id, region),
-        zed.getSummonerSpells()
+    const [ summonerRank, match, matchList, summonerSpells ] = await Promise.all([
+        zed.getSummonerPosition(summoner.id, region),
+        zed.checkActiveGame(summoner.id, region),
+        zed.getMatchList(summoner.accountId, region, 0, 10)
     ]);
 
-    if (summonerRank.length) {
-        league = await zed.getLeague(summonerRank[0].leagueId, region);
-    }
+    const recentGames = await Promise.all(
+        matchList.matches.map(game => zed.getMatchSummary(game.gameId, region))
+    );
+
+    console.log(recentGames);
+
+    const league = summonerRank.length ? await zed.getLeague(summonerRank[0].leagueId, region): null;
+
     if (match) {
         playerDetails = await Promise.all(
-            match.participants.map(p => zed.getSummonerLeague(p.summonerId, region))
+            match.participants.map(player => zed.getSummonerPosition(player.summonerId, region))
         )
     }
     res.render('summoner', {
@@ -31,8 +36,8 @@ router.get('/', async (req, res) => {
         league,
         match,
         region,
-        summonerSpells,
         playerDetails,
+        recentGames,
     });
 });
 

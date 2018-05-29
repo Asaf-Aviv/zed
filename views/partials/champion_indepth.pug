@@ -231,7 +231,6 @@ main#champion-statistics.row.col-12.mt-5.justify-content-between
                 - perk = champStats[0].hashes.runehash.highestCount.hash.split('-').map(Number)
                 - mainPerk = runePaths.find(r => r.id == perk[0])
                 - subPerk = runePaths.find(r => r.id == perk[5])
-                
             else
                 - perk = champStats[0].hashes.runehash.highestWinrate.hash.split('-').map(Number)
                 - mainPerk = runePaths.find(r => r.id == perk[0])

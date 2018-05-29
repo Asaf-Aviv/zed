@@ -305,6 +305,7 @@
   }
   .series-W::after, .series-L::after, .series-N::after {
     margin: 0 3px;
+    font-size: 12px;
     border-radius: 50%;
     font-family: 'Font Awesome\ 5 Free';
     content: "\f111";
@@ -504,6 +505,94 @@ table.dataTable {
   }
 }
 // SUMMONER LEAGUE END
+
+// RECENT GAMES
+#recent-games {
+  margin-top: 1em;
+  .recent-game-wrapper {
+    margin: 1em 0;
+    .game-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.3em;
+      &.win {
+        background: #569465;
+      }
+      &.loss {
+        background: #d4757b;
+      }
+      .champ {
+        width: 50px;
+        height: 50px;
+        img {
+          border-radius: 50%
+        }
+      }
+      .summoner-info {
+        width: 130px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        overflow: hidden;
+        > div {
+          margin: 0.3em;
+        }
+        .level {
+          flex: 1;
+          text-align: center;
+        }
+        .summoners, .runes {
+          img {
+            display: block;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-bottom: 0.3em;
+          }
+        }
+      }
+      
+      .KDA {
+        width: 135px;
+        text-align: center;
+      }
+
+      .end-game-items {
+        width: 135px;
+        .item {
+          margin: 0.1em;
+          display: inline-block;
+          height: 30px;
+          width: 30px;
+          img {
+            border-radius: 7px;
+          }
+        }
+      }
+      .teams {
+        display: flex;
+        align-self: flex-end;
+        .blue-team, .red-team {
+          width: 175px;
+          display: flex;
+          flex-flow: column;
+          .player {
+            margin: .1em;
+            display: flex;
+            .champion {
+              height: 20px;
+              width: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+// RECENT GAMES END
+
+
 // SUMMONER END
 // RUNES
 #runes-paths {

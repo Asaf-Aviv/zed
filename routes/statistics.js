@@ -2,7 +2,7 @@ const express     = require('express');
 const router      = express.Router();
 const pug         = require('pug');
 const zed         = require('../util/zed');
-const redisClient = require('../util/redisClient');
+const redisClient = require('../util/redis_client');
 
 router.get('/', (req, res) => {
     redisClient.mgetAsync(`overall_info_platplus`, `overall_platplus`, `overall_champions_platplus`).then(async reply => {

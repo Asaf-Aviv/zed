@@ -3,12 +3,9 @@ const router  = express.Router();
 const zed     = require('../util/zed');
 
 router.get('/', (req, res) => {
-    zed.getItems().then(items => {
-        res.render('items', {
-            title: 'Items | Legends',
-            items,
-        });    
-    });
+    res.render('items', {
+        title: 'Items | Legends',
+    });    
 });
 
 router.get('/:id', (req, res) => {

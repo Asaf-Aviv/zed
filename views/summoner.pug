@@ -38,14 +38,17 @@ body
                 .col-lg-8
                     nav#summoner-nav
                         .nav.nav-tabs(role="tablist")
-                            a#nav-games-tab.nav-item.nav-link.active(data-toggle="tab" href="#nav-games" role="tab" aria-controls="nav-games" aria-selected="true") Games
-                            a#nav-league-tab.nav-item.nav-link(data-toggle="tab" href="#nav-league" role="tab" aria-controls="nav-league" aria-selected="false") League
-                            a#nav-match-tab.nav-item.nav-link(data-toggle="tab" href="#nav-match" role="tab" aria-controls="nav-match" aria-selected="false") Match
+                            a#nav-games-tab.nav-item.nav-link.active(
+                                data-toggle="tab" href="#nav-games" role="tab" aria-controls="nav-games" aria-selected="true") Games
+                            a#nav-league-tab.nav-item.nav-link(
+                                data-toggle="tab" href="#nav-league" role="tab" aria-controls="nav-league" aria-selected="false") League
+                            a#nav-match-tab.nav-item.nav-link(
+                                data-toggle="tab" href="#nav-match" role="tab" aria-controls="nav-match" aria-selected="false") Match
                     
                         //- span= JSON.stringify(summonerRank)
-                    .tab-content.main-bg.silent-shadow
+                    .tab-content
                         #nav-games.tab-pane.active(role="tabpanel" aria-labelledby="nav-games-tab")
-                            p Recent games here
+                            include partials/recent_games
                         #nav-league.tab-pane(role="tabpanel" aria-labelledby="nav-league-tab")
                             if league
                                 include partials/league
@@ -55,7 +58,4 @@ body
                             else
                                 .not-in-game
                                     h4.text-center= `${summoner.name} is not in game`
-    //- p= JSON.stringify(match, 4)
-    script.
-        console.log(test)
     include partials/footer

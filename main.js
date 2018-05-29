@@ -13,6 +13,7 @@ const bodyParser       = require("body-parser");
 const moment           = require('moment');
 const momentDuration   = require("moment-duration-format")(moment);
 const morgan           = require('morgan');
+const rp               = require('request-promise');
 const fs               = require('fs');
 const bluebird         = require('bluebird');
 const path             = require('path');
@@ -30,9 +31,10 @@ const passport         = require('passport');
 const LocalStrategy    = require('passport-local').Strategy;
 // DB utils
 const mongoose         = require('mongoose');
-const redisClient      = require('./util/redisClient');
+const redisClient      = require('./util/redis_client');
 const Legend           = require('./models/user');
 const MongoStore       = require('connect-mongo')(session);
+require('./util/update_data');
 // Routes 
 const leaderboards     = require('./routes/leaderboards');
 const champions        = require('./routes/champions');
@@ -54,13 +56,24 @@ const spectate         = require('./routes/spectate');
 const upload           = require('./routes/upload');
 
 app.locals.moment = moment;
+app.locals.leagueItems = zed.leagueItems;
+app.locals.champInfo = zed.general_cmp_info;
 app.locals._ = _;
+app.locals.summonerSpells = zed.summonerSpells;
 app.locals.ddragon = zed.ddragon;
 app.locals.ddragonNoVer = zed.ddragonNoVer;
 app.locals.cmpId = championIds;
 app.locals.runePaths = runePaths;
 app.locals.runeDesc = runeDesc;
 app.locals.leagueConstants = leagueConstants;
+
+// setInterval( async () => {
+//     const leagueVersion = await rp('http://ddragon.leagueoflegends.com/api/versions.json', {json:true});
+//     if(leagueVersion[0] != app.locals.ddragon.slice(34)) {
+//         app.locals.ddragon = app.locals.ddragon.slice(0, 34) + leagueVersion[0];
+//     }
+//     console.log(app.locals.ddragon);
+// }, 3600000);
 
 // MongoDB
 // mongoose.set('debug', true);

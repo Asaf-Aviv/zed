@@ -1,0 +1,80 @@
+-
+    const popoff = {
+        '2': 'Double Kill',
+        '3': 'Triple Kill',
+        '4': 'Quadra Kill',
+        '5': 'PENTA KILL'
+    }
+
+#recent-games
+    - for (let i = 0, x = recentGames.length; i < x; i++)
+        - const game = recentGames[i]
+        .recent-game-wrapper
+            - const playerIndex = game.participantIdentities.findIndex(p => p.player.summonerId == summoner.id)
+            - const playerRecap = game.participants[playerIndex]
+            .game-wrapper.silent-border(class=playerRecap.stats.win ? 'win' : 'loss')
+                .summoner-info
+                    .champ
+                        a(href=`/champions/${cmpId[playerRecap.championId]}`)
+                            img(src=`${ddragon}/img/champion/${cmpId[playerRecap.championId]}.png`)
+                    .summoners
+                        img(src=`${ddragon}/img/spell/${summonerSpells.data[playerRecap.spell1Id].image.full}`)
+                        img(src=`${ddragon}/img/spell/${summonerSpells.data[playerRecap.spell2Id].image.full}`)
+                    .runes
+                        img(src=`/assets/league/img/runesReforged/perk/${playerRecap.stats.perk0}.png`)
+                        img(src=`/assets/league/img/runesReforged/perk/${playerRecap.stats.perkSubStyle}.png`)
+                    .level
+                        span= 'Level ' + playerRecap.stats.champLevel
+                .KDA
+                    span= playerRecap.stats.kills
+                    |  / 
+                    span= playerRecap.stats.deaths
+                    |  / 
+                    span= playerRecap.stats.assists
+                    .minions
+                        span= playerRecap.stats.totalMinionsKilled + ' CS'
+                    if playerRecap.stats.firstBloodKill
+                        .first-blood
+                            span First Blood
+                    .multi-kill
+                        span= popoff[playerRecap.stats.largestMultiKill]
+                
+
+                .end-game-items
+                    - for (let z = 0; z < 7; z++)
+                        - let itemId
+                        if z === 3
+                            - itemId = playerRecap.stats['item6']
+                        else if z === 6
+                            - itemId = playerRecap.stats['item3']
+                        else
+                            - itemId = playerRecap.stats['item'+z]
+                        if itemId
+                            .item
+                                img(src=`${ddragon}/img/item/${itemId}.png`)
+                    .wards Wards Placed 
+                        span= playerRecap.stats.wardsPlaced
+                        if playerRecap.stats.sightWardsBoughtInGame
+                            span Vision Wards 
+                                span= playerRecap.stats.sightWardsBoughtInGame
+                .teams
+                    .blue-team
+                        - for (let k = 0; k < 5; k++)
+                            .player
+                                .champion.mr-2
+                                    a(href=`/champions/${cmpId[game.participants[k].championId]}`)
+                                        img(src=`${ddragon}/img/champion/${cmpId[game.participants[k].championId]}.png`
+                                            data-toggle="tooltip" data-title=champInfo.data[game.participants[k].championId].name)
+                                .summoner
+                                    - const summonerName = game.participantIdentities[k].player.summonerName
+                                    a(href=`/summoner?userName=${summonerName}&region=${game.platformId}`)= summonerName
+                    .red-team
+                        - for (let j = 5; j < 10; j++)
+                            .player
+                                .champion.mr-2
+                                    a(href=`/champions/${cmpId[game.participants[j].championId]}`)
+                                        img(src=`${ddragon}/img/champion/${cmpId[game.participants[j].championId]}.png`
+                                            data-toggle="tooltip" data-title=champInfo.data[game.participants[j].championId].name)
+                                .summoner
+                                    - const summonerName = game.participantIdentities[j].player.summonerName
+                                    a(href=`/summoner?userName=${summonerName}&region=${game.platformId}`)= summonerName

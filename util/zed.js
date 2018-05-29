@@ -1,12 +1,13 @@
-const rp             = require('request-promise');
-const redisClient    = require('./redisClient');
-const championIds    = require('../assets/data/champions/championIds.json');
-const champions      = require('../assets/data/champions/champion.json');
-const items          = require('../assets/league/data/en_US/item.json');
-const runes          = require('../assets/league/data/en_US/runesReforged.json');
-const summonerSpells = require('../assets/league/data/en_US/summoner.json');
+const rp               = require('request-promise');
+const redisClient      = require('./redis_client');
+const championIds      = require('../assets/data/champions/championIds.json');
+const champions        = require('../assets/data/champions/champion.json');
+const leagueItems      = require('../assets/league/data/en_US/item.json');
+const runes            = require('../assets/league/data/en_US/runesReforged.json');
+const summonerSpells   = require('../assets/league/data/en_US/summoner.json');
+const general_cmp_info = require('../assets/data/general_champ_info.json')
 
-const ddragon      = '//ddragon.leagueoflegends.com/cdn/8.10.1';
+const ddragon      = `//ddragon.leagueoflegends.com/cdn/8.10.1`;
 const ddragonNoVer = '//ddragon.leagueoflegends.com/cdn';
 const riot         = '.api.riotgames.com/lol/';
 const champGG      = 'http://api.champion.gg/v2';
@@ -40,13 +41,16 @@ global.regionNameFix = {
     RU: 'Russia'
 };
 
+// SPECTATE
 async function makeSpecBatch(specObject) {
     const specBat = String.raw`CD /D D:\Riot Games\League of Legends\RADS\solutions\lol_game_client_sln\releases\0.0.1.217\deploy`;
     const batch = `${specBat}\n\t${specGrid.start}${specGrid[specObject.region]}${specObject.key} ${specObject.gameId} ${specObject.region}"`;
     return batch;
 }
 
-// RIOT
+// RIOT API
+
+// SUMMONER
 async function getSummoner(summonerName, region) {
     return redisClient.getAsync(`summoner_${summonerName}_${region}`)
         .then(async summonerData => {
@@ -63,63 +67,79 @@ async function getSummoner(summonerName, region) {
         });
 }
 
-async function getSummonerGame(summonerId, region) {
+// SUMMONER GAME
+async function checkActiveGame(summonerId, region) {
     const summonerGameData = await rp({
         uri: `https://${region}${riot}spectator/v3/active-games/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`,
         json: true
     })
-    .catch(err => console.log("getSummonerGame ERROR: " + err));
+    .catch(err => console.log("checkActiveGame ERROR: " + err));
     return summonerGameData;
 }
 
-async function getGameDetails(matchId, region) {
-    const gameDetails = await rp({
-        uri: `https://${region}${riot}match/v3/matches/${matchId}?api_key=${process.env.LOL_KEY}`,
+// MATCH LIST
+async function getMatchList(summonerId, region, beginIndex='', endIndex='', queue='', timestamp='') {
+    const matchList = await rp({
+        uri: `https://${region}${riot}match/v3/matchlists/by-account/\
+        ${summonerId}?beginIndex=${beginIndex}&endIndex=${endIndex}\
+        &queue=${queue}&season=11&api_key=${process.env.LOL_KEY}`.replace(/ /g, ''),
         json: true
     })
-    .catch(err => console.log("getGameDetails ERROR: " + err));
-    return gameDetails;
+    .catch(err => console.log("getMatchList ERROR: " + err));
+    return matchList;
 }
 
-async function getSummonerLeague(summonerId, region) {
-    return redisClient.getAsync(`summoner_pos_${summonerId}_${region}`).then(async summonerLeague => {
-        if (summonerLeague) return JSON.parse(summonerLeague);
-        
-        summonerLeague = await rp({
-            uri: `https://${region}${riot}league/v3/positions/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`,
-            json: true
-        })
-        .catch(err => console.log("getSummonerLeague ERROR: " + err));
+async function getMatchSummary(gameId, region) {
+    return redisClient.getAsync(`match_summary_${gameId}_${region}`)
+        .then(async summary => {
+            if (summary) return JSON.parse(summary);
 
-        redisClient.SET(`summoner_pos_${summonerId}_${region}`, JSON.stringify(summonerLeague), 'EX', 3600);
-        return summonerLeague;
-    });
-}
-
-async function getLeague(leagueId, region) {
-    return redisClient.getAsync(`league_${leagueId}`).then(async league => {
-        if (league) return JSON.parse(league);
-        
-        league = await rp({
-            uri: `https://${region}${riot}league/v3/leagues/${leagueId}?api_key=${process.env.LOL_KEY}`,
-            json: true
-        })
-        .catch(err => console.log('getLeague error:', err));
-
-        redisClient.SET(`league_${leagueId}`, JSON.stringify(league), 'EX', 3600 * 12);
-        return league; 
-    });
-}
-
-async function getMastery(summonerId, region) {
-    const masteryData = await rp({
-        uri: `https://${region}${riot}champion-mastery/v3/champion-masteries/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`,
-        json: true 
+            summary = await rp({
+                uri: `https://${region}${riot}match/v3/matches/${gameId}?api_key=${process.env.LOL_KEY}`,
+                json: true
+            })
+            .catch(err => console.log('getMatchSummary ERROR:', err));
+            console.log('caching');
+            redisClient.SET(`match_summary_${gameId}_${region}`, JSON.stringify(summary));
+            return summary;
     })
-    .catch(err => console.log("getMastery ERROR:", err));
-    return masteryData;
 }
 
+// SUMMONER LEAGUE POSITION
+async function getSummonerPosition(summonerId, region) {
+    return redisClient.getAsync(`summoner_pos_${summonerId}_${region}`)
+        .then(async summonerPosition => {
+            if (summonerPosition) return JSON.parse(summonerPosition);
+            
+            summonerPosition = await rp({
+                uri: `https://${region}${riot}league/v3/positions/by-summoner/${summonerId}?api_key=${process.env.LOL_KEY}`,
+                json: true
+            })
+            .catch(err => console.log('getSummonerPosition ERROR: ', err));
+
+            redisClient.SET(`summoner_pos_${summonerId}_${region}`, JSON.stringify(summonerPosition), 'EX', 3600);
+            return summonerPosition;
+        });
+}
+
+// LEAGUE
+async function getLeague(leagueId, region) {
+    return redisClient.getAsync(`league_${leagueId}`)
+        .then(async league => {
+            if (league) return JSON.parse(league);
+            
+            league = await rp({
+                uri: `https://${region}${riot}league/v3/leagues/${leagueId}?api_key=${process.env.LOL_KEY}`,
+                json: true
+            })
+            .catch(err => console.log('getLeague error:', err));
+
+            redisClient.SET(`league_${leagueId}`, JSON.stringify(league), 'EX', 3600 * 12);
+            return league; 
+        });
+}
+
+// LEADERBOARDS
 async function getLeaderboards(region='NA1') {
     return redisClient.getAsync(`challenger_${region}`)
         .then(async leaderboardData => {
@@ -137,17 +157,8 @@ async function getLeaderboards(region='NA1') {
         });
 }
 
-async function getMatches(summonerId, region) {
-    const matchesData = rp({
-        uri: `https://${region}${riot}match/v3/matchlists/by-account/${summonerId}/recent?api_key=${process.env.LOL_KEY}`,
-        json: true
-    })
-    .catch(err => console.log("getMatches ERROR: " + err));
-    return matchesData;
-}
-// RIOT
+// CHAMPION API
 
-// CHAMPION
 async function getAllChampionsStats(elo='platplus') {
     const allData = `kda,minions,goldEarned`
     const getChampsData = elo && elo !== 'platplus' ? 
@@ -160,18 +171,6 @@ async function getAllChampionsStats(elo='platplus') {
     .catch(err => console.log("getAllChampionsStats ERROR: " + err));
     return champData;
 }
-
-// async function getChampionStats(champName) {
-//     champName = Object.keys(championIds).filter(k => k.toLowerCase() === champName.toLowerCase());
-//     const allData = `kda,damage,minions,wins,positions,wards,normalized,averageGames,overallPerformanceScore,goldEarned,sprees,hashes,wins,maxMins`; //,matchups
-//     const getChampsData = `${champGG}/champions/${championIds[champName]}?champData=${allData}&api_key=${process.env.CHAMPION_KEY}`;
-//     const champsData = await rp({
-//         uri: getChampsData,
-//         json: true
-//     })
-//     .catch(err => console.log("getChampionStats ERROR: " + err));
-//     return champsData;
-// }
 
 async function getIndepthStats(champName, position, elo) {
     champName = String(Object.keys(championIds).filter(c => c.toLowerCase() === champName.toLowerCase()))
@@ -242,37 +241,25 @@ function getRunesReforged() {
     });
 }
 
-function getSummonerSpells() {
-    return new Promise((resolve, reject) => {
-        resolve(summonerSpells);
-    });
-}
-
-function getItems() {
-    return new Promise((resolve, reject) => {
-        resolve(items);
-    });
-}
-
 module.exports = {
     getSummoner,
     getLeague,
-    getSummonerGame,
-    getMastery,
+    getSummonerPosition,
+    getMatchSummary,
+    checkActiveGame,
     getLeaderboards,
-    getMatches,
+    getMatchList,
+    getOverallPatchInfo,
+    getOverallStatistics,
+    getAllChampionsStats,
+    getIndepthStats,
     getChampionsIdsAndNames,
     getChampDesc,
     getRunesReforged,
-    getItems,
-    getSummonerSpells,
-    getOverallStatistics,
-    makeSpecBatch,
-    getGameDetails,
-    getOverallPatchInfo,
-    getSummonerLeague,
-    getAllChampionsStats,
-    getIndepthStats,
     ddragon,
     ddragonNoVer,
+    makeSpecBatch,
+    summonerSpells,
+    leagueItems,
+    general_cmp_info,
 };

@@ -1,6 +1,6 @@
 const express     = require('express');
 const router      = express.Router();
-const redisClient = require('../util/redisClient');
+const redisClient = require('../util/redis_client');
 const zed         = require('../util/zed');
 
 router.get('/', async (req, res) => {

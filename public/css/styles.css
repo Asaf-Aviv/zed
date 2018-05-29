@@ -242,6 +242,7 @@
 
 .series-progress .series-W::after, .series-progress .series-L::after, .series-progress .series-N::after {
   margin: 0 3px;
+  font-size: 12px;
   border-radius: 50%;
   font-family: 'Font Awesome\ 5 Free';
   content: "\f111"; }
@@ -405,6 +406,67 @@ table.dataTable {
         border-color: #b1a0ff !important; }
       #leagues ul li a:not(.active):focus {
         outline: 0; }
+
+#recent-games {
+  margin-top: 1em; }
+  #recent-games .recent-game-wrapper {
+    margin: 1em 0; }
+    #recent-games .recent-game-wrapper .game-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.3em; }
+      #recent-games .recent-game-wrapper .game-wrapper.win {
+        background: #569465; }
+      #recent-games .recent-game-wrapper .game-wrapper.loss {
+        background: #d4757b; }
+      #recent-games .recent-game-wrapper .game-wrapper .champ {
+        width: 50px;
+        height: 50px; }
+        #recent-games .recent-game-wrapper .game-wrapper .champ img {
+          border-radius: 50%; }
+      #recent-games .recent-game-wrapper .game-wrapper .summoner-info {
+        width: 130px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        overflow: hidden; }
+        #recent-games .recent-game-wrapper .game-wrapper .summoner-info > div {
+          margin: 0.3em; }
+        #recent-games .recent-game-wrapper .game-wrapper .summoner-info .level {
+          flex: 1;
+          text-align: center; }
+        #recent-games .recent-game-wrapper .game-wrapper .summoner-info .summoners img, #recent-games .recent-game-wrapper .game-wrapper .summoner-info .runes img {
+          display: block;
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          margin-bottom: 0.3em; }
+      #recent-games .recent-game-wrapper .game-wrapper .KDA {
+        width: 135px;
+        text-align: center; }
+      #recent-games .recent-game-wrapper .game-wrapper .end-game-items {
+        width: 135px; }
+        #recent-games .recent-game-wrapper .game-wrapper .end-game-items .item {
+          margin: 0.1em;
+          display: inline-block;
+          height: 30px;
+          width: 30px; }
+          #recent-games .recent-game-wrapper .game-wrapper .end-game-items .item img {
+            border-radius: 7px; }
+      #recent-games .recent-game-wrapper .game-wrapper .teams {
+        display: flex;
+        align-self: flex-end; }
+        #recent-games .recent-game-wrapper .game-wrapper .teams .blue-team, #recent-games .recent-game-wrapper .game-wrapper .teams .red-team {
+          width: 175px;
+          display: flex;
+          flex-flow: column; }
+          #recent-games .recent-game-wrapper .game-wrapper .teams .blue-team .player, #recent-games .recent-game-wrapper .game-wrapper .teams .red-team .player {
+            margin: .1em;
+            display: flex; }
+            #recent-games .recent-game-wrapper .game-wrapper .teams .blue-team .player .champion, #recent-games .recent-game-wrapper .game-wrapper .teams .red-team .player .champion {
+              height: 20px;
+              width: 20px; }
 
 #runes-paths {
   display: flex;

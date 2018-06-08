@@ -1,12 +1,14 @@
 .row.align-items-start
-    header.col-lg-3.text-center.main-bg.silent-border.mb-lg-0.mb-4.shadow
-        img(src=`/assets/league/img/base_rank_icons/${LB.tier}.png` alt=LB.tier)
-        p.lead= LB.name
-        p.lead= _.capitalize(LB.tier)
-        p= LB.queue.replace(/_/g, ' ')
-        p= region
-    main.col-lg-7.text-center.main-bg.silent-border.mx-auto.shadow
-        table#leaderboard-table.table.text-center
+    header.col-lg-3.text-center.main-bg.silent-border.mb-lg-0.mb-4.ml-auto.shadow
+        .lb-tier
+            img(src=`/assets/league/img/base_rank_icons/${LB.tier}.png` alt=LB.tier)
+        .lb-info
+            p.lead= LB.name
+            p.lead= _.capitalize(LB.tier)
+            p= LB.queue.replace(/_/g, ' ')
+            p= fixedRegion
+    main.col-lg-7.main-bg.silent-border.mx-auto.shadow
+        table#leaderboard-table.table
             thead
                 tr
                     th Rank
@@ -20,7 +22,9 @@
                     - let winrate = ((LB.entries[i].wins / (LB.entries[i].wins + LB.entries[i].losses)) * 100).toFixed(0)
                     tr
                         td= i + 1
-                        td.lb-summoner: span= LB.entries[i].playerOrTeamName
+                        td
+                            a(href=`summoner?region=${region}&userName=${LB.entries[i].playerOrTeamName}`)
+                                span= LB.entries[i].playerOrTeamName
                         td= LB.entries[i].leaguePoints
                         td.hot-streak
                             .d-inline-block

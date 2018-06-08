@@ -10,7 +10,8 @@ router.get('/', async (req, res) => {
     res.render('leaderboards', {
         title: `${regionNameFix[region]} Leaderboards | Zed.gg`,
         LB,
-        region: regionNameFix[region]
+        fixedRegion: regionNameFix[region],
+        region,
     });
 });
 

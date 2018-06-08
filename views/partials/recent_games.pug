@@ -12,17 +12,27 @@
         .recent-game-wrapper
             - const playerIndex = game.participantIdentities.findIndex(p => p.player.summonerId == summoner.id)
             - const playerRecap = game.participants[playerIndex]
-            .game-wrapper.silent-border(class=playerRecap.stats.win ? 'win' : 'loss')
+            .game-header.d-flex
+                .time= moment(game.gameCreation + (game.gameDuration * 1000)).subtract().fromNow()
+                .map= leagueConstants.queue[game.queueId].map
+                .queue= leagueConstants.queue[game.queueId].description
+                .length= moment.duration(game.gameDuration, 's').format('H:mm:ss')
+            .game-wrapper(class=playerRecap.stats.win ? 'win' : 'loss')
                 .summoner-info
                     .champ
                         a(href=`/champions/${cmpId[playerRecap.championId]}`)
-                            img(src=`${ddragon}/img/champion/${cmpId[playerRecap.championId]}.png`)
+                            img(src=`${ddragon}/img/champion/${cmpId[playerRecap.championId]}.png`
+                            data-toggle="tooltip" data-title=cmpId[playerRecap.championId])
                     .summoners
-                        img(src=`${ddragon}/img/spell/${summonerSpells.data[playerRecap.spell1Id].image.full}`)
-                        img(src=`${ddragon}/img/spell/${summonerSpells.data[playerRecap.spell2Id].image.full}`)
+                        img(src=`${ddragon}/img/spell/${summonerSpells.data[playerRecap.spell1Id].image.full}`
+                            data-toggle="tooltip" data-title=summonerSpells.data[playerRecap.spell1Id].description)
+                        img(src=`${ddragon}/img/spell/${summonerSpells.data[playerRecap.spell2Id].image.full}`
+                            data-toggle="tooltip" data-title=summonerSpells.data[playerRecap.spell2Id].description)
                     .runes
-                        img(src=`/assets/league/img/runesReforged/perk/${playerRecap.stats.perk0}.png`)
-                        img(src=`/assets/league/img/runesReforged/perk/${playerRecap.stats.perkSubStyle}.png`)
+                        img(src=`/assets/league/img/runesReforged/perk/${playerRecap.stats.perk0}.png`
+                            data-toggle="tooltip" data-title=runesReforged[playerRecap.stats.perk0].longDesc data-html="true")
+                        img(src=`/assets/league/img/runesReforged/perk/${playerRecap.stats.perkSubStyle}.png`
+                            data-toggle="tooltip" data-title=runeDesc[playerRecap.stats.perkSubStyle].shortDesc)
                     .level
                         span= 'Level ' + playerRecap.stats.champLevel
                 .KDA

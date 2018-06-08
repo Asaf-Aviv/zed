@@ -2,7 +2,7 @@
 #overall-champs
     .row.py-4.main-bg.silent-border.mb-3.shadow
         .league-info.col-md-3.col-sm-12.justify-content-center
-            select#overall-table-elo
+            select#overall-table-elo-select
                 option(value="platplus" selected=allChampsStats[0].elo.length > 10) Platinum+
                 option(value="platinum" selected=allChampsStats[0].elo == 'PLATINUM') Platinum
                 option(value="gold" selected=allChampsStats[0].elo == 'GOLD') Gold
@@ -34,7 +34,7 @@
                 tr(data-href=`/statistics/${ids[allChampsStats[i].championId]}?position=${role.toLowerCase()}&elo=${champElo}`)
                     td
                         .d-flex.align-items-center
-                            .overall-table-champ-tile
+                            .overall-table-champ-tile.mr-3
                                 img(src=`${ddragon}/img/champion/${ids[allChampsStats[i].championId]}.png`)
                             span.ml-2= ids[allChampsStats[i].championId]
                     td= role != 'DUO_CARRY' ? _.capitalize(role) : 'ADC'

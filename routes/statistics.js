@@ -39,33 +39,26 @@ router.get('/:champName', (req, res) => {
     const position  = req.query.position;
     const champName = req.params.champName;
 
-    redisClient.mgetAsync(`statistics_${champName}_${position}_${elo}`).then(async reply => {
+    redisClient.getAsync(`statistics_${champName}_${position}_${elo}`).then(async reply => {
         let champStats;
 
-        if (reply[0]) {
+        if (reply) {
             console.log('serving from cache');
-            champStats = JSON.parse(reply[0]);
+            champStats = JSON.parse(reply);
         } else {
             console.log('caching');
             champStats = await zed.getIndepthStats(champName, position, elo);
             redisClient.SET(`statistics_${champName}_${position}_${elo}`, JSON.stringify(champStats), 'EX', 3600 * 12);
         }
-        [champ, items, runes, summonerSpells] = 
-            await Promise.all([
-                zed.getChampDesc(champName),
-                zed.getItems(),
-                zed.getRunesReforged(),
-                zed.getSummonerSpells()
-            ]);
 
         if(!champStats || !champStats.length) return res.redirect('/statistics');
+
+        const champ = await zed.getChampDesc(champName);
+
         res.render('champion_statistics', {
             title: `${champ.name} Statistics | Zed.gg`,
             champ,
             champStats,
-            items,
-            runes,
-            summonerSpells,
         });
     });
 });

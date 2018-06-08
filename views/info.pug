@@ -312,9 +312,9 @@ body
                         $('select.dropdown[name=day]').dropdown();
                         $('select.dropdown[name=month]').dropdown();
                         $('select.dropdown[name=year]').dropdown();
-
-        include partials/footer
-
+    include partials/footer
+    include partials/scroll_top
+    include partials/scripts
     script.
         var Days = [31,28,31,30,31,30,31,31,30,31,30,31];// index => month [0-11]
         $(document).ready(function(){

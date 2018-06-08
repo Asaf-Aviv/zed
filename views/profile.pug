@@ -6,31 +6,18 @@ body
     .container
         #profile-wrapper
             .row.align-items-start
-                .col-xl-2.col-lg-3.col-md-5.col-sm-12.mt-5
-                    .card
-                        .image
-                            img(src=currentUser.profilePicture)
-                        .content
-                            a.header= currentUser.username
-                            .meta
-                                p Owner of Legends
-                            .description
-                                p Asaf is the creator of this site
-                        .extra.content
-                            i.user.icon
-                            | 22 Friends
+                .col-xl-2.col-lg-3.col-md-5
                     #profile-menu
-                        .ui.vertical.menu
-                            a.item(href="/") Home
-                            a.item(href="/profile") Profile
-                            a.item(href="/profile/messages") Messages
-                            a.item(href="/profile/friends") Friends
-                            a.item(href="/profile/photos") Photos
-                            a.item(href="/profile/info") Information
-                            a.item(href="/profile/settings") Settings
-                            a.item(href="/profile/logout") Logout
+                        a.item(href="/") Home
+                        a.item(href="/profile") Profile
+                        a.item(href="/profile/messages") Messages
+                        a.item(href="/profile/friends") Friends
+                        a.item(href="/profile/photos") Photos
+                        a.item(href="/profile/info") Information
+                        a.item(href="/profile/settings") Settings
+                        a.item(href="/profile/logout") Logout
 
-                #profile-content.col-md-7.offset-lg-1.col-sm-12.mt-5
+                #profile-content.col-md-7.offset-lg-1.col-sm-12
                     .profile-post-wrapper.mb-4
                         form(method="POST", action="/post")
                             .form-group
@@ -102,3 +89,5 @@ body
             button.btn.btn-success(onclick="successAlert('Upload complete', 'topRight', 'fa fa-check')")
             button.btn.btn-success(onclick="errorAlert('Something went wrong :/ Please try again.', 'center')")
     include partials/footer
+    include partials/scroll_top
+    include partials/scripts

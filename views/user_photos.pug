@@ -10,4 +10,6 @@ body
                     a.d-flex.align-items-center.justify-content-center(href=`${image.cdnUrl}` target="_blank")
                         img(src=`${image.cdnUrl}-/resize/200x200/`)
                     .text-center= moment(image.created).subtract().fromNow()
-        include partials/footer
+    include partials/footer
+    include partials/scroll_top
+    include partials/scripts

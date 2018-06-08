@@ -89,7 +89,7 @@ main#champion-statistics.row.col-12.mt-5.justify-content-between
             each item in highestCountItems
                 .item-tile
                     a(href=`/items/${item}`)
-                        img(src=`/assets/league/img/item/${item}.png`, data-toggle="tooltip", title=items.data[item].plaintext)
+                        img(src=`/assets/league/img/item/${item}.png`, data-toggle="tooltip", title=leagueItems.data[item].plaintext)
         
         h5.general-color.text-center Highest Win Rate Build
         
@@ -105,7 +105,7 @@ main#champion-statistics.row.col-12.mt-5.justify-content-between
             each item in highestWinrateItems
                 .item-tile
                     a(href=`/items/${item}`)
-                        img(src=`/assets/league/img/item/${item}.png` data-toggle="tooltip" title=items.data[item].plaintext)
+                        img(src=`/assets/league/img/item/${item}.png` data-toggle="tooltip" title=leagueItems.data[item].plaintext)
 
         - let highestSummonerCount = champStats[0].hashes.summonershash.highestCount.hash.split('-')
         - let highesSummonertWinrateS = champStats[0].hashes.summonershash.highestWinrate.hash.split('-')
@@ -139,24 +139,24 @@ main#champion-statistics.row.col-12.mt-5.justify-content-between
         .trinkets.row.justify-content-around.text-center
             .trinket
                 p= +String(champStats[0].hashes.trinkethash.highestCount.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
-                .item-tile: img(src=`/assets/league/img/item/${highestTrinketCount}.png`, data-toggle="tooltip", title=items.data[highestTrinketCount].plaintext)
+                .item-tile: img(src=`/assets/league/img/item/${highestTrinketCount}.png`, data-toggle="tooltip", title=leagueItems.data[highestTrinketCount].plaintext)
             .trinket
                 p= +String(champStats[0].hashes.trinkethash.highestWinrate.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
-                .item-tile: img(src=`/assets/league/img/item/${highestTrinketWinrate}.png`, data-toggle="tooltip", title=items.data[highestTrinketCount].plaintext)
+                .item-tile: img(src=`/assets/league/img/item/${highestTrinketWinrate}.png`, data-toggle="tooltip", title=leagueItems.data[highestTrinketCount].plaintext)
         hr
                 
         h5.general-color.text-center.pb-2 Must Common Start Items
         p.text-center= +String(champStats[0].hashes.firstitemshash.highestCount.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
         .start-items.row.justify-content-around.text-center
             each item in highestStartItemCount
-                .item-tile: img(src=`/assets/league/img/item/${item}.png`, data-toggle="tooltip", title=items.data[item].plaintext)
+                .item-tile: img(src=`/assets/league/img/item/${item}.png`, data-toggle="tooltip", title=leagueItems.data[item].plaintext)
         hr
 
         h5.general-color.text-center.pb-2 Highest Win Rate Early Items
         p.text-center= +String(champStats[0].hashes.firstitemshash.highestWinrate.winrate).slice(2, 6).split('').map((v, i) => i === 1 ? v+'.' : v).join('') + '%'
         .start-items.row.justify-content-around.text-center
             each item in highestStartItemWinrate
-                .item-tile: img(src=`/assets/league/img/item/${item}.png`, data-toggle="tooltip", title=items.data[item].plaintext)
+                .item-tile: img(src=`/assets/league/img/item/${item}.png`, data-toggle="tooltip", title=leagueItems.data[item].plaintext)
 
     section#skill-sets.col-12.mt-5
         

@@ -1,0 +1,59 @@
+@keyframes open-window {
+  0% {
+    transform: scaleX(0.1); }
+  100% {
+    transform: scaleX(1); } }
+
+@keyframes close-window {
+  0% {
+    transform: scaleX(1); }
+  100% {
+    transform: scaleX(0); } }
+
+@keyframes ingame {
+  0% {
+    background: transparent; }
+  100% {
+    background: #27a968; } }
+
+@keyframes slide {
+  0% {
+    transform: rotateX(90deg);
+    opacity: 0; }
+  40% {
+    opacity: 1; }
+  100% {
+    transform: rotateX(0deg);
+    opacity: 1; } }
+
+@keyframes loader {
+  from {
+    -webkit-transform: rotate(0);
+    transform: rotate(0); }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+
+@keyframes ring {
+  0% {
+    transform: rotate(35deg); }
+  10% {
+    transform: rotate(-30deg); }
+  20% {
+    transform: rotate(25deg); }
+  30% {
+    transform: rotate(-20deg); }
+  40% {
+    transform: rotate(15deg); }
+  50% {
+    transform: rotate(-10deg); }
+  60% {
+    transform: rotate(5deg); }
+  70% {
+    transform: rotate(-2deg); }
+  80% {
+    transform: rotate(2deg); }
+  80% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(0deg); } }

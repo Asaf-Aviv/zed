@@ -5,10 +5,13 @@ body
     .container
         .row.mt-5
             .col-md-7.mx-auto
-                .main-bg.silent-border.champions-squares-wrapper.d-flex.justify-content-center.flex-wrap.text-center.pt-3.mt-4.shadow
+                .light-bg.champions-squares-wrapper.d-flex.justify-content-center.flex-wrap.text-center.pt-3.shadow
                     each champName in champs
                         .champion-square
                             a(href=`/champions/${champName.replace("'", '')}`)
-                                img.lazy(data-src=`${ddragon}/img/champion/${champName}.png`)
+                                .champ-img
+                                    img.lazy(data-src=`${ddragon}/img/champion/${champName}.png`)
                                 p.pt-2= champName
-        include partials/footer
+    include partials/footer
+    include partials/scroll_top
+    include partials/scripts

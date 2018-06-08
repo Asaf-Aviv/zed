@@ -3,11 +3,6 @@ body
     include partials/nav
     include partials/sidenav
     .container
-        //- #sort-items.col-lg-4.col-md-6.col-sm-3
-            p.lead Sort By
-            label.checkbox-inline
-                input(type="checkbox", value="data-price")
-                | Price
         .row.mt-5
             #filter-items.col-lg-3.col-md-4.col-sm-5.pt-3.main-bg.silent-border.shadow
                 #item-filter.row
@@ -110,14 +105,15 @@ body
                     label.checkbox-inline.mr-3
                         input(type="checkbox", value="NonbootsMovement")
                         | Movement Speed
-            .col-md-8.col-sm-7.mx-auto.p-0
+            .col-md-8.col-sm-7.mx-auto.p-0.main-bg.shadow
                 .league-item-wrapper.d-flex.flex-wrap
                     each item in leagueItems.data
                         .league-item(tags=item.tags ? item.tags.join(' ') : '', data-price=item.gold.total, data-title=item.name.toLowerCase(), data-colloq=item.colloq)
                             a(tabindex="0", href="#", data-toggle="popover", data-trigger="manual", data-html="true", data-title=item.name, 
-                            data-content=`<span><img src=/assets/league/img/item/${item.image.full}></span>${item.description}<br><br>
+                            data-content=`<span><div class="league-item mx-auto" style="background: url(${ddragon}/img/sprite/${item.image.sprite}) -${item.image.x}px -${item.image.y}px no-repeat"></div></span>${item.description}<br><br>
                             <div class=cost><span>Cost <yellow>${item.gold.total}</yellow>
                             </span><span>Sell <yellow>${item.gold.sell}</yellow></span></div>`)
                                 .league-item(style=`background: url(${ddragon}/img/sprite/${item.image.sprite}) -${item.image.x}px -${item.image.y}px no-repeat`)
-    
-        include partials/footer
+    include partials/footer
+    include partials/scroll_top
+    include partials/scripts

@@ -8,6 +8,7 @@ global.io              = require('socket.io')(server);
 require('./io');
 // Server utils
 const compression      = require('compression');
+const cookieParser     = require('cookie-parser');
 const _                = require('lodash');
 const bodyParser       = require("body-parser");
 const moment           = require('moment');
@@ -20,6 +21,7 @@ const path             = require('path');
 const expressValidator = require('express-validator');
 const flash            = require('connect-flash');
 const championIds      = require('./assets/data/champions/championIds');
+const runesReforged    = require('./assets/league/data/en_US/runesReforged.json')
 const runePaths        = require('./assets/league/data/en_US/runes');
 const runeDesc         = require('./assets/data/runeDesc');
 const leagueConstants  = require('./assets/data/leaugeConstants');
@@ -31,10 +33,10 @@ const passport         = require('passport');
 const LocalStrategy    = require('passport-local').Strategy;
 // DB utils
 const mongoose         = require('mongoose');
+const db               = require('./util/db');
 const redisClient      = require('./util/redis_client');
 const Legend           = require('./models/user');
 const MongoStore       = require('connect-mongo')(session);
-require('./util/update_data');
 // Routes 
 const leaderboards     = require('./routes/leaderboards');
 const champions        = require('./routes/champions');
@@ -53,6 +55,8 @@ const items            = require('./routes/items');
 const message          = require('./routes/message');
 const runes            = require('./routes/runes');
 const spectate         = require('./routes/spectate');
+const about            = require('./routes/about');
+const forgot           = require('./routes/forgot');
 const upload           = require('./routes/upload');
 
 app.locals.moment = moment;
@@ -66,6 +70,9 @@ app.locals.cmpId = championIds;
 app.locals.runePaths = runePaths;
 app.locals.runeDesc = runeDesc;
 app.locals.leagueConstants = leagueConstants;
+app.locals.runesReforged = runesReforged;
+
+console.log('env', process.env.NODE_ENV);
 
 // setInterval( async () => {
 //     const leagueVersion = await rp('http://ddragon.leagueoflegends.com/api/versions.json', {json:true});
@@ -77,16 +84,7 @@ app.locals.leagueConstants = leagueConstants;
 
 // MongoDB
 // mongoose.set('debug', true);
-mongoose.connect(process.env.MONGO_ADMIN);
 
-console.log('env', process.env.NODE_ENV);
-
-global.db = mongoose.connection;
-
-db.on('error', console.error.bind(console, 'DB connection error:'));
-db.once('open', () => {
-    console.log("Conneted to DB");
-});
 
 // Redis
 redisClient.on('connect', () => {
@@ -104,7 +102,9 @@ app.set('view engine', 'pug');
 
 app
 .use(compression())
+.use(cookieParser())
 .use('/dist', express.static(path.join(__dirname, 'dist')))
+.use('/public', express.static(path.join(__dirname, 'public')))
 .use('/matches', express.static(path.join(__dirname, 'matches')))
 .use('/assets', express.static(path.join(__dirname, 'assets')))
 .use(bodyParser.json())
@@ -122,6 +122,7 @@ app
 .use(passport.session())
 .use(function(req, res, next){
     res.locals.currentUser = req.user;
+    res.locals.historyCookie = req.cookies._hist ? JSON.parse(req.cookies._hist) : null;
     next();
 })
 .use(flash())
@@ -147,6 +148,8 @@ app
 .use('/items', items)
 .use('/upload', upload)
 .use('/runes', runes)
+.use('/about', about)
+.use('/forgot', forgot)
 .use('/message', message)
 .use('/spectate', spectate)
 .use('/', index)

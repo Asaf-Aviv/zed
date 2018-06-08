@@ -12,20 +12,11 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/:champName', (req, res) => {
-    Promise.all([
-        zed.getChampDesc(req.params.champName),
-        zed.getItems(),
-        zed.getRunesReforged(),
-        zed.getSummonerSpells()
-    ]).then(([champ, items, runes, summonerSpells]) =>{
-        res.render('champion', {
-            title: `${champ.name} | Legends`,
-            champ,
-            items,
-            runes,
-            summonerSpells,
-        });
+router.get('/:champName', async (req, res) => {
+    const champ = await zed.getChampDesc(req.params.champName);
+    res.render('champion', {
+        title: `${champ.name} | zed`,
+        champ,
     });
 });
 

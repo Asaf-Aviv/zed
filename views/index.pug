@@ -1,11 +1,10 @@
 include partials/head
 body
     include partials/nav
-    include partials/sidenav
-    include partials/chat
+    //- include partials/sidenav
     .container
-        .row
-            .col-lg-6.col-md-7.mx-auto
+        .row.align-items-center.justify-content-center.vh-100
+            .col-lg-6.col-md-7
                 form#search-form(method="GET", action="/summoner")
                     .input-group
                         .input-group-prepend
@@ -25,4 +24,6 @@ body
                         .input-group-append
                             button.btn
                                 i.fas.fa-search
-        include partials/footer
+    include partials/footer
+    include partials/scroll_top
+    include partials/scripts

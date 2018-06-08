@@ -1,5 +1,6 @@
 - const tier = {'1': [],'2': [],'3': [],'4': [],'5': []}
-- const ranks = [null, 'I', 'II', 'III', 'IV', 'V'];
+- const ranks = [null, 'I', 'II', 'III', 'IV', 'V']
+- const currentSummonerRank = summonerRank.rank
 
 each player in league.entries
     - if (player.rank === 'I') tier['1'].push(player)
@@ -15,17 +16,18 @@ each player in league.entries
 - tier['5'].sort((a, b) => b.leaguePoints - a.leaguePoints)
 
 #leagues.row.justify-content-center
+    p= JSON.stringify(league)
     .col-12
         ul.nav.nav-pills
-            li.nav-item: a.nav-link(class=summonerRank.rank == 'I' ? 'active' : '' data-toggle="pill" href="#tier-1") I
-            li.nav-item: a.nav-link(class=summonerRank.rank == 'II' ? 'active' : '' data-toggle="pill" href="#tier-2") II
-            li.nav-item: a.nav-link(class=summonerRank.rank == 'III' ? 'active' : '' data-toggle="pill" href="#tier-3") III
-            li.nav-item: a.nav-link(class=summonerRank.rank == 'IV' ? 'active' : '' data-toggle="pill" href="#tier-4") IV
-            li.nav-item: a.nav-link(class=summonerRank.rank == 'V' ? 'active' : '' data-toggle="pill" href="#tier-5") V
+            li.nav-item: a.nav-link(class=currentSummonerRank == 'I' ? 'active' : '' data-toggle="pill" href="#tier-1") I
+            li.nav-item: a.nav-link(class=currentSummonerRank == 'II' ? 'active' : '' data-toggle="pill" href="#tier-2") II
+            li.nav-item: a.nav-link(class=currentSummonerRank == 'III' ? 'active' : '' data-toggle="pill" href="#tier-3") III
+            li.nav-item: a.nav-link(class=currentSummonerRank == 'IV' ? 'active' : '' data-toggle="pill" href="#tier-4") IV
+            li.nav-item: a.nav-link(class=currentSummonerRank == 'V' ? 'active' : '' data-toggle="pill" href="#tier-5") V
 
         .tab-content
             - for (let k = 1; k < 6; k++)
-                .silent-border.silent-shadow.tab-pane.p-3.mb-3(id=`tier-${k}` class=(summonerRank.rank == `${ranks[k]}`) ? 'active' : '')
+                .silent-border.silent-shadow.tab-pane.p-3.mb-3(id=`tier-${k}` class=(currentSummonerRank == `${ranks[k]}`) ? 'active' : '')
                     table.league-table.table.text-center
                         thead
                             tr
@@ -62,11 +64,4 @@ each player in league.entries
                                             .series-progress
                                                 each game in tierRank[i].miniSeries.progress
                                                     div(class="series-" + game)
-                                                //- .series-progress.d-inline-block
-                                                    if game == 'W'
-                                                        i.fa.fa-check-circle(style="color: green; font-size: 18px; padding: 1px")
-                                                    else if game == 'L'
-                                                        i.fa.fa-times-circle(style="color: red; font-size: 18px; padding: 1px")
-                                                    else
-                                                        i.fa.fa-question(style="color: #fff; font-size: 18px; padding: 1px")
                             - }

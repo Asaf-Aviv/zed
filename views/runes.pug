@@ -16,13 +16,13 @@ body
                 data-path="sorcery" title=runes["8200"].shortDesc data-toggle="tooltip")
                 img(src="/assets/league/img/runesReforged/perk/8200.png")
 
-            .resolve(data-color="#49ce4c" data-bg="/assets/league/img/runesReforged/perk/8300.jpg" 
-                data-path="resolve" title=runes["8300"].shortDesc data-toggle="tooltip")
-                img(src="/assets/league/img/runesReforged/perk/8300.png")
-
-            .inspiration(data-color="#4dafc5" data-bg="/assets/league/img/runesReforged/perk/8400.jpg" 
-                data-path="inspiration" title=runes["8400"].shortDesc data-toggle="tooltip")
+            .resolve(data-color="#49ce4c" data-bg="/assets/league/img/runesReforged/perk/8400.jpg" 
+                data-path="resolve" title=runes["8400"].shortDesc data-toggle="tooltip")
                 img(src="/assets/league/img/runesReforged/perk/8400.png")
+
+            .inspiration(data-color="#4dafc5" data-bg="/assets/league/img/runesReforged/perk/8300.jpg" 
+                data-path="inspiration" title=runes["8300"].shortDesc data-toggle="tooltip")
+                img(src="/assets/league/img/runesReforged/perk/8300.png")
 
         #runes-wrapper.d-flex.mx-auto
             #rune-trees
@@ -242,11 +242,11 @@ body
                 #resolve
                     .path.active-path
                         img.invisible
-                        img(src="/assets/league/img/runesReforged/perk/8300.png" style="cursor: default;")
+                        img(src="/assets/league/img/runesReforged/perk/8400.png" style="cursor: default;")
                         
-                        #8300
-                            h5(style="color: #49ce4c;")=runes["8300"].name
-                            p!=runes["8300"].shortDesc
+                        #8400
+                            h5(style="color: #49ce4c;")=runes["8400"].name
+                            p!=runes["8400"].shortDesc
 
                     #resolve-KS
                         img(src="/assets/league/img/runesReforged/perk/8437.png" data-toggle="collapse" data-target="#8437")
@@ -312,11 +312,11 @@ body
                 #inspiration
                     .path.active-path
                         img.invisible
-                        img(src="/assets/league/img/runesReforged/perk/8400.png" style="cursor: default;")
+                        img(src="/assets/league/img/runesReforged/perk/8300.png" style="cursor: default;")
                         
-                        #8400
-                            h5(style="color: #4dafc5;")=runes["8400"].name
-                            p!=runes["8400"].shortDesc
+                        #8300
+                            h5(style="color: #4dafc5;")=runes["8300"].name
+                            p!=runes["8300"].shortDesc
 
                     #inspiration-KS
                         img(src="/assets/league/img/runesReforged/perk/8351.png" data-toggle="collapse" data-target="#8351")
@@ -417,4 +417,6 @@ body
                     $(this).removeClass('active-rune');
                 }
             });
-        include partials/footer
+    include partials/footer
+    include partials/scroll_top
+    include partials/scripts

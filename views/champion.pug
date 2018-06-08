@@ -24,8 +24,9 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
         #champ-base-stats
             .row
                 .col-md-2.d-flex.justify-content-center.align-items-center.mb-4
-                    a(href="/champions/" + champ.name.replace('_','').replace(' ', '').replace("'", '').replace('.', ''))
-                        img(src=`/assets/league/img/champion-base-tile/${champ.name.replace("'", "").replace(' ', '').replace('.', '')}.png`)
+                    - const champName = champ.name.replace('_','').replace(' ', '').replace("'", '').replace('.', '')
+                    a(href=`/champions/${champName}`)
+                        img(src=`${ddragon}/img/champion/${champName}.png`)
                 
                 .col-md-5.col-sm-12
                     table.table
@@ -98,7 +99,8 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                 section#abilities.champion-abilities.tab-pane.fade.show.active(role="tabpanel")
                     .ability-wrapper.row.col-10.offset-1.align-items-start
                         .passive-name.col-12.text-center.mb-1: h4.bold.general-color.pt-4.mb-4= champ.passive.name
-                        .ability-tile.col-md-1.d-flex.justify-content-center.align-items-center.mb-4: img(src=`/assets/league/img/passive/${champ.passive.image.full}`)
+                        .ability-tile.col-md-1.d-flex.justify-content-center.align-items-center.mb-4
+                            img(src=`${ddragon}/img/passive/${champ.passive.image.full}`)
                         -
                             let passiveDesc = champ.passive.description
                                 passiveDesc = passiveDesc.replace(/bonus/g, 'Bonus ').replace(/spelldamage/g, 'AP').replace(/attackdamage/g, 'AD').replace(/armor/g, 'Armor')
@@ -127,17 +129,18 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                                 .cooldown.col-lg-4.col-sm-4.text-xs-center: span= 'Cooldown ' + champ.spells[i].cooldownBurn
                         
                                 if champ.spells[i].resource
-                                    -let res = champ.spells[i].resource.replace('{{ cost }}', champ.spells[i].costBurn) || 'No Cost'
-                                    -let resEffect = res.match(/{{ ..+? }}/g)
+                                    - let res = champ.spells[i].resource.replace('{{ cost }}', champ.spells[i].costBurn) || 'No Cost'
+                                    - let resEffect = res.match(/{{ ..+? }}/g)
                                     if resEffect
-                                        -res = res.replace(resEffect[0], champ.spells[i].effectBurn[resEffect[0].slice(4, resEffect[0].lastIndexOf(' '))])
+                                        - res = res.replace(resEffect[0], champ.spells[i].effectBurn[resEffect[0].slice(4, resEffect[0].lastIndexOf(' '))])
                                     .cost-type.col-lg-4.col-sm-4.text-xs-center: span= res
                                 else 
                                     .cost-type.col-lg-4.col-sm-4.text-xs-center: span No Cost
                                     
                                 .range.col-lg-4.col-sm-4.text-xs-center: span= 'Range ' + champ.spells[i].rangeBurn
 
-                            .ability-tile.col-md-1.d-flex.justify-content-center.align-items-start.mb-4: img(src=`/assets/league/img/spell/${champ.spells[i].image.full}`)
+                            .ability-tile.col-md-1.d-flex.justify-content-center.align-items-start.mb-4
+                                img(src=`${ddragon}/img/spell/${champ.spells[i].image.full}`)
                             -
                                 let tooltip = champ.spells[i].tooltip
                                 let damageAmp
@@ -190,7 +193,9 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                                 video.player.w-100.h-100(class=`player${i}` controls playsinline poster=`${videoUrls[i]}.jpg`)
                                     source(src=`${videoUrls[i]}.webm` type="video/webm")
                         br
-                include partials/footer
+    include partials/footer
+    include partials/scroll_top
+    include partials/scripts
         script.
             const playerP = new Plyr('.playerP');
             const playerQ = new Plyr('.player0');

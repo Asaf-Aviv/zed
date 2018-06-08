@@ -2,19 +2,24 @@ include partials/head
 body
     include partials/nav
     include partials/sidenav
-    .container
-        .row
-            .col-lg-6.col-md-7.pb-3.mx-auto.mt-5.main-bg.silent-border
-                form#login-form.mt-3(action="/login" method="POST" autocomplete="off")
-                    legend.text-center Log In
-                    .md-form
-                        i.fa.fa-at.prefix
-                        input.form-control(type="text" id="login-email" name="email" placeholder="Email" required)
-                    .md-form
-                        i.fa.fa-lock.prefix
-                        input.form-control.pb-3(type="password" id="login-password" name="password" placeholder="Password" required)
-                    .text-center
-                        button.btn.btn-outline-success.mt-3
-                            i.fa.fa-sign-in.fa-5x.mr-2
-                            | Log In
-        include partials/footer
+    .container.position-relative
+        .form-container.col-xl-3.col-lg-4.col-md-5.col-10.p-0.mx-auto
+            .form-wrapper
+                .form-header Log In
+                form#login-form(action="/login" method="POST")
+                    .form-group-wrapper
+                        .form-icon
+                            i.fa.fa-at
+                            input(type="text" id="login-email" name="email" placeholder="Email" required)
+                        .form-icon
+                            i.fas.fa-key
+                            input(type="password" id="login-password" name="password" placeholder="Password" required)
+                        a.forgot(href="/forgot") Forgot Password ?
+                    button Log in
+                    .form-footer
+                        span Dont have an account ?  
+                            a.logins(href="/register") register
+                            | &nbsp;here
+    include partials/footer
+    include partials/scroll_top
+    include partials/scripts

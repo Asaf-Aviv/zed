@@ -88,7 +88,7 @@ LegendSchema.statics.authenticate = function (email, password, callback) {
                 console.log('user not found sending err');
                 return callback(err);
             } else {
-                password == user.password ? callback(null, user) : (console.log('wrong password'), callback());
+                password === user.password ? callback(null, user) : callback()
                 // bcrypt.compare(password, user.password, function (err, result) {
                 //     return result ? callback(null, user) : (console.log('wrong password'), callback());
                 // });

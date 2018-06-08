@@ -4,29 +4,62 @@ nav#main-nav-bar
             a(href="/") Home
             a(href="/leaderboards?region=NA1") Leaderboards
             a(href="/statistics") Statistics
-            #nav-dropdown.dropdown.show.d-flex
-                a.dropdown-toggle(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Data
-                .dropdown-menu(aria-labelledby="nav-dropdown")
-                    a.dropdown-item(href="/champions") Champions
-                    a.dropdown-item(href="/runes") Runes
-                    a.dropdown-item(href="/items") Items
+            #nav-dropdown
+                a Data
+                .nav-dropdown
+                    a.d-block.text-left(href="/champions") Champions
+                    a.d-block.text-left(href="/runes") Runes
+                    a.d-block.text-left(href="/items") Items
+
+        #nav-search.zed-flex-center
+            #summoner-input
+                input(
+                    type="text" placeholder="Summoner Name" 
+                    minlength="3" maxlength="16" required)
+                button#summoner-search-btn
+                    i.fas.fa-search
+                if historyCookie
+                    #search-history.shadow
+                        .history-wrapper
+                            each summonerSearch in historyCookie
+                                - const [ pName, pRegion ] = summonerSearch.split('=')
+                                .summoner
+                                    a.hist(href=`/summoner?region=${pRegion}&userName=${pName}`)= pName
+                                    .remove-history
+                                        i.fas.fa-times
+                
+            #nav-regions.zed-flex-center
+                #selected-region.zed-flex-center.h-100.w-100(data-region="NA1") NA
+                #regions-wrapper
+                    #region-select
+                        div.zed-flex-center(data-region="NA1") NA
+                        div.zed-flex-center(data-region="EUW1") EUW
+                        div.zed-flex-center(data-region="EUN1") EUNE
+                        div.zed-flex-center(data-region="KR") KOREA
+                        div.zed-flex-center(data-region="LA1") LAN
+                        div.zed-flex-center(data-region="LA2") LAS
+                        div.zed-flex-center(data-region="RU") RUSSIA
+                        div.zed-flex-center(data-region="JP1") JAPAN
+                        div.zed-flex-center(data-region="TR1") TURKEY
+                        div.zed-flex-center(data-region="BR1") BRAZIL
+                        div.zed-flex-center(data-region="OC1") OCE
 
         #nav-bar-login.d-flex.ml-auto
             //- a.d-flex.align-items-center(href="/users") Find Legends
             if currentUser
                 #nav-bar-util.d-flex.mr-5
 
-                    .util-box(data-link="#notifications-nav")
+                    #notifications.util-box(data-link="#notifications-nav")
                         i.far.fa-lg.fa-bell
                         span.badge 5
                         #notifications-nav.util-content.shadow.p-3 You Don't have any notifications
                         
-                    .util-box(data-link="#messages-nav")
+                    #messages.util-box(data-link="#messages-nav")
                         i.far.fa-lg.fa-envelope
                         span.badge 5
                         #messages-nav.util-content.shadow.p-3 You Don't have any messages
                         
-                    .util-box(data-link="#friend-requests-nav")
+                    #friend-requests.util-box(data-link="#friend-requests-nav")
                         i.fa.fa-lg.fa-user-plus
                         span.badge 15
                         #friend-requests-nav.util-content.shadow.p-3 You Don't have any friend requests

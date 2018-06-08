@@ -1,9 +1,4 @@
 $(function() {
-
-    var path = window.location.pathname.split("/").pop();
-    if (!path) $('#main-nav-bar a[href="/"]').addClass('nav-active');
-    else $('#main-nav-bar a[href*="'+path+'"]').addClass('nav-active');
-
     $('.lazy').Lazy();
 
     fixPopover();
@@ -14,53 +9,109 @@ $(function() {
     });
 
     $('[data-toggle="tooltip"]').tooltip().click(function(e) {
-        e.preventDefault()
+        e.preventDefault();
     });
 
-    // NavBar utilities
+    $('.remove-history').click(function() {
+        $(this).parent().remove();
+        if (!$('.history-wrapper').children().length) $('#search-history').remove();
+    });
+
+    $('#nav-match-tab').click(function() {
+        $(this).removeClass('animate');
+    });
+
+    throttle$('#selected-region', 'click', 500)
+        .subscribe(() => {
+            const $this = $('#regions-wrapper');
+            const RS = $('#region-select');
+            if (RS.hasClass('bounceInDown')) {
+                RS.animateCss('bounceOutUp', () => {
+                    $this.toggle();
+                    RS.removeClass('bounceInDown');
+                });
+            } else {
+                $this.toggle();
+                RS.addClass('bounceInDown')
+                    .removeClass('bounceOutUp');
+            }
+        });
+
+    $('#region-select > div').click(function(e) {
+        const $this = $(this)
+        const regionId = $this.data('region');
+        const regionText = $this.text();
+
+        $('#selected-region')
+            .data('region', regionId)
+            .text(regionText);
+            
+        $('#regions-wrapper').hide();
+        $('#region-select').removeClass('bounceInDown');
+    });
+
+    $('#summoner-input input').focus(() => {
+        $('#search-history').show();
+    });
+
+    $(document).click(function(e) {
+        const target = $(e.target);
+
+        if (!target.is('.util-box') || !target.parents('.util-box').length) {
+            const actives = $('.util-box').find('.active');
+            if (actives.length) {
+                actives.removeClass('active').addClass('is-closed').parents().removeClass('active');
+            }
+        }
+
+        if (!$('#summoner-input input').is(":focus")
+            && !target.is('#search-history')
+            && !target.is('.remove-history i')
+            && !target.is('.remove-history')) {
+                if (!target.parents('#search-history').length) {
+                    $('#search-history').hide();
+                }
+        }
+    });
+
+    $('#summoner-search-btn').click(() => {
+        const summonerName = $('#summoner-input input').val().replace(/ /g, '+');
+        const regionId = $('#selected-region').data('region');
+            if (summonerName.length < 3) {
+                return errorAlert('Summoner name must be at least 3 characters long.', 'topCenter', false);
+            }
+        window.location.href = `/summoner?region=${regionId}&userName=${summonerName}`;
+    });
+
+    // Navbar Utils
     $('.util-box').click(function(e) {
         e.stopPropagation();
-
+        
         const $this = $(this);
         const divToShow = $(`${$(this).data('link')}`);
 
+        $('#notifications i:first-child').addClass('ring');
+        $('#messages i:first-child').addClass('animated rubberBand');
+        $('#friend-requests i:first-child').addClass('animated flash');
+
         $this.find('span').text('');
 
-        $this.siblings('.is-active')
-            .removeClass('is-active');
+        $this.siblings('.active')
+            .removeClass('active');
 
-        $this.toggleClass('is-active')
+        $this.toggleClass('active')
 
         $('.util-box')
             .children()
             .not(divToShow)
-            .removeClass('is-active');
+            .removeClass('active');
 
-        if (!divToShow.hasClass('is-active')) divToShow.addClass('is-active');
-        else divToShow.removeClass('is-active').addClass('is-closed');
+        if (!divToShow.hasClass('active')) divToShow.addClass('active');
+        else divToShow.removeClass('active').addClass('is-closed');
     });
 
     $('.util-content').click(function(e) {
         e.stopPropagation();
-    });
-
-    $(document).scroll(function() {
-        $(this).scrollTop() > 900 ? $('#scroll-top').css({'display': 'block'}) : $('#scroll-top').css({'display': 'none'});
-    });
-
-    $('#scroll-top').click( () => $("html, body").animate({ scrollTop: 0 }, 280, 'easeOutCubic'));
-
-    $(document).click(function(e) {
-        if (!$(e.target).is('.util-box') || !$(e.target).parents('.util-box').length) {
-            const actives = $('.util-box').find('.is-active')
-            if (actives.length) {
-                actives.removeClass('is-active').addClass('is-closed').parents().removeClass('is-active')
-            }
-        }
-    });
-
-    $('.lb-summoner').on('click', function() {
-        window.location = `/summoner?userName=${$(this).text()}&region=${location.href.slice(location.href.lastIndexOf('=')+1)}`;
     });
 
     $('#filter-items input').click(function() {
@@ -72,7 +123,7 @@ $(function() {
             values.push($(this).val())
         });
 
-        if(values.length > 0) {
+        if(values.length) {
             $('.league-item-wrapper > div').map(function() {
                 show = true;
                 tags = $(this).attr('tags').split(' ')
@@ -95,25 +146,58 @@ $(function() {
             $(this).data('title').search(value) < 0 ? $(this).hide() : $(this).show()
         });
     });
-
-    {
-        let unsorted = $('.league-item-wrapper div');
-        let lowToHigh = $('.league-item-wrapper div').sort(function(a, b) {
-            return +$(a).attr('data-price') - +$(b).attr('data-price');
+    
+    $('#overall-wrapper').on('change', '#overall-league', function() {
+        createLoader('#overall-patch-tables', 'Loading');
+        $.ajax({
+            type: 'GET',
+            url: `/statistics/overall/${$(this).val()}`,
+            success: function(res) {
+                $('#overall-wrapper').html(res);
+            }
         });
-        let HighToLow = $('.league-item-wrapper div').sort(function(a, b) {
-            return +$(b).attr('data-price') - +$(a).attr('data-price');
-        });
-        let i = 0;
+    });
 
-        $('#sort-items input').click(function() {
-            i++
-            i === 1 ? $('.league-item-wrapper').html(lowToHigh) :
-            i === 2 ? $('.league-item-wrapper').html(HighToLow) : ($('.league-item-wrapper').html(unsorted), i = 0)
-            fixPopover();
+    $('#overall-champs').on('change', '#overall-table-elo', function() {
+        createLoader('#overall-table', 'Loading');
+        $.ajax({
+            type: 'GET',
+            url: `/statistics/overall/champions/${$(this).val()}`,
+            success: function(res) {
+                $('#overall-champs').html(res);
+            }
         });
-    }
+    });
 
+    $('#spectate').click(function() {
+        const $this = $(this);
+        const gameId = $this.attr('data-id');
+        const region = $this.attr('data-region');
+        const key = $this.attr('data-key');
+
+        $.ajax({
+            type: 'post',
+            url: `/spectate/${gameId}`,
+            data: {
+                gameId,
+                region,
+                key,
+            },
+            success: function(res) {
+                window.open('/spectate/'+res);
+            },
+            error: function(err) {
+                alert(err);
+            }
+        });
+    });
+    
+    $('#summoner-search').on('click', 'button', function(e) {
+        const query = window.location.href+`/summoner?${$('#summoner-search').serialize()}&region=${$('#summoner-search .active').attr('data-region')}`
+        window.location = query
+    });
+    
+    // User events
     $('.delete-post').click(function() {
         const postId = $(this).attr('data-id');
 
@@ -205,7 +289,6 @@ $(function() {
     });
 
     $(document).on('click', '.send-friend-request', function() {
-
         const userId = $(this).attr('data-id');
         $this = $(this)
         $this.prop('disabled', true);
@@ -246,7 +329,6 @@ $(function() {
     });
 
     $(document).on('click', '.decline-friend-request', function() {
-
         const userId = $(this).attr('data-id');
         $this = $(this)
         $this.prop('disabled', true);
@@ -266,7 +348,6 @@ $(function() {
     });
 
     $(document).on('click', '.cancel-friend-request', function() {
-        
         const userId = $(this).attr('data-id');
         $this = $(this)
         $this.prop('disabled', true);
@@ -282,51 +363,6 @@ $(function() {
                 alert(err);
             },
             complete: () => $this.prop('disabled', false)
-        });
-    });
-
-    $('#overall-wrapper').on('change', '#overall-league', function() {
-        createLoader('#overall-patch-tables', 'Loading');
-        $.ajax({
-            type: 'GET',
-            url: `/statistics/overall/${$(this).val()}`,
-            success: function(res) {
-                $('#overall-wrapper').html(res);
-            }
-        });
-    });
-
-    $('#overall-champs').on('change', '#overall-table-elo', function() {
-        createLoader('#overall-table', 'Loading');
-        $.ajax({
-            type: 'GET',
-            url: `/statistics/overall/champions/${$(this).val()}`,
-            success: function(res) {
-                $('#overall-champs').html(res);
-            }
-        });
-    });
-
-    $('#spectate').click(function() {
-        const $this = $(this);
-        const gameId = $this.attr('data-id');
-        const region = $this.attr('data-region');
-        const key = $this.attr('data-key');
-
-        $.ajax({
-            type: 'post',
-            url: `/spectate/${gameId}`,
-            data: {
-                gameId,
-                region,
-                key,
-            },
-            success: function(res) {
-                window.open('/spectate/'+res);
-            },
-            error: function(err) {
-                alert(err);
-            }
         });
     });
 
@@ -412,11 +448,6 @@ $(function() {
             }
         });
     });
-    
-    $('#summoner-search').on('click', 'button', function(e) {
-        const query = window.location.href+`/summoner?${$('#summoner-search').serialize()}&region=${$('#summoner-search .active').attr('data-region')}`
-        window.location = query
-    });
 
     $('#contact-form').submit(function(e) {
         e.preventDefault();
@@ -460,15 +491,6 @@ $(function() {
         });
     });
 
-    $('.remove-feedback').click(function(){
-        $('#feedback-wrapper, .feedback-btns').remove();
-    });
-    
-    $('.feedback-btn, .close-feedback').click(function() {
-        $('#feedback-wrapper').toggleClass('d-none');
-        $('#feedback-form textarea').focus();
-    });
-    
     $('#inbox-controls > div').click(function(e) {
         if (!$(this).hasClass('inbox-nav-active')) {
             window.location.hash = $(this).attr('id');
@@ -479,7 +501,43 @@ $(function() {
             $(`#${divToShow}`).show();
         }
     });
+
+    $('.remove-feedback').click(() => {
+        $('#feedback-wrapper, .feedback-btns').remove();
+    });
+    
+    $('.feedback-btn, .close-feedback').click(function() {
+        $('#feedback-wrapper').toggleClass('d-none');
+        $('#feedback-form textarea').focus();
+    });
+
+    // User events end
+
+    $('#scroll-top').click(() => {
+        setTimeout(() => $('#scroll-top').css({'display': 'none'}), 200);
+        $("html, body").animate({ scrollTop: 0 }, 200, 'easeOutCubic')
+    });
+
+    Rx.Observable.fromEvent(document, 'scroll')
+        .throttleTime(500)
+        .subscribe(() => {
+            $(this).scrollTop() > 500 ? 
+                $('#scroll-top').css({'display': 'block'}) :
+                $('#scroll-top').css({'display': 'none'});
+        });
 });
+
+function throttle$(el, event, time=1000) {
+    const element = document.querySelector(el);
+    const eventObserver = Rx.Observable.fromEvent(element, event);
+    return eventObserver.throttleTime(time).map(e => e);
+}
+
+function debounce$(el, event, time=1000) {
+    const element = document.querySelector(el);
+    const eventObserver = Rx.Observable.fromEvent(element, event);
+    return eventObserver.debounceTime(time).map(e => e);
+}
 
 iziToast.settings({
     class: 'izi-alert',
@@ -506,7 +564,7 @@ function successAlert(message, position, icon) {
     });
 }
 
-function errorAlert(message, position) {
+function errorAlert(message, position, overlay=true) {
     iziToast.show({
         titleColor: 'red',
         iconColor: 'red',
@@ -514,8 +572,8 @@ function errorAlert(message, position) {
         title: 'Error: ',
         message,
         position,
-        overlay: true,
-        overlayClose: true,
+        overlay,
+        overlayClose: overlay,
     });
 }
 
@@ -546,3 +604,29 @@ function createLoader(parent, text='') {
         )
     );
 }
+
+$.fn.extend({
+    animateCss: function(animationName, callback) {
+        const animationEnd = (function(el) {
+            const animations = {
+                animation: 'animationend',
+                OAnimation: 'oAnimationEnd',
+                MozAnimation: 'mozAnimationEnd',
+                WebkitAnimation: 'webkitAnimationEnd',
+            };
+
+            for (const t in animations) {
+                if (el.style[t] !== undefined) {
+                    return animations[t];
+                }
+        }})(document.createElement('div'));
+
+        this.addClass('animated ' + animationName).one(animationEnd, function() {
+            $(this).removeClass('animated ' + animationName);
+
+            if (typeof callback === 'function') callback();
+        });
+
+        return this;
+    },
+});

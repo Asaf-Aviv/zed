@@ -1,25 +1,16 @@
 include partials/head
-body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' ', '').replace("'", '')}.jpg); color: #efefef;`)
+body(style=`
+    background-image: url(/assets/league/img/bgs/${champ.name.replace(' ', '').replace("'", '')}.jpg); color: #efefef;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;`)
     include partials/nav
     include partials/sidenav
     header.container(style="background-color: rgba(0, 0, 0, 0.75);")
-        //- p= JSON.stringify(champ)
         h1.champion-name.bold.text-center.pt-5.mb-3= champ.name
         .champion-title.text-center.mb-2: q= champ.title
         .champion-role.text-center.mb-2: span= 'Role: ' + champ.tags.join(', ')
-
-        #base-info
-            .row
-                .col-md-8.mx-auto.text-center
-                    .d-flex.justify-content-between.p-4.flex-column.flex-sm-row
-                        span.general-color D i f f i c u l t
-                            span.mb-2.d-block= champ.info.difficulty
-                        span.mb-2.red-text A t t a c k 
-                            span.d-block= champ.info.attack
-                        span.mb-2.yellow-text D e f e n s e 
-                            span.d-block= champ.info.defense
-                        span.mb-2.green-text M a g i c 
-                            span.d-block= champ.info.magic
             
         #champ-base-stats
             .row
@@ -31,19 +22,19 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                 .col-md-5.col-sm-12
                     table.table
                         tr
-                            td.colorFF0000 Health
+                            td.general-color Health
                             td= `${champ.stats.hp}(+${champ.stats.hpperlevel})`
                         tr
-                            td.colorFF0000 Health Regen
+                            td.general-color Health Regen
                             td= `${champ.stats.hpregen}(+${champ.stats.hpregenperlevel})`
                         tr    
-                            td.colorFF8C00 Attack Damage
+                            td.general-color Attack Damage
                             td= `${champ.stats.attackdamage}(+${champ.stats.attackdamageperlevel})`
                         tr
-                            td.colorFFFF00 Armor
+                            td.general-color Armor
                             td= `${champ.stats.armor}(+${champ.stats.armorperlevel})`
                         tr
-                            td.colorFF00FF Magic Resist
+                            td.general-color Magic Resist
                             td= Math.trunc(champ.stats.spellblock) + `(+${champ.stats.spellblockperlevel})`
                 .col-md-5.col-sm-12
                     table.table.general-color
@@ -115,7 +106,7 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                         .ability-desc.d-flex.align-items-start.col-md-7.px-4.mb-4
                             p.text-center.text-md-left!= passiveDesc
 
-                        - const CID = cmpId[champ.name.replace(' ','').replace("'", '')].padStart(4, '0');
+                        - const CID = champ.key.padStart(4, '0');
                         - const abilityUrl = `//d28xe8vt774jo5.cloudfront.net/champion-abilities/${CID}/ability_${CID}_`;
                         - const videoUrls = [`${abilityUrl}Q1`,`${abilityUrl}W1`,`${abilityUrl}E1`,`${abilityUrl}R1`];
                         .d-flex.col-md-4.mb-4
@@ -124,20 +115,25 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
 
                     - for (let i = 0; i < 4; i++)
                         .ability-wrapper.row.col-10.offset-1
-                            .ability-name.col-12.text-center.mb-1: h4.bold.general-color.pt-4.mb-4= champ.spells[i].name
+                            .ability-name.col-12.text-center.mb-1
+                                h4.bold.general-color.pt-4.mb-4= champ.spells[i].name
                             .row.col-12.mb-4.px-4.text-center.bold.general-color.mb-4
-                                .cooldown.col-lg-4.col-sm-4.text-xs-center: span= 'Cooldown ' + champ.spells[i].cooldownBurn
+                                .cooldown.col-lg-4.col-sm-4.text-xs-center
+                                    span= 'Cooldown ' + champ.spells[i].cooldownBurn
                         
                                 if champ.spells[i].resource
                                     - let res = champ.spells[i].resource.replace('{{ cost }}', champ.spells[i].costBurn) || 'No Cost'
                                     - let resEffect = res.match(/{{ ..+? }}/g)
                                     if resEffect
                                         - res = res.replace(resEffect[0], champ.spells[i].effectBurn[resEffect[0].slice(4, resEffect[0].lastIndexOf(' '))])
-                                    .cost-type.col-lg-4.col-sm-4.text-xs-center: span= res
+                                    .cost-type.col-lg-4.col-sm-4.text-xs-center
+                                        span= res
                                 else 
-                                    .cost-type.col-lg-4.col-sm-4.text-xs-center: span No Cost
+                                    .cost-type.col-lg-4.col-sm-4.text-xs-center
+                                        span No Cost
                                     
-                                .range.col-lg-4.col-sm-4.text-xs-center: span= 'Range ' + champ.spells[i].rangeBurn
+                                .range.col-lg-4.col-sm-4.text-xs-center
+                                    span= 'Range ' + champ.spells[i].rangeBurn
 
                             .ability-tile.col-md-1.d-flex.justify-content-center.align-items-start.mb-4
                                 img(src=`${ddragon}/img/spell/${champ.spells[i].image.full}`)
@@ -192,7 +188,7 @@ body(style=`background-image: url(/assets/league/img/bgs/${champ.name.replace(' 
                             .d-flex.align-items-start.col-md-4.mb-4
                                 video.player.w-100.h-100(class=`player${i}` controls playsinline poster=`${videoUrls[i]}.jpg`)
                                     source(src=`${videoUrls[i]}.webm` type="video/webm")
-                        br
+                    br
     include partials/footer
     include partials/scroll_top
     include partials/scripts

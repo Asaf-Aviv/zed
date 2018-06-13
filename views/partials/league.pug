@@ -15,17 +15,19 @@ each player in league.entries
 - tier['4'].sort((a, b) => b.leaguePoints - a.leaguePoints)
 - tier['5'].sort((a, b) => b.leaguePoints - a.leaguePoints)
 
+- const isChallenger = (summonerRank.tier === 'MASTER' || summonerRank.tier === 'CHALLENGER')
+
 #leagues.row.justify-content-center
-    p= JSON.stringify(league)
     .col-12
         ul.nav.nav-pills
             li.nav-item: a.nav-link(class=currentSummonerRank == 'I' ? 'active' : '' data-toggle="pill" href="#tier-1") I
-            li.nav-item: a.nav-link(class=currentSummonerRank == 'II' ? 'active' : '' data-toggle="pill" href="#tier-2") II
-            li.nav-item: a.nav-link(class=currentSummonerRank == 'III' ? 'active' : '' data-toggle="pill" href="#tier-3") III
-            li.nav-item: a.nav-link(class=currentSummonerRank == 'IV' ? 'active' : '' data-toggle="pill" href="#tier-4") IV
-            li.nav-item: a.nav-link(class=currentSummonerRank == 'V' ? 'active' : '' data-toggle="pill" href="#tier-5") V
+            if (!isChallenger)
+                li.nav-item: a.nav-link(class=currentSummonerRank == 'II' ? 'active' : '' data-toggle="pill" href="#tier-2") II
+                li.nav-item: a.nav-link(class=currentSummonerRank == 'III' ? 'active' : '' data-toggle="pill" href="#tier-3") III
+                li.nav-item: a.nav-link(class=currentSummonerRank == 'IV' ? 'active' : '' data-toggle="pill" href="#tier-4") IV
+                li.nav-item: a.nav-link(class=currentSummonerRank == 'V' ? 'active' : '' data-toggle="pill" href="#tier-5") V
 
-        .tab-content
+        .tab-content.main-bg
             - for (let k = 1; k < 6; k++)
                 .silent-border.silent-shadow.tab-pane.p-3.mb-3(id=`tier-${k}` class=(currentSummonerRank == `${ranks[k]}`) ? 'active' : '')
                     table.league-table.table.text-center
@@ -37,14 +39,17 @@ each player in league.entries
                                 th Emblems
                                 th Win / Loss
                                 th Win Ratio
-                                th Series
+                                if (!isChallenger)
+                                    th Series
                         tbody
                             - for (let i = 0, x = tier[k].length; i < x; i++) {
                                 - tierRank = tier[k]
                                 - const winrate = ((tierRank[i].wins / (tierRank[i].wins + tierRank[i].losses)) * 100).toFixed(0)
+                                - const playerName = tierRank[i].playerOrTeamName
                                 tr
                                     td= i + 1
-                                    td.lb-summoner: span= tierRank[i].playerOrTeamName
+                                    td
+                                        a(href=`/summoner?region=${region}&userName=${playerName}`)= playerName
                                     td= tierRank[i].leaguePoints
                                     td.hot-streak
                                         .d-inline-block
@@ -59,9 +64,10 @@ each player in league.entries
                                     td: span= tierRank[i].wins + '/'
                                         span= tierRank[i].losses
                                     td: span(class=winrate > 49 ? 'greenC' : 'colorCC3300')= `${winrate}%`
-                                    td(width="130")
-                                        if tierRank[i].miniSeries
-                                            .series-progress
-                                                each game in tierRank[i].miniSeries.progress
-                                                    div(class="series-" + game)
+                                    if (!isChallenger)
+                                        td(width="130")
+                                            if tierRank[i].miniSeries
+                                                .series-progress
+                                                    each game in tierRank[i].miniSeries.progress
+                                                        div(class="series-" + game)
                             - }

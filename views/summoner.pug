@@ -48,12 +48,12 @@ body
                         #nav-league.tab-pane(role="tabpanel" aria-labelledby="nav-league-tab")
                             if league
                                 include partials/league
-                        #nav-match.tab-pane(role="tabpanel" aria-labelledby="nav-match-tab")
+                        #nav-match.tab-pane.main-bg.silent-shadow(role="tabpanel" aria-labelledby="nav-match-tab")
                             if match
                                 include partials/match
                             else
                                 .not-in-game
-                                    h4.text-center= `${summoner.name} is not in game`
+                                    h4.text-center= `${summoner.name} is not in a game`
     include partials/footer
     include partials/scroll_top
     include partials/scripts

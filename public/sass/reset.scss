@@ -13,14 +13,14 @@
 
 body {
   color: #fff;
-  padding-top: 65px;
+  margin-top: 65px;
   font-family: $Open;
   font-size: 16px;
   background: $body-bg;
-  // background-attachment: fixed;
-  // background-position: center;
-  // background-repeat: no-repeat;
-  // background-size: cover;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
 }
 
 label {
@@ -28,7 +28,7 @@ label {
 }
 
 hr {
-  background: #b1a0ff;
+  background: $dark-blue;
 }
 
 a {
@@ -235,4 +235,8 @@ table.dataTable thead .sorting {
 
 .silent-shadow {
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .34), 0 1px 8px -3px rgba(0, 0, 0, .26), 0 2px 16px 0 rgba(0, 0, 0, .28) !important;
+}
+
+.l-pop {
+  cursor: pointer;
 }

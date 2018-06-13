@@ -13,9 +13,9 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:champName', async (req, res) => {
-    const champ = await zed.getChampDesc(req.params.champName);
+    const champ = await zed.getStaticChampStats(req.params.champName);
     res.render('champion', {
-        title: `${champ.name} | zed`,
+        title: `${champ.name} | Zed`,
         champ,
     });
 });

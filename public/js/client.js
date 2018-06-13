@@ -60,7 +60,11 @@ $(function() {
         if (!target.is('.util-box') || !target.parents('.util-box').length) {
             const actives = $('.util-box').find('.active');
             if (actives.length) {
-                actives.removeClass('active').addClass('is-closed').parents().removeClass('active');
+                actives
+                    .removeClass('active')
+                    .addClass('is-closed')
+                    .parents()
+                    .removeClass('active');
             }
         }
 
@@ -71,6 +75,16 @@ $(function() {
                 if (!target.parents('#search-history').length) {
                     $('#search-history').hide();
                 }
+        }
+
+        if (!target.parents('.actions-toggler').length ) {
+            $('.actions').hide();
+        }
+    });
+
+    $('#summoner-input input').keypress(e => {
+        if (e.keyCode === 13) {
+            $('#summoner-search-btn').click();
         }
     });
 
@@ -94,7 +108,7 @@ $(function() {
         $('#messages i:first-child').addClass('animated rubberBand');
         $('#friend-requests i:first-child').addClass('animated flash');
 
-        $this.find('span').text('');
+        $this.find('.badge').text('');
 
         $this.siblings('.active')
             .removeClass('active');
@@ -147,7 +161,7 @@ $(function() {
         });
     });
     
-    $('#overall-wrapper').on('change', '#overall-league', function() {
+    $('#overall-wrapper').on('change', '#overall-league-select', function() {
         createLoader('#overall-patch-tables', 'Loading');
         $.ajax({
             type: 'GET',
@@ -158,7 +172,7 @@ $(function() {
         });
     });
 
-    $('#overall-champs').on('change', '#overall-table-elo', function() {
+    $('#overall-champs').on('change', '#overall-table-elo-select', function() {
         createLoader('#overall-table', 'Loading');
         $.ajax({
             type: 'GET',
@@ -192,11 +206,6 @@ $(function() {
         });
     });
     
-    $('#summoner-search').on('click', 'button', function(e) {
-        const query = window.location.href+`/summoner?${$('#summoner-search').serialize()}&region=${$('#summoner-search .active').attr('data-region')}`
-        window.location = query
-    });
-    
     // User events
     $('.delete-post').click(function() {
         const postId = $(this).attr('data-id');
@@ -214,20 +223,46 @@ $(function() {
     });
 
     $('.like-post').click(function() {
-        const postId = $(this).attr('data-id');
-        let likes = $(`#${postId} .like-count`).text();
+        $this = $(this)
+        const postId = $this.attr('data-id');
+        const likes = $this.siblings('.like-count').text();
 
         $.ajax({
             type: 'POST',
             url: '/post/like/'+postId,
             success: function(res) {
-                $(`#${postId} .like-post > button`).toggleClass('active');
-                $(`#${postId} .like-count`).text(+likes + +res);
+                $this.find('button').toggleClass('active');
+                console.log(likes)
+                console.log(res)
+                $this.siblings('.like-count').text(Number(likes) + Number(res));
             },
             error: function(err) {
                 errorAlert(err.responseText, 'center');
             }
         });
+    });
+
+    $('.actions-toggler').click(function() {
+        $(this)
+            .find('.actions')
+            .toggle()
+    });
+
+    $('.action-toggler').blur(function() {
+        $('.actions').hide();
+    });
+    $('.actions').blur(function() {
+        $('.actions').hide();
+    });
+
+    $('.comment-toggler').click(function() {
+        $(this)
+            .parent()
+            .parent()
+            .find('.comment-form')
+            .slideToggle()
+            .find('textarea')
+            .focus()
     });
 
     $('.comment-form').submit(function(e) {
@@ -519,7 +554,7 @@ $(function() {
     });
 
     Rx.Observable.fromEvent(document, 'scroll')
-        .throttleTime(500)
+        .throttleTime(300)
         .subscribe(() => {
             $(this).scrollTop() > 500 ? 
                 $('#scroll-top').css({'display': 'block'}) :
@@ -629,4 +664,13 @@ $.fn.extend({
 
         return this;
     },
+});
+
+jQuery.each(jQuery('textarea[data-autoresize]'), function() {
+    const offset = this.offsetHeight - this.clientHeight;
+
+    const resizeTextarea = function(el) {
+        jQuery(el).css('height', 'auto').css('height', el.scrollHeight + offset + 2);
+    };
+    jQuery(this).on('keyup input', function() { resizeTextarea(this); }).removeAttr('data-autoresize');
 });

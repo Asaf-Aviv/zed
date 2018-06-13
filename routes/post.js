@@ -18,13 +18,15 @@ router.get('/edit/:id', (req, res) => {
 // Publish a post
 router.post('/', (req, res) => {
     Legend.findByIdAndUpdate(
-        req.user._id, 
+        req.user._id,
         {
             $push: {
                 posts: {
                     $each: [{
-                        author: req.user.username,
-                        authorId: req.user._id,
+                        author: {
+                            username: req.user.username,
+                            _id: req.user._id,
+                        },
                         body: req.body.postBody
                     }],
                     $position: 0
@@ -82,15 +84,15 @@ router.post('/like/:id', (req, res) => {
         },
         'posts.$',
         (err, doc) => {
-            if (err || !doc) res.status(400).send("It looks like this post has been deleted");
-            const alreadyLike = doc[0].posts[0].likes.some(like => like._id.toString() == req.user._id);
+            if (err || !doc) res.status(404).send("It looks like this post has been deleted");
+            const alreadyLike = doc[0].posts[0].likes.some(like => like.from.toString() == req.user._id);
             if (alreadyLike) {
                 Legend.update({
                         'posts._id': req.params.id
                     }, 
                     {
                         $inc: { 'posts.$.likeCount' : -1},
-                        $pull: { 'posts.$.likes': { _id: req.user._id }}
+                        $pull: { 'posts.$.likes': { from: req.user._id }}
                     },
                     err => {
                         if (err) console.log(err)
@@ -115,7 +117,10 @@ router.post('/like/:id', (req, res) => {
                     },
                     {
                         $inc: { 'posts.$.likeCount' : 1 },
-                        $push: {'posts.$.likes': { _id: req.user._id }}
+                        $push: {'posts.$.likes': { 
+                            from: req.user._id,
+                            username: req.user.username
+                        }}
                     },
                     err => {
                         if (err) console.log(err)
@@ -123,7 +128,11 @@ router.post('/like/:id', (req, res) => {
                                 'posts._id': req.params.id
                             },
                             (err, user) => {
-                                io.to(connectedUsers[user[0]._id]).emit('likePost', req.user.username);
+                                if (connectedUsers[user[0]._id]) {
+                                    connectedUsers[user[0]._id].map(socketId => 
+                                        io.to(socketId).emit('likePost', req.user.username)
+                                    )
+                                }
                                 res.send('1');
                             });
                     });
@@ -149,15 +158,19 @@ router.post('/like/:id', (req, res) => {
 
 // Comment
 router.post('/comment/:id', (req, res) => {
+    const postId = req.params.id;
+
     Legend.findOneAndUpdate({
-            'posts._id': req.params.id
+            'posts._id': postId
         },
         {
             $push: {
                 'posts.$.comments': {
-                    from: {
+                    parentId: postId,
+                    author: {
                         _id: req.user._id,
                         username: req.user.username,
+                        // add profile picture
                     },
                     body: req.body.commentBody
                 }
@@ -167,7 +180,11 @@ router.post('/comment/:id', (req, res) => {
         (err, user) => {
             if (err) console.log(err)
             res.send();
-            io.to(connectedUsers[user._id]).emit('comment', req.user.username);
+            if (connectedUsers[user._id]) {
+                connectedUsers[user._id].map(socketId =>
+                    io.to(socketId).emit('comment', req.user.username)
+                )
+            }
 
             const postIndex = user.posts.findIndex(post => post._id.toString() === req.params.id);
             const newCommentId = user.posts[postIndex].comments[user.posts[postIndex].comments.length -1]._id
@@ -178,7 +195,9 @@ router.post('/comment/:id', (req, res) => {
                     $push: {
                         myComments: {
                             $each: [{
-                                _id: newCommentId 
+                                posterId: user._id,
+                                postId,
+                                _id: newCommentId
                             }],
                             $position: 0
                         }
@@ -192,18 +211,21 @@ router.post('/comment/:id', (req, res) => {
 
 // Delete a comment
 router.delete('/comment/:id', (req, res) => {
+    const commentId = req.params.id;
+
     Legend.findOneAndUpdate(
         {
-            'posts.comments._id': req.params.id
+            'posts.comments._id': commentId
         },
         {
             $pull: {
-                'posts.$.comments': { _id: req.params.id }
+                'posts.$.comments': { _id: commentId }
             }
         },
         (err, doc) => {
-            if (err) console.log(err)
-            res.send();
+            if (err) {
+                console.log(err);
+            }
         }
     );
 
@@ -211,13 +233,16 @@ router.delete('/comment/:id', (req, res) => {
         req.user._id,
         {
             $pull: {
-                myComments: { _id: req.params.id }
+                myComments: { _id: commentId }
             }
         },
         (err, doc) => {
-            if (err) console.log(err)
+            if (err) {
+                console.log(err)
+            }
         }
     );
+    res.send();
 });
 
 module.exports = router;

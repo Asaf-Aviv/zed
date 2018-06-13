@@ -10,7 +10,7 @@ socket.on('friendRequest', user => {
 
 socket.on('likePost', user => {
     successAlert(
-        `<a href="/users/${user}">${user}</a> liked your post`,
+        `<a href="/users/${user}">${user}</a> liked your post!`,
         'topRight', 
         'fa fa-thumbs-up'
     );
@@ -18,7 +18,7 @@ socket.on('likePost', user => {
 
 socket.on('comment', user => {
     successAlert(
-        `<a href="/users/${user}">${user}</a> commented on your post`,
+        `<a href="/users/${user}">${user}</a> commented on your post!`,
         'topRight',
         'fa fa-comment'
     );
@@ -29,5 +29,13 @@ socket.on('acceptFriendRequest', user => {
         `You and <a href="/users/${user}">${user}</a> are now friends!`,
         'topRight',
         'fa fa-check'
+    );
+});
+
+socket.on('newMessage', user => {
+    successAlert(
+        `${user} just sent you a message!`,
+        'topRight',
+        'fa fa-envelope'
     );
 });

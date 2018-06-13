@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @keyframes open-window {
   0% {
     transform: scaleX(0.1); }
@@ -114,7 +115,6 @@
       cursor: pointer;
       text-decoration: none;
       letter-spacing: 0.07em;
-      font-size: 16px;
       text-align: center;
       padding: 20px; }
       #main-nav-bar .wrapper a:active {
@@ -214,7 +214,7 @@
     #nav-bar-util .util-box.active {
       background: #2a2a2a;
       border-bottom-color: #11b0d6 !important; }
-      #nav-bar-util .util-box.active i {
+      #nav-bar-util .util-box.active > i {
         color: #11b0d6; }
     #nav-bar-util .util-box .badge {
       font-family: Arial;
@@ -236,6 +236,7 @@
   display: none;
   position: absolute;
   width: 350px;
+  padding: .5em;
   height: 300px;
   top: 88px;
   z-index: 100; }
@@ -253,12 +254,37 @@
   #messages-nav.is-closed,
   #friend-requests-nav.is-closed {
     display: block;
-    animation: close-window 200ms ease-out forwards; }
+    animation: close-window 150ms ease-out forwards; }
   #notifications-nav.active,
   #messages-nav.active,
   #friend-requests-nav.active {
     display: block;
-    animation: open-window 200ms ease-out forwards; }
+    animation: open-window 150ms ease-out forwards; }
+  #notifications-nav .notify-wrapper,
+  #messages-nav .notify-wrapper,
+  #friend-requests-nav .notify-wrapper {
+    position: relative;
+    padding: 0px 1.1em 0px .5em;
+    border-left: 4px solid #DDD;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125); }
+    #notifications-nav .notify-wrapper::before,
+    #messages-nav .notify-wrapper::before,
+    #friend-requests-nav .notify-wrapper::before {
+      position: absolute;
+      top: 50%;
+      content: "√";
+      background-color: #03a9d2;
+      margin-top: -17px;
+      left: -17px;
+      color: #FFF;
+      width: 30px;
+      height: 30px;
+      border-radius: 100%;
+      text-align: center;
+      line-height: 30px;
+      font-weight: bold;
+      font-family: Georgia;
+      text-shadow: 1px 1px rgba(0, 0, 0, 0.5); }
 
 #sidebar {
   user-select: none;
@@ -305,9 +331,6 @@
     transition: transform 300ms ease-out; }
   .champion-square:hover img {
     transform: scale(1.4); }
-
-#base-info {
-  word-spacing: -0.1em; }
 
 #champ-base-stats table tr > th,
 #champ-base-stats table td {
@@ -409,14 +432,6 @@
 .series-progress .series-N::after {
   color: #c7c7c7; }
 
-.profile-post-wrapper textarea {
-  background: #313131;
-  border-color: #7d5bbe; }
-  .profile-post-wrapper textarea:focus {
-    background: #313131;
-    border-color: #7d5bbe;
-    box-shadow: 0 0 0 0.2rem #47177c; }
-
 .league-table thead th:first-child {
   padding-right: 5px; }
 
@@ -425,6 +440,8 @@
 
 .league-table tbody tr:hover {
   color: #03a9d2; }
+  .league-table tbody tr:hover a {
+    color: #03a9d2; }
 
 .league-table td {
   padding: 10px; }
@@ -525,6 +542,9 @@
       .match-runes .inner-runes img.active {
         filter: grayscale(0); }
 
+#nav-match {
+  margin-top: 20px; }
+
 #nav-match-tab.ingame {
   background: #27a968 !important; }
 
@@ -533,7 +553,7 @@
 
 .not-in-game {
   padding-top: 30px;
-  min-height: 174px; }
+  height: 159px; }
 
 #summoner-nav .nav-tabs .nav-link {
   padding: 10px 40px;
@@ -553,13 +573,17 @@
   font-size: 0.9em;
   margin-top: 1em; }
   #recent-games .recent-game-wrapper {
+    font-weight: 600;
     box-shadow: 0 3px 8px 0px #000000;
     margin: 1em 0; }
     #recent-games .recent-game-wrapper .game-header {
       background: #1d1d1d;
-      padding: .5em; }
+      padding: .5em 1em;
+      color: #c7c7c7; }
+      #recent-games .recent-game-wrapper .game-header .analyze-match a {
+        color: #2ce0ff; }
       #recent-games .recent-game-wrapper .game-header > div {
-        width: 120px;
+        width: 135px;
         margin-right: 1.5em; }
     #recent-games .recent-game-wrapper .game-wrapper {
       display: flex;
@@ -594,10 +618,19 @@
           border-radius: 50%;
           margin-bottom: 0.3em; }
       #recent-games .recent-game-wrapper .game-wrapper .KDA {
+        color: #c7c7c7;
         width: 135px;
-        text-align: center; }
+        text-align: center;
+        padding-right: 2em; }
+        #recent-games .recent-game-wrapper .game-wrapper .KDA span {
+          color: #e8e8e8; }
       #recent-games .recent-game-wrapper .game-wrapper .end-game-items {
         width: 135px; }
+        #recent-games .recent-game-wrapper .game-wrapper .end-game-items .wards {
+          font-weight: 300;
+          color: #e8e8e8;
+          font-family: Arial;
+          font-size: .8em; }
         #recent-games .recent-game-wrapper .game-wrapper .end-game-items .item {
           margin: 0.1em;
           display: inline-block;
@@ -698,7 +731,6 @@
   display: flex;
   justify-content: center; }
   #runes-set .runes {
-    padding: 5px;
     margin: 0 26px 50px;
     width: 100%;
     max-width: 500px; }
@@ -710,7 +742,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-evenly;
-    background: #221e33; }
+    background: #232323; }
     #runes-set .stats-runes-wrapper .main-perk {
       margin-right: auto; }
     #runes-set .stats-runes-wrapper .main-perk > img,
@@ -736,10 +768,8 @@
   user-select: none; }
 
 .board-box {
-  background: #555555;
+  background: #03a9d2;
   display: flex;
-  height: 100%;
-  width: 100%;
   justify-content: center;
   align-items: center; }
 
@@ -928,24 +958,35 @@
   padding: 1em 2em;
   font-family: "Montserrat";
   background-image: linear-gradient(to right bottom, #323232, #2f2f2f, #2c2c2c, #2a2929, #272626); }
-  #footer .row .col {
-    display: flex;
-    flex-direction: column; }
-    #footer .row .col a {
+  #footer h3 {
+    font-weight: 600; }
+  #footer .d-flex {
+    justify-content: space-evenly; }
+    #footer .d-flex a {
       color: #00ffac; }
-      #footer .row .col a:hover {
+      #footer .d-flex a:hover {
         text-decoration: underline; }
-  #footer .c {
-    color: #c7c7c7;
-    text-align: center;
-    font-size: 0.8em; }
+  #footer .donate {
+    position: absolute;
+    right: 0;
+    height: 50px;
+    display: flex; }
+    #footer .donate img {
+      width: auto;
+      height: auto; }
+  #footer .c-wrapper {
+    border-top: 1px solid #484848; }
+    #footer .c-wrapper .c {
+      color: #c7c7c7;
+      text-align: center;
+      font-size: 0.8em;
+      padding-top: .5em; }
+      #footer .c-wrapper .c a {
+        color: #00ceff !important; }
   #footer .social-media {
-    height: 100px; }
+    height: 80px; }
     #footer .social-media > div {
-      background: #3a3a3a;
-      margin: 0 .1em;
-      height: 60px;
-      width: 60px;
+      margin: 0 .3em;
       border-radius: 50%;
       font-size: 1.5em; }
       #footer .social-media > div a {
@@ -961,10 +1002,6 @@
       color: #1DA1F2; }
     #footer .social-media .instagram:hover i {
       color: #cd486b; }
-
-/* FOOTER */
-#terms ol {
-  margin-left: 2em; }
 
 .popover {
   font-size: 15px;
@@ -1023,6 +1060,40 @@ stats {
   vertical-align: middle;
   border: 0; }
 
+#profile-menu {
+  font-family: "Montserrat";
+  font-weight: 600;
+  letter-spacing: .07em;
+  background: #333; }
+  #profile-menu a {
+    padding: 1em; }
+    #profile-menu a i {
+      margin-right: 1.2em; }
+    #profile-menu a.active {
+      background: #2a2a2a;
+      border-left: 5px solid #11b0d6;
+      color: #11b0d6;
+      padding-left: 1.5em; }
+    #profile-menu a:active {
+      color: #11b0d6; }
+
+.profile-post-wrapper form {
+  overflow: hidden; }
+
+.profile-post-wrapper textarea {
+  background: #313131;
+  border: 0;
+  color: #e8e8e8;
+  resize: none; }
+  .profile-post-wrapper textarea:focus {
+    background: #313131;
+    color: #e8e8e8;
+    box-shadow: none; }
+
+.profile-post-wrapper button {
+  float: right;
+  background: #03a9d2; }
+
 #inbox-controls {
   user-select: none;
   padding: 0; }
@@ -1040,10 +1111,127 @@ stats {
   color: #03a9d2; }
 
 /* POSTS */
+.post-header, .comment-header {
+  margin-bottom: .6em;
+  display: flex; }
+
+.post-body, .comment-body {
+  color: #e8e8e8;
+  margin: 1em 2em; }
+  .post-body p, .comment-body p {
+    margin: 0; }
+
+.author {
+  margin-right: 2em; }
+  .author a {
+    color: #00ffac; }
+
+.created {
+  display: flex;
+  align-items: flex-end;
+  font-weight: bold;
+  font-size: 0.9em;
+  color: #a2a2a2; }
+
+.like-btn.active {
+  color: #ff4042 !important; }
+
+.delete-post, .delete-comment {
+  margin-left: auto; }
+
+.actions-toggler {
+  position: relative;
+  margin-left: auto; }
+  .actions-toggler > button {
+    padding: 0 .8em;
+    background: transparent;
+    border: 0;
+    color: #e8e8e8; }
+    .actions-toggler > button i {
+      vertical-align: bottom; }
+  .actions-toggler .actions {
+    border-radius: 5px;
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: -32px;
+    background: #2a2a2a;
+    box-shadow: 1px 1px 5px 2px #191919;
+    overflow: visible !important; }
+    .actions-toggler .actions::before {
+      display: block;
+      content: '';
+      top: -10px;
+      right: 38px;
+      position: absolute;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid #2a2a2a; }
+    .actions-toggler .actions button {
+      font-weight: bold;
+      margin: .5em;
+      display: flex;
+      align-items: center;
+      border: 0;
+      background: transparent;
+      color: #757575; }
+      .actions-toggler .actions button i {
+        margin: 0 .5em .2em 0; }
+      .actions-toggler .actions button:hover {
+        color: #e8e8e8; }
+
+.post-controls, .comment-controls {
+  display: flex;
+  align-items: flex-end;
+  margin: 0 2em 1em 2em; }
+  .post-controls button, .comment-controls button {
+    margin-right: .5em;
+    background: transparent;
+    border: 0;
+    color: #757575; }
+    .post-controls button:hover, .comment-controls button:hover {
+      color: #e8e8e8; }
+
 .post-wrapper {
-  word-wrap: break-word; }
+  font-family: "Montserrat";
+  position: relative;
+  word-wrap: break-word;
+  padding: 1.5em;
+  color: #c7c7c7;
+  margin-bottom: 3em; }
+  .post-wrapper .post-content-wrapper {
+    margin-bottom: 1em;
+    border-bottom: 1px solid #2f2f2f; }
+    .post-wrapper .post-content-wrapper .like-count {
+      font-weight: bold; }
+    .post-wrapper .post-content-wrapper .comment-toggler {
+      margin-left: 2em; }
+      .post-wrapper .post-content-wrapper .comment-toggler button {
+        font-weight: bold; }
+    .post-wrapper .post-content-wrapper .comment-form {
+      display: none;
+      margin: 1em 2em 0;
+      padding-bottom: 1em;
+      overflow: hidden; }
+      .post-wrapper .post-content-wrapper .comment-form textarea {
+        width: 100%;
+        background: #1d1d1d;
+        border-bottom: 2px solid #00ffac;
+        resize: none;
+        color: #e8e8e8;
+        margin-bottom: .2em; }
+        .post-wrapper .post-content-wrapper .comment-form textarea:focus {
+          outline: 0; }
+      .post-wrapper .post-content-wrapper .comment-form button {
+        float: right;
+        background: #03a9d2; }
 
 /* POSTS END */
+.comments {
+  margin-left: 2em; }
+  .comments .comment {
+    position: relative; }
+
 .delete-photo {
   position: absolute;
   top: -20px;
@@ -1304,24 +1492,6 @@ yellow {
 .ui.text.loader {
   min-width: 2.28571429rem;
   padding-top: 3.07142857rem; }
-
-.like-btn {
-  display: block;
-  text-align: center;
-  padding: 5px 20px;
-  font-size: 14px;
-  background: #665a5f;
-  color: #fff;
-  cursor: pointer;
-  border: none;
-  outline: none;
-  transition: 0.3s ease; }
-  .like-btn.active {
-    background: #f0006e; }
-  .like-btn .fa {
-    margin-right: 5px; }
-  .like-btn:hover {
-    transform: translateY(-3px); }
 
 #scroll-top {
   display: none;

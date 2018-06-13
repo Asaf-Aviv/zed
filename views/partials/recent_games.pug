@@ -9,14 +9,18 @@
 #recent-games
     - for (let i = 0, x = recentGames.length; i < x; i++)
         - const game = recentGames[i]
+        - const playerIndex = game.participantIdentities.findIndex(p => p.player.summonerId == summoner.id)
+        - const playerRecap = game.participants[playerIndex]
+        - const gameDuration = moment.duration(game.gameDuration, 's').format('H:mm:ss')
         .recent-game-wrapper
-            - const playerIndex = game.participantIdentities.findIndex(p => p.player.summonerId == summoner.id)
-            - const playerRecap = game.participants[playerIndex]
             .game-header.d-flex
                 .time= moment(game.gameCreation + (game.gameDuration * 1000)).subtract().fromNow()
                 .map= leagueConstants.queue[game.queueId].map
                 .queue= leagueConstants.queue[game.queueId].description
-                .length= moment.duration(game.gameDuration, 's').format('H:mm:ss')
+                .length= gameDuration
+                .analyze-match
+                    a(href="#").ml-auto Analyze Match
+                        i.
             .game-wrapper(class=playerRecap.stats.win ? 'win' : 'loss')
                 .summoner-info
                     .champ
@@ -33,8 +37,7 @@
                             data-toggle="tooltip" data-title=runesReforged[playerRecap.stats.perk0].longDesc data-html="true")
                         img(src=`/assets/league/img/runesReforged/perk/${playerRecap.stats.perkSubStyle}.png`
                             data-toggle="tooltip" data-title=runeDesc[playerRecap.stats.perkSubStyle].shortDesc)
-                    .level
-                        span= 'Level ' + playerRecap.stats.champLevel
+                
                 .KDA
                     span= playerRecap.stats.kills
                     |  / 
@@ -42,12 +45,14 @@
                     |  / 
                     span= playerRecap.stats.assists
                     .minions
-                        span= playerRecap.stats.totalMinionsKilled + ' CS'
+                        span= `${playerRecap.stats.totalMinionsKilled} CS (${(playerRecap.stats.totalMinionsKilled / gameDuration.split(':')[0]).toFixed(2)}m)`
                     if playerRecap.stats.firstBloodKill
                         .first-blood
                             span First Blood
                     .multi-kill
                         span= popoff[playerRecap.stats.largestMultiKill]
+                    .level
+                        span= 'Level ' + playerRecap.stats.champLevel
                 
 
                 .end-game-items
@@ -62,16 +67,20 @@
                         if itemId
                             .item
                                 img(src=`${ddragon}/img/item/${itemId}.png`)
-                    .wards Wards Placed 
-                        span= playerRecap.stats.wardsPlaced
-                        if playerRecap.stats.sightWardsBoughtInGame
-                            span Vision Wards 
-                                span= playerRecap.stats.sightWardsBoughtInGame
+                    if playerRecap.stats.wardsPlaced
+                        .wards Placed 
+                            span= playerRecap.stats.wardsPlaced
+                            |  Wards
+                    if playerRecap.stats.visionWardsBoughtInGame
+                        .wards Bought 
+                            span= playerRecap.stats.visionWardsBoughtInGame
+                            |  Vision Wards 
+                            
                 .teams
                     .blue-team
                         - for (let k = 0; k < 5; k++)
                             .player
-                                .champion.mr-2
+                                .champion.mr-1
                                     a(href=`/champions/${cmpId[game.participants[k].championId]}`)
                                         img(src=`${ddragon}/img/champion/${cmpId[game.participants[k].championId]}.png`
                                             data-toggle="tooltip" data-title=champInfo.data[game.participants[k].championId].name)
@@ -81,7 +90,7 @@
                     .red-team
                         - for (let j = 5; j < 10; j++)
                             .player
-                                .champion.mr-2
+                                .champion.mr-1
                                     a(href=`/champions/${cmpId[game.participants[j].championId]}`)
                                         img(src=`${ddragon}/img/champion/${cmpId[game.participants[j].championId]}.png`
                                             data-toggle="tooltip" data-title=champInfo.data[game.participants[j].championId].name)

@@ -4,57 +4,41 @@ body
     include partials/nav
     include partials/sidenav
     .container
-        #profile-wrapper
-            .row.align-items-start
-                .col-xl-2.col-lg-3.col-md-5
-                    #profile-menu
-                        a.item(href="/") Home
-                        a.item(href="/profile") Profile
-                        a.item(href="/profile/messages") Messages
-                        a.item(href="/profile/friends") Friends
-                        a.item(href="/profile/photos") Photos
-                        a.item(href="/profile/info") Information
-                        a.item(href="/profile/settings") Settings
-                        a.item(href="/profile/logout") Logout
+        #profile-wrapper.pt-5
+            .row
+                .col-lg-3.col-md-4.mb-5.mb-md-0
+                    #profile-menu.silent-shadow.d-flex.flex-column
+                        a(href="/")
+                            i.fas.fa-home 
+                            | Home
+                        a.active(href="/profile")
+                            i.fas.fa-user
+                            | Profile
+                        a(href="/profile/inbox")
+                            i.fas.fa-inbox
+                            | Inbox
+                        a(href="/profile/friends")
+                            i.fas.fa-user-friends
+                            | Friends
+                        a(href="/profile/info")
+                            i.fas.fa-info-circle
+                            | Info
+                        a(href="/profile/settings")
+                            i.fas.fa-wrench
+                            | Settings
+                        a(href="/profile/logout")
+                            i.fas.fa-sign-out-alt
+                            | Logout
 
-                #profile-content.col-md-7.offset-lg-1.col-sm-12
+                #profile-content.col-md-8.offset-lg-1.col-sm-12
                     .profile-post-wrapper.mb-4
                         form(method="POST", action="/post")
-                            .form-group
-                                textarea.form-control.rounded-0.mb-3(name="postBody", placeholder="Post something nice ...", rows="5", required)
-                            button.ui.tiny.violet.button.w-100 Post
+                            .form-group.silent-shadow
+                                textarea.form-control.rounded-0.mb-3(name="postBody" data-autoresize placeholder="Post something nice ..." rows="5" required)
+                            button.btn.bold Post
                     #posts
                         each post in currentUser.posts
-                            .post-wrapper.mb-4.main-bg.silent-border.shadow
-                                .ui.raised.segment
-                                    div(id=post._id)
-                                        .post-body.p-2
-                                            p= post.body
-                                        .post-controls.d-flex.align-items-center.p-2
-                                            .ui.labeled.button.like-post(data-id=post.id)
-                                                button.like-btn(class=post.likes.some(like => like._id.toString() == currentUser._id) ? 'active' : '')
-                                                    i.fa.fa-heart
-                                                    | Like
-                                                .like-count.ui.basic.violet.left.pointing.label= post.likeCount + ' people like this'
-                                            .post-buttons.ml-auto
-                                                button.btn.btn-turkiz.button(href="/post/edit/"+post._id) Edit
-                                                button.btn.btn-danger.delete-post(data-id=post._id) Delete
-                                    if post.comments.length > 0
-                                        .ui.threaded.comments
-                                            h5.ui.dividing.header Comments
-                                            each comment in post.comments
-                                                .comment(data-id=comment._id)
-                                                    a.avatar: img(src=currentUser.profilePicture)
-                                                    .content
-                                                        a.author(href=`/profile/${comment.from.username}`)= comment.from.username
-                                                        .metadata
-                                                            span.date= moment(comment.created).subtract().fromNow()
-                                                        .text= comment.body
-                                                        .actions 
-                                                            a.reply(data-id=comment._id) Reply
-                                                            a.report(data-id=comment._id) Report
-                                                        if comment.from._id.toString() == currentUser._id
-                                                            button.delete-comment.btn.btn-danger(data-id=comment._id) Delete
+                            include partials/post
                 #friend-requests.col-2.pt-5
                     each request in currentUser.friendRequests
                         .requester.profile-friend-request.text-center(id=request.requester)
@@ -64,27 +48,6 @@ body
                             .ui.buttons
                                 button.ui.tiny.basic.red.button.decline-friend-request(data-id=request.requester) Decline
                                 button.ui.tiny.basic.green.button.accept-friend-request(data-id=request.requester) Accept
-            button(onClick="uploadImage()") Upload Images
-                            //- .ui.dimmer
-                                .ui.modal.w-75.h-75.m-auto
-                                    .d-flex.flex-wrap
-                                        img.p-md-3(src=currentUser.profilePicture)
-                                        img.p-md-3(src=currentUser.profilePicture)
-                                        img.p-md-3(src=currentUser.profilePicture)
-                                        img.p-md-3(src=currentUser.profilePicture)
-                                        img.p-md-3(src=currentUser.profilePicture)
-                                        img.p-md-3(src=currentUser.profilePicture)
-                                        img.p-md-3(src=currentUser.profilePicture)
-                                        img.p-md-3(src=currentUser.profilePicture)
-                                    //- form#myAwesomeDropzone.dropzone.d-flex.align-items-center.justify-content-center(
-                                    //- action="/upload/photos" method="POST" style="height: 20%; width: 100%; border: 2px dashed #000;position:fixed; bottom: 5px")
-                                        .dz-message Drag and drop files here or click to upload
-                                script.
-                                    $('.ui.modal')
-                                        .modal({
-                                            closable: true
-                                        }).modal('show');
-                    
         #suhdude
             button.btn.btn-success(onclick="successAlert('Upload complete', 'topRight', 'fa fa-check')")
             button.btn.btn-success(onclick="errorAlert('Something went wrong :/ Please try again.', 'center')")

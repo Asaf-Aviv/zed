@@ -29,14 +29,14 @@
                     tr
                         td.general-color Top
                         td
-                            a(href=`/champions/${ids[pos.TOP.winrate.best.championId]}`)
+                            a(href=`/statistics/${ids[pos.TOP.winrate.best.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.TOP.winrate.best.championId]}.png)`)
                                 span.t-champ-name= ids[pos.TOP.winrate.best.championId]
                         td
                             span.greenC= (pos.TOP.winrate.best.score * 100).toFixed(2) + '%'
                         td
-                            a(href=`/champions/${ids[pos.TOP.winrate.worst.championId]}`)
+                            a(href=`/statistics/${ids[pos.TOP.winrate.worst.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.TOP.winrate.worst.championId]}.png)`)
                                 span.t-champ-name= ids[pos.TOP.winrate.worst.championId]
@@ -45,14 +45,14 @@
                     tr
                         td.general-color Jungle
                         td
-                            a(href=`/champions/${ids[pos.JUNGLE.winrate.best.championId]}`)
+                            a(href=`/statistics/${ids[pos.JUNGLE.winrate.best.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.JUNGLE.winrate.best.championId]}.png)`)
                                 span.t-champ-name= ids[pos.JUNGLE.winrate.best.championId]
                         td
                             span.greenC= (pos.JUNGLE.winrate.best.score * 100).toFixed(2) + '%'
                         td
-                            a(href=`/champions/${ids[pos.JUNGLE.winrate.worst.championId]}`)
+                            a(href=`/statistics/${ids[pos.JUNGLE.winrate.worst.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.JUNGLE.winrate.worst.championId]}.png)`)
                                 span.t-champ-name= ids[pos.JUNGLE.winrate.worst.championId]
@@ -61,14 +61,14 @@
                     tr
                         td.general-color Middle
                         td
-                            a(href=`/champions/${ids[pos.MIDDLE.winrate.best.championId]}`)
+                            a(href=`/statistics/${ids[pos.MIDDLE.winrate.best.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.MIDDLE.winrate.best.championId]}.png)`)
                                 span.t-champ-name= ids[pos.MIDDLE.winrate.best.championId]
                         td
                             span.greenC= (pos.MIDDLE.winrate.best.score * 100).toFixed(2) + '%'
                         td
-                            a(href=`/champions/${ids[pos.MIDDLE.winrate.worst.championId]}`)
+                            a(href=`/statistics/${ids[pos.MIDDLE.winrate.worst.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.MIDDLE.winrate.worst.championId]}.png)`)
                                 span.t-champ-name= ids[pos.MIDDLE.winrate.worst.championId]
@@ -77,14 +77,14 @@
                     tr
                         td.general-color ADC
                         td
-                            a(href=`/champions/${ids[pos.DUO_CARRY.winrate.best.championId]}`)
+                            a(href=`/statistics/${ids[pos.DUO_CARRY.winrate.best.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.DUO_CARRY.winrate.best.championId]}.png)`)
                                 span.t-champ-name=ids[pos.DUO_CARRY.winrate.best.championId]
                         td
                             span.greenC=(pos.DUO_CARRY.winrate.best.score * 100).toFixed(2) + '%'
                         td
-                            a(href=`/champions/${ids[pos.DUO_CARRY.winrate.worst.championId]}`)
+                            a(href=`/statistics/${ids[pos.DUO_CARRY.winrate.worst.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.DUO_CARRY.winrate.worst.championId]}.png)`)
                                 span.t-champ-name= ids[pos.DUO_CARRY.winrate.worst.championId]
@@ -93,14 +93,14 @@
                     tr
                         td.general-color Support
                         td
-                            a(href=`/champions/${ids[pos.DUO_SUPPORT.winrate.best.championId]}`)
+                            a(href=`/statistics/${ids[pos.DUO_SUPPORT.winrate.best.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.DUO_SUPPORT.winrate.best.championId]}.png)`)
                                 span.t-champ-name= ids[pos.DUO_SUPPORT.winrate.best.championId]
                         td
                             span.greenC= (pos.DUO_SUPPORT.winrate.best.score * 100).toFixed(2) + '%'
                         td
-                            a(href=`/champions/${ids[pos.DUO_SUPPORT.winrate.worst.championId]}`)
+                            a(href=`/statistics/${ids[pos.DUO_SUPPORT.winrate.worst.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.DUO_SUPPORT.winrate.worst.championId]}.png)`)
                                 span.t-champ-name= ids[pos.DUO_SUPPORT.winrate.worst.championId]
@@ -113,69 +113,79 @@
                 thead
                     tr
                         th Role
-                        th.greenC Best
-                        th.colorFF0000 Worst
+                        th.greenC(colspan="2") Best
+                        th.colorFF0000(colspan="2") Worst
                 tbody
                     tr
                         td.general-color Top
                         td
-                            a(href=`/champions/${ids[pos.TOP.performanceScore.best.championId]}`)
+                            a(href=`/statistics/${ids[pos.TOP.performanceScore.best.championId]}`)
                                     div.overall-champ-tile(
                                         style=`background-image: url(${ddragon}/img/champion/${ids[pos.TOP.performanceScore.best.championId]}.png)`)
                                     span.t-champ-name= ids[pos.TOP.performanceScore.best.championId]
                         td
-                            a(href=`/champions/${ids[pos.TOP.performanceScore.worst.championId]}`)
+                        td
+                            a(href=`/statistics/${ids[pos.TOP.performanceScore.worst.championId]}`)
                                     div.overall-champ-tile(
                                         style=`background-image: url(${ddragon}/img/champion/${ids[pos.TOP.performanceScore.worst.championId]}.png)`)
                                     span.t-champ-name= ids[pos.TOP.performanceScore.worst.championId]
+                        td
                     tr
                         td.general-color Jungle
                         td
-                            a(href=`/champions/${ids[pos.JUNGLE.performanceScore.best.championId]}`)
+                            a(href=`/statistics/${ids[pos.JUNGLE.performanceScore.best.championId]}`)
                                     div.overall-champ-tile(
                                         style=`background-image: url(${ddragon}/img/champion/${ids[pos.JUNGLE.performanceScore.best.championId]}.png)`)
                                     span.t-champ-name= ids[pos.JUNGLE.performanceScore.best.championId]
                         td
-                            a(href=`/champions/${ids[pos.JUNGLE.performanceScore.worst.championId]}`)
+                        td
+                            a(href=`/statistics/${ids[pos.JUNGLE.performanceScore.worst.championId]}`)
                                     div.overall-champ-tile(
                                         style=`background-image: url(${ddragon}/img/champion/${ids[pos.JUNGLE.performanceScore.worst.championId]}.png)`)
                                     span.t-champ-name= ids[pos.JUNGLE.performanceScore.worst.championId]
+                        td
                     tr
                         td.general-color Middle
                         td
-                            a(href=`/champions/${ids[pos.MIDDLE.performanceScore.best.championId]}`)
+                            a(href=`/statistics/${ids[pos.MIDDLE.performanceScore.best.championId]}`)
                                     div.overall-champ-tile(
                                         style=`background-image: url(${ddragon}/img/champion/${ids[pos.MIDDLE.performanceScore.best.championId]}.png)`)
                                     span.t-champ-name= ids[pos.MIDDLE.performanceScore.best.championId]
                         td
-                            a(href=`/champions/${ids[pos.MIDDLE.performanceScore.worst.championId]}`)
+                        td
+                            a(href=`/statistics/${ids[pos.MIDDLE.performanceScore.worst.championId]}`)
                                     div.overall-champ-tile(
                                         style=`background-image: url(${ddragon}/img/champion/${ids[pos.MIDDLE.performanceScore.worst.championId]}.png)`)
                                     span.t-champ-name= ids[pos.MIDDLE.performanceScore.worst.championId]
+                        td
                     tr
                         td.general-color ADC
                         td
-                            a(href=`/champions/${ids[pos.DUO_CARRY.performanceScore.best.championId]}`)
+                            a(href=`/statistics/${ids[pos.DUO_CARRY.performanceScore.best.championId]}`)
                                     div.overall-champ-tile(
                                         style=`background-image: url(${ddragon}/img/champion/${ids[pos.DUO_CARRY.performanceScore.best.championId]}.png)`)
                                     span.t-champ-name= ids[pos.DUO_CARRY.performanceScore.best.championId]
                         td
-                            a(href=`/champions/${ids[pos.DUO_CARRY.performanceScore.worst.championId]}`)
+                        td
+                            a(href=`/statistics/${ids[pos.DUO_CARRY.performanceScore.worst.championId]}`)
                                     div.overall-champ-tile(
                                         style=`background-image: url(${ddragon}/img/champion/${ids[pos.DUO_CARRY.performanceScore.worst.championId]}.png)`)
                                     span.t-champ-name= ids[pos.DUO_CARRY.performanceScore.worst.championId]
+                        td
                     tr
                         td.general-color Support
                         td
-                            a(href=`/champions/${ids[pos.DUO_SUPPORT.performanceScore.best.championId]}`)
+                            a(href=`/statistics/${ids[pos.DUO_SUPPORT.performanceScore.best.championId]}`)
                                     div.overall-champ-tile(
                                         style=`background-image: url(${ddragon}/img/champion/${ids[pos.DUO_SUPPORT.performanceScore.best.championId]}.png)`)
                                     span.t-champ-name= ids[pos.DUO_SUPPORT.performanceScore.best.championId]
                         td
-                            a(href=`/champions/${ids[pos.DUO_SUPPORT.performanceScore.worst.championId]}`)
+                        td
+                            a(href=`/statistics/${ids[pos.DUO_SUPPORT.performanceScore.worst.championId]}`)
                                     div.overall-champ-tile(
                                         style=`background-image: url(${ddragon}/img/champion/${ids[pos.DUO_SUPPORT.performanceScore.worst.championId]}.png)`)
                                     span.t-champ-name= ids[pos.DUO_SUPPORT.performanceScore.worst.championId]
+                        td
 
         #overall-score.col-xl-4
             h6.text-center.bold.general-color CHAMPION RANKING CHANGES
@@ -189,14 +199,14 @@
                     tr
                         td.general-color Top
                         td
-                            a(href=`/champions/${ids[pos.TOP.performanceDelta.best.championId]}`)
+                            a(href=`/statistics/${ids[pos.TOP.performanceDelta.best.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.TOP.performanceDelta.best.championId]}.png)`)
                                 span.t-champ-name.mr-1= ids[pos.TOP.performanceDelta.best.championId]
                             i.fa.fa-arrow-up
                             span.greenC= pos.TOP.performanceDelta.best.score
                         td
-                            a(href=`/champions/${ids[pos.TOP.performanceDelta.worst.championId]}`)
+                            a(href=`/statistics/${ids[pos.TOP.performanceDelta.worst.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.TOP.performanceDelta.worst.championId]}.png)`)
                                 span.t-champ-name.mr-1= ids[pos.TOP.performanceDelta.worst.championId]
@@ -205,14 +215,14 @@
                     tr
                         td.general-color Jungle
                         td
-                            a(href=`/champions/${ids[pos.JUNGLE.performanceDelta.best.championId]}`)
+                            a(href=`/statistics/${ids[pos.JUNGLE.performanceDelta.best.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.JUNGLE.performanceDelta.best.championId]}.png)`)
                                 span.t-champ-name.mr-1= ids[pos.JUNGLE.performanceDelta.best.championId]
                             i.fa.fa-arrow-up
                             span.greenC= pos.JUNGLE.performanceDelta.best.score
                         td
-                            a(href=`/champions/${ids[pos.JUNGLE.performanceDelta.worst.championId]}`)
+                            a(href=`/statistics/${ids[pos.JUNGLE.performanceDelta.worst.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.JUNGLE.performanceDelta.worst.championId]}.png)`)
                                 span.t-champ-name.mr-1= ids[pos.JUNGLE.performanceDelta.worst.championId]
@@ -221,14 +231,14 @@
                     tr
                         td.general-color Middle
                         td
-                            a(href=`/champions/${ids[pos.MIDDLE.performanceDelta.best.championId]}`)
+                            a(href=`/statistics/${ids[pos.MIDDLE.performanceDelta.best.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.MIDDLE.performanceDelta.best.championId]}.png)`)
                                 span.t-champ-name.mr-1= ids[pos.MIDDLE.performanceDelta.best.championId]
                             i.fa.fa-arrow-up
                             span.greenC= pos.MIDDLE.performanceDelta.best.score
                         td
-                            a(href=`/champions/${ids[pos.MIDDLE.performanceDelta.worst.championId]}`)
+                            a(href=`/statistics/${ids[pos.MIDDLE.performanceDelta.worst.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.MIDDLE.performanceDelta.worst.championId]}.png)`)
                                 span.t-champ-name.mr-1= ids[pos.MIDDLE.performanceDelta.worst.championId]
@@ -237,14 +247,14 @@
                     tr
                         td.general-color ADC
                         td
-                            a(href=`/champions/${ids[pos.DUO_CARRY.performanceDelta.best.championId]}`)
+                            a(href=`/statistics/${ids[pos.DUO_CARRY.performanceDelta.best.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.DUO_CARRY.performanceDelta.best.championId]}.png)`)
                                 span.t-champ-name.mr-1= ids[pos.DUO_CARRY.performanceDelta.best.championId]
                             i.fa.fa-arrow-up
                             span.greenC= pos.DUO_CARRY.performanceDelta.best.score
                         td
-                            a(href=`/champions/${ids[pos.DUO_CARRY.performanceDelta.worst.championId]}`)
+                            a(href=`/statistics/${ids[pos.DUO_CARRY.performanceDelta.worst.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.DUO_CARRY.performanceDelta.worst.championId]}.png)`)
                                 span.t-champ-name.mr-1= ids[pos.DUO_CARRY.performanceDelta.worst.championId]
@@ -253,14 +263,14 @@
                     tr
                         td.general-color Support
                         td
-                            a(href=`/champions/${ids[pos.DUO_SUPPORT.performanceDelta.best.championId]}`)
+                            a(href=`/statistics/${ids[pos.DUO_SUPPORT.performanceDelta.best.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.DUO_SUPPORT.performanceDelta.best.championId]}.png)`)
                                 span.t-champ-name.mr-1= ids[pos.DUO_SUPPORT.performanceDelta.best.championId]
                             i.fa.fa-arrow-up
                             span.greenC= pos.DUO_SUPPORT.performanceDelta.best.score
                         td
-                            a(href=`/champions/${ids[pos.DUO_SUPPORT.performanceDelta.worst.championId]}`)
+                            a(href=`/statistics/${ids[pos.DUO_SUPPORT.performanceDelta.worst.championId]}`)
                                 div.overall-champ-tile(
                                     style=`background-image: url(${ddragon}/img/champion/${ids[pos.DUO_SUPPORT.performanceDelta.worst.championId]}.png)`)
                                 span.t-champ-name.mr-1= ids[pos.DUO_SUPPORT.performanceDelta.worst.championId]

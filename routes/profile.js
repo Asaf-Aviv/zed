@@ -6,13 +6,13 @@ const uploadcare = require('uploadcare')(process.env.UPLOADCARE_PUB_KEY, process
 
 router.get('/', auth.isLogged(), (req, res) => {
     res.render('profile', {
-        title: `${req.user.username} | Legends`
+        title: `${req.user.username} Profile | Zed`
     });
 });
 
-router.get('/messages', auth.isLogged(), (req, res) => {
-    res.render('messages', {
-        title: `${req.user.username} messages | Legends`
+router.get('/inbox', auth.isLogged(), (req, res) => {
+    res.render('inbox', {
+        title: `${req.user.username} Inbox | Zed`
     });
 });
 
@@ -25,31 +25,8 @@ router.get('/friends', auth.isLogged(), (req, res) => {
                 user.friends.map(({ _id }) => Legend.findById(_id))
             );
             res.render('friends', {
-                title: 'Friends | Legends',
+                title: 'Friends | Zed',
                 friendsList,
-            });
-        }
-    );
-});
-
-router.get('/photos', auth.isLogged(), (req, res) => {
-    res.render('photos', {
-        title: `${req.user.username} Photos | Legends`
-    });
-});
-
-router.delete('/image/:id', (req, res) => {
-    Legend.findByIdAndUpdate(
-        req.user._id,
-        {
-            $pull: { images: { _id: req.params.id }},
-            remove: true, new: false
-        },
-        (err, doc) => {
-            if (err) return res.status(500).send();
-            res.status(200).send();
-            uploadcare.files.remove(req.body.uuid, (err, data) => {
-                if (err) console.log(err);
             });
         }
     );

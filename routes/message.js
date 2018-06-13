@@ -15,7 +15,12 @@ router.post('/:id', (req, res) => {
         }, 
         (err, user) => {
         if (err) console.log(err);
-        res.send();
+        
+        if (connectedUsers[req.params.id]) {
+            connectedUsers[req.params.id].map(socketId =>
+                io.to(socketId).emit('newMessage', req.user.username)
+            )
+        }
         Legend.findByIdAndUpdate(
             req.user._id, 
             {
@@ -29,6 +34,7 @@ router.post('/:id', (req, res) => {
             err => {
             if (err) console.log(err);
         });
+        res.send();
     });
 });
 

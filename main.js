@@ -17,6 +17,7 @@ const morgan           = require('morgan');
 const rp               = require('request-promise');
 const fs               = require('fs');
 const bluebird         = require('bluebird');
+const helmet           = require('helmet');
 const path             = require('path');
 const expressValidator = require('express-validator');
 const flash            = require('connect-flash');
@@ -74,17 +75,8 @@ app.locals.runesReforged = runesReforged;
 
 console.log('env', process.env.NODE_ENV);
 
-// setInterval( async () => {
-//     const leagueVersion = await rp('http://ddragon.leagueoflegends.com/api/versions.json', {json:true});
-//     if(leagueVersion[0] != app.locals.ddragon.slice(34)) {
-//         app.locals.ddragon = app.locals.ddragon.slice(0, 34) + leagueVersion[0];
-//     }
-//     console.log(app.locals.ddragon);
-// }, 3600000);
-
 // MongoDB
 // mongoose.set('debug', true);
-
 
 // Redis
 redisClient.on('connect', () => {
@@ -102,6 +94,7 @@ app.set('view engine', 'pug');
 
 app
 .use(compression())
+.use(helmet())
 .use(cookieParser())
 .use('/dist', express.static(path.join(__dirname, 'dist')))
 .use('/public', express.static(path.join(__dirname, 'public')))
@@ -114,6 +107,7 @@ app
     secret: 'EFK9AqwLKR932',
     resave: false,
     saveUninitialized: false,
+    autoSave: true,
     store: new MongoStore({
         mongooseConnection: db
     })

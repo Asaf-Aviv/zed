@@ -9,14 +9,13 @@ router.post('/sendFriendRequest/:id', (req, res) => {
 
     Legend.findById(receiverId).then(user => {
         for (let request of user.friendRequests) {
-            if (receiverId == senderId) {
+            if (request.requester == senderId) {
                 return console.log('Request already exists');
             }
         }
     });
 
     if (!requestExist) {
-
         const friendRequestSent = {
             to: receiverId
         };
@@ -51,7 +50,11 @@ router.post('/sendFriendRequest/:id', (req, res) => {
                 res.send(receiverId);
             }
         );
-        io.to(connectedUsers[receiverId]).emit('friendRequest', req.user.username);
+        if (connectedUsers[receiverId]) {
+            connectedUsers[receiverId].map(socketId =>
+                io.to(socketId).emit('friendRequest', req.user.username)
+            )
+        }
     }
 });
 
@@ -87,12 +90,18 @@ router.post('/acceptFriendRequest/:id', (req, res) => {
             if(err) console.log(err);
             res.send(senderId);
     });
-    io.to(connectedUsers[senderId]).emit('acceptFriendRequest', req.user.username);
+    
+    if (connectedUsers[senderId]) {
+        connectedUsers[senderId].map(socketId => 
+            io.to(socketId).emit('acceptFriendRequest', req.user.username)
+        )
+    }
 });
 
 router.post('/declineFriendRequest/:id', (req, res) => {
     const declinerId = req.user._id;
     const senderId = req.params.id;
+
     Legend.update(
         { _id: declinerId },
         { $pull: { friendRequests : { requester: senderId }}},
@@ -132,20 +141,6 @@ router.post('/cancelFriendRequest/:id', (req, res) => {
 // FIXME 
 router.post('/removeFriend/:id', (req, res) => {
     console.log('remove')
-    Legend.update(
-        { _id: req.user._id },
-        { $pull: { friendRequestsSent : { to: req.params.id }}},
-        (err, doc) => {
-            if(err) console.log(err);
-    });
-
-    Legend.update(
-        { _id: req.params.id },
-        { $pull: { friendRequests: { requester: req.user._id }}},
-        (err, doc) => {
-            if(err) console.log(err);
-    });
-    res.send(req.params.id);
 });
 
 module.exports = router;

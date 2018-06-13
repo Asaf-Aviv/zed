@@ -2,9 +2,11 @@ const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
 const CommentSchema = new Schema({
-    from: {
+    parentId: Schema.Types.ObjectId,
+    author: {
         _id: Schema.Types.ObjectId,
-        username: String
+        username: String,
+        profilePic: String
     },
     body: {
         type: String,

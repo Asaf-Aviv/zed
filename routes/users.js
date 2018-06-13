@@ -20,17 +20,4 @@ router.get('/:userName', (req, res) => {
     });
 });
 
-router.get('/:userName/photos', (req, res) => {
-    Legend.findOne({ username: req.params.userName }).then(user => {
-        if (user) {
-            res.render('user_photos', {
-                title: `${user.username} Photos | Legends`,
-                user,
-            });
-        } else {
-            res.redirect('/users');
-        }
-    });
-});
-
 module.exports = router;

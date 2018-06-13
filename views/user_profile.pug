@@ -13,45 +13,15 @@ body
                         p Owner of Legends
                         p Asaf is the creator of this site
                     #profile-menu(style="max-width: 290px;")
-                        a.item(href=`/users/${user.username}/photos`) Photos
-                            i.images.outline.icon
-                        a.send-message.item(href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal") Send a Message
-                            i.envelope.outline.icon
+                        if (currentUser)
+                                a.send-message.item(href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal") Send a Message
+                                    i.envelope.outline.icon
 
                 #profile-content.col-md-7.offset-lg-1.col-sm-12.pt-5
                     #posts
                         each post in user.posts
-                            .post-wrapper.mb-4
-                                .ui.raised.segment
-                                    div(id=post._id)
-                                        .post-body.p-2
-                                            p= post.body
-                                        .post-controls.d-flex.align-items-center.p-2
-                                            .ui.labeled.button.like-post(data-id=post.id)
-                                                button.ui.tiny.button(class=post.likes.some(like => like._id.toString() == user._id) ? 'red' : '')
-                                                    i.heart.icon
-                                                    | Likes
-                                                .like-count.ui.basic.violet.left.pointing.label= post.likeCount
-                                            .post-buttons.ml-auto
-                                                button.ui.tiny.blue.button(href="/post/edit/"+post._id) Edit
-                                                button.ui.tiny.red.button.delete-post(data-id=post._id) Delete
-                                    if post.comments.length > 0
-                                        .ui.threaded.comments
-                                            h3.ui.dividing.header Comments
-                                            each comment in post.comments
-                                                .comment(data-id=comment._id)
-                                                    a.avatar: img(src=user.profilePicture)
-                                                    .content
-                                                        a.author(href=`/profile/${comment.from.username}`)= comment.from.username
-                                                        .metadata
-                                                            span.date= moment(comment.created).subtract().fromNow()
-                                                        .text= comment.body
-                                                        .actions 
-                                                            a.reply(data-id=comment._id) Reply
-                                                            a.report(data-id=comment._id) Report
-                                                        if comment.from._id.toString() == user._id
-                                                            button.delete-comment.btn.btn-danger(data-id=comment._id) Delete
-    
+                            include partials/post
+                                
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">

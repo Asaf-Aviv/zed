@@ -4,9 +4,9 @@ const LikeSchema    = require('./like');
 const CommentSchema = require('./comment');
 
 const PostSchema = new Schema({
-    author: String,
-    authorId: {
-        type: Schema.Types.ObjectId
+    author: {
+        _id: Schema.Types.ObjectId,
+        username: String
     },
     body: {
         type: String,
@@ -22,7 +22,7 @@ const PostSchema = new Schema({
         type: Number,
         default: 0
     },
-    date: {
+    created: {
         type: Date,
         default: Date.now
     },

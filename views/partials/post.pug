@@ -1,0 +1,65 @@
+p=JSON.stringify(post)
+.post-wrapper.main-bg.shadow
+    div(id=post._id)
+        .post-content-wrapper
+            .post-header
+                .author Posted by #[a(href=`/users/${post.author.username}`)= post.author.username]
+                .created= moment(post.created).subtract().fromNow()
+                .actions-toggler
+                    button
+                        i.fas.fa-ellipsis-v
+                    .actions
+                        if post.author._id.toString() == currentUser._id
+                            button.edit-post
+                                i.fas.fa-edit
+                                | Edit
+                            button.delete-post(data-id=post._id)
+                                i.fas.fa-trash
+                                | Delete
+                        else 
+                            button.report-post(data-id=post._id)
+                                i.fas.fa-flag
+                                | Report
+            .post-body
+                p #{post.body}
+            .post-controls
+                .like-post(data-id=post.id)
+                    button.like-btn(class=post.likes.some(like => like.from.toString() == currentUser._id) ? 'active' : '')
+                        i.fa.fa-heart
+                .like-count.d-inline-block= post.likeCount
+                .comment-toggler
+                    button.create-comment-box
+                        i.fas.fa-comment
+                        |  Comment
+                
+            form.comment-form(data-id=post._id)
+                textarea(name="commentBody" data-autoresize rows="1" placeholder="Add a comment" required)
+                button.btn.bold Comment
+
+        if post.comments.length
+            .comments
+                each comment in post.comments
+                    .comment(id=comment._id)
+                        .comment-header
+                            .author By #[a(href=`/profile/${comment.author.username}`)= comment.author.username]
+                            .created= moment(comment.created).subtract().fromNow()
+                            //- img(src=comment.author.profilePicture)
+                            .actions-toggler
+                                button
+                                    i.fas.fa-ellipsis-v
+                                .actions
+                                    if comment.author._id.toString() == currentUser._id
+                                        button.delete-comment(data-id=comment._id)
+                                            i.fas.fa-trash
+                                            | Delete
+                                    else 
+                                        button.report-post(data-id=comment._id)
+                                            i.fas.fa-flag
+                                            | Report
+                        .comment-body
+                            p #{comment.body}
+                        .comment-controls
+                            .like-comment(data-id=comment._id)
+                                button.like-btn(class=comment.likes.some(like => like._id.toString() == currentUser._id) ? 'active' : '')
+                                    i.fa.fa-heart
+                            .like-count.d-inline-block= comment.likeCount

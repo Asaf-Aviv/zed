@@ -1096,22 +1096,81 @@ stats {
 
 #inbox-controls {
   user-select: none;
-  padding: 0; }
-  #inbox-controls div {
-    border-left: 5px solid transparent;
-    font-weight: 500;
-    padding: 10px 20px;
-    cursor: pointer; }
-    #inbox-controls div:hover {
-      background: #eee;
-      color: #03a9d2; }
+  background: #333;
+  font-family: "Montserrat";
+  font-weight: bold;
+  font-size: 0.9em; }
+  #inbox-controls > div {
+    padding: .7em;
+    cursor: pointer;
+    transition: padding 100ms ease-out; }
+    #inbox-controls > div:hover {
+      background: #2a2a2a;
+      color: #11b0d6; }
+    #inbox-controls > div.active {
+      background: #2a2a2a;
+      border-left: 5px solid #11b0d6;
+      color: #11b0d6;
+      padding-left: 1.5em; }
+    #inbox-controls > div:active {
+      color: #11b0d6; }
 
-.inbox-nav-active {
-  border-left: 5px solid #03a9d2 !important;
-  color: #03a9d2; }
+#inbox-msg-wrapper {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 85vh;
+  padding: 0 1em; }
 
-/* POSTS */
-.post-header, .comment-header {
+.msg-wrapper {
+  background: #545454;
+  font-family: "Montserrat";
+  padding: 1em;
+  display: flex;
+  margin-bottom: 1em; }
+  .msg-wrapper:last-of-type {
+    margin-bottom: 0; }
+  .msg-wrapper .pic {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    margin-right: 1em; }
+  .msg-wrapper .content {
+    flex: 1; }
+    .msg-wrapper .content .msg-header .author a {
+      font-weight: bold;
+      color: #00ffac; }
+    .msg-wrapper .content .msg-body-wrapper {
+      margin: 0 2em .5em 0;
+      cursor: pointer; }
+      .msg-wrapper .content .msg-body-wrapper .msg-subject {
+        margin: .5em 0em;
+        font-weight: bold;
+        color: #c7c7c7; }
+      .msg-wrapper .content .msg-body-wrapper .msg-body {
+        margin-left: 1em;
+        max-height: 75px;
+        overflow: hidden; }
+    .msg-wrapper .content .msg-controls button {
+      font-weight: bold;
+      background: transparent;
+      border: 0;
+      margin-right: 1.3em;
+      color: #c7c7c7;
+      font-size: .8em; }
+      .msg-wrapper .content .msg-controls button:hover {
+        color: #e8e8e8; }
+    .msg-wrapper .content .msg-controls .bookmark-msg.active i, .msg-wrapper .content .msg-controls .self-bookmark-msg.active i {
+      color: yellow; }
+
+.icon-btn {
+  font-weight: 700;
+  background: 0 0;
+  border: 0;
+  color: #c7c7c7; }
+  .icon-btn:hover {
+    color: #e8e8e8; }
+
+.post-header, .comment-header, .msg-header {
   margin-bottom: .6em;
   display: flex; }
 
@@ -1226,7 +1285,6 @@ stats {
         float: right;
         background: #03a9d2; }
 
-/* POSTS END */
 .comments {
   margin-left: 2em; }
   .comments .comment {

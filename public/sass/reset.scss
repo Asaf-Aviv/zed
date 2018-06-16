@@ -66,6 +66,18 @@ img {
   color: $dark-grey !important;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: $nav-bg;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $really-dark-grey; 
+}
+
 // BOOTSTRAP
 .shadow {
   box-shadow: 0px 0px 20px 2px #151515;

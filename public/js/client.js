@@ -21,22 +21,6 @@ $(function() {
         $(this).removeClass('animate');
     });
 
-    throttle$('#selected-region', 'click', 500)
-        .subscribe(() => {
-            const $this = $('#regions-wrapper');
-            const RS = $('#region-select');
-            if (RS.hasClass('bounceInDown')) {
-                RS.animateCss('bounceOutUp', () => {
-                    $this.toggle();
-                    RS.removeClass('bounceInDown');
-                });
-            } else {
-                $this.toggle();
-                RS.addClass('bounceInDown')
-                    .removeClass('bounceOutUp');
-            }
-        });
-
     $('#region-select > div').click(function(e) {
         const $this = $(this)
         const regionId = $this.data('region');
@@ -282,28 +266,6 @@ $(function() {
             }
         });
     });
-    
-    $('#message-form').submit(function(e) {
-        e.preventDefault();
-        $this = $(this);
-        $this.addClass('loading');
-        const userId = $('#message-form').attr('data-id');
-
-        $.ajax({
-            type: 'POST',
-            data: $(this).serialize(),
-            url: '/message/'+userId,
-            success: function(res) {
-                successAlert('success', 'center', 'fa fa-comment');
-            },
-            error: function(err) {
-                errorAlert(err.responseText, 'center')
-            },
-            complete: function() {
-                $this.removeClass('loading');
-            }
-        });
-    });
 
     $(document).on('click', '.delete-comment', function() {
         const commentId = $(this).attr('data-id');
@@ -401,89 +363,138 @@ $(function() {
         });
     });
 
+    // Messages
+    
+    // Inbox nav
+    $('#inbox-controls > div').click(function(e) {
+        $this = $(this);
+
+        if (!$this.hasClass('active')) {
+            const divToShow = $(this).data('link');
+
+            $('#inbox-controls .active').removeClass('active');
+            $this.addClass('active');
+            
+            $('#inbox-msg-wrapper > div:visible').hide(0, () => $(`#${divToShow}`).fadeIn());
+        }
+    });
+
+    // Send msg
+    $('#message-form').submit(function(e) {
+        e.preventDefault();
+        $this = $(this);
+        const userId = $this.data('id');
+
+        $.ajax({
+            type: 'POST',
+            data: $(this).serialize(),
+            url: '/message/'+userId,
+            success: function(res) {
+                successAlert('success', 'center', 'fa fa-comment');
+            },
+            error: function(err) {
+                errorAlert(err.responseText, 'center')
+            },
+            complete: function() {
+            }
+        });
+    });
+
+    // Reply msg
+    $('.reply-msg').click(function() {
+        console.log('clicked');
+        const userId = $(this).data('id');
+        const username = $(this).data('username');
+        console.log(userId, username);
+    });
+
+    // Toggle Bookmark Msg
+    $('.bookmark-msg').click(function() {
+        const msgId = $(this).data('id');
+        const msgEle = $(`#${msgId}`);
+        msgEle.find('.bookmark-msg').toggleClass('active');
+
+        $.ajax({
+            type: 'PATCH',
+            url: `/message/bookmark/${msgId}`,
+            success: function(bookmark) {
+                if (bookmark) msgEle.clone(true, true).appendTo('#inbox-bookmark');
+                else $(`#inbox-bookmark #${msgId}`).fadeOut(200);
+                
+            },
+            error: function(err) {
+                msgEle.find('.bookmark-msg').toggleClass('active');
+                errorAlert(err.responseText, 'center')
+            }
+        });
+    });
+
+    // toggle self bookmark msg
+    $('.self-bookmark-msg').click(function() {
+        const msgId = $(this).data('id');
+        const msgEle = $(`#${msgId}`);
+        msgEle.find('.self-bookmark-msg').toggleClass('active');
+
+        $.ajax({
+            type: 'PATCH',
+            url: `/message/bookmark/self/${msgId}`,
+            success: function(bookmark) {
+                if (bookmark) msgEle.clone(true, true).appendTo('#inbox-bookmark');
+                else $(`#inbox-bookmark #${msgId}`).fadeOut(200);
+                
+            },
+            error: function(err) {
+                msgEle.find('.self-bookmark-msg').toggleClass('active');
+                errorAlert(err.responseText, 'center')
+            }
+        });
+    });
+
+    // move msg to trash
     $('.move-to-trash').click(function() {
-        const msg = $(`#${$(this).parent().attr('id')}`)
-        $.confirm({
-            draggable: true,
-            closeIcon: true,
-            icon: 'fa fa-warning',
-            type: 'red',
-            title: 'Confirm',
-            content: 'Are you sure you want to delete this message ?',
-            theme: 'dark',
-            buttons: {
-                Yes: {
-                    action: () => msg.remove(),
-                    btnClass: 'btn btn-outline-success'
-                },
-                No:{
-                    action: () => {},
-                    btnClass: 'btn btn-outline-danger'
-                }
+        const msgId = $(this).data('id');
+
+        $.ajax({
+            type: 'PATCH',
+            url: `/message/moveToTrash/${msgId}`,
+            success: function(res) {
+                successAlert('success', 'center', 'fa fa-comment');
+            },
+            error: function(err) {
+                errorAlert(err.responseText, 'center')
+            },
+            complete: function() {
             }
         });
     });
 
-    $('.clear-trash').click(function() {
-        const msg = $(`#${$(this).parent().attr('id')}`)
-        $.confirm({
-            draggable: true,
-            closeIcon: true,
-            icon: 'fa fa-warning',
-            type: 'red',
-            title: 'Confirm',
-            content: 'Are you sto delete this message ?',
-            theme: 'dark',
-            buttons: {
-                Yes: {
-                    action: () => msg.remove(),
-                    btnClass: 'btn btn-outline-success'
-                },
-                No:{
-                    action: () => {},
-                    btnClass: 'btn btn-outline-danger'
-                }
+    // delete msg
+    $('.delete-msg').click(function() {
+        const msgId = $(this).data('id');
+
+        $.ajax({
+            type: 'PATCH',
+            url: `/message/${msgId}`,
+            success: function(res) {
+                successAlert('success', 'center', 'fa fa-comment');
+            },
+            error: function(err) {
+                errorAlert(err.responseText, 'center')
+            },
+            complete: function() {
             }
         });
     });
 
-    $('.delete-photo').click(function() {
-        const photoId = $(this).data('id')
-        const photoUuid = $(this).data('uuid')
-
-        $.confirm({
-            draggable: true,
-            closeIcon: true,
-            icon: 'fa fa-warning',
-            type: 'red',
-            title: 'Confirm',
-            content: 'Are you sure you want to delete this photo ?',
-            theme: 'dark',
-            buttons: {
-                Yes: {
-                    action: function() {
-                        $.ajax({
-                            url: `/profile/image/${photoId}`,
-                            type: 'DELETE',
-                            data: {uuid: photoUuid},
-                            success: function() {
-                                alert('success');
-                            },
-                            error: function() {
-                                alert('error');
-                            }
-                        })
-                    },
-                    btnClass: 'btn btn-outline-success'
-                },
-                No:{
-                    action: () => {},
-                    btnClass: 'btn btn-outline-danger'
-                }
-            }
-        });
+    // report msg
+    $('.report-msg').click(function() {
+        console.log('clicked');
+        const msgId = $(this).data('id');
+        console.log(msgId);
+        
     });
 
+    // messages end
     $('#contact-form').submit(function(e) {
         e.preventDefault();
         $('.ajax-loader-wrapper').removeClass('invisible');
@@ -526,16 +537,7 @@ $(function() {
         });
     });
 
-    $('#inbox-controls > div').click(function(e) {
-        if (!$(this).hasClass('inbox-nav-active')) {
-            window.location.hash = $(this).attr('id');
-            let divToShow = $(this).attr('data-link');
-            $('.inbox-nav-active').removeClass('inbox-nav-active');
-            $(this).addClass('inbox-nav-active');
-            $('#inbox-msg-wrapper > div').hide();
-            $(`#${divToShow}`).show();
-        }
-    });
+    
 
     $('.remove-feedback').click(() => {
         $('#feedback-wrapper, .feedback-btns').remove();
@@ -548,10 +550,27 @@ $(function() {
 
     // User events end
 
+    // Observables
     $('#scroll-top').click(() => {
         setTimeout(() => $('#scroll-top').css({'display': 'none'}), 200);
         $("html, body").animate({ scrollTop: 0 }, 200, 'easeOutCubic')
     });
+
+    throttle$('#selected-region', 'click', 500)
+        .subscribe(() => {
+            const $this = $('#regions-wrapper');
+            const RS = $('#region-select');
+            if (RS.hasClass('bounceInDown')) {
+                RS.animateCss('bounceOutUp', () => {
+                    $this.toggle();
+                    RS.removeClass('bounceInDown');
+                });
+            } else {
+                $this.toggle();
+                RS.addClass('bounceInDown')
+                    .removeClass('bounceOutUp');
+            }
+        });
 
     Rx.Observable.fromEvent(document, 'scroll')
         .throttleTime(300)
@@ -560,6 +579,8 @@ $(function() {
                 $('#scroll-top').css({'display': 'block'}) :
                 $('#scroll-top').css({'display': 'none'});
         });
+
+    // Observables End
 });
 
 function throttle$(el, event, time=1000) {

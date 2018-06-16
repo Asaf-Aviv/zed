@@ -38,6 +38,7 @@ body
                         label.col-form-label Recipient:
                         input.form-control(type="text", value=user.username disabled) 
                         input.form-control(type="hidden", name="to" value=user._id)
+                        input.form-control(type="hidden", name="username" value=user.username)
                     .form-group
                         label.col-form-label Subject
                         input.form-control(type="text", name="subject")

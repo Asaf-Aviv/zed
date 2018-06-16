@@ -66,7 +66,7 @@ const LegendSchema = new Schema({
     ,images: [ ImageSchema ],
     posts: [ PostSchema ],
     messages: [ MessageSchema ],
-    messagesSent: [ MessageSchema ],
+    // messagesSent: [ MessageSchema ],
     myComments: [ MyCommentsSchema ],
     myLikes: [ LikeSchema ],
     shares: [],

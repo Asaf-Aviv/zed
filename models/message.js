@@ -2,13 +2,19 @@ const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
 const MessageSchema = new Schema({
-    from: {
-        type: Schema.Types.ObjectId,
-        require: true
+    author: {
+        _id: {
+            type: Schema.Types.ObjectId,
+            required: true
+        },
+        username: {
+            type: String,
+            required: true
+        }
     },
     to: {
-        type: Schema.Types.ObjectId,
-        require: true
+        _id: Schema.Types.ObjectId,
+        username: String
     },
     subject: {
         type: String,
@@ -30,9 +36,9 @@ const MessageSchema = new Schema({
         type: Boolean,
         default: false
     },
-    new: {
+    read: {
         type: Boolean,
-        default: true
+        default: false
     },
     deleted: {
         type: Boolean,

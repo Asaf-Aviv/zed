@@ -1359,31 +1359,117 @@ stats {
   }
 }
 
-// INBOX */
+// Inbox
 #inbox-controls {
   user-select: none;
-  padding: 0;
-  div {
-    border-left: 5px solid transparent;
-    font-weight: 500;
-    padding: 10px 20px;
+  background: $nav-bg;
+  font-family: $Mont;
+  font-weight: bold;
+  font-size: 0.9em;
+  > div {
+    padding: .7em;
     cursor: pointer;
+    transition: padding 100ms ease-out;
     &:hover {
-      background: #eee;
-      color: $dark-blue;
+      background: $nav-bg-dark;
+      color: $nav-blue;
+    }
+    &.active {
+      background: $nav-bg-dark;
+      border-left: 5px solid $nav-blue;
+      color: $nav-blue;
+      padding-left: 1.5em;
+    }
+    &:active {
+      color: $nav-blue;
     }
   }
 }
 
-.inbox-nav-active {
-  border-left: 5px solid $dark-blue !important;
-  color: $dark-blue;
+#inbox-msg-wrapper {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 85vh;
+  padding: 0 1em;
 }
 
-// INBOX END
-/* POSTS */
+.msg-wrapper {
+  background: #545454;
+  font-family: $Mont;
+  padding: 1em;
+  display: flex;
+  margin-bottom: 1em;
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+  .pic {
+    display: inline-block;
+    width: 80px;
+    height:80px;
+    margin-right: 1em;
+  }
+  .content {
+    flex: 1;
+    .msg-header {
+      .author {
+        a {
+          font-weight: bold;
+          color: $laser-green;
+        }
+      }
+    }
+    .msg-body-wrapper {
+      margin: 0 2em .5em 0;
+      cursor: pointer;
+      .msg-subject {
+        margin: .5em 0em;
+        font-weight: bold;
+        color: $dark-grey;
+      }
+      .msg-body {
+        margin-left: 1em;
+        max-height: 75px;
+        overflow: hidden;
+      }
+    }
+    .msg-controls {
+      button {
+        font-weight: bold;
+        background: transparent;
+        border: 0;
+        margin-right: 1.3em;
+        color: $dark-grey;
+        font-size: .8em;
+        &:hover {
+          color: $light-grey;
+        }
+      }
+      .bookmark-msg, .self-bookmark-msg {
+        &.active {
+          i {
+            color: yellow;
+          }
+        }
+      }
+    }
+  }
+}
 
-.post-header, .comment-header {
+.icon-btn {
+  font-weight: 700;
+  background: 0 0;
+  border: 0;
+  color: #c7c7c7;
+  &:hover {
+    color: $light-grey;
+  }
+}
+
+// Inbox end
+
+// Post
+
+.post-header, .comment-header, .msg-header {
   margin-bottom: .6em;
   display: flex;
 }
@@ -1504,43 +1590,39 @@ stats {
         font-weight: bold;
       }
     }
-  .comment-form {
-    display: none;
-    margin: 1em 2em 0;
-    padding-bottom: 1em;
-    overflow: hidden;
-    textarea {
-      width: 100%;
-      background: $primary-bg-color;
-      border-bottom: 2px solid $laser-green;
-      resize: none;
-      color: $light-grey;
-      margin-bottom: .2em;
-      &:focus {
-        outline: 0;
+    .comment-form {
+      display: none;
+      margin: 1em 2em 0;
+      padding-bottom: 1em;
+      overflow: hidden;
+      textarea {
+        width: 100%;
+        background: $primary-bg-color;
+        border-bottom: 2px solid $laser-green;
+        resize: none;
+        color: $light-grey;
+        margin-bottom: .2em;
+        &:focus {
+          outline: 0;
+        }
+      }
+      button {
+        float: right;
+        background: $dark-blue;
       }
     }
-    button {
-      float: right;
-      background: $dark-blue;
-    }
-  }
   }
 }
 
-
-/* POSTS END */
-// Comments 
+// Post end 
+// Comment
 .comments {
   margin-left: 2em;
   .comment {
     position: relative;
-    .comment-header {
-    
-    }
   }
 }
-// Comments end
+// Comment end
 
 // IMAGES
 .delete-photo {

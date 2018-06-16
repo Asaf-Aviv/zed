@@ -7,29 +7,7 @@ body
         #profile-wrapper.pt-5
             .row
                 .col-lg-3.col-md-4.mb-5.mb-md-0
-                    #profile-menu.silent-shadow.d-flex.flex-column
-                        a(href="/")
-                            i.fas.fa-home 
-                            | Home
-                        a.active(href="/profile")
-                            i.fas.fa-user
-                            | Profile
-                        a(href="/profile/inbox")
-                            i.fas.fa-inbox
-                            | Inbox
-                        a(href="/profile/friends")
-                            i.fas.fa-user-friends
-                            | Friends
-                        a(href="/profile/info")
-                            i.fas.fa-info-circle
-                            | Info
-                        a(href="/profile/settings")
-                            i.fas.fa-wrench
-                            | Settings
-                        a(href="/profile/logout")
-                            i.fas.fa-sign-out-alt
-                            | Logout
-
+                    include partials/profile_nav
                 #profile-content.col-md-8.offset-lg-1.col-sm-12
                     .profile-post-wrapper.mb-4
                         form(method="POST", action="/post")

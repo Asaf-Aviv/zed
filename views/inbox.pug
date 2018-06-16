@@ -3,72 +3,51 @@ body
     include partials/nav
     include partials/sidenav
     .container
-        #inbox
+        #inbox.pt-5
             .row
-                #inbox-controls.col-md-2.col-sm-12.d-flex.flex-column.flex-grow
-                    #inbox.inbox-nav-active(data-link='inbox-msgs')
-                        i.fa.fa-inbox.fa-lg(style="margin-left: 1px; margin-right: 21px")
-                        span Inbox
-                    #sent(data-link='inbox-sent' href="#sent")
-                        i.fa.fa-envelope-o.fa-lg(style="margin-right: 19px")
-                        span Sent
-                    #bookmark(data-link='inbox-bookmark')
-                        i.fa.fa-star-o.fa-lg(style="margin-right: 20px")
-                        span Bookmark
-                    #trash(data-link='inbox-trash')
-                        i.fa.fa-trash-o.fa-lg(style="margin-left: 1px; margin-right: 23px")
-                        span Trash
+                .col-lg-3.col-md-4.mb-5.mb-md-0
+                    include partials/profile_nav
+                .col-md-2.col-sm-12.d-flex.flex-column.flex-grow.mb-5.mb-md-0
+                    #inbox-controls.silent-shadow
+                        #inbox.active(data-link='inbox-msgs') Inbox
+                        #sent(data-link='inbox-sent' href="#sent") Sent
+                        #bookmark(data-link='inbox-bookmark') Bookmark
+                        #trash(data-link='inbox-trash') Trash
+                .col-md-7.col-sm-12.mb-5.mb-md-0.p-0
+                    #inbox-msg-wrapper
+                        - const bookmark = []
+                        - const trash = []
+                        #inbox-msgs
+                            //- p= JSON.stringify(currentUser.messages[0])
+                            each message in currentUser.messages
+                                if message.inBookmark
+                                    - bookmark.push(message)
+                                    include partials/message
+                                else if message.inTrash
+                                    - trash.push(message)
+                                else
+                                    include partials/message
+                                    
+                        #inbox-sent(style="display: none")
+                            each message in currentUser.messagesSent
+                                if message.inBookmark
+                                    - bookmark.push(message)
+                                    include partials/message
+                                else if message.inTrash
+                                    - trash.push(message)
+                                else
+                                    include partials/message
 
-                #inbox-msg-wrapper.col-md-8.col-sm-12
-                    #inbox-msgs
-                        table.table.table-hover.table-dark
-                            tbody
-                                - for(let i = 0; i < 5; i++) {
-                                    tr(id=i)
-                                        td: input.d-flex(type="checkbox")
-                                        td.add-bookmark: i.fa.fa-star
-                                        td Arjuna Admin
-                                        td Lorem iporqweqqweqwe...</td>
-                                        td 9:27
-                                        td.move-to-trash: i.fa.fa-trash-o.fa-lg.text-danger
-                                - }
+                        #inbox-bookmark(style="display: none")
+                            - bookmark.sort((a, b) => b.created - a.created)
+                            each message in bookmark
+                                include partials/message
 
-                    #inbox-sent(style="display: none")
-                        table.table.table-hover.table-dark
-                            tbody
-                                - for(let i = 0; i < 5; i++) {
-                                    tr(id=i)
-                                        td: input.d-flex(type="checkbox")
-                                        td: i.fa.fa-star
-                                        td Admin
-                                        td class="view-message ">Lorem ipsum dolorqweqweqweqweqweqweqweqweqweqwe...</td>
-                                        td 9:27
-                                        td.move-to-trash: i.fa.fa-trash-o.fa-lg.text-danger
-                                - }
-                    #inbox-bookmark(style="display: none")
-                        table.table.table-hover.table-dark
-                            tbody
-                                - for(let i = 0; i < 5; i++) {
-                                    tr(id=i)
-                                        td: input.d-flex(type="checkbox")
-                                        td: i.fa.fa-star
-                                        td bookmark
-                                        td class="view-message ">Lorem ipsum dolorqweqweqweqweqweqweqweqweqweqwe...</td>
-                                        td 9:27
-                                        td.move-to-trash: i.fa.fa-trash-o.fa-lg.text-danger
-                                - }
-                    #inbox-trash(style="display: none")
-                        table.table.table-hover.table-dark
-                            tbody
-                                - for(let i = 0; i < 5; i++) {
-                                    tr(id=i)
-                                        td: input.d-flex(type="checkbox")
-                                        td: i.fa.fa-star
-                                        td trash
-                                        td class="view-message ">Lorem ipsum dolorqweqweqweqweqweqweqweqweqweqwe...</td>
-                                        td 9:27
-                                        td.clear-trash: i.fa.fa-trash-o.fa-lg.text-danger
-                                - }
+                        #inbox-trash(style="display: none")
+                            - trash.sort((a, b) => b.created - a.created)
+                            each message in trash
+                                include partials/message
+                p= trash
     include partials/footer
     include partials/scroll_top
     include partials/scripts

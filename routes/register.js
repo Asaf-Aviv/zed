@@ -1,6 +1,6 @@
 const express = require('express');
 const router  = express.Router();
-const Legend  = require('../models/user');
+const Ninja   = require('../models/user');
 const auth    = require('../middlewares/auth');
 
 router.get('/', auth.isNotLogged(), (req, res) => {
@@ -15,16 +15,16 @@ router.post('/', (req, res) => {
     req.body.info = {};
 
     if (req.body.password === req.body.confirmPassword) {
-        Legend.create(req.body, (err, user) => {
+        Ninja.create(req.body, (err, user) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.render('register', {
                     title: 'Register | Legends',
                     err: err.errors
                 });
             } else {
                 req.login(user, err => {
-                    if (err) console.log(err);
+                    // if (err) console.log(err);
                     res.redirect('/profile');
                 });
             }

@@ -12,40 +12,34 @@ body
                         #inbox.active(data-link='inbox-msgs') Inbox
                         #sent(data-link='inbox-sent' href="#sent") Sent
                         #bookmark(data-link='inbox-bookmark') Bookmark
-                        #trash(data-link='inbox-trash') Trash
                 .col-md-7.col-sm-12.mb-5.mb-md-0.p-0
                     #inbox-msg-wrapper
+
+                        - const messagesSent = []
                         - const bookmark = []
-                        - const trash = []
+
                         #inbox-msgs
-                            //- p= JSON.stringify(currentUser.messages[0])
                             each message in currentUser.messages
-                                if message.inBookmark
-                                    - bookmark.push(message)
-                                    include partials/message
-                                else if message.inTrash
-                                    - trash.push(message)
-                                else
-                                    include partials/message
+                                if !message.isDeleted
+                                    if message.author._id == currentUser._id.toString()
+                                        - messagesSent.push(message)
+                                        if message.inBookmark
+                                            - bookmark.push(message)
+                                    else if message.inBookmark
+                                        - bookmark.push(message)
+                                        include partials/message
+                                        include partials/reply
+                                    else
+                                        include partials/message
+                                        include partials/reply
                                     
                         #inbox-sent(style="display: none")
-                            each message in currentUser.messagesSent
-                                if message.inBookmark
-                                    - bookmark.push(message)
-                                    include partials/message
-                                else if message.inTrash
-                                    - trash.push(message)
-                                else
-                                    include partials/message
-
-                        #inbox-bookmark(style="display: none")
-                            - bookmark.sort((a, b) => b.created - a.created)
-                            each message in bookmark
+                            each message in messagesSent
                                 include partials/message
 
-                        #inbox-trash(style="display: none")
-                            - trash.sort((a, b) => b.created - a.created)
-                            each message in trash
+                        #inbox-bookmark(style="display: none")
+                            //- - bookmark.sort((a, b) => b.created - a.created)
+                            each message in bookmark
                                 include partials/message
                 p= trash
     include partials/footer

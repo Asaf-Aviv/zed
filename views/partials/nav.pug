@@ -51,26 +51,19 @@ nav#main-nav-bar
 
                     #notifications.util-box(data-link="#notifications-nav")
                         i.far.fa-lg.fa-bell
-                        span.badge 5
+                        span.badge
                         #notifications-nav.util-content.shadow
-                            .notify-wrapper
-                                .notify-icon
-                                    i.far.fa-thumbs-up
-                                .notify-time 
-                                    span 2 minutes ago
-                                .notify-body 
-                                    span Asaf just liked your post
-                                    
+                            .notify-content
                     #messages.util-box(data-link="#messages-nav")
                         i.far.fa-lg.fa-envelope
-                        span.badge 5
-                        #messages-nav.util-content.shadow You Don't have any messages
-                        
+                        span.badge
+                        #messages-nav.util-content.shadow
+                            .notify-content
                     #friend-requests.util-box(data-link="#friend-requests-nav")
                         i.fa.fa-lg.fa-user-plus
-                        span.badge 15
-                        #friend-requests-nav.util-content.shadow You Don't have any friend requests
-
+                        span.badge
+                        #friend-requests-nav.util-content.shadow
+                            .notify-content
                 a(href="/profile")= currentUser.username
             else
                 a(href="/register") Register

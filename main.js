@@ -3,9 +3,13 @@ const debug            = require('debug')('zed');
 const express          = require('express');
 const app              = express();
 const server           = require('http').Server(app);
+
 // Socket.io
 global.io              = require('socket.io')(server);
+const redisAdapter     = require('socket.io-redis');
+io.adapter(redisAdapter({ host: 'localhost', port: 6379 }));
 require('./io');
+
 // Server utils
 const compression      = require('compression');
 const cookieParser     = require('cookie-parser');
@@ -52,6 +56,8 @@ const post             = require('./routes/post');
 const legendSearch     = require('./routes/legendSearch');
 const friendRequests   = require('./routes/friendRequests');
 const index            = require('./routes/index');
+const league           = require('./routes/league');
+const match            = require('./routes/match');
 const items            = require('./routes/items');
 const message          = require('./routes/message');
 const runes            = require('./routes/runes');
@@ -142,6 +148,8 @@ app
 .use('/items', items)
 .use('/upload', upload)
 .use('/runes', runes)
+.use('/league', league)
+.use('/match', match)
 .use('/about', about)
 .use('/forgot', forgot)
 .use('/message', message)
@@ -195,4 +203,21 @@ app.get('*', (req, res) => {
 
 server.listen('1337', () => {
     console.log(`Listening on port 1337`);
+});
+
+process.on('SIGINT', () => {
+    console.info('SIGINT signal received.');
+
+    // Stops the server from accepting new connections and finishes existing connections.
+    server.close(err => {
+        if (err) {
+            console.error(err);
+            process.exit(1);
+        }
+
+        mongoose.connection.close(function () {
+            console.log('Mongoose connection disconnected');
+            process.exit(0);
+        });
+    });
 });

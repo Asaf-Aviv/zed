@@ -3,6 +3,7 @@ body
     include partials/nav
     include partials/sidenav
     .container.position-relative
+        
         .form-container.col-xl-3.col-lg-4.col-md-5.col-10.p-0.mx-auto
             .form-wrapper
                 .form-header Join Zed
@@ -11,19 +12,72 @@ body
                         .form-icon
                             i.fa.fa-user
                             input(type="text" id="reg-username" name="username" placeholder="Username" required)
+                            .check
+                                i.fas.fa-check
                         .form-icon
                             i.fa.fa-at
                             input(type="text" id="reg-email" name="email" placeholder="Email" required)
+                            .check
+                                i.fas.fa-check
                         .form-icon
                             i.fas.fa-key
                             input(type="password" id="reg-password" name="password" placeholder="Password" required)
+                            .check
+                                i.fas.fa-check
                         .form-icon
                             i.fas.fa-key
                             input(type="password" id="reg-conPass" name="confirmPassword" placeholder="Confirm Password" required)
+                            .check
+                                i.fas.fa-check
                         a.forgot(href="/forgot") Forgot Password ?
-                    .g-recaptcha(data-site-key="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" data-theme="dark")
                     button Register
-                    span By signing up you indicate that you have read and agree to Zed's 
+                    script.
+                        $('#reg-username').keyup(function() {
+                            const isValid = /^[a-zA-Z0-9_]{4,16}$/.test(this.value)
+                            console.log(isValid)
+                            if (isValid) {
+                                console.log($(this).parents('.form-icon').find('.check').show())
+                            } else {
+                                $(this).parents('.form-icon').find('.check').hide()
+                            }
+                        });
+
+                        $('#reg-email').keyup(function() {
+                            const isValid = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.value)
+                            console.log(isValid)
+                            if (isValid) {
+                                console.log($(this).parents('.form-icon').find('.check').show())
+                            } else {
+                                $(this).parents('.form-icon').find('.check').hide()
+                            }
+                        });
+
+                        $('#reg-password').keyup(function() {
+                            const isValid = /^[^ ]{6,100}$/.test(this.value)
+                            console.log(isValid)
+                            if (isValid !== $('#reg-conPass').val()) {
+                                $('#reg-conPass').parents('.form-icon').find('.check').hide()
+                            }
+                            if (isValid) {
+                                console.log($(this).parents('.form-icon').find('.check').show())
+                                if (isValid === $('#reg-conPass').val()) {
+                                $('#reg-conPass').parents('.form-icon').find('.check').show()
+                            }
+                            } else {
+                                $(this).parents('.form-icon').find('.check').hide()
+                            }
+                        });
+
+                        $('#reg-conPass').keyup(function() {
+                            const isValid = this.value === $('#reg-password').val() && /^[^ ]{6,100}$/.test(this.value)
+                            console.log(isValid)
+                            if (isValid) {
+                                console.log($(this).parents('.form-icon').find('.check').show())
+                            } else {
+                                $(this).parents('.form-icon').find('.check').hide()
+                            }
+                        });
+                    //- span By signing up you indicate that you have read and agree to Zed's 
                         a(href="/about/terms") Terms of Service
                         | &nbsp;and 
                         a(href="/about/privacy") Privacy Policy
@@ -32,6 +86,11 @@ body
                         span Already have an account ? 
                             a.logins(href="/login") login
                             | &nbsp;here
+                    if err
+                        each e in err
+                            .alert.alert-danger.alert-dismissible
+                                a.close(data-dismiss="alert") &times;
+                                = e.message
     include partials/footer
     include partials/scroll_top
     include partials/scripts

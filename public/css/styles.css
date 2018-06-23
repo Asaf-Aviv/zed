@@ -1,4 +1,3 @@
-@charset "UTF-8";
 @keyframes open-window {
   0% {
     transform: scaleX(0.1); }
@@ -59,6 +58,22 @@
   100% {
     transform: rotate(0deg); } }
 
+@keyframes rubberBand {
+  from {
+    transform: scale3d(1, 1, 1); }
+  30% {
+    transform: scale3d(1.25, 0.75, 1); }
+  40% {
+    transform: scale3d(0.75, 1.25, 1); }
+  50% {
+    transform: scale3d(1.15, 0.85, 1); }
+  65% {
+    transform: scale3d(0.95, 1.05, 1); }
+  75% {
+    transform: scale3d(1.05, 0.95, 1); }
+  to {
+    transform: scale3d(1, 1, 1); } }
+
 /* NAVBAR */
 #main-nav-bar {
   box-shadow: 0 4px 5px #1d1d1d;
@@ -94,7 +109,7 @@
     z-index: 1100; }
     #main-nav-bar .wrapper > div {
       height: 100%; }
-    #main-nav-bar .wrapper a::before,
+    #main-nav-bar .wrapper a:not(.notify-link)::before,
     #main-nav-bar .wrapper .util-box::before {
       content: '';
       display: block;
@@ -108,18 +123,17 @@
       transform-origin: left;
       transition: transform cubic-bezier(0.65, 0.05, 0.27, 1.01) 200ms;
       z-index: 1; }
-    #main-nav-bar .wrapper a {
+    #main-nav-bar .wrapper a:not(.notify-link) {
       position: relative;
-      font-family: "Montserrat";
       color: #fff;
       cursor: pointer;
       text-decoration: none;
       letter-spacing: 0.07em;
       text-align: center;
       padding: 20px; }
-      #main-nav-bar .wrapper a:active {
+      #main-nav-bar .wrapper a:not(.notify-link):active {
         color: #11b0d6; }
-      #main-nav-bar .wrapper a:hover:not(.hist)::before {
+      #main-nav-bar .wrapper a:not(.notify-link):hover:not(.hist)::before {
         transform: scale(1, 1); }
 
 #nav-search {
@@ -163,7 +177,6 @@
           #nav-search #summoner-input #search-history .summoner .remove-history i {
             font-size: .8em; }
         #nav-search #summoner-input #search-history .summoner a {
-          font-family: "Open sans";
           letter-spacing: 0;
           padding: 0;
           font-size: 0.9em; }
@@ -199,6 +212,12 @@
           #nav-search #nav-regions #regions-wrapper #region-select > div:hover {
             transform: translateY(-3px); }
 
+.notify-link {
+  padding: 0;
+  color: #00ffac; }
+  .notify-link:hover {
+    color: #00ffac; }
+
 #nav-bar-util {
   color: #fff; }
   #nav-bar-util .util-box {
@@ -220,7 +239,7 @@
       font-family: Arial;
       background: #467e84;
       border-radius: .50rem;
-      font-size: 72%;
+      font-size: 70%;
       color: #fff;
       position: absolute;
       top: 5px;
@@ -236,8 +255,6 @@
   display: none;
   position: absolute;
   width: 350px;
-  padding: .5em;
-  height: 300px;
   top: 88px;
   z-index: 100; }
   #notifications-nav::before,
@@ -264,27 +281,31 @@
   #messages-nav .notify-wrapper,
   #friend-requests-nav .notify-wrapper {
     position: relative;
-    padding: 0px 1.1em 0px .5em;
-    border-left: 4px solid #DDD;
+    padding-left: .5em;
+    margin-bottom: 1em;
+    border-left: 4px solid #11b0d6;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125); }
-    #notifications-nav .notify-wrapper::before,
-    #messages-nav .notify-wrapper::before,
-    #friend-requests-nav .notify-wrapper::before {
-      position: absolute;
-      top: 50%;
-      content: "√";
-      background-color: #03a9d2;
-      margin-top: -17px;
-      left: -17px;
-      color: #FFF;
-      width: 30px;
-      height: 30px;
-      border-radius: 100%;
-      text-align: center;
-      line-height: 30px;
+    #notifications-nav .notify-wrapper .notify-time,
+    #messages-nav .notify-wrapper .notify-time,
+    #friend-requests-nav .notify-wrapper .notify-time {
       font-weight: bold;
-      font-family: Georgia;
-      text-shadow: 1px 1px rgba(0, 0, 0, 0.5); }
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 0.7em; }
+    #notifications-nav .notify-wrapper .notify-body,
+    #messages-nav .notify-wrapper .notify-body,
+    #friend-requests-nav .notify-wrapper .notify-body {
+      font-size: .9em;
+      padding-top: 1.2em; }
+  #notifications-nav .notify-content,
+  #messages-nav .notify-content,
+  #friend-requests-nav .notify-content {
+    background: #2a2a2a;
+    color: #e8e8e8;
+    padding: .5em;
+    height: 270px;
+    overflow-y: auto; }
 
 #sidebar {
   user-select: none;
@@ -366,6 +387,12 @@
 
 #champ-patch-stats table tr:hover {
   color: #03a9d2; }
+
+#charts-wrapper > div > div {
+  padding: 1em; }
+
+#nav-match, #nav-league {
+  min-height: 160px; }
 
 #summoner-wrapper {
   padding: 10px;
@@ -571,30 +598,32 @@
 
 #recent-games {
   font-size: 0.9em;
+  font-weight: 600;
   margin-top: 1em; }
   #recent-games .recent-game-wrapper {
-    font-weight: 600;
     box-shadow: 0 3px 8px 0px #000000;
     margin: 1em 0; }
     #recent-games .recent-game-wrapper .game-header {
       background: #1d1d1d;
-      padding: .5em 1em;
-      color: #c7c7c7; }
+      padding: .5em 1em; }
       #recent-games .recent-game-wrapper .game-header .analyze-match a {
         color: #2ce0ff; }
       #recent-games .recent-game-wrapper .game-header > div {
-        width: 135px;
+        width: 140px;
         margin-right: 1.5em; }
     #recent-games .recent-game-wrapper .game-wrapper {
+      font-size: .9em;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0.3em; }
       #recent-games .recent-game-wrapper .game-wrapper.win {
-        background: #064c17; }
+        background: #154b22; }
       #recent-games .recent-game-wrapper .game-wrapper.loss {
         background: #800f17; }
       #recent-games .recent-game-wrapper .game-wrapper .champ {
+        box-shadow: 0px 0px 10px #000;
+        border-radius: 50%;
         width: 50px;
         height: 50px; }
         #recent-games .recent-game-wrapper .game-wrapper .champ img {
@@ -610,6 +639,8 @@
         #recent-games .recent-game-wrapper .game-wrapper .summoner-info .level {
           flex: 1;
           text-align: center; }
+        #recent-games .recent-game-wrapper .game-wrapper .summoner-info .summoners img {
+          box-shadow: 0 0 10px #000; }
         #recent-games .recent-game-wrapper .game-wrapper .summoner-info .summoners img,
         #recent-games .recent-game-wrapper .game-wrapper .summoner-info .runes img {
           display: block;
@@ -640,7 +671,7 @@
             border-radius: 7px; }
       #recent-games .recent-game-wrapper .game-wrapper .teams {
         display: flex;
-        align-self: flex-end; }
+        align-self: flex-start; }
         #recent-games .recent-game-wrapper .game-wrapper .teams .blue-team,
         #recent-games .recent-game-wrapper .game-wrapper .teams .red-team {
           width: 175px;
@@ -797,7 +828,8 @@
 
 /* OVERALLTABLE */
 #overall-patch-tables {
-  padding-top: 18px; }
+  padding-top: 18px;
+  font-size: 0.8em; }
   #overall-patch-tables th {
     font-weight: 400; }
 
@@ -956,7 +988,6 @@
 /* FOOTER */
 #footer {
   padding: 1em 2em;
-  font-family: "Montserrat";
   background-image: linear-gradient(to right bottom, #323232, #2f2f2f, #2c2c2c, #2a2929, #272626); }
   #footer h3 {
     font-weight: 600; }
@@ -1061,14 +1092,17 @@ stats {
   border: 0; }
 
 #profile-menu {
-  font-family: "Montserrat";
   font-weight: 600;
   letter-spacing: .07em;
   background: #333; }
   #profile-menu a {
-    padding: 1em; }
+    padding: 1em;
+    transition: 200ms ease-out; }
     #profile-menu a i {
       margin-right: 1.2em; }
+    #profile-menu a:hover {
+      background: #2a2a2a;
+      color: #11b0d6; }
     #profile-menu a.active {
       background: #2a2a2a;
       border-left: 5px solid #11b0d6;
@@ -1097,13 +1131,12 @@ stats {
 #inbox-controls {
   user-select: none;
   background: #333;
-  font-family: "Montserrat";
   font-weight: bold;
   font-size: 0.9em; }
   #inbox-controls > div {
     padding: .7em;
     cursor: pointer;
-    transition: padding 100ms ease-out; }
+    transition: 100ms ease-out; }
     #inbox-controls > div:hover {
       background: #2a2a2a;
       color: #11b0d6; }
@@ -1116,14 +1149,13 @@ stats {
       color: #11b0d6; }
 
 #inbox-msg-wrapper {
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   height: 85vh;
   padding: 0 1em; }
 
 .msg-wrapper {
   background: #545454;
-  font-family: "Montserrat";
   padding: 1em;
   display: flex;
   margin-bottom: 1em; }
@@ -1159,8 +1191,42 @@ stats {
       font-size: .8em; }
       .msg-wrapper .content .msg-controls button:hover {
         color: #e8e8e8; }
+    .msg-wrapper .content .msg-controls .bookmark-msg:hover i, .msg-wrapper .content .msg-controls .self-bookmark-msg:hover i {
+      color: yellow; }
     .msg-wrapper .content .msg-controls .bookmark-msg.active i, .msg-wrapper .content .msg-controls .self-bookmark-msg.active i {
       color: yellow; }
+
+.message-form .col-form-label {
+  color: #fff; }
+
+.message-form .form-control {
+  border-radius: 0; }
+
+.message-form textarea {
+  resize: none; }
+
+.modal-content {
+  border: 0;
+  border-radius: 0;
+  color: #fff;
+  background: #688fd7; }
+  .modal-content .close {
+    text-shadow: none;
+    color: #fff;
+    font-size: 1.7rem; }
+    .modal-content .close:hover {
+      opacity: 1; }
+  .modal-content h5 {
+    font-weight: 400; }
+  .modal-content .modal-footer {
+    padding: 1rem 1rem 0 1rem; }
+    .modal-content .modal-footer button {
+      padding: 0.4em .7em;
+      background: #fff;
+      transition: 200ms ease-out; }
+      .modal-content .modal-footer button:hover {
+        color: #fff;
+        background: #1DA1F2; }
 
 .icon-btn {
   font-weight: 700;
@@ -1169,6 +1235,87 @@ stats {
   color: #c7c7c7; }
   .icon-btn:hover {
     color: #e8e8e8; }
+
+#info-wrapper {
+  padding: 2em;
+  background: #333; }
+
+#info-form .text-center {
+  padding: 0 2em; }
+  #info-form .text-center button {
+    padding: 0;
+    background: transparent;
+    font-size: 1.3em;
+    border: 4px solid #11b0d6;
+    margin: 1em 0 .5em 0;
+    color: #fff;
+    width: 100%;
+    height: 50px;
+    transition: background 200ms ease-out, border-color 200ms ease-out; }
+    #info-form .text-center button:hover {
+      background: #2a2a2a;
+      border-color: #00ffac; }
+    #info-form .text-center button:active {
+      color: #00ffac; }
+
+#info-form .form-group {
+  padding: 0 2em !important; }
+
+#info-form h4 {
+  padding: 0 0 .5em 0 !important;
+  border-bottom: 1px solid #3f3f3f;
+  margin: 0 1em 1em 1em; }
+
+#info-form .form-row {
+  margin-bottom: 1em; }
+
+#info-form select, #info-form textarea {
+  border: 0;
+  border-bottom: 1px solid #00ffac;
+  background: #2a2a2a !important; }
+
+#info-form .form-control {
+  color: #fff;
+  border-radius: 0;
+  background-color: transparent; }
+
+#info-form input, #info-form textarea {
+  background: transparent;
+  padding: .25em .50em;
+  border: 0;
+  border-bottom: 1px solid #00ffac; }
+  #info-form input:focus, #info-form textarea:focus {
+    outline: 0; }
+
+#info-form .icon-btn {
+  padding: .4em 1em;
+  background: #11b0d6;
+  color: #fff; }
+  #info-form .icon-btn:hover {
+    background: #43c5e3;
+    color: #fff; }
+
+.user-wrapper {
+  margin: 0 .5em 1em;
+  padding: 1em 0 1em 1em; }
+  .user-wrapper span {
+    display: block; }
+  .user-wrapper .user-content {
+    display: flex; }
+    .user-wrapper .user-content .user-pic {
+      min-width: 100px;
+      margin: 0.7em;
+      width: 100px;
+      height: 100px; }
+    .user-wrapper .user-content .user-body {
+      display: flex;
+      flex-direction: column;
+      margin-left: 1em; }
+      .user-wrapper .user-content .user-body .user-name a {
+        font-size: 1.5em;
+        color: #00ffac; }
+        .user-wrapper .user-content .user-body .user-name a:hover {
+          color: #00ffac; }
 
 .post-header, .comment-header, .msg-header {
   margin-bottom: .6em;
@@ -1242,7 +1389,7 @@ stats {
 .post-controls, .comment-controls {
   display: flex;
   align-items: flex-end;
-  margin: 0 2em 1em 2em; }
+  margin: 0 2em; }
   .post-controls button, .comment-controls button {
     margin-right: .5em;
     background: transparent;
@@ -1252,15 +1399,14 @@ stats {
       color: #e8e8e8; }
 
 .post-wrapper {
-  font-family: "Montserrat";
   position: relative;
   word-wrap: break-word;
   padding: 1.5em;
   color: #c7c7c7;
   margin-bottom: 3em; }
   .post-wrapper .post-content-wrapper {
-    margin-bottom: 1em;
-    border-bottom: 1px solid #2f2f2f; }
+    padding: 0.5em;
+    border: 1px solid #2f2f2f; }
     .post-wrapper .post-content-wrapper .like-count {
       font-weight: bold; }
     .post-wrapper .post-content-wrapper .comment-toggler {
@@ -1283,12 +1429,16 @@ stats {
           outline: 0; }
       .post-wrapper .post-content-wrapper .comment-form button {
         float: right;
-        background: #03a9d2; }
+        background: #15596a; }
 
 .comments {
   margin-left: 2em; }
   .comments .comment {
-    position: relative; }
+    position: relative;
+    padding: 0.5em;
+    border-right: 1px solid #2f2f2f;
+    border-left: 1px solid #2f2f2f;
+    border-bottom: 1px solid #2f2f2f; }
 
 .delete-photo {
   position: absolute;
@@ -1297,13 +1447,20 @@ stats {
   background: rgba(0, 0, 0, 0.15) !important;
   z-index: 2; }
 
+.check {
+  display: none;
+  color: #00ffac;
+  position: absolute;
+  top: 5px;
+  right: 0; }
+
 .form-container {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -70%); }
+  transform: translate(-50%, -55%); }
   .form-container .form-wrapper {
-    padding: 1.5em;
+    padding: 0 1.5em 1.5em;
     box-shadow: 0 0 18px 5px #272727;
     background: #333; }
     .form-container .form-wrapper .form-header {
@@ -1316,7 +1473,7 @@ stats {
     .form-container .form-wrapper .form-footer {
       border-top: 1px solid #5d5d5d;
       padding-top: .5em;
-      margin-top: .5em; }
+      margin: .5em 0; }
     .form-container .form-wrapper .forgot {
       letter-spacing: 0;
       font-size: .8em;
@@ -1340,10 +1497,9 @@ stats {
     .form-container .form-wrapper span {
       letter-spacing: 0;
       font-size: .8em; }
-    .form-container .form-wrapper a {
-      color: #00ceff; }
 
 #register-form .form-icon, #login-form .form-icon, #contact-form .form-icon {
+  position: relative;
   margin-bottom: 2em;
   display: flex;
   justify-content: center; }
@@ -1561,7 +1717,7 @@ yellow {
   #scroll-top i {
     padding: 10px;
     font-size: 2em;
-    background: rgba(0, 0, 0, 0.75); }
+    background: rgba(120, 120, 120, 0.1); }
 
 .zed-flex-center {
   display: flex;
@@ -1571,6 +1727,6 @@ yellow {
 .ring {
   animation: ring 1500ms cubic-bezier(0.32, 0.12, 0.49, 1.16); }
 
-.bounceInDown {
-  animation-duration: 500ms;
-  animation-timing-function: ease-out; }
+.rubberBand {
+  animation-duration: 700ms;
+  animation-name: rubberBand; }

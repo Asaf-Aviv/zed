@@ -1,0 +1,26 @@
+.modal.fade(id=`reply-${message.author._id}` tabindex="-1" role="dialog" aria-hidden="true")
+    .modal-dialog.modal-dialog-centered
+        .modal-content
+            .modal-header
+                h5.modal-title Reply
+                button.close(type="button" data-dismiss="modal" aria-label="Close")
+                    span(aria-hidden="true") &times;
+            .modal-body
+                form.message-form(data-id=message.author._id)
+                    input.form-control(type="hidden", name="from" value=currentUser._id)
+                    input.form-control(type="hidden", name="to" value=message.author._id)
+                    input.form-control(type="hidden", name="username" value=message.author.username)
+                    .form-group
+                        label.col-form-label Recipient:
+                        input.form-control(type="text", value=message.author.username disabled) 
+                    .form-group
+                        label.col-form-label Subject:
+                        input.form-control(type="text", name="subject" autocomplete="off" required)
+                    .form-group.mb-2
+                        label.col-form-label Message:
+                        label.col-form-labelMessage
+                        textarea.form-control(name="body" rows="6" required)
+                    .modal-footer
+                        button.icon-btn(data-dismiss="modal") Close
+                        button.icon-btn(type="submit" data-id=message.author._id) Send 
+                            i.far.fa-paper-plane

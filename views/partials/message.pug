@@ -12,25 +12,23 @@
             .msg-body 
                 p= message.body
         .msg-controls
-            //- if message.author._id == currentUser._id.toString()
-            //-     button.bookmark-msg(data-id=message._id)
-            //-         i.fas.fa-star
-            //-         |  Bookmark
-            //-     button.delete-msg(data-id=message._id)
-            //-         i.fas.fa-trash
-            //-         |  Delete
-            //- else
-            button.reply-msg(data-id=message.author._id data-username=message.author.username)
-                i.fas.fa-reply
-                |  Reply
-            - const inBookmark = message.inBookmark ? 'active' : ''
-            - const myMsg = message.author._id == currentUser._id.toString() ? 'self-bookmark-msg' : 'bookmark-msg'
-            button(data-id=message._id class=`${myMsg} ${inBookmark}`)
-                i.fas.fa-star
-                |  Bookmark
-            button(data-id=message._id class=message.inTrash ? 'delete-msg' : 'move-to-trash')
-                i.fas.fa-trash
-                |  Delete
-            button.report-msg(data-id=message._id)
-                i.fas.fa-flag
-                |  Report
+            if message.author._id == currentUser._id.toString()
+                button.bookmark-msg(data-id=message._id)
+                    i.fas.fa-star
+                    |  Bookmark
+                button.delete-msg(data-id=message._id)
+                    i.fas.fa-trash
+                    |  Delete
+            else
+                button.reply-msg(data-id=message.author._id data-username=message.author.username data-toggle="modal" data-target=`#reply-${message.author._id}`)
+                    i.fas.fa-reply
+                    |  Reply
+                button.bookmark-msg(data-id=message._id class=message.inBookmark ? 'active' : '')
+                    i.fas.fa-star
+                    |  Bookmark
+                button.delete-msg(data-id=message._id)
+                    i.fas.fa-trash
+                    |  Delete
+                button.report-msg(data-id=message._id)
+                    i.fas.fa-flag
+                    |  Report

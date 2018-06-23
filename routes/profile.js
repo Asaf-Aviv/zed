@@ -2,7 +2,6 @@ const express    = require('express');
 const router     = express.Router();
 const Legend     = require('../models/user');
 const auth       = require('../middlewares/auth');
-const uploadcare = require('uploadcare')(process.env.UPLOADCARE_PUB_KEY, process.env.UPLOADCARE_PR_KEY);
 
 router.get('/', auth.isLogged(), (req, res) => {
     res.render('profile', {
@@ -21,8 +20,9 @@ router.get('/friends', auth.isLogged(), (req, res) => {
         friends: 1,
         },
         async (err, user) => {
+            console.log(user);
             const friendsList = await Promise.all(
-                user.friends.map(({ _id }) => Legend.findById(_id))
+                user.friends.map(({ _id }) => Legend.findById(_id, {username: 1, info: 1}))
             );
             res.render('friends', {
                 title: 'Friends | Zed',
@@ -38,11 +38,9 @@ router.get('/info', auth.isLogged(), (req, res) => {
     });
 });
 
-router.post('/info', auth.isLogged(), (req, res) => {
+router.put('/info', (req, res) => {
     console.log(req.body);
-    if (req.body.day && req.body.month && req.body.year) {
-        req.body.birthday = req.body.day+'-'+req.body.month+'-'+req.body.year;
-    }
+
     Legend.findByIdAndUpdate(
         req.user._id,
         {

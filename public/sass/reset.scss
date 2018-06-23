@@ -14,7 +14,7 @@
 body {
   color: #fff;
   margin-top: 65px;
-  font-family: $Open;
+  font-family: $Mont, sans-serif;
   font-size: 16px;
   background: $body-bg;
 }
@@ -79,6 +79,23 @@ img {
 }
 
 // BOOTSTRAP
+.alert {
+  font-size: .9em;
+  border: 0;
+  border-radius: 0;
+  .close {
+    line-height: .9;
+  }
+  .close:focus, .close:hover {
+    opacity: 1;
+  }
+}
+
+.alert-danger {
+  color: #f3f3f3;
+  background-color: #b92a37;
+}
+
 .shadow {
   box-shadow: 0px 0px 20px 2px #151515;
 }
@@ -121,7 +138,7 @@ img {
 .form-control:focus {
   border-color: #80bdff;
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+  box-shadow: none;
 }
 
 // BOOTSTRAP END

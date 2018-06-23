@@ -6,23 +6,99 @@ body
         p= friendsList.length
         p= friendsList[0]
         .row
-            #friends-list-wrapper
-                each friend in friendsList
-                    .card
-                        .image
-                            img(src=friend.profilePicture)
-                        .content
-                            .center.aligned.header
-                                a(href=`/users/${friend.username}`)= friend.username
-                        .content
-                            .meta
-                                i.mr-2.il.flag
-                                | Israel
-                            .description I love to proggram
-                            .description 28
-                        .extra.content
-                            i.user.icon
-                            | 22 friends
+            .col-lg-3.col-md-4.mb-5.mb-md-0
+                include partials/profile_nav
+            .col-lg-9.col-md-8.p-0
+                #friends-list-wrapper
+                    .row
+                        each friend in friendsList
+                            .col-md-6.p-0
+                                .user-wrapper.main-bg.silent-shadow
+                                    .user-content
+                                        .user-pic
+                                            img(src="//via.placeholder.com/100x100")
+                                        .user-body
+                                            .user-name
+                                                a(href=`/users/${friend.username}`)= friend.username
+                                            .user-desc
+                                                span Israel
+                                                span I love to proggram
+                                                span 28
+                                            .user-footer
+                                                span 22 friends
+                            .col-md-6.p-0
+                                .user-wrapper.main-bg.silent-shadow
+                                    .user-content
+                                        .user-pic
+                                            img(src="//via.placeholder.com/100x100")
+                                        .user-body
+                                            .user-name
+                                                a(href=`/users/${friend.username}`)= friend.username
+                                            .user-desc
+                                                span Israel
+                                                span I love to proggram
+                                                span 28
+                                            .user-footer
+                                                span 22 friends
+                            .col-md-6.p-0
+                                .user-wrapper.main-bg.silent-shadow
+                                    .user-content
+                                        .user-pic
+                                            img(src="//via.placeholder.com/100x100")
+                                        .user-body
+                                            .user-name
+                                                a(href=`/users/${friend.username}`)= friend.username
+                                            .user-desc
+                                                span Israel
+                                                span I love to proggram
+                                                span 28
+                                            .user-footer
+                                                span 22 friends
+                            .col-md-6.p-0
+                                .user-wrapper.main-bg.silent-shadow
+                                    .user-content
+                                        .user-pic
+                                            img(src="//via.placeholder.com/100x100")
+                                        .user-body
+                                            .user-name
+                                                a(href=`/users/${friend.username}`)= friend.username
+                                            .user-desc
+                                                span Israel
+                                                span I love to proggram
+                                                span 28
+                                            .user-footer
+                                                span 22 friends
+                            .col-md-6.p-0
+                                .user-wrapper.main-bg.silent-shadow
+                                    .user-content
+                                        .user-pic
+                                            img(src="//via.placeholder.com/100x100")
+                                        .user-body
+                                            .user-name
+                                                a(href=`/users/${friend.username}`)= friend.username
+                                            .user-desc
+                                                span Israel
+                                                span I love to proggram
+                                                span 28
+                                            .user-footer
+                                                span 22 friends
+                            .col-md-6.p-0
+                                .user-wrapper.main-bg.silent-shadow
+                                    .user-content
+                                        .user-pic
+                                            img(src="//via.placeholder.com/100x100")
+                                        .user-body
+                                            .user-name
+                                                a(href=`/users/${friend.username}`)= friend.username
+                                            .user-desc
+                                                span Israel
+                                                span I love to proggram
+                                                span 28
+                                            .user-footer
+                                                span 22 friends
+                                //- .user-controls
+                                //-     button Add
+                                //-     button Message
     include partials/footer
     include partials/scroll_top
     include partials/scripts

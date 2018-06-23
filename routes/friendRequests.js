@@ -32,8 +32,8 @@ router.post('/sendFriendRequest/:id', (req, res) => {
             { safe: true, new: true },
             err => {
                 if (err) {
-                    console.log(err);
-                    return res.status(400).send();
+                    console.error(err);
+                    res.status(400).send();
                 }
             }
         );

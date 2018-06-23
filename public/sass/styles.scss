@@ -43,7 +43,7 @@
     >div {
       height: 100%;
     }
-    a,
+    a:not(.notify-link),
     .util-box {
       &::before {
         content: '';
@@ -60,9 +60,8 @@
         z-index: 1;
       }
     }
-    a {
+    a:not(.notify-link) {
       position: relative;
-      font-family: $Mont;
       color: #fff;
       cursor: pointer;
       text-decoration: none;
@@ -130,7 +129,6 @@
           }
         }
         a {
-          font-family: $Open;
           letter-spacing: 0;
           padding: 0;
           font-size: 0.9em;
@@ -177,6 +175,14 @@
   }
 }
 
+.notify-link {
+  padding: 0;
+  color: $laser-green;
+  &:hover {
+    color: $laser-green;
+  }
+}
+
 #nav-bar-util {
   color: #fff;
   .util-box {
@@ -203,7 +209,7 @@
       font-family: Arial;
       background: $nav-btn;
       border-radius: .50rem;
-      font-size: 72%;
+      font-size: 70%;
       color: #fff;
       position: absolute;
       top: 5px;
@@ -223,8 +229,6 @@
   display: none;
   position: absolute;
   width: 350px;
-  padding: .5em;
-  height: 300px;
   top: 88px;
   z-index: 100;
   &::before {
@@ -246,26 +250,46 @@
   }
   .notify-wrapper {
     position: relative;
-    padding: 0px 1.1em 0px .5em;
-    border-left: 4px solid #DDD;
+    padding-left: .5em;
+    margin-bottom: 1em;
+    border-left: 4px solid $nav-blue;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
-    &::before {
-      position: absolute;
-      top: 50%;
-      content: "√";
-      background-color: $dark-blue;
-      margin-top: -17px;
-      left: -17px;
-      color: #FFF;
-      width: 30px;
-      height: 30px;
-      border-radius: 100%;
-      text-align: center;
-      line-height: 30px;
+    // &::before {
+    //   position: absolute;
+    //   top: 50%;
+    //   content: "√";
+    //   background-color: $dark-blue;
+    //   margin-top: -17px;
+    //   left: -17px;
+    //   color: #FFF;
+    //   width: 30px;
+    //   height: 30px;
+    //   border-radius: 100%;
+    //   text-align: center;
+    //   line-height: 30px;
+    //   font-weight: bold;
+    //   font-family: Georgia;
+    //   text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+    // }
+    .notify-time {
       font-weight: bold;
-      font-family: Georgia;
-      text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 0.7em;
     }
+    .notify-body {
+      font-size: .9em;
+      padding-top: 1.2em;
+    }
+  }
+  .notify-content {
+    background: $nav-bg-dark;
+    color: $light-grey;
+    // width: 350px;
+    padding: .5em;
+    height: 270px;
+    overflow-y: auto;
   }
 }
 
@@ -386,8 +410,24 @@
   }
 }
 
+// charts
+#charts-wrapper {
+  > div {
+    > div {
+      padding: 1em;
+    }
+  }
+}
+
+// charts end
+
 // INDEPTH END
+
 // SUMMONER
+
+#nav-match, #nav-league {
+  min-height: 160px;
+}
 
 #summoner-wrapper {
   padding: 10px;
@@ -467,8 +507,6 @@
     color: $dark-grey;
   }
 }
-
-
 
 // LEAGUE
 .league-table {
@@ -654,38 +692,41 @@
 
 #recent-games {
   font-size: 0.9em;
+  font-weight: 600;
   margin-top: 1em;
   .recent-game-wrapper {
-    font-weight: 600;
     box-shadow: 0 3px 8px 0px #000000;
     margin: 1em 0;
     .game-header {
       background: $primary-bg-color;
       padding: .5em 1em;
-      color: $dark-grey;
+      // color: $dark-grey;
       .analyze-match {
         a {
           color: #2ce0ff;
         }
       }
         > div {
-        width: 135px;
+        width: 140px;
         margin-right: 1.5em;
       }
     }
     .game-wrapper {
+      font-size: .9em;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0.3em;
       
       &.win {
-        background: #064c17;
+        background: #154b22;
       }
       &.loss {
         background: #800f17;
       }
       .champ {
+        box-shadow: 0px 0px 10px #000;
+        border-radius: 50%;
         width: 50px;
         height: 50px;
         img {
@@ -704,6 +745,11 @@
         .level {
           flex: 1;
           text-align: center;
+        }
+        .summoners {
+          img {
+            box-shadow: 0 0 10px #000;
+          }
         }
         .summoners,
         .runes {
@@ -745,7 +791,7 @@
       }
       .teams {
         display: flex;
-        align-self: flex-end;
+        align-self: flex-start;
         .blue-team,
         .red-team {
           width: 175px;
@@ -955,6 +1001,7 @@
 
 #overall-patch-tables {
   padding-top: 18px;
+  font-size: 0.8em;
   th {
     font-weight: 400;
   }
@@ -1172,7 +1219,6 @@
 
 #footer {
   padding: 1em 2em;
-  font-family: $Mont;
   background-image: linear-gradient(to right bottom, #323232, #2f2f2f, #2c2c2c, #2a2929, #272626);
   h3 {
     font-weight: 600;
@@ -1317,14 +1363,18 @@ stats {
 
 // PROFILE 
 #profile-menu {
-  font-family: $Mont;
   font-weight: 600;
   letter-spacing: .07em;
   background: $nav-bg;
   a {
     padding: 1em;
+    transition: 200ms ease-out;
     i {
       margin-right: 1.2em;
+    }
+    &:hover {
+      background: $nav-bg-dark;
+      color: $nav-blue;
     }
     &.active {
       background: $nav-bg-dark;
@@ -1363,13 +1413,12 @@ stats {
 #inbox-controls {
   user-select: none;
   background: $nav-bg;
-  font-family: $Mont;
   font-weight: bold;
   font-size: 0.9em;
   > div {
     padding: .7em;
     cursor: pointer;
-    transition: padding 100ms ease-out;
+    transition: 100ms ease-out;
     &:hover {
       background: $nav-bg-dark;
       color: $nav-blue;
@@ -1395,7 +1444,6 @@ stats {
 
 .msg-wrapper {
   background: #545454;
-  font-family: $Mont;
   padding: 1em;
   display: flex;
   margin-bottom: 1em;
@@ -1445,11 +1493,58 @@ stats {
         }
       }
       .bookmark-msg, .self-bookmark-msg {
+        &:hover {
+          i {
+            color: yellow;
+          }
+        }
         &.active {
           i {
             color: yellow;
           }
         }
+      }
+    }
+  }
+}
+
+.message-form {
+  .col-form-label {
+    color: #fff;
+  }
+  .form-control {
+    border-radius: 0;
+  }
+  textarea {
+    resize: none;
+  }
+}
+// message modal 
+.modal-content {
+  border: 0;
+  border-radius: 0;
+  color: #fff;
+  background: #688fd7;
+  .close {
+    text-shadow: none;
+    color: #fff;
+    font-size: 1.7rem;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  h5 {
+    font-weight: 400;
+  }
+  .modal-footer {
+    padding: 1rem 1rem 0 1rem;
+    button {
+      padding: 0.4em .7em;
+      background: #fff;
+      transition: 200ms ease-out;
+      &:hover {
+        color: #fff;
+        background: #1DA1F2;
       }
     }
   }
@@ -1466,6 +1561,122 @@ stats {
 }
 
 // Inbox end
+
+// Info
+
+#info-wrapper {
+  padding: 2em;
+  background: $nav-bg;
+}
+
+#info-form {
+  .text-center {
+    padding: 0 2em;
+    button {
+      padding: 0;
+      background: transparent;
+      font-size: 1.3em;
+      border: 4px solid $nav-blue;
+      margin: 1em 0 .5em 0;
+      color: #fff;
+      width: 100%;
+      height: 50px;
+      transition: 
+        background 200ms ease-out,
+        border-color 200ms ease-out;
+      &:hover {
+        background: $nav-bg-dark;
+        border-color: $laser-green;
+      }
+      &:active {
+        color: $laser-green;
+      }
+    }
+  }
+  
+  .form-group {
+    padding: 0 2em !important;
+  }
+  h4 {
+    padding: 0 0 .5em 0 !important;
+    border-bottom: 1px solid #3f3f3f;
+    margin: 0 1em 1em 1em;
+  }
+  .form-row {
+    margin-bottom: 1em;
+  }
+  select, textarea {
+    border: 0;
+    border-bottom: 1px solid $laser-green;
+    background: $nav-bg-dark !important;
+  }
+  .form-control {
+    color: #fff;
+    border-radius: 0;
+    background-color: transparent;
+  }
+  input, textarea {
+    background: transparent;
+    padding: .25em .50em;
+    border: 0;
+    border-bottom: 1px solid $laser-green;
+    &:focus {
+      outline: 0;
+    }
+  }
+  .icon-btn {
+    padding: .4em 1em;
+    background: $nav-blue;
+    color: #fff;
+    &:hover {
+      background: #43c5e3;
+      color: #fff;
+    }
+  }
+}
+
+// info end
+
+// Friends
+.user-wrapper {
+  margin: 0 .5em 1em;
+  padding: 1em 0 1em 1em;
+  span {
+    display: block;
+  }
+  .user-content {
+    display: flex;
+    .user-pic {
+      min-width: 100px;
+      margin: 0.7em;
+      width: 100px;
+      height: 100px;
+    }
+    .user-body {
+      display: flex;
+      flex-direction: column;
+      margin-left: 1em;
+      .user-name {
+        a {
+          font-size: 1.5em;
+          color: $laser-green;
+          &:hover {
+            color: $laser-green;
+          }
+        }
+      }
+      .user-desc {
+
+      }
+      .user-footer {
+
+      }
+    }
+  }
+}
+
+// Friends end
+
 
 // Post
 
@@ -1559,7 +1770,7 @@ stats {
 .post-controls, .comment-controls {
   display: flex;
   align-items: flex-end;
-  margin: 0 2em 1em 2em;
+  margin: 0 2em;
   button {
     margin-right: .5em;
     background: transparent;
@@ -1572,15 +1783,14 @@ stats {
 }
 
 .post-wrapper {
-  font-family: $Mont;
   position: relative;
   word-wrap: break-word;
   padding: 1.5em;
   color: $dark-grey;
   margin-bottom: 3em;
   .post-content-wrapper {
-    margin-bottom: 1em;
-    border-bottom: 1px solid #2f2f2f;
+    padding: 0.5em;
+    border: 1px solid #2f2f2f;
     .like-count {
       font-weight: bold;
     }
@@ -1608,7 +1818,7 @@ stats {
       }
       button {
         float: right;
-        background: $dark-blue;
+        background: $turkiz;
       }
     }
   }
@@ -1620,6 +1830,10 @@ stats {
   margin-left: 2em;
   .comment {
     position: relative;
+    padding: 0.5em;
+    border-right: 1px solid #2f2f2f;
+    border-left: 1px solid #2f2f2f;
+    border-bottom: 1px solid #2f2f2f;
   }
 }
 // Comment end
@@ -1637,13 +1851,21 @@ stats {
 // PROFILE END
 
 // Login and Register
+.check {
+  display: none;
+  color: #00ffac;
+  position: absolute;
+  top: 5px;
+  right: 0;
+}
+
 .form-container {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -70%);
+  transform: translate(-50%, -55%);
   .form-wrapper {
-    padding: 1.5em;
+    padding: 0 1.5em 1.5em;
     box-shadow: 0 0 18px 5px #272727;
     background: $nav-bg;
     .form-header {
@@ -1657,7 +1879,7 @@ stats {
     .form-footer {
       border-top: 1px solid #5d5d5d;
       padding-top: .5em;
-      margin-top: .5em;
+      margin: .5em 0;
     }
     .forgot {
       letter-spacing: 0;
@@ -1690,14 +1912,12 @@ stats {
       letter-spacing: 0;
       font-size: .8em;
     }
-    a {
-      color: $light-blue;
-    }
   }
 }
 
 #register-form, #login-form, #contact-form {
   .form-icon {
+    position: relative;
     margin-bottom: 2em;
     display: flex;
     justify-content: center;
@@ -1991,7 +2211,7 @@ yellow {
   i {
     padding: 10px;
     font-size: 2em;
-    background: rgba(0, 0, 0, 0.75)
+    background: rgba(120, 120, 120, 0.1)
   }
 }
 
@@ -2007,9 +2227,9 @@ yellow {
   animation: ring 1500ms cubic-bezier(0.32, 0.12, 0.49, 1.16);
 }
 
-.bounceInDown {
-  animation-duration: 500ms;
-  animation-timing-function: ease-out;
+.rubberBand {
+  animation-duration: 700ms;
+  animation-name: rubberBand;
 }
 
 // Animations End

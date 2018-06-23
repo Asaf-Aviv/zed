@@ -2,8 +2,8 @@ include partials/head
 body
     include partials/nav
     include partials/sidenav
-    .container
-        #summoner-main.mt-5
+    .container.pt-5
+        #summoner-main
             .row
                 .col-lg-4
                     #summoner-wrapper.main-bg.silent-shadow.mb-5.mb-lg-0
@@ -13,7 +13,9 @@ body
                             h1.summoner-name.text-center.ml-1= summoner.name
                             h4.level= 'level ' + summoner.summonerLevel
                         .summoner-league-info
-                            if (summonerRank && typeof summonerRank != 'undefined')
+                            if (summonerRank && typeof summonerRank !== undefined)
+                                script.
+                                    const summonerRank = !{JSON.stringify(summonerRank.rank)};
                                 .league-icon
                                     img(src=`/assets/league/img/tier_icons/${summonerRank.tier}${summonerRank.rank}.png`)
                                 .league-data
@@ -38,28 +40,27 @@ body
                         .nav.nav-tabs(role="tablist")
                             a#nav-games-tab.nav-item.nav-link.active(
                                 data-toggle="tab" href="#nav-games" role="tab" aria-controls="nav-games" aria-selected="true") Games
-                            a#nav-league-tab.nav-item.nav-link(
+                            a#nav-league-tab.nav-item.nav-link(data-league-id=summonerRank ? summonerRank.leagueId : '' data-region=region
                                 data-toggle="tab" href="#nav-league" role="tab" aria-controls="nav-league" aria-selected="false") League
-                            a#nav-match-tab.nav-item.nav-link(class=match ? 'ingame animate' : ''
+                            a#nav-match-tab.nav-item.nav-link(data-region=region data-id=summoner.id
                                 data-toggle="tab" href="#nav-match" role="tab" aria-controls="nav-match" aria-selected="false") Match
                     .tab-content
                         #nav-games.tab-pane.active(role="tabpanel" aria-labelledby="nav-games-tab")
                             include partials/recent_games
                         #nav-league.tab-pane(role="tabpanel" aria-labelledby="nav-league-tab")
-                            if league
-                                include partials/league
                         #nav-match.tab-pane.main-bg.silent-shadow(role="tabpanel" aria-labelledby="nav-match-tab")
-                            if match
-                                include partials/match
-                            else
-                                .not-in-game
-                                    h4.text-center= `${summoner.name} is not in a game`
     include partials/footer
     include partials/scroll_top
     include partials/scripts
     script.
-        const summoner = `${!{JSON.stringify(summoner.name)}}=${!{JSON.stringify(region)}}`;
+        const summonerId = !{JSON.stringify(summoner.id)}
+        const region = !{JSON.stringify(region)}
+        $.ajax(`/match/isActive/${summonerId}_${region}`, {
+            success: res => res ? $('#nav-match-tab').addClass('ingame animate') : ''
+        });
+    script.
+        const summonerName = `${!{JSON.stringify(summoner.name)}}=${!{JSON.stringify(region)}}`;
         const _hist = Cookies.getJSON('_hist') || [];
-        if (!_hist.includes(summoner)) _hist.unshift(summoner);
+        if (!_hist.includes(summonerName)) _hist.unshift(summonerName);
         if (_hist.length > 8) _hist.pop();
         Cookies.set('_hist', _hist);

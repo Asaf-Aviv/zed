@@ -32,15 +32,11 @@ const MessageSchema = new Schema({
         type: Boolean,
         default: false
     },
-    inTrash: {
-        type: Boolean,
-        default: false
-    },
     read: {
         type: Boolean,
         default: false
     },
-    deleted: {
+    isDeleted: {
         type: Boolean,
         default: false
     }

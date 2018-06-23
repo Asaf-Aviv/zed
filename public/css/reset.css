@@ -10,7 +10,7 @@
 body {
   color: #fff;
   margin-top: 65px;
-  font-family: "Open sans";
+  font-family: "Montserrat", sans-serif;
   font-size: 16px;
   background: #3a3a3a; }
 
@@ -61,6 +61,19 @@ img {
 ::-webkit-scrollbar-thumb {
   background: #757575; }
 
+.alert {
+  font-size: .9em;
+  border: 0;
+  border-radius: 0; }
+  .alert .close {
+    line-height: .9; }
+  .alert .close:focus, .alert .close:hover {
+    opacity: 1; }
+
+.alert-danger {
+  color: #f3f3f3;
+  background-color: #b92a37; }
+
 .shadow {
   box-shadow: 0px 0px 20px 2px #151515; }
 
@@ -95,7 +108,7 @@ img {
 .form-control:focus {
   border-color: #80bdff;
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
+  box-shadow: none; }
 
 .dataTables_info {
   padding: 5px; }

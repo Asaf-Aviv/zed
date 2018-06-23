@@ -66,21 +66,6 @@ $(function() {
         }
     });
 
-    $('#summoner-input input').keypress(e => {
-        if (e.keyCode === 13) {
-            $('#summoner-search-btn').click();
-        }
-    });
-
-    $('#summoner-search-btn').click(() => {
-        const summonerName = $('#summoner-input input').val().replace(/ /g, '+');
-        const regionId = $('#selected-region').data('region');
-            if (summonerName.length < 3) {
-                return errorAlert('Summoner name must be at least 3 characters long.', 'topCenter', false);
-            }
-        window.location.href = `/summoner?region=${regionId}&userName=${summonerName}`;
-    });
-
     // Navbar Utils
     $('.util-box').click(function(e) {
         e.stopPropagation();
@@ -88,13 +73,10 @@ $(function() {
         const $this = $(this);
         const divToShow = $(`${$(this).data('link')}`);
 
-        $('#notifications i:first-child').addClass('ring');
-        $('#messages i:first-child').addClass('animated rubberBand');
-        $('#friend-requests i:first-child').addClass('animated flash');
-
         $this.find('.badge').text('');
 
-        $this.siblings('.active')
+        $this.
+            siblings('.active')
             .removeClass('active');
 
         $this.toggleClass('active')
@@ -207,17 +189,37 @@ $(function() {
     });
 
     $('.like-post').click(function() {
-        $this = $(this)
-        const postId = $this.attr('data-id');
+        $this = $(this);
+        const postId = $this.data('id');
         const likes = $this.siblings('.like-count').text();
 
         $.ajax({
             type: 'POST',
             url: '/post/like/'+postId,
             success: function(res) {
-                $this.find('button').toggleClass('active');
-                console.log(likes)
-                console.log(res)
+                $this.children('.like-btn').toggleClass('active');
+                $this.siblings('.like-count').text(Number(likes) + Number(res));
+            },
+            error: function(err) {
+                errorAlert(err.responseText, 'center');
+            }
+        });
+    });
+
+    $('.like-comment').click(function() {
+        $this = $(this);
+        const postId = $this.data('parent');
+        const commentId = $this.data('id');
+        const likes = $this.siblings('.like-count').text();
+
+        $.ajax({
+            type: 'POST',
+            url: '/post/comment/like/'+postId,
+            data: {
+                commentId,
+            },
+            success: function(res) {
+                $this.children('.like-btn').toggleClass('active');
                 $this.siblings('.like-count').text(Number(likes) + Number(res));
             },
             error: function(err) {
@@ -249,20 +251,28 @@ $(function() {
             .focus()
     });
 
+    // FIX add new comment to the post
     $('.comment-form').submit(function(e) {
         e.preventDefault();
+        const $this = $(this);
 
-        const postId = $(this).attr('data-id');
+        const postId = $this.attr('data-id');
+        $this.find('button').prop('disabled', true)
 
         $.ajax({
             type: 'POST',
-            data: $(this).serialize(),
+            data: $this.serialize(),
             url: '/post/comment/'+postId,
             success: function(res) {
                 successAlert('success', 'center', 'fa fa-comment');
+                $this.find('textarea').val('');
             },
             error: function(err) {
                 errorAlert(err.responseText, 'center')
+                
+            },
+            complete: function() {
+                $this.find('button').prop('disabled', false);
             }
         });
     });
@@ -363,6 +373,43 @@ $(function() {
         });
     });
 
+    $('#nav-league-tab').click(function() {
+        const leagueId = $(this).data('league-id');
+        const region = $(this).data('region');
+        console.log(leagueId, region);
+
+        if (leagueId) {
+            createLoader('#nav-league');
+            $.ajax({
+                type: 'GET',
+                url: `/league/${leagueId}_${region}`,
+                success: function(leagueData) {
+                    $('#nav-league').html(leagueData);
+                },
+                error: function(err) {
+                    alert(err);
+                },
+                complete: () => $('.ui.dimmer.active').remove()
+            });
+        } 
+    });
+
+    $('#nav-match-tab').click(function() {
+        const summonerId = $(this).data('id');
+        const region = $(this).data('region');
+        console.log(summonerId, region);
+
+        createLoader('#nav-match');
+        $.ajax({
+            type: 'GET',
+            url: `/match/${summonerId}_${region}`,
+            success: function(matchData) {
+                $('#nav-match').html(matchData);
+            },
+            complete: () => $('.ui.dimmer.active').remove()
+        });
+    });
+
     // Messages
     
     // Inbox nav
@@ -375,15 +422,16 @@ $(function() {
             $('#inbox-controls .active').removeClass('active');
             $this.addClass('active');
             
-            $('#inbox-msg-wrapper > div:visible').hide(0, () => $(`#${divToShow}`).fadeIn());
+            $('#inbox-msg-wrapper > div:visible').hide(0, () => $(`#${divToShow}`).fadeIn(200));
         }
     });
 
     // Send msg
-    $('#message-form').submit(function(e) {
+    $('.message-form').submit(function(e) {
         e.preventDefault();
         $this = $(this);
         const userId = $this.data('id');
+        console.log($this);
 
         $.ajax({
             type: 'POST',
@@ -391,6 +439,7 @@ $(function() {
             url: '/message/'+userId,
             success: function(res) {
                 successAlert('success', 'center', 'fa fa-comment');
+                $this[0].reset();
             },
             error: function(err) {
                 errorAlert(err.responseText, 'center')
@@ -406,6 +455,7 @@ $(function() {
         const userId = $(this).data('id');
         const username = $(this).data('username');
         console.log(userId, username);
+        $(this).closest(`#reply-${userId}`).addClass('show');
     });
 
     // Toggle Bookmark Msg
@@ -419,7 +469,7 @@ $(function() {
             url: `/message/bookmark/${msgId}`,
             success: function(bookmark) {
                 if (bookmark) msgEle.clone(true, true).appendTo('#inbox-bookmark');
-                else $(`#inbox-bookmark #${msgId}`).fadeOut(200);
+                else $(`#inbox-bookmark #${msgId}`).fadeOut(100);
                 
             },
             error: function(err) {
@@ -429,54 +479,16 @@ $(function() {
         });
     });
 
-    // toggle self bookmark msg
-    $('.self-bookmark-msg').click(function() {
-        const msgId = $(this).data('id');
-        const msgEle = $(`#${msgId}`);
-        msgEle.find('.self-bookmark-msg').toggleClass('active');
-
-        $.ajax({
-            type: 'PATCH',
-            url: `/message/bookmark/self/${msgId}`,
-            success: function(bookmark) {
-                if (bookmark) msgEle.clone(true, true).appendTo('#inbox-bookmark');
-                else $(`#inbox-bookmark #${msgId}`).fadeOut(200);
-                
-            },
-            error: function(err) {
-                msgEle.find('.self-bookmark-msg').toggleClass('active');
-                errorAlert(err.responseText, 'center')
-            }
-        });
-    });
-
-    // move msg to trash
-    $('.move-to-trash').click(function() {
-        const msgId = $(this).data('id');
-
-        $.ajax({
-            type: 'PATCH',
-            url: `/message/moveToTrash/${msgId}`,
-            success: function(res) {
-                successAlert('success', 'center', 'fa fa-comment');
-            },
-            error: function(err) {
-                errorAlert(err.responseText, 'center')
-            },
-            complete: function() {
-            }
-        });
-    });
-
     // delete msg
     $('.delete-msg').click(function() {
         const msgId = $(this).data('id');
 
         $.ajax({
-            type: 'PATCH',
+            type: 'DELETE',
             url: `/message/${msgId}`,
             success: function(res) {
-                successAlert('success', 'center', 'fa fa-comment');
+                $(`#${msgId}`).remove();
+                $(`#${msgId}`).remove();
             },
             error: function(err) {
                 errorAlert(err.responseText, 'center')
@@ -495,10 +507,30 @@ $(function() {
     });
 
     // messages end
+
+    // info 
+    $('#info-form').submit(function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: "PUT",
+            url: '/profile/info',
+            data: $(this).serialize(),
+            success: function() {
+                successAlert('center', 'fa fa-thumps-up');
+            },
+            error: function() {
+                errorAlert('Something went wrong :/ Please try again.', 'center');
+            },
+            complete: function() {
+            }
+        })
+    });
+
     $('#contact-form').submit(function(e) {
         e.preventDefault();
-        $('.ajax-loader-wrapper').removeClass('invisible');
         $('#contact-form button').prop('disabled', true);
+
         $.ajax({
             type: "POST",
             url: '/contact',
@@ -510,7 +542,6 @@ $(function() {
                 errorAlert('Something went wrong :/ Please try again.', 'center');
             },
             complete: function() {
-                $('.ajax-loader-wrapper').addClass('invisible');
                 $('#contact-form button').prop('disabled', false);
             }
         });
@@ -518,8 +549,8 @@ $(function() {
 
     $('#feedback-form').submit(function(e) {
         e.preventDefault();
-        $('.ajax-loader-wrapper').removeClass('invisible');
         $('#feedback-form button').prop('disabled', true);
+
         $.ajax({
             type: "POST",
             url: '/feedback',
@@ -531,13 +562,10 @@ $(function() {
                 errorAlert('Something went wrong :/ Please try again.', 'center');
             },
             complete: function() {
-                $('.ajax-loader-wrapper').addClass('invisible');
                 $('#feedback-form button').prop('disabled', false);
             }
         });
     });
-
-    
 
     $('.remove-feedback').click(() => {
         $('#feedback-wrapper, .feedback-btns').remove();
@@ -556,26 +584,31 @@ $(function() {
         $("html, body").animate({ scrollTop: 0 }, 200, 'easeOutCubic')
     });
 
-    throttle$('#selected-region', 'click', 500)
+    $('#selected-region').click(function() {
+        $('#regions-wrapper').toggle();
+    });
+
+    $('#summoner-input input').keypress(e => {
+        if (e.keyCode === 13) {
+            $('#summoner-search-btn').click();
+        }
+    });
+
+    throttle$('#summoner-search-btn', 'click', 400)
         .subscribe(() => {
-            const $this = $('#regions-wrapper');
-            const RS = $('#region-select');
-            if (RS.hasClass('bounceInDown')) {
-                RS.animateCss('bounceOutUp', () => {
-                    $this.toggle();
-                    RS.removeClass('bounceInDown');
-                });
-            } else {
-                $this.toggle();
-                RS.addClass('bounceInDown')
-                    .removeClass('bounceOutUp');
-            }
+            const summonerName = $('#summoner-input input').val().replace(/ /g, '+');
+            const regionId = $('#selected-region').data('region');
+                if (summonerName.length < 3) {
+                    return errorAlert('Summoner name must be at least 3 characters long.', 'topCenter', false);
+                }
+            $('#summoner-search-btn').prop('disabled', true);
+            window.location.href = `/summoner?region=${regionId}&userName=${summonerName}`;
         });
 
     Rx.Observable.fromEvent(document, 'scroll')
         .throttleTime(300)
         .subscribe(() => {
-            $(this).scrollTop() > 500 ? 
+            $(this).scrollTop() > 800 ? 
                 $('#scroll-top').css({'display': 'block'}) :
                 $('#scroll-top').css({'display': 'none'});
         });
@@ -583,13 +616,13 @@ $(function() {
     // Observables End
 });
 
-function throttle$(el, event, time=1000) {
+function throttle$(el, event, time=500) {
     const element = document.querySelector(el);
     const eventObserver = Rx.Observable.fromEvent(element, event);
     return eventObserver.throttleTime(time).map(e => e);
 }
 
-function debounce$(el, event, time=1000) {
+function debounce$(el, event, time=500) {
     const element = document.querySelector(el);
     const eventObserver = Rx.Observable.fromEvent(element, event);
     return eventObserver.debounceTime(time).map(e => e);
@@ -660,32 +693,6 @@ function createLoader(parent, text='') {
         )
     );
 }
-
-$.fn.extend({
-    animateCss: function(animationName, callback) {
-        const animationEnd = (function(el) {
-            const animations = {
-                animation: 'animationend',
-                OAnimation: 'oAnimationEnd',
-                MozAnimation: 'mozAnimationEnd',
-                WebkitAnimation: 'webkitAnimationEnd',
-            };
-
-            for (const t in animations) {
-                if (el.style[t] !== undefined) {
-                    return animations[t];
-                }
-        }})(document.createElement('div'));
-
-        this.addClass('animated ' + animationName).one(animationEnd, function() {
-            $(this).removeClass('animated ' + animationName);
-
-            if (typeof callback === 'function') callback();
-        });
-
-        return this;
-    },
-});
 
 jQuery.each(jQuery('textarea[data-autoresize]'), function() {
     const offset = this.offsetHeight - this.clientHeight;

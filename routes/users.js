@@ -1,8 +1,9 @@
 const express = require('express');
 const router  = express.Router();
 const Legend  = require('../models/user');
+const auth    = require('../middlewares/auth');
 
-router.get('/:userName', (req, res) => {
+router.get('/:userName', auth.isLogged(), (req, res) => {
     console.log(req.params.userName)
     console.log('searching')
     Legend.findOne({ username: req.params.userName }).then(user => {

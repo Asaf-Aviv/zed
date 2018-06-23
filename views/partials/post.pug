@@ -49,7 +49,7 @@ p=JSON.stringify(post)
                                     i.fas.fa-ellipsis-v
                                 .actions
                                     if comment.author._id.toString() == currentUser._id
-                                        button.delete-comment(data-id=comment._id)
+                                        button.delete-comment(data-id=comment._id data-parent=comment.parentId)
                                             i.fas.fa-trash
                                             | Delete
                                     else 
@@ -59,7 +59,7 @@ p=JSON.stringify(post)
                         .comment-body
                             p #{comment.body}
                         .comment-controls
-                            .like-comment(data-id=comment._id)
-                                button.like-btn(class=comment.likes.some(like => like._id.toString() == currentUser._id) ? 'active' : '')
+                            .like-comment(data-id=comment._id data-parent=comment.parentId)
+                                button.like-btn(class=comment.likes.some(like => like.from.toString() == currentUser._id) ? 'active' : '')
                                     i.fa.fa-heart
                             .like-count.d-inline-block= comment.likeCount

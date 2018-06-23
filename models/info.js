@@ -6,7 +6,7 @@ const InfoSchema = new Schema({
     firstName: String,
     lastName: String,
     country: String,
-    birthday: String,
+    about: String,
     gender: String,
 });
 

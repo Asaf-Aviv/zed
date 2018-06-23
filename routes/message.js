@@ -6,7 +6,9 @@ router.post('/:receiverId', (req, res) => {
     const receiverId = req.params.receiverId;
     const senderId = req.user._id;
 
-    const Message = {
+    if (senderId == receiverId) return res.sendStatus(400);
+    
+    const message = {
         author: {
             _id: senderId,
             username: req.user.username
@@ -24,7 +26,7 @@ router.post('/:receiverId', (req, res) => {
         {
             $push: {
                 messages: {
-                    $each: [ Message ],
+                    $each: [ message ],
                     $position: 0
                 }
             }
@@ -41,8 +43,8 @@ router.post('/:receiverId', (req, res) => {
             senderId, 
             {
                 $push: {
-                    messagesSent: {
-                        $each: [ Message ],
+                    messages: {
+                        $each: [ message ],
                         $position: 0
                     }
                 }
@@ -52,30 +54,6 @@ router.post('/:receiverId', (req, res) => {
         });
         res.send();
     });
-});
-
-router.patch('/bookmark/self/:msgId', async (req, res) => {
-    const msgId = req.params.msgId;
-    const userId = req.user._id;
-
-    const doc = await Legend.findOne({ _id: userId, 'messagesSent._id': msgId }, 'messagesSent.$');
-    
-    const isInBookmark = doc.messagesSent[0].inBookmark;
-    console.log(isInBookmark);
-
-    Legend.findOneAndUpdate(
-        {
-            _id: userId, 'messagesSent._id': req.params.msgId
-        },
-        {
-            $set: {
-                'messagesSent.$.inBookmark': !isInBookmark
-            }
-        },
-        err => {
-            if (err) res.sendStatus(404);
-            res.send(!isInBookmark);
-        });
 });
 
 router.patch('/bookmark/:msgId', async (req, res) => {
@@ -102,30 +80,14 @@ router.patch('/bookmark/:msgId', async (req, res) => {
         });
 });
 
-router.patch('/moveToTrash/:msgId', (req, res) => {
+router.delete('/:msgId', (req, res) => {
     Legend.findOneAndUpdate(
     {
         _id: req.user._id, 'messages._id': req.params.msgId
     },
     {
         $set: {
-            'messages.$.inTrash': true
-        }
-    },
-    err => {
-        if (err) console.log(err);
-        res.send();
-    });
-});
-
-router.patch('/:msgId', (req, res) => {
-    Legend.findOneAndUpdate(
-    {
-        _id: req.user._id, 'messages._id': req.params.msgId
-    },
-    {
-        $set: {
-            'messages.$.deleted': true
+            'messages.$.isDeleted': true
         }
     },
     err => {

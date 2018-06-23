@@ -10,10 +10,11 @@ const FriendSchema            = require('./friend');
 const MessageSchema           = require('./message');
 const MyCommentsSchema        = require('./myComments');
 const LikeSchema              = require('./like');
+const myLikesSchema           = require('./myLikes');
 const InfoSchema              = require('./info');
 const ImageSchema             = require('./image');
 
-const LegendSchema = new Schema({
+const NinjaSchema = new Schema({
     username: {
         type: String,
         required: true,
@@ -28,9 +29,9 @@ const LegendSchema = new Schema({
         type: String,
         required: true,
         unique: false,
-        minlength: [8, 'Password is too short'],
+        minlength: [6, 'Password is too short'],
         maxlength: [100, 'Password is too long'],
-        validate: [/^[^ ]+$/ , 'Passwords can contain anything but Space']
+        validate: [/^[^ ]+$/ , 'Passwords can contain anything but Spaces']
     },
     email: {
         type: String,
@@ -66,9 +67,8 @@ const LegendSchema = new Schema({
     ,images: [ ImageSchema ],
     posts: [ PostSchema ],
     messages: [ MessageSchema ],
-    // messagesSent: [ MessageSchema ],
     myComments: [ MyCommentsSchema ],
-    myLikes: [ LikeSchema ],
+    myLikes: [ myLikesSchema ],
     shares: [],
     notifications: [],
     profileViews: {
@@ -78,38 +78,36 @@ const LegendSchema = new Schema({
 });
 
 // Authenticate input against database
-LegendSchema.statics.authenticate = function (email, password, callback) {
-    Legend.findOne({ lowerCaseEmail: email.toLowerCase() })
+NinjaSchema.statics.authenticate = function (email, password, callback) {
+    Ninja.findOne({ lowerCaseEmail: email.toLowerCase() })
         .exec((err, user) => {
             if (err) return callback(err)
             if (!user) {
                 const err = new Error('User not found.');
                 err.status = 401;
-                console.log('user not found sending err');
                 return callback(err);
             } else {
-                password === user.password ? callback(null, user) : callback()
-                // bcrypt.compare(password, user.password, function (err, result) {
-                //     return result ? callback(null, user) : (console.log('wrong password'), callback());
-                // });
+                bcrypt.compare(password, user.password, function (err, result) {
+                    return result ? callback(null, user) : (console.log('wrong password'), callback());
+                });
             }
     });
 }
 
 // Hashing the password before saving it to the database
-// LegendSchema.pre('save', function(next) {
-//     const user = this;
-//     bcrypt.hash(user.password, 10, function(err, hashedPassword) {
-//         if (err) {
-//             next(err);
-//         } else {
-//             user.password = hashedPassword;
-//             next();
-//         }
-//     });
-// });
+NinjaSchema.pre('save', function(next) {
+    const user = this;
+    bcrypt.hash(user.password, 10, function(err, hashedPassword) {
+        if (err) {
+            next(err);
+        } else {
+            user.password = hashedPassword;
+            next();
+        }
+    });
+});
 
-LegendSchema.plugin(uniqueValidator, { message: '{PATH} already exists' });
+NinjaSchema.plugin(uniqueValidator, { message: '{PATH} already exists' });
 
-const Legend = mongoose.model('users', LegendSchema);
-module.exports = Legend;
+const Ninja = mongoose.model('users', NinjaSchema);
+module.exports = Ninja;

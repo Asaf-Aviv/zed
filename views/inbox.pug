@@ -7,6 +7,11 @@ body
             .row
                 .col-lg-3.col-md-4.mb-5.mb-md-0
                     include partials/profile_nav
+                    if currentUser.friendRequests.length
+                        #prof-friend-requests.main-bg.silent-shadow.p-3.mt-3
+                            h6 Friend Requests
+                            each request in currentUser.friendRequests
+                                include partials/friend-request
                 .col-md-2.col-sm-12.d-flex.flex-column.flex-grow.mb-5.mb-md-0
                     #inbox-controls.silent-shadow
                         #inbox.active(data-link='inbox-msgs') Inbox
@@ -38,10 +43,8 @@ body
                                 include partials/message
 
                         #inbox-bookmark(style="display: none")
-                            //- - bookmark.sort((a, b) => b.created - a.created)
                             each message in bookmark
                                 include partials/message
-                p= trash
     include partials/footer
     include partials/scroll_top
     include partials/scripts

@@ -1,7 +1,7 @@
 const express  = require('express');
 const router   = express.Router();
-const Post     = require('../models/post');
 const Zed      = require('../models/user');
+const pug      = require('pug');
 const mongoose = require('mongoose');
 
 // Edit post route
@@ -75,8 +75,10 @@ router.post('/like/:postId', (req, res) => {
         { 'posts._id': postId },
         'posts.$',
         (err, doc) => {
-            if (err || !doc) res.status(404).send("It looks like this post has been deleted");
-
+            console.log(err, doc);
+            if (err || !doc.length) {
+                return res.status(404).send("It looks like this post has been deleted, Try refreshing the page.");
+            }
             const alreadyLike = doc[0].posts[0].likes.some(like => like.from.toString() == userId);
 
             if (alreadyLike) {
@@ -113,7 +115,7 @@ router.post('/like/:postId', (req, res) => {
                         Zed.find(
                             { 'posts._id': postId },
                             (err, user) => {
-                                if (connectedUsers[user[0]._id]) {
+                                if (connectedUsers[user[0]._id] && user[0]._id!= req.user._id.toString()) {
                                     connectedUsers[user[0]._id].map(socketId => 
                                         io.to(socketId).emit('likePost', req.user.username)
                                     )
@@ -133,39 +135,36 @@ router.post('/like/:postId', (req, res) => {
 });
 
 // Comment
-router.post('/comment/:id', (req, res) => {
-    const postId = req.params.id;
+router.post('/comment/:postId', (req, res) => {
+    const postId = req.params.postId;
+    const comment = {
+        _id: mongoose.Types.ObjectId(),
+        parentId: postId,
+        author: {
+            _id: req.user._id,
+            username: req.user.username,
+            // add profile picture
+        },
+        body: req.body.commentBody,
+        likes: []
+    }
+    const newCommentId = comment._id;
 
     Zed.findOneAndUpdate(
         { 'posts._id': postId },
-        {
-            $push: {
-                'posts.$.comments': {
-                    parentId: postId,
-                    author: {
-                        _id: req.user._id,
-                        username: req.user.username,
-                        // add profile picture
-                    },
-                    body: req.body.commentBody
-                }
-            }
-        },
+        { $push: { 'posts.$.comments': comment }},
         { new: true },
         (err, user) => {
-            if (err) {
+            console.log(err, user)
+            if (err || !user) {
                 console.error(err);
-                res.sendStatus(404);
+                return res.status(404).send('It looks like this post has been deleted, Try refreshing the page.');
             }
-
-            if (connectedUsers[user._id]) {
+            if (connectedUsers[user._id] && user._id != req.user._id.toString()) {
                 connectedUsers[user._id].map(socketId =>
                     io.to(socketId).emit('comment', req.user.username)
                 )
             }
-
-            const postIndex = user.posts.findIndex(post => post._id.toString() === req.params.id);
-            const newCommentId = user.posts[postIndex].comments[user.posts[postIndex].comments.length -1]._id
 
             Zed.findByIdAndUpdate(
                 req.user._id,
@@ -184,11 +183,14 @@ router.post('/comment/:id', (req, res) => {
                 err => {
                     if (err) {
                         console.error(err);
-                        res.sendStatus(404);
-                    }
+                        return res.sendStatus(404);
+                    } 
+                    res.send(pug.renderFile('views/partials/comment.pug', {
+                        comment,
+                        currentUser: req.user
+                    }));
                 }
             );
-            res.send();
         });
 });
 
@@ -248,7 +250,7 @@ router.post('/comment/like/:postId', (req, res) => {
                             console.error(err);
                             res.sendStatus(404);
                         }
-                        if (connectedUsers[authorId]) {
+                        if (connectedUsers[authorId] && authorId != req.user._id.toString()) {
                             connectedUsers[authorId].map(socketId => 
                                 io.to(socketId).emit('likeComment', req.user.username)
                             )

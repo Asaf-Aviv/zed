@@ -1,4 +1,3 @@
-p=JSON.stringify(post)
 .post-wrapper.main-bg.shadow
     div(id=post._id)
         .post-content-wrapper
@@ -26,40 +25,17 @@ p=JSON.stringify(post)
                 .like-post(data-id=post.id)
                     button.like-btn(class=post.likes.some(like => like.from.toString() == currentUser._id) ? 'active' : '')
                         i.fa.fa-heart
-                .like-count.d-inline-block= post.likeCount
+                .like-count= post.likeCount
                 .comment-toggler
                     button.create-comment-box
                         i.fas.fa-comment
-                        |  Comment
+                .comment-count= post.comments.length
+                .toggle-comments
+                    button Show/Hide Comments
                 
             form.comment-form(data-id=post._id)
                 textarea(name="commentBody" data-autoresize rows="1" placeholder="Add a comment" required)
                 button.btn.bold Comment
-
-        if post.comments.length
-            .comments
-                each comment in post.comments
-                    .comment(id=comment._id)
-                        .comment-header
-                            .author By #[a(href=`/profile/${comment.author.username}`)= comment.author.username]
-                            .created= moment(comment.created).subtract().fromNow()
-                            //- img(src=comment.author.profilePicture)
-                            .actions-toggler
-                                button
-                                    i.fas.fa-ellipsis-v
-                                .actions
-                                    if comment.author._id.toString() == currentUser._id
-                                        button.delete-comment(data-id=comment._id data-parent=comment.parentId)
-                                            i.fas.fa-trash
-                                            | Delete
-                                    else 
-                                        button.report-post(data-id=comment._id)
-                                            i.fas.fa-flag
-                                            | Report
-                        .comment-body
-                            p #{comment.body}
-                        .comment-controls
-                            .like-comment(data-id=comment._id data-parent=comment.parentId)
-                                button.like-btn(class=comment.likes.some(like => like.from.toString() == currentUser._id) ? 'active' : '')
-                                    i.fa.fa-heart
-                            .like-count.d-inline-block= comment.likeCount
+        .comments
+            each comment in post.comments
+                include comment

@@ -9,6 +9,7 @@ async function getRunes() {
 } 
 
 getRunes().then(runes => {
+    // wrap every rune object with the id of the rune
     const keyBy = (arr, key) => arr.reduce((r, o) => ({ ...r,  [o[key]]: o }), {});
     result = keyBy(runes, 'id')
     fs.writeFileSync('result.json', JSON.stringify(result))

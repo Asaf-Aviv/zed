@@ -10,7 +10,7 @@ router.post('/sendFriendRequest/:id', (req, res) => {
     Legend.findById(receiverId).then(user => {
         for (let request of user.friendRequests) {
             if (request.requester == senderId) {
-                return console.log('Request already exists');
+                return res.status(400).send();
             }
         }
     });
@@ -61,6 +61,7 @@ router.post('/sendFriendRequest/:id', (req, res) => {
 router.post('/acceptFriendRequest/:id', (req, res) => {
     const accepterId = req.user._id;
     const senderId = req.params.id;
+    console.log('accept')
 
     Legend.update(
         { _id: accepterId },

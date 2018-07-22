@@ -30,7 +30,7 @@ section.row
                                     a(href=`/champions/${cmpId[players[i].championId]}`)
                                         img(src=`${ddragon}/img/champion/${cmpId[players[i].championId]}.png`)
                             
-                            td(width="185")
+                            td(width="170")
                                 a(href=`/summoner?userName=${players[i].summonerName}&region=${match.platformId}`)
                                     span= players[i].summonerName
                             td(width="20")
@@ -50,7 +50,7 @@ section.row
                                         data-title=runeDesc[players[i].perks.perkSubStyle].name + '<br><br>' + runeDesc[players[i].perks.perkSubStyle].shortDesc
                                         data-toggle="tooltip" data-html="true")
                             
-                            td.position-relative(width="180")
+                            td.position-relative(width="200")
                                 if playerInfo
                                     img.player-rank(src=`/assets/league/img/tier_icons/${playerInfo[0].tier}${playerInfo[0].rank}.png`
                                         data-title=_.capitalize(playerInfo[0].tier) + ' ' + playerInfo[0].rank data-toggle="tooltip")
@@ -124,7 +124,7 @@ section.row
                                     a(href=`/champions/${cmpId[players[i].championId]}`)
                                         img(src=`${ddragon}/img/champion/${cmpId[players[i].championId]}.png`)
                             
-                            td(width="185")
+                            td(width="170")
                                 a(href=`/summoner?userName=${players[i].summonerName}&region=${match.platformId}`)
                                     span= players[i].summonerName
                             td(width="20")
@@ -144,7 +144,7 @@ section.row
                                         data-title=runeDesc[players[i].perks.perkSubStyle].name + '<br><br>' + runeDesc[players[i].perks.perkSubStyle].shortDesc
                                         data-toggle="tooltip" data-html="true")
                             
-                            td.position-relative(width="180")
+                            td.position-relative(width="200")
                                 if playerInfo
                                     img.player-rank(src=`/assets/league/img/tier_icons/${playerInfo[0].tier}${playerInfo[0].rank}.png`
                                         data-title=_.capitalize(playerInfo[0].tier) + ' ' + playerInfo[0].rank data-toggle="tooltip")

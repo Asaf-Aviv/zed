@@ -10,6 +10,10 @@ const MessageSchema = new Schema({
         username: {
             type: String,
             required: true
+        },
+        profilePicture: {
+            type: String,
+            required: true
         }
     },
     to: {

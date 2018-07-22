@@ -1,0 +1,24 @@
+.comment(id=comment._id)
+    .comment-header
+        .author By #[a(href=`/profile/${comment.author.username}`)= comment.author.username]
+        .created= comment.created ? moment(comment.created).subtract().fromNow() : 'just now'
+        //- img(src=comment.author.profilePicture)
+        .actions-toggler
+            button
+                i.fas.fa-ellipsis-v
+            .actions
+                if comment.author._id.toString() == currentUser._id
+                    button.delete-comment(data-id=comment._id data-parent=comment.parentId)
+                        i.fas.fa-trash
+                        | Delete
+                else 
+                    button.report-post(data-id=comment._id)
+                        i.fas.fa-flag
+                        | Report
+    .comment-body
+        p #{comment.body}
+    .comment-controls
+        .like-comment(data-id=comment._id data-parent=comment.parentId)
+            button.like-btn(class=comment.likes.some(like => like.from.toString() == currentUser._id) ? 'active' : '')
+                i.fa.fa-heart
+        .like-count.d-inline-block= comment.likeCount

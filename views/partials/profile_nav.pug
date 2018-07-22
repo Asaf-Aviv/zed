@@ -2,7 +2,7 @@
     a(href="/")
         i.fas.fa-home 
         | Home
-    a.active(href="/profile")
+    a(href="/profile")
         i.fas.fa-user
         | Profile
     a(href="/profile/inbox")
@@ -20,3 +20,6 @@
     a(href="/logout")
         i.fas.fa-sign-out-alt
         | Logout
+    script.
+        const currentLocation = window.location.pathname;
+        $('#profile-menu').find(`a[href="${currentLocation}"]`).addClass('active');

@@ -6,8 +6,14 @@ body
     .container
         #profile-wrapper.pt-5
             .row
-                .col-lg-3.col-md-4.mb-5.mb-md-0
+                .col-lg-3.col-md-4.col-sm-6.mb-5.mb-md-0
                     include partials/profile_nav
+                    if currentUser.friendRequests.length
+                        #prof-friend-requests.main-bg.silent-shadow.p-3.mt-3
+                            h6 Friend Requests
+                            each request in currentUser.friendRequests
+                                include partials/friend-request
+                                    
                 #profile-content.col-md-8.offset-lg-1.col-sm-12
                     .profile-post-wrapper.mb-4
                         form(method="POST", action="/post")
@@ -17,18 +23,6 @@ body
                     #posts
                         each post in currentUser.posts
                             include partials/post
-                #friend-requests.col-2.pt-5
-                    each request in currentUser.friendRequests
-                        .requester.profile-friend-request.text-center(id=request.requester)
-                            a.bold.d-block(href=`/users/${request.username}`)= request.username
-                            .ui.image
-                                img(src=request.profilePicture)
-                            .ui.buttons
-                                button.ui.tiny.basic.red.button.decline-friend-request(data-id=request.requester) Decline
-                                button.ui.tiny.basic.green.button.accept-friend-request(data-id=request.requester) Accept
-        #suhdude
-            button.btn.btn-success(onclick="successAlert('Upload complete', 'topRight', 'fa fa-check')")
-            button.btn.btn-success(onclick="errorAlert('Something went wrong :/ Please try again.', 'center')")
     include partials/footer
     include partials/scroll_top
     include partials/scripts

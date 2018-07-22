@@ -63,4 +63,4 @@ body
         const _hist = Cookies.getJSON('_hist') || [];
         if (!_hist.includes(summonerName)) _hist.unshift(summonerName);
         if (_hist.length > 8) _hist.pop();
-        Cookies.set('_hist', _hist);
+        Cookies.set('_hist', _hist, { expires: 365 });

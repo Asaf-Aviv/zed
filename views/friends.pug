@@ -3,11 +3,14 @@ body
     include partials/nav
     include partials/sidenav
     .container
-        p= friendsList.length
-        p= friendsList[0]
-        .row
+        .row.pt-5
             .col-lg-3.col-md-4.mb-5.mb-md-0
                 include partials/profile_nav
+                if currentUser.friendRequests.length
+                    #prof-friend-requests.main-bg.silent-shadow.p-3.mt-3
+                        h6 Friend Requests
+                        each request in currentUser.friendRequests
+                            include partials/friend-request
             .col-lg-9.col-md-8.p-0
                 #friends-list-wrapper
                     .row
@@ -21,84 +24,10 @@ body
                                             .user-name
                                                 a(href=`/users/${friend.username}`)= friend.username
                                             .user-desc
-                                                span Israel
-                                                span I love to proggram
-                                                span 28
-                                            .user-footer
-                                                span 22 friends
-                            .col-md-6.p-0
-                                .user-wrapper.main-bg.silent-shadow
-                                    .user-content
-                                        .user-pic
-                                            img(src="//via.placeholder.com/100x100")
-                                        .user-body
-                                            .user-name
-                                                a(href=`/users/${friend.username}`)= friend.username
-                                            .user-desc
-                                                span Israel
-                                                span I love to proggram
-                                                span 28
-                                            .user-footer
-                                                span 22 friends
-                            .col-md-6.p-0
-                                .user-wrapper.main-bg.silent-shadow
-                                    .user-content
-                                        .user-pic
-                                            img(src="//via.placeholder.com/100x100")
-                                        .user-body
-                                            .user-name
-                                                a(href=`/users/${friend.username}`)= friend.username
-                                            .user-desc
-                                                span Israel
-                                                span I love to proggram
-                                                span 28
-                                            .user-footer
-                                                span 22 friends
-                            .col-md-6.p-0
-                                .user-wrapper.main-bg.silent-shadow
-                                    .user-content
-                                        .user-pic
-                                            img(src="//via.placeholder.com/100x100")
-                                        .user-body
-                                            .user-name
-                                                a(href=`/users/${friend.username}`)= friend.username
-                                            .user-desc
-                                                span Israel
-                                                span I love to proggram
-                                                span 28
-                                            .user-footer
-                                                span 22 friends
-                            .col-md-6.p-0
-                                .user-wrapper.main-bg.silent-shadow
-                                    .user-content
-                                        .user-pic
-                                            img(src="//via.placeholder.com/100x100")
-                                        .user-body
-                                            .user-name
-                                                a(href=`/users/${friend.username}`)= friend.username
-                                            .user-desc
-                                                span Israel
-                                                span I love to proggram
-                                                span 28
-                                            .user-footer
-                                                span 22 friends
-                            .col-md-6.p-0
-                                .user-wrapper.main-bg.silent-shadow
-                                    .user-content
-                                        .user-pic
-                                            img(src="//via.placeholder.com/100x100")
-                                        .user-body
-                                            .user-name
-                                                a(href=`/users/${friend.username}`)= friend.username
-                                            .user-desc
-                                                span Israel
-                                                span I love to proggram
-                                                span 28
-                                            .user-footer
-                                                span 22 friends
-                                //- .user-controls
-                                //-     button Add
-                                //-     button Message
+                                                span= ((friend.info.firstName || '') + ' ' + (friend.info.lastName || ''))
+                                                span= (friend.info.country || '')
+                                                span= (friend.info.gender || '')
+                                                span= (friend.info.about || '')
     include partials/footer
     include partials/scroll_top
     include partials/scripts

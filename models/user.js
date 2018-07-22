@@ -62,7 +62,7 @@ const NinjaSchema = new Schema({
     blockedUsers: [],
     profilePicture: {
         type: String,
-        default: '/assets/img/user_profile_icons/glasses.png'
+        default: '/assets/images/blank_avatar.png'
     }
     ,images: [ ImageSchema ],
     posts: [ PostSchema ],
@@ -87,6 +87,7 @@ NinjaSchema.statics.authenticate = function (email, password, callback) {
                 err.status = 401;
                 return callback(err);
             } else {
+                console.log(email, password, user.password);
                 bcrypt.compare(password, user.password, function (err, result) {
                     return result ? callback(null, user) : (console.log('wrong password'), callback());
                 });

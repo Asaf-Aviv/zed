@@ -5,25 +5,38 @@ body
     .container
         .row.align-items-center.justify-content-center.vh-100
             .col-lg-6.col-md-7
-                form#search-form(method="GET", action="/summoner")
-                    .input-group
-                        .input-group-prepend
-                            select#region-select(name="region")
-                                option(value="NA1") NA
-                                option(value="EUW1") EUW
-                                option(value="EUN1") EUNE
-                                option(value="KR") KOREA
-                                option(value="JP1") JAPAN
-                                option(value="LA1") LAN
-                                option(value="BR1") BRAZIL
-                                option(value="LA2") LAS
-                                option(value="TR1") TURKEY
-                                option(value="OC1") OCE
-                                option(value="RU") RUSSIA
-                        input.form-control(type="text" name="userName" maxlength="16" placeholder="Summoner Name" required)
-                        .input-group-append
-                            button.btn
-                                i.fas.fa-search
+                .nav-search.zed-flex-center
+                    .summoner-input
+                        input(
+                            type="text" placeholder="Summoner Name" 
+                            minlength="3" maxlength="16" required)
+                        button.summoner-search-btn
+                            i.fas.fa-search
+                        if historyCookie && historyCookie.length
+                            .search-history.shadow
+                                .history-wrapper
+                                    each summonerSearch in historyCookie
+                                        - const [ pName, pRegion ] = summonerSearch.split('=')
+                                        .summoner
+                                            a.hist(href=`/summoner?region=${pRegion}&userName=${pName}`)= pName
+                                            .remove-history
+                                                i.fas.fa-times
+                        
+                    .nav-regions.zed-flex-center
+                        .selected-region.zed-flex-center.h-100.w-100(data-region="NA1") NA
+                        .regions-wrapper
+                            .region-select
+                                div.zed-flex-center(data-region="NA1") NA
+                                div.zed-flex-center(data-region="EUW1") EUW
+                                div.zed-flex-center(data-region="EUN1") EUNE
+                                div.zed-flex-center(data-region="KR") KOREA
+                                div.zed-flex-center(data-region="LA1") LAN
+                                div.zed-flex-center(data-region="LA2") LAS
+                                div.zed-flex-center(data-region="RU") RUSSIA
+                                div.zed-flex-center(data-region="JP1") JAPAN
+                                div.zed-flex-center(data-region="TR1") TURKEY
+                                div.zed-flex-center(data-region="BR1") BRAZIL
+                                div.zed-flex-center(data-region="OC1") OCE
     include partials/footer
     include partials/scroll_top
     include partials/scripts

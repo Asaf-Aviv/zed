@@ -1,7 +1,7 @@
 .msg-wrapper(id=message._id)
     p= message.inTrash
     .pic
-        img(src="http://via.placeholder.com/80x80")
+        img(src=message.author.profilePicture)
     .content
         .msg-header
             .author #[a(href=`/users/${message.author.username}`)= message.author.username]

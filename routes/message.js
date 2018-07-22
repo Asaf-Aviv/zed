@@ -11,7 +11,8 @@ router.post('/:receiverId', (req, res) => {
     const message = {
         author: {
             _id: senderId,
-            username: req.user.username
+            username: req.user.username,
+            profilePicture: req.user.profilePicture
         },
         to: {
             _id: receiverId,

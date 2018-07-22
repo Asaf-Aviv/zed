@@ -5,9 +5,11 @@ const app              = express();
 const server           = require('http').Server(app);
 
 // Socket.io
+const redis            = require('redis')
 global.io              = require('socket.io')(server);
 const redisAdapter     = require('socket.io-redis');
-io.adapter(redisAdapter({ host: 'localhost', port: 6379 }));
+const pubClient        = redis.createClient(13824, 'redis-13824.c17.us-east-1-4.ec2.cloud.redislabs.com', { auth_pass: process.env.REDIS_PASSWORD})
+io.adapter(redisAdapter({ pubClient }));
 require('./io');
 
 // Server utils
@@ -80,6 +82,9 @@ app.locals.leagueConstants = leagueConstants;
 app.locals.runesReforged = runesReforged;
 
 console.log('env', process.env.NODE_ENV);
+
+// Create new runesReforged on patch update
+// require('./makeJson');
 
 // MongoDB
 // mongoose.set('debug', true);

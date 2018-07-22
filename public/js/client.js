@@ -13,8 +13,13 @@ $(function() {
     });
 
     $('.remove-history').click(function() {
+        const summonerName = $(this).siblings('.hist').text()
         $(this).parent().remove();
         if (!$('.history-wrapper').children().length) $('#search-history').remove();
+
+        const _hist = Cookies.getJSON('_hist');
+        _hist.splice(_hist.findIndex(s => s.startsWith(`${summonerName}=`)), 1);
+        Cookies.set('_hist', _hist, { expires: 365 });
     });
 
     $('#nav-match-tab').click(function() {
@@ -31,11 +36,30 @@ $(function() {
             .text(regionText);
             
         $('#regions-wrapper').hide();
-        $('#region-select').removeClass('bounceInDown');
+    });
+
+    $('.region-select > div').click(function(e) {
+        const $this = $(this)
+        const regionId = $this.data('region');
+        const regionText = $this.text();
+
+        $('.selected-region')
+            .data('region', regionId)
+            .text(regionText);
+            
+        $('.regions-wrapper').hide();
     });
 
     $('#summoner-input input').focus(() => {
         $('#search-history').show();
+    });
+
+    $('.summoner-input input').focus(() => {
+        $('.search-history').show();
+    });
+
+    $('.summoner-input input').blur(() => {
+        $('.search-history').hide();
     });
 
     $(document).click(function(e) {
@@ -237,6 +261,7 @@ $(function() {
     $('.action-toggler').blur(function() {
         $('.actions').hide();
     });
+
     $('.actions').blur(function() {
         $('.actions').hide();
     });
@@ -251,7 +276,11 @@ $(function() {
             .focus()
     });
 
-    // FIX add new comment to the post
+    $('.toggle-comments').click(function() {
+        $this = $(this);
+        $this.parents('.post-content-wrapper').siblings('.comments').slideToggle();
+    });
+
     $('.comment-form').submit(function(e) {
         e.preventDefault();
         const $this = $(this);
@@ -263,13 +292,13 @@ $(function() {
             type: 'POST',
             data: $this.serialize(),
             url: '/post/comment/'+postId,
-            success: function(res) {
-                successAlert('success', 'center', 'fa fa-comment');
+            success: function(commentData) {
                 $this.find('textarea').val('');
+                $this.parents('.post-content-wrapper').siblings('.comments').append(commentData).slideDown();
             },
             error: function(err) {
                 errorAlert(err.responseText, 'center')
-                
+                console.log(err)
             },
             complete: function() {
                 $this.find('button').prop('disabled', false);
@@ -278,15 +307,18 @@ $(function() {
     });
 
     $(document).on('click', '.delete-comment', function() {
-        const commentId = $(this).attr('data-id');
         $this = $(this)
         $this.prop('disabled', true);
+        const commentId = $this.data('id');
+        const commentsLength = $this.parents('.comments').children().length;
 
         $.ajax({
             type: 'DELETE',
             url: '/post/comment/'+commentId,
             success: function(res) {
-                successAlert('Message deleted', 'topRight', 'fa fa-check');
+                successAlert('Comment deleted', 'topRight', 'fa fa-check');
+                $(`#${commentId}`).fadeOut(() => $(`#${commentId}`).remove());
+                $this.parents('.comments').siblings('.post-content-wrapper').find('.comment-count').text(commentsLength - 1)
             },
             error: function(err) {
                 alert(err);
@@ -316,7 +348,7 @@ $(function() {
     });
 
     $(document).on('click', '.accept-friend-request', function() {
-        const userId = $(this).attr('data-id');
+        const userId = $(this).data('id');
         $this = $(this)
         $this.prop('disabled', true)
 
@@ -325,8 +357,6 @@ $(function() {
             url: 'users/acceptFriendRequest/'+userId,
             success: function(res) {
                 $(`#${userId}`).remove();
-                // $(`#${res}`).find('button').remove();
-                // $(`#${res}`).append($('<button>').addClass('btn btn-success ').html('Friends'));
             },
             error: function(err) {
                 alert(err);
@@ -344,8 +374,7 @@ $(function() {
             type: 'POST',
             url: 'users/declineFriendRequest/'+userId,
             success: function(res) {
-                $(`#${res}`).find('button').remove();
-                $(`#${res}`).append($('<button>').addClass('btn btn-success send-friend-request').attr('data-id', res).html('ADD'));
+                $(`#${res}`).remove();
             },
             error: function(err) {
                 alert(err);
@@ -373,10 +402,9 @@ $(function() {
         });
     });
 
-    $('#nav-league-tab').click(function() {
+    $('#nav-league-tab').one('click', function() {
         const leagueId = $(this).data('league-id');
         const region = $(this).data('region');
-        console.log(leagueId, region);
 
         if (leagueId) {
             createLoader('#nav-league');
@@ -394,10 +422,9 @@ $(function() {
         } 
     });
 
-    $('#nav-match-tab').click(function() {
+    $('#nav-match-tab').one('click', function() {
         const summonerId = $(this).data('id');
         const region = $(this).data('region');
-        console.log(summonerId, region);
 
         createLoader('#nav-match');
         $.ajax({
@@ -405,6 +432,10 @@ $(function() {
             url: `/match/${summonerId}_${region}`,
             success: function(matchData) {
                 $('#nav-match').html(matchData);
+                console.log(matchData);
+            },
+            error: () => {
+                $('#nav-match').html(`<div class="not-in-game">Summoner is not in a game</div>`);
             },
             complete: () => $('.ui.dimmer.active').remove()
         });
@@ -578,19 +609,29 @@ $(function() {
 
     // User events end
 
+    $('#selected-region').click(function() {
+        $('#regions-wrapper').toggle();
+    });
+
+    $('.selected-region').click(function() {
+        $('.regions-wrapper').toggle();
+    });
+
     // Observables
     $('#scroll-top').click(() => {
         setTimeout(() => $('#scroll-top').css({'display': 'none'}), 200);
         $("html, body").animate({ scrollTop: 0 }, 200, 'easeOutCubic')
     });
 
-    $('#selected-region').click(function() {
-        $('#regions-wrapper').toggle();
-    });
-
     $('#summoner-input input').keypress(e => {
         if (e.keyCode === 13) {
             $('#summoner-search-btn').click();
+        }
+    });
+
+    $('.summoner-input input').keypress(e => {
+        if (e.keyCode === 13) {
+            $('.summoner-search-btn').click();
         }
     });
 
@@ -602,6 +643,17 @@ $(function() {
                     return errorAlert('Summoner name must be at least 3 characters long.', 'topCenter', false);
                 }
             $('#summoner-search-btn').prop('disabled', true);
+            window.location.href = `/summoner?region=${regionId}&userName=${summonerName}`;
+        });
+        
+    throttle$('.summoner-search-btn', 'click', 400)
+        .subscribe(() => {
+            const summonerName = $('.summoner-input input').val().replace(/ /g, '+');
+            const regionId = $('.selected-region').data('region');
+                if (summonerName.length < 3) {
+                    return errorAlert('Summoner name must be at least 3 characters long.', 'topCenter', false);
+                }
+            $('.summoner-search-btn').prop('disabled', true);
             window.location.href = `/summoner?region=${regionId}&userName=${summonerName}`;
         });
 
@@ -666,14 +718,6 @@ function errorAlert(message, position, overlay=true) {
     });
 }
 
-$('#suhdude').click( () => {
-    iziToast.show({
-        title: 'Friend Request',
-        message: `<a href="/users/yojimbozx">yojimbozx</a> sent you a friend request`,
-        icon: 'fa fa-user',
-    });
-});
-
 function fixPopover() {
     $('[data-trigger="manual"]').click(function(e) {
         $(this).popover('toggle');
@@ -694,11 +738,11 @@ function createLoader(parent, text='') {
     );
 }
 
-jQuery.each(jQuery('textarea[data-autoresize]'), function() {
+$.each($('textarea[data-autoresize]'), function() {
     const offset = this.offsetHeight - this.clientHeight;
 
     const resizeTextarea = function(el) {
-        jQuery(el).css('height', 'auto').css('height', el.scrollHeight + offset + 2);
+        $(el).css('height', 'auto').css('height', el.scrollHeight + offset + 2);
     };
-    jQuery(this).on('keyup input', function() { resizeTextarea(this); }).removeAttr('data-autoresize');
+    $(this).on('keyup input', function() { resizeTextarea(this); }).removeAttr('data-autoresize');
 });

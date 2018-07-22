@@ -2,8 +2,8 @@ nav#main-nav-bar
     .wrapper
         #main-left-nav-bar.d-flex
             a(href="/") Home
-            a(href="/leaderboards?region=NA1") Leaderboards
             a(href="/statistics") Statistics
+            a(href="/leaderboards?region=NA1") Leaderboards
             #nav-dropdown
                 a Data
                 .nav-dropdown
@@ -18,7 +18,7 @@ nav#main-nav-bar
                     minlength="3" maxlength="16" required)
                 button#summoner-search-btn
                     i.fas.fa-search
-                if historyCookie
+                if historyCookie && historyCookie.length
                     #search-history.shadow
                         .history-wrapper
                             each summonerSearch in historyCookie
@@ -48,7 +48,6 @@ nav#main-nav-bar
             //- a.d-flex.align-items-center(href="/users") Find Legends
             if currentUser
                 #nav-bar-util.d-flex.mr-5
-
                     #notifications.util-box(data-link="#notifications-nav")
                         i.far.fa-lg.fa-bell
                         span.badge

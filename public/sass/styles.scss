@@ -40,13 +40,13 @@
     user-select: none;
     display: flex;
     z-index: 1100;
-    >div {
+    > div {
       height: 100%;
     }
     a:not(.notify-link),
     .util-box {
       &::before {
-        content: '';
+        content: "";
         display: block;
         height: 5px;
         background: $nav-blue;
@@ -74,6 +74,108 @@
       &:hover:not(.hist) {
         &::before {
           transform: scale(1, 1);
+        }
+      }
+    }
+  }
+}
+
+.nav-search {
+  .summoner-input {
+    position: relative;
+    input {
+      font-size: 1.5rem;
+      background: #6d6d6d;
+      border: 0;
+      padding-left: 8px;
+      width: 300px;
+      height: 60px;
+    }
+    .summoner-search-btn {
+      border: 0;
+      height: 60px;
+      width: 100px;
+      background: $dark-blue-btn;
+      i {
+        font-size: 1.8rem;
+        color: #fff;
+        transition: transform 150ms ease-out;
+      }
+      &:hover {
+        background: $dark-blue;
+        i {
+          transform: rotate(90deg);
+        }
+      }
+      &:active {
+        background: $dark-blue-btn;
+      }
+    }
+    .search-history {
+      position: absolute;
+      display: none;
+      top: 60px;
+      width: 100%;
+      background: $nav-bg-dark;
+      border-top: 5px solid $dark-blue-btn;
+      &.shadow {
+        box-shadow: 0 3px 20px -4px #151515 !important;
+      }
+      .summoner {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.8em;
+        .remove-history {
+          padding: 0 0.8em;
+          cursor: pointer;
+          i {
+            font-size: 0.8em;
+          }
+        }
+        a {
+          letter-spacing: 0;
+          padding: 0;
+          font-size: 0.9em;
+        }
+      }
+    }
+  }
+
+  .nav-regions {
+    cursor: pointer;
+    position: relative;
+    background: $nav-btn;
+    width: 100px;
+    margin-left: 10px;
+    font-size: 0.9em;
+    height: 60px;
+    .selected-region {
+      font-size: 1.6rem;
+    }
+    .regions-wrapper {
+      display: none;
+      .region-select {
+        cursor: default;
+        position: absolute;
+        display: flex;
+        flex-wrap: wrap;
+        background: $nav-bg;
+        padding: 3px;
+        left: -10px;
+        top: 66px;
+        width: 258px;
+        box-shadow: 0px 4px 11px #1d1d1d;
+        > div {
+          font-size: 0.8em;
+          height: 35px;
+          width: 70px;
+          margin: 7px;
+          background: $nav-btn;
+          transition: transform 80ms ease-out;
+          cursor: pointer;
+          &:hover {
+            transform: translateY(-3px);
+          }
         }
       }
     }
@@ -120,12 +222,12 @@
       .summoner {
         display: flex;
         justify-content: space-between;
-        padding: .8em;
+        padding: 0.8em;
         .remove-history {
-          padding: 0 .8em;
+          padding: 0 0.8em;
           cursor: pointer;
           i {
-            font-size: .8em;
+            font-size: 0.8em;
           }
         }
         a {
@@ -136,14 +238,14 @@
       }
     }
   }
-  
+
   #nav-regions {
     cursor: pointer;
     position: relative;
     background: $nav-btn;
     width: 70px;
     margin-left: 10px;
-    font-size: .9em;
+    font-size: 0.9em;
     height: 35px;
     #regions-wrapper {
       display: none;
@@ -158,7 +260,7 @@
         top: 50px;
         width: 258px;
         box-shadow: 0px 4px 11px #1d1d1d;
-        >div {
+        > div {
           font-size: 0.8em;
           height: 35px;
           width: 70px;
@@ -208,7 +310,7 @@
     .badge {
       font-family: Arial;
       background: $nav-btn;
-      border-radius: .50rem;
+      border-radius: 0.5rem;
       font-size: 70%;
       color: #fff;
       position: absolute;
@@ -232,7 +334,7 @@
   top: 88px;
   z-index: 100;
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: -20px;
     left: 155px;
@@ -250,27 +352,13 @@
   }
   .notify-wrapper {
     position: relative;
-    padding-left: .5em;
+    padding-left: 0.5em;
     margin-bottom: 1em;
     border-left: 4px solid $nav-blue;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
-    // &::before {
-    //   position: absolute;
-    //   top: 50%;
-    //   content: "√";
-    //   background-color: $dark-blue;
-    //   margin-top: -17px;
-    //   left: -17px;
-    //   color: #FFF;
-    //   width: 30px;
-    //   height: 30px;
-    //   border-radius: 100%;
-    //   text-align: center;
-    //   line-height: 30px;
-    //   font-weight: bold;
-    //   font-family: Georgia;
-    //   text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
-    // }
+    &:last-of-type {
+      margin-bottom: 0;
+    }
     .notify-time {
       font-weight: bold;
       position: absolute;
@@ -279,7 +367,7 @@
       font-size: 0.7em;
     }
     .notify-body {
-      font-size: .9em;
+      font-size: 0.9em;
       padding-top: 1.2em;
     }
   }
@@ -287,7 +375,7 @@
     background: $nav-bg-dark;
     color: $light-grey;
     // width: 350px;
-    padding: .5em;
+    padding: 0.5em;
     height: 270px;
     overflow-y: auto;
   }
@@ -361,7 +449,7 @@
 
 #champ-base-stats {
   table {
-    tr>th,
+    tr > th,
     td {
       padding: 3px;
       font-weight: 600;
@@ -425,7 +513,8 @@
 
 // SUMMONER
 
-#nav-match, #nav-league {
+#nav-match,
+#nav-league {
   min-height: 160px;
 }
 
@@ -440,7 +529,7 @@
     padding-bottom: 8px;
     align-items: flex-end;
     justify-content: space-around;
-    border-bottom: 1px solid rgba(255, 255, 255, .35);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
     h1 {
       margin-bottom: 0;
       font-size: 1.3rem;
@@ -483,7 +572,7 @@
 }
 
 .series-progress {
-  >div {
+  > div {
     display: inline-block;
   }
   .series-W::after,
@@ -492,7 +581,7 @@
     margin: 0 3px;
     font-size: 10px;
     border-radius: 50%;
-    font-family: 'Font Awesome\ 5 Free';
+    font-family: "Font Awesome\ 5 Free";
     content: "\f111";
   }
   .series-W::after {
@@ -532,7 +621,7 @@
 }
 
 // LEAGUE EMD
-// ACTIVE MATCH 
+// ACTIVE MATCH
 #match-wrapper {
   font-size: 0.9em;
   .series-progress {
@@ -636,7 +725,7 @@
     #sub-perk {
       padding: 15px;
       margin-top: 100px;
-      >img {
+      > img {
         margin-left: 60px;
       }
     }
@@ -666,8 +755,8 @@
 }
 
 .not-in-game {
-  padding-top: 30px;
-  height: 159px;
+  text-align: center;
+  padding-top: 2em;
 }
 
 // ACTIVE MATCH END
@@ -683,7 +772,8 @@
   .nav-tabs {
     border: 0;
   }
-  .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  .nav-tabs .nav-item.show .nav-link,
+  .nav-tabs .nav-link.active {
     background-color: $dark-blue-btn;
     color: #fff;
     border-color: #dee2e6 #dee2e6 #fff;
@@ -699,25 +789,25 @@
     margin: 1em 0;
     .game-header {
       background: $primary-bg-color;
-      padding: .5em 1em;
+      padding: 0.5em 1em;
       // color: $dark-grey;
       .analyze-match {
         a {
           color: #2ce0ff;
         }
       }
-        > div {
+      > div {
         width: 140px;
         margin-right: 1.5em;
       }
     }
     .game-wrapper {
-      font-size: .9em;
+      font-size: 0.9em;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0.3em;
-      
+
       &.win {
         background: #154b22;
       }
@@ -730,7 +820,7 @@
         width: 50px;
         height: 50px;
         img {
-          border-radius: 50%
+          border-radius: 50%;
         }
       }
       .summoner-info {
@@ -739,7 +829,7 @@
         align-items: center;
         flex-wrap: wrap;
         overflow: hidden;
-        >div {
+        > div {
           margin: 0.3em;
         }
         .level {
@@ -777,7 +867,7 @@
           font-weight: 300;
           color: $light-grey;
           font-family: Arial;
-          font-size: .8em;
+          font-size: 0.8em;
         }
         .item {
           margin: 0.1em;
@@ -798,7 +888,7 @@
           display: flex;
           flex-flow: column;
           .player {
-            margin: .05em;
+            margin: 0.05em;
             display: flex;
             .champion {
               height: 20px;
@@ -821,7 +911,8 @@
       background: $nav-btn;
     }
   }
-  .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  .nav-pills .nav-link.active,
+  .nav-pills .show > .nav-link {
     background: $nav-btn;
   }
   ul {
@@ -857,7 +948,7 @@
     }
     &:hover {
       img {
-        filter: grayscale(0)
+        filter: grayscale(0);
       }
     }
   }
@@ -878,7 +969,7 @@
   li {
     list-style: none;
   }
-  >div {
+  > div {
     padding: 20px;
     display: none;
     margin-left: 20px;
@@ -893,7 +984,7 @@
     border-radius: 50%;
     transition: 0.5s;
     &:hover {
-      filter: grayscale(0)
+      filter: grayscale(0);
     }
   }
 }
@@ -933,7 +1024,7 @@
     }
     .main-perk,
     .sub-perk {
-      >img {
+      > img {
         height: 48px !important;
         width: 48px !important;
         margin-left: 75px;
@@ -1085,7 +1176,7 @@
   align-items: center;
 }
 
-.league-info>span {
+.league-info > span {
   margin-left: 25px;
 }
 
@@ -1175,9 +1266,7 @@
   a {
     border-bottom: 3px solid transparent;
     border-radius: 0;
-    transition: 
-      border-color 200ms ease-out,
-      color 200ms ease-out;
+    transition: border-color 200ms ease-out, color 200ms ease-out;
     &:hover {
       color: $dark-blue;
       border-color: $dark-blue;
@@ -1218,13 +1307,25 @@
 /* FOOTER */
 
 #footer {
+  justify-content: center;
+  display: flex;
   padding: 1em 2em;
-  background-image: linear-gradient(to right bottom, #323232, #2f2f2f, #2c2c2c, #2a2929, #272626);
+  background-image: linear-gradient(
+    to right bottom,
+    #323232,
+    #2f2f2f,
+    #2c2c2c,
+    #2a2929,
+    #272626
+  );
+  > div {
+    margin: 0 2rem;
+  }
   h3 {
     font-weight: 600;
   }
   .d-flex {
-    justify-content: space-evenly;
+    flex-direction: column;
     a {
       color: $laser-green;
       &:hover {
@@ -1232,35 +1333,18 @@
       }
     }
   }
-  .donate {
-    position: absolute;
-    right: 0;
-    height: 50px;
-    display: flex;
-    img {
-      width: auto;
-      height: auto;
-    }
-  }
   .c-wrapper {
-    border-top: 1px solid #484848;
-    .c {
-      color: $dark-grey;
-      text-align: center;
-      font-size: 0.8em;
-      padding-top: .5em;
-      a {
-        color: $light-blue !important;
-      }
-    }
-  }
-  
-  .social-media {
-    height: 80px;
-    > div {
-      margin: 0 .3em;
+    padding-left: 2rem;
+    border-left: 1px solid #484848;
+    .github {
+      margin-right: 1rem;
       border-radius: 50%;
-      font-size: 1.5em;
+      font-size: 3rem;
+      &:hover {
+        i {
+          color: #fff;
+        }
+      }
       a {
         border-radius: 50%;
         flex: 1;
@@ -1271,24 +1355,30 @@
         transition: color 250ms ease;
       }
     }
-    .facebook:hover {
-      i {
-        color: #3B5998;
-      }
-    }
-    .twitter:hover {
-      i {
-        color: #1DA1F2;
-      }
-    }
-    .instagram:hover {
-      i {
-        color: #cd486b;
+    .c {
+      color: $dark-grey;
+      text-align: center;
+      font-size: 0.8em;
+      padding-top: 0.5em;
+      a {
+        color: $light-blue !important;
       }
     }
   }
 }
 
+@media (max-width: 460px){
+  #footer {
+    flex-direction: column;
+  }
+  #footer .d-flex {
+    margin-bottom: 2rem !important;
+  }
+  #footer .c-wrapper {
+    border-left: none;
+    flex-direction: column;
+  }
+}
 // Footer End
 
 // POPOVER
@@ -1312,7 +1402,7 @@
   border-bottom: 1px solid $dark-blue;
 }
 
-.popover-body>span {
+.popover-body > span {
   img {
     width: 48px;
     height: 48px;
@@ -1343,9 +1433,9 @@ itemname {
 
 unique,
 active,
-active>a,
+active > a,
 passive,
-passive>a {
+passive > a {
   color: #fddb22;
 }
 
@@ -1361,10 +1451,11 @@ stats {
   border: 0;
 }
 
-// PROFILE 
+// PROFILE
 #profile-menu {
+  font-size: 0.8em;
   font-weight: 600;
-  letter-spacing: .07em;
+  letter-spacing: 0.07em;
   background: $nav-bg;
   a {
     padding: 1em;
@@ -1405,10 +1496,47 @@ stats {
   }
   button {
     float: right;
-    background: $dark-blue;
+    background: $dark-blue-btn;
+    color: #fff;
+    &:hover {
+      background: $dark-blue;
+    }
   }
 }
 
+.accept-friend-request {
+  background: #004f20 !important;
+}
+.decline-friend-request {
+  background: #840808 !important;
+}
+
+#prof-friend-requests {
+  > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    &:not(:last-child) {
+      margin-bottom: 1em;
+    }
+    button {
+      width: 70px;
+      margin: 0 0.4em;
+      font-size: 0.8em;
+      color: #fff;
+      padding: 0.3em 0.5em;
+    }
+  }
+}
+
+.request-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  img {
+    border-radius: 50%;
+  }
+}
 // Inbox
 #inbox-controls {
   user-select: none;
@@ -1416,7 +1544,7 @@ stats {
   font-weight: bold;
   font-size: 0.9em;
   > div {
-    padding: .7em;
+    padding: 0.7em;
     cursor: pointer;
     transition: 100ms ease-out;
     &:hover {
@@ -1453,7 +1581,7 @@ stats {
   .pic {
     display: inline-block;
     width: 80px;
-    height:80px;
+    height: 80px;
     margin-right: 1em;
   }
   .content {
@@ -1467,10 +1595,10 @@ stats {
       }
     }
     .msg-body-wrapper {
-      margin: 0 2em .5em 0;
+      margin: 0 2em 0.5em 0;
       cursor: pointer;
       .msg-subject {
-        margin: .5em 0em;
+        margin: 0.5em 0em;
         font-weight: bold;
         color: $dark-grey;
       }
@@ -1487,12 +1615,13 @@ stats {
         border: 0;
         margin-right: 1.3em;
         color: $dark-grey;
-        font-size: .8em;
+        font-size: 0.8em;
         &:hover {
           color: $light-grey;
         }
       }
-      .bookmark-msg, .self-bookmark-msg {
+      .bookmark-msg,
+      .self-bookmark-msg {
         &:hover {
           i {
             color: yellow;
@@ -1508,6 +1637,13 @@ stats {
   }
 }
 
+.green-link {
+  color: $laser-green;
+  &:hover {
+    color: $laser-green;
+  }
+}
+
 .message-form {
   .col-form-label {
     color: #fff;
@@ -1519,7 +1655,7 @@ stats {
     resize: none;
   }
 }
-// message modal 
+// message modal
 .modal-content {
   border: 0;
   border-radius: 0;
@@ -1539,12 +1675,12 @@ stats {
   .modal-footer {
     padding: 1rem 1rem 0 1rem;
     button {
-      padding: 0.4em .7em;
+      padding: 0.4em 0.7em;
       background: #fff;
       transition: 200ms ease-out;
       &:hover {
         color: #fff;
-        background: #1DA1F2;
+        background: #1da1f2;
       }
     }
   }
@@ -1570,6 +1706,9 @@ stats {
 }
 
 #info-form {
+  .form-control {
+    background: #2a2a2a !important;
+  }
   .text-center {
     padding: 0 2em;
     button {
@@ -1577,13 +1716,11 @@ stats {
       background: transparent;
       font-size: 1.3em;
       border: 4px solid $nav-blue;
-      margin: 1em 0 .5em 0;
+      margin: 1em 0 0.5em 0;
       color: #fff;
       width: 100%;
       height: 50px;
-      transition: 
-        background 200ms ease-out,
-        border-color 200ms ease-out;
+      transition: background 200ms ease-out, border-color 200ms ease-out;
       &:hover {
         background: $nav-bg-dark;
         border-color: $laser-green;
@@ -1593,19 +1730,20 @@ stats {
       }
     }
   }
-  
+
   .form-group {
     padding: 0 2em !important;
   }
   h4 {
-    padding: 0 0 .5em 0 !important;
+    padding: 0 0 0.5em 0 !important;
     border-bottom: 1px solid #3f3f3f;
     margin: 0 1em 1em 1em;
   }
   .form-row {
     margin-bottom: 1em;
   }
-  select, textarea {
+  select,
+  textarea {
     border: 0;
     border-bottom: 1px solid $laser-green;
     background: $nav-bg-dark !important;
@@ -1615,9 +1753,10 @@ stats {
     border-radius: 0;
     background-color: transparent;
   }
-  input, textarea {
+  input,
+  textarea {
     background: transparent;
-    padding: .25em .50em;
+    padding: 0.25em 0.5em;
     border: 0;
     border-bottom: 1px solid $laser-green;
     &:focus {
@@ -1625,7 +1764,7 @@ stats {
     }
   }
   .icon-btn {
-    padding: .4em 1em;
+    padding: 0.4em 1em;
     background: $nav-blue;
     color: #fff;
     &:hover {
@@ -1639,7 +1778,7 @@ stats {
 
 // Friends
 .user-wrapper {
-  margin: 0 .5em 1em;
+  margin: 0 0.5em 1em;
   padding: 1em 0 1em 1em;
   span {
     display: block;
@@ -1666,10 +1805,8 @@ stats {
         }
       }
       .user-desc {
-
       }
       .user-footer {
-
       }
     }
   }
@@ -1677,15 +1814,17 @@ stats {
 
 // Friends end
 
-
 // Post
 
-.post-header, .comment-header, .msg-header {
-  margin-bottom: .6em;
+.post-header,
+.comment-header,
+.msg-header {
+  margin-bottom: 0.6em;
   display: flex;
 }
 
-.post-body, .comment-body {
+.post-body,
+.comment-body {
   color: $light-grey;
   margin: 1em 2em;
   p {
@@ -1714,7 +1853,8 @@ stats {
   }
 }
 
-.delete-post, .delete-comment {
+.delete-post,
+.delete-comment {
   margin-left: auto;
 }
 
@@ -1722,7 +1862,7 @@ stats {
   position: relative;
   margin-left: auto;
   > button {
-    padding: 0 .8em;
+    padding: 0 0.8em;
     background: transparent;
     border: 0;
     color: $light-grey;
@@ -1741,7 +1881,7 @@ stats {
     overflow: visible !important;
     &::before {
       display: block;
-      content: '';
+      content: "";
       top: -10px;
       right: 38px;
       position: absolute;
@@ -1751,14 +1891,14 @@ stats {
     }
     button {
       font-weight: bold;
-      margin: .5em;
+      margin: 0.5em;
       display: flex;
       align-items: center;
       border: 0;
       background: transparent;
       color: $really-dark-grey;
       i {
-        margin: 0 .5em .2em 0;
+        margin: 0 0.5em 0.2em 0;
       }
       &:hover {
         color: $light-grey;
@@ -1767,17 +1907,30 @@ stats {
   }
 }
 
-.post-controls, .comment-controls {
+.post-controls,
+.comment-controls {
   display: flex;
   align-items: flex-end;
   margin: 0 2em;
   button {
-    margin-right: .5em;
+    margin-right: 0.5em;
     background: transparent;
     border: 0;
     color: $really-dark-grey;
     &:hover {
       color: $light-grey;
+    }
+  }
+}
+
+.toggle-comments {
+  margin-left: auto;
+  button {
+    font-weight: 700;
+    font-size: 0.7em;
+    color: $light-blue;
+    &:hover {
+      color: $light-blue;
     }
   }
 }
@@ -1791,7 +1944,8 @@ stats {
   .post-content-wrapper {
     padding: 0.5em;
     border: 1px solid #2f2f2f;
-    .like-count {
+    .like-count,
+    .comment-count {
       font-weight: bold;
     }
     .comment-toggler {
@@ -1811,22 +1965,27 @@ stats {
         border-bottom: 2px solid $laser-green;
         resize: none;
         color: $light-grey;
-        margin-bottom: .2em;
+        margin-bottom: 0.2em;
         &:focus {
           outline: 0;
         }
       }
       button {
         float: right;
-        background: $turkiz;
+        background: $dark-blue-btn;
+        color: #fff;
+        &:hover {
+          background: $dark-blue;
+        }
       }
     }
   }
 }
 
-// Post end 
+// Post end
 // Comment
 .comments {
+  display: none;
   margin-left: 2em;
   .comment {
     position: relative;
@@ -1878,12 +2037,12 @@ stats {
     }
     .form-footer {
       border-top: 1px solid #5d5d5d;
-      padding-top: .5em;
-      margin: .5em 0;
+      padding-top: 0.5em;
+      margin: 0.5em 0;
     }
     .forgot {
       letter-spacing: 0;
-      font-size: .8em;
+      font-size: 0.8em;
       color: $laser-green;
     }
     .logins {
@@ -1893,13 +2052,11 @@ stats {
       background: transparent;
       font-size: 1.3em;
       border: 4px solid $nav-blue;
-      margin: 1em 0 .5em 0;
+      margin: 1em 0 0.5em 0;
       color: #fff;
       width: 100%;
       height: 50px;
-      transition: 
-        background 200ms ease-out,
-        border-color 200ms ease-out;
+      transition: background 200ms ease-out, border-color 200ms ease-out;
       &:hover {
         background: $nav-bg-dark;
         border-color: $laser-green;
@@ -1910,12 +2067,14 @@ stats {
     }
     span {
       letter-spacing: 0;
-      font-size: .8em;
+      font-size: 0.8em;
     }
   }
 }
 
-#register-form, #login-form, #contact-form {
+#register-form,
+#login-form,
+#contact-form {
   .form-icon {
     position: relative;
     margin-bottom: 2em;
@@ -1928,15 +2087,16 @@ stats {
       align-self: flex-end;
       font-size: 1.2em;
       flex: 1;
-      margin-bottom: .25em;
+      margin-bottom: 0.25em;
       &.fa-pencil-alt {
         align-self: flex-start;
         margin-top: 0.3em;
       }
     }
-    input, textarea {
+    input,
+    textarea {
       background: transparent;
-      padding: .25em .50em;
+      padding: 0.25em 0.5em;
       width: 90%;
       border: 0;
       border-bottom: 1px solid $laser-green;
@@ -2121,7 +2281,7 @@ yellow {
 
 /* FONT AWESOME */
 
-// LOADER 
+// LOADER
 .ui.loader {
   display: none;
   position: absolute;
@@ -2130,34 +2290,34 @@ yellow {
   margin: 0;
   text-align: center;
   z-index: 1000;
-  transform: translateX(-50%) translateY(-50%)
+  transform: translateX(-50%) translateY(-50%);
 }
 
 .ui.loader:before {
   position: absolute;
-  content: '';
+  content: "";
   top: 0;
   left: 50%;
   width: 100%;
   height: 100%;
   border-radius: 500rem;
-  border: .2em solid rgba(0, 0, 0, .1)
+  border: 0.2em solid rgba(0, 0, 0, 0.1);
 }
 
 .ui.loader:after {
   position: absolute;
-  content: '';
+  content: "";
   top: 0;
   left: 50%;
   width: 100%;
   height: 100%;
-  animation: loader .6s linear;
+  animation: loader 0.6s linear;
   animation-iteration-count: infinite;
   border-radius: 500rem;
   border-color: #767676 transparent transparent;
   border-style: solid;
-  border-width: .2em;
-  box-shadow: 0 0 0 1px transparent
+  border-width: 0.2em;
+  box-shadow: 0 0 0 1px transparent;
 }
 
 // @-webkit-keyframes loader {
@@ -2174,19 +2334,19 @@ yellow {
 .ui.loader:before {
   width: 2.28571429rem;
   height: 2.28571429rem;
-  margin: 0 0 0 -1.14285714rem
+  margin: 0 0 0 -1.14285714rem;
 }
 
 .ui.dimmer .loader {
-  display: block
+  display: block;
 }
 
 .ui.dimmer .ui.loader {
-  color: rgba(255, 255, 255, .9)
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .ui.dimmer .ui.loader:before {
-  border-color: rgba(255, 255, 255, .15)
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .ui.dimmer .ui.loader:after {
@@ -2195,7 +2355,7 @@ yellow {
 
 .ui.text.loader {
   min-width: 2.28571429rem;
-  padding-top: 3.07142857rem
+  padding-top: 3.07142857rem;
 }
 
 // LOADER END
@@ -2211,7 +2371,7 @@ yellow {
   i {
     padding: 10px;
     font-size: 2em;
-    background: rgba(120, 120, 120, 0.1)
+    background: rgba(120, 120, 120, 0.1);
   }
 }
 
@@ -2222,7 +2382,7 @@ yellow {
   justify-content: center;
 }
 
-// Animations 
+// Animations
 .ring {
   animation: ring 1500ms cubic-bezier(0.32, 0.12, 0.49, 1.16);
 }

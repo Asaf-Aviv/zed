@@ -298,7 +298,6 @@ $(function() {
             },
             error: function(err) {
                 errorAlert(err.responseText, 'center')
-                console.log(err)
             },
             complete: function() {
                 $this.find('button').prop('disabled', false);
@@ -432,7 +431,6 @@ $(function() {
             url: `/match/${summonerId}_${region}`,
             success: function(matchData) {
                 $('#nav-match').html(matchData);
-                console.log(matchData);
             },
             error: () => {
                 $('#nav-match').html(`<div class="not-in-game">Summoner is not in a game</div>`);
@@ -462,7 +460,6 @@ $(function() {
         e.preventDefault();
         $this = $(this);
         const userId = $this.data('id');
-        console.log($this);
 
         $.ajax({
             type: 'POST',
@@ -482,10 +479,8 @@ $(function() {
 
     // Reply msg
     $('.reply-msg').click(function() {
-        console.log('clicked');
         const userId = $(this).data('id');
         const username = $(this).data('username');
-        console.log(userId, username);
         $(this).closest(`#reply-${userId}`).addClass('show');
     });
 
@@ -531,10 +526,7 @@ $(function() {
 
     // report msg
     $('.report-msg').click(function() {
-        console.log('clicked');
         const msgId = $(this).data('id');
-        console.log(msgId);
-        
     });
 
     // messages end

@@ -8,8 +8,9 @@ const server           = require('http').Server(app);
 const redis            = require('redis')
 global.io              = require('socket.io')(server);
 const redisAdapter     = require('socket.io-redis');
-const pubClient        = redis.createClient(13824, 'redis-13824.c17.us-east-1-4.ec2.cloud.redislabs.com', { auth_pass: process.env.REDIS_PASSWORD})
-io.adapter(redisAdapter({ pubClient }));
+const pubClient        = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_URL, { auth_pass: process.env.REDIS_PASSWORD})
+const subClient        = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_URL, { auth_pass: process.env.REDIS_PASSWORD})
+io.adapter(redisAdapter({ pubClient, subClient }));
 require('./io');
 
 // Server utils
@@ -20,19 +21,17 @@ const bodyParser       = require("body-parser");
 const moment           = require('moment');
 const momentDuration   = require("moment-duration-format")(moment);
 const morgan           = require('morgan');
-const rp               = require('request-promise');
 const fs               = require('fs');
-const bluebird         = require('bluebird');
 const helmet           = require('helmet');
 const path             = require('path');
 const expressValidator = require('express-validator');
-const flash            = require('connect-flash');
 const championIds      = require('./assets/data/champions/championIds');
 const runesReforged    = require('./assets/league/data/en_US/runesReforged.json')
 const runePaths        = require('./assets/league/data/en_US/runes');
 const runeDesc         = require('./assets/data/runeDesc');
 const leagueConstants  = require('./assets/data/leaugeConstants');
 const zed              = require('./util/zed');
+const port             = process.env.PORT || 3000;
 // Authentication utils
 const session          = require('express-session');
 const sharedsession    = require("express-socket.io-session");
@@ -115,7 +114,7 @@ app
 .use(bodyParser.urlencoded({ extended: false }))
 .use(expressValidator())
 .use(session({
-    secret: 'EFK9AqwLKR932',
+    secret: process.env.SS_SECRET,
     resave: false,
     saveUninitialized: false,
     autoSave: true,
@@ -130,7 +129,6 @@ app
     res.locals.historyCookie = req.cookies._hist ? JSON.parse(req.cookies._hist) : null;
     next();
 })
-.use(flash())
 .use(morgan('combined', {stream: accessLogStream}))
 .use(function(req, res, next){
     res.locals.messages = require('express-messages')(req, res);
@@ -162,7 +160,7 @@ app
 .use('/', index)
 
 io.use(sharedsession(session({
-    secret: 'EFK9AqwLKR932',
+    secret: process.env.SS_SECRET,
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({
@@ -206,13 +204,12 @@ app.get('*', (req, res) => {
 //     console.log(`Caught exception: ${err}\n`);
 // });
 
-server.listen('1337', () => {
-    console.log(`Listening on port 1337`);
+server.listen(port, () => {
+    console.log(`Listening on port ${port}`);
 });
 
 process.on('SIGINT', () => {
     console.info('SIGINT signal received.');
-
     // Stops the server from accepting new connections and finishes existing connections.
     server.close(err => {
         if (err) {

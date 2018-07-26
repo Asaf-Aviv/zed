@@ -12,16 +12,6 @@ $(function() {
         e.preventDefault();
     });
 
-    $('.remove-history').click(function() {
-        const summonerName = $(this).siblings('.hist').text()
-        $(this).parent().remove();
-        if (!$('.history-wrapper').children().length) $('#search-history').remove();
-
-        const _hist = Cookies.getJSON('_hist');
-        _hist.splice(_hist.findIndex(s => s.startsWith(`${summonerName}=`)), 1);
-        Cookies.set('_hist', _hist, { expires: 365 });
-    });
-
     $('#nav-match-tab').click(function() {
         $(this).removeClass('animate');
     });
@@ -658,6 +648,16 @@ $(function() {
         });
 
     // Observables End
+    
+    $('.remove-history').click(function() {
+        const summonerName = $(this).siblings('.hist').text()
+        $(this).parent().remove();
+        if (!$('.history-wrapper').children().length) $('#search-history').remove();
+
+        const _hist = Cookies.getJSON('_hist');
+        _hist.splice(_hist.findIndex(s => s.startsWith(`${summonerName}=`)), 1);
+        Cookies.set('_hist', _hist, { expires: 365 });
+    });
 });
 
 function throttle$(el, event, time=500) {

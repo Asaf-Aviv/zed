@@ -1,5 +1,4 @@
 require('dotenv').config();
-const debug            = require('debug')('zed');
 const express          = require('express');
 const app              = express();
 const server           = require('http').Server(app);
@@ -85,9 +84,6 @@ console.log('env', process.env.NODE_ENV);
 // Create new runesReforged on patch update
 // require('./makeJson');
 
-// MongoDB
-// mongoose.set('debug', true);
-
 // Redis
 redisClient.on('connect', () => {
     console.log(`Connected to redis`);
@@ -106,10 +102,9 @@ app
 .use(compression())
 .use(helmet())
 .use(cookieParser())
-.use('/dist', express.static(path.join(__dirname, 'dist')))
-.use('/public', express.static(path.join(__dirname, 'public')))
-.use('/matches', express.static(path.join(__dirname, 'matches')))
-.use('/assets', express.static(path.join(__dirname, 'assets')))
+.use('/dist', express.static(path.join(__dirname, '/dist')))
+.use('/matches', express.static(path.join(__dirname, '/matches')))
+.use('/assets', express.static(path.join(__dirname, '/assets')))
 .use(bodyParser.json())
 .use(bodyParser.urlencoded({ extended: false }))
 .use(expressValidator())

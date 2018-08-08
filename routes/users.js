@@ -1,7 +1,7 @@
-const express = require('express');
-const router  = express.Router();
-const Legend  = require('../models/user');
-const auth    = require('../middlewares/auth');
+const express = require('express')
+const router  = express.Router()
+const Legend  = require('../models/user')
+const auth    = require('../middlewares/auth')
 
 router.get('/:userName', auth.isLogged(), (req, res) => {
     console.log(req.params.userName)
@@ -9,16 +9,16 @@ router.get('/:userName', auth.isLogged(), (req, res) => {
     Legend.findOne({ username: req.params.userName }).then(user => {
         if (user) {
             console.log('users found')
-            user.profileViews++;
-            user.save();
+            user.profileViews++
+            user.save()
             res.render('user_profile', {
                 title: `${user.username} | Legends`,
                 user,
-            });
+            })
         } else {
-            res.redirect('/users');
+            res.redirect('/users')
         }
-    });
-});
+    })
+})
 
-module.exports = router;
+module.exports = router

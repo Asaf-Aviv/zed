@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Schema   = mongoose.Schema;
+const mongoose = require('mongoose')
+const Schema   = mongoose.Schema
 
 const MessageSchema = new Schema({
     author: {
@@ -44,6 +44,6 @@ const MessageSchema = new Schema({
         type: Boolean,
         default: false
     }
-});
+})
 
-module.exports = MessageSchema;
+module.exports = MessageSchema

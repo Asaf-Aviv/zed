@@ -1,5 +1,5 @@
-const mongoose      = require('mongoose');
-const Schema        = mongoose.Schema;
+const mongoose      = require('mongoose')
+const Schema        = mongoose.Schema
 
 const ReportSchema = new Schema({
   reportType: {
@@ -15,6 +15,6 @@ const ReportSchema = new Schema({
     type: String,
     required: true
   }
-});
+})
 
-module.exports = Report = mongoose.model('reports', ReportSchema);
+module.exports = Report = mongoose.model('reports', ReportSchema)

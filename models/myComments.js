@@ -1,5 +1,5 @@
-const mongoose   = require('mongoose');
-const Schema     = mongoose.Schema;
+const mongoose   = require('mongoose')
+const Schema     = mongoose.Schema
 
 const MyCommentsSchema = new Schema({
     posterId: Schema.Types.ObjectId,
@@ -9,6 +9,6 @@ const MyCommentsSchema = new Schema({
         type: Date,
         default: Date.now
     }
-});
+})
 
-module.exports = MyCommentsSchema;
+module.exports = MyCommentsSchema

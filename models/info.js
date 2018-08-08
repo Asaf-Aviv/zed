@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Schema   = mongoose.Schema;
+const mongoose = require('mongoose')
+const Schema   = mongoose.Schema
 
 const InfoSchema = new Schema({
     _id: false,
@@ -8,6 +8,6 @@ const InfoSchema = new Schema({
     country: String,
     about: String,
     gender: String,
-});
+})
 
-module.exports = InfoSchema;
+module.exports = InfoSchema

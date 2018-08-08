@@ -1,12 +1,12 @@
-const express = require('express');
-const router  = express.Router();
-const Legend  = require('../models/user');
+const express = require('express')
+const router  = express.Router()
+const Legend  = require('../models/user')
 
 router.post('/:receiverId', (req, res) => {
-    const receiverId = req.params.receiverId;
-    const senderId = req.user._id;
+    const receiverId = req.params.receiverId
+    const senderId = req.user._id
 
-    if (senderId == receiverId) return res.sendStatus(400);
+    if (senderId == receiverId) return res.sendStatus(400)
     
     const message = {
         author: {
@@ -20,7 +20,7 @@ router.post('/:receiverId', (req, res) => {
         },
         subject: req.body.subject,
         body: req.body.body
-    };
+    }
 
     Legend.findByIdAndUpdate(
         receiverId, 
@@ -33,7 +33,7 @@ router.post('/:receiverId', (req, res) => {
             }
         }, 
         (err, user) => {
-        if (err) console.log(err);
+        if (err) console.log(err)
         
         if (connectedUsers[receiverId]) {
             connectedUsers[receiverId].map(socketId =>
@@ -51,20 +51,20 @@ router.post('/:receiverId', (req, res) => {
                 }
             },
             err => {
-            if (err) console.log(err);
-        });
-        res.send();
-    });
-});
+            if (err) console.log(err)
+        })
+        res.send()
+    })
+})
 
 router.patch('/bookmark/:msgId', async (req, res) => {
-    const msgId = req.params.msgId;
-    const userId = req.user._id;
+    const msgId = req.params.msgId
+    const userId = req.user._id
 
-    const doc = await Legend.findOne({ _id: userId, 'messages._id': msgId }, 'messages.$');
+    const doc = await Legend.findOne({ _id: userId, 'messages._id': msgId }, 'messages.$')
     
-    const isInBookmark = doc.messages[0].inBookmark;
-    console.log(isInBookmark);
+    const isInBookmark = doc.messages[0].inBookmark
+    console.log(isInBookmark)
 
     Legend.findOneAndUpdate(
         {
@@ -76,10 +76,10 @@ router.patch('/bookmark/:msgId', async (req, res) => {
             }
         },
         err => {
-            if (err) res.sendStatus(404);
-            res.send(!isInBookmark);
-        });
-});
+            if (err) res.sendStatus(404)
+            res.send(!isInBookmark)
+        })
+})
 
 router.delete('/:msgId', (req, res) => {
     Legend.findOneAndUpdate(
@@ -92,9 +92,9 @@ router.delete('/:msgId', (req, res) => {
         }
     },
     err => {
-        if (err) console.log(err);
-        res.send();
-    });
-});
+        if (err) console.log(err)
+        res.send()
+    })
+})
 
-module.exports = router;
+module.exports = router

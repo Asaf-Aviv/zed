@@ -1,18 +1,18 @@
-const mongoose                = require('mongoose');
-const Schema                  = mongoose.Schema;
-const validator               = require('validator');
-const uniqueValidator         = require('mongoose-unique-validator');
-const bcrypt                  = require('bcrypt');
-const PostSchema              = require('./post');
-const FriendRequestSchema     = require('./friendRequest');
-const FriendRequestSentSchema = require('./friendRequestSent');
-const FriendSchema            = require('./friend');
-const MessageSchema           = require('./message');
-const MyCommentsSchema        = require('./myComments');
-const LikeSchema              = require('./like');
-const myLikesSchema           = require('./myLikes');
-const InfoSchema              = require('./info');
-const ImageSchema             = require('./image');
+const mongoose                = require('mongoose')
+const Schema                  = mongoose.Schema
+const validator               = require('validator')
+const uniqueValidator         = require('mongoose-unique-validator')
+const bcrypt                  = require('bcrypt')
+const PostSchema              = require('./post')
+const FriendRequestSchema     = require('./friendRequest')
+const FriendRequestSentSchema = require('./friendRequestSent')
+const FriendSchema            = require('./friend')
+const MessageSchema           = require('./message')
+const MyCommentsSchema        = require('./myComments')
+const LikeSchema              = require('./like')
+const myLikesSchema           = require('./myLikes')
+const InfoSchema              = require('./info')
+const ImageSchema             = require('./image')
 
 const NinjaSchema = new Schema({
     username: {
@@ -75,7 +75,7 @@ const NinjaSchema = new Schema({
         type: Number,
         default: 0
     }
-});
+})
 
 // Authenticate input against database
 NinjaSchema.statics.authenticate = function (email, password, callback) {
@@ -83,32 +83,32 @@ NinjaSchema.statics.authenticate = function (email, password, callback) {
         .exec((err, user) => {
             if (err) return callback(err)
             if (!user) {
-                const err = new Error('User not found.');
-                err.status = 401;
-                return callback(err);
+                const err = new Error('User not found.')
+                err.status = 401
+                return callback(err)
             } else {
-                console.log(email, password, user.password);
+                console.log(email, password, user.password)
                 bcrypt.compare(password, user.password, function (err, result) {
-                    return result ? callback(null, user) : (console.log('wrong password'), callback());
-                });
+                    return result ? callback(null, user) : (console.log('wrong password'), callback())
+                })
             }
-    });
+    })
 }
 
 // Hashing the password before saving it to the database
 NinjaSchema.pre('save', function(next) {
-    const user = this;
+    const user = this
     bcrypt.hash(user.password, 10, function(err, hashedPassword) {
         if (err) {
-            next(err);
+            next(err)
         } else {
-            user.password = hashedPassword;
-            next();
+            user.password = hashedPassword
+            next()
         }
-    });
-});
+    })
+})
 
-NinjaSchema.plugin(uniqueValidator, { message: '{PATH} already exists' });
+NinjaSchema.plugin(uniqueValidator, { message: '{PATH} already exists' })
 
-const Ninja = mongoose.model('users', NinjaSchema);
-module.exports = Ninja;
+const Ninja = mongoose.model('users', NinjaSchema)
+module.exports = Ninja

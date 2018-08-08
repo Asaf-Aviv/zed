@@ -1,5 +1,5 @@
-const mongoose   = require('mongoose');
-const Schema     = mongoose.Schema;
+const mongoose   = require('mongoose')
+const Schema     = mongoose.Schema
 
 const LikeSchema = new Schema({
     from : {
@@ -7,6 +7,6 @@ const LikeSchema = new Schema({
     },
     username: String,
     // add profile pic
-});
+})
 
-module.exports = LikeSchema;
+module.exports = LikeSchema

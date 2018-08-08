@@ -1,102 +1,102 @@
-require('dotenv').config();
-const express          = require('express');
-const app              = express();
-const server           = require('http').Server(app);
+require('dotenv').config()
+const express          = require('express')
+const app              = express()
+const server           = require('http').Server(app)
 
 // Socket.io
 const redis            = require('redis')
-global.io              = require('socket.io')(server);
-const redisAdapter     = require('socket.io-redis');
+global.io              = require('socket.io')(server)
+const redisAdapter     = require('socket.io-redis')
 const pubClient        = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_URL, { auth_pass: process.env.REDIS_PASSWORD})
 const subClient        = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_URL, { auth_pass: process.env.REDIS_PASSWORD})
-io.adapter(redisAdapter({ pubClient, subClient }));
-require('./io');
+io.adapter(redisAdapter({ pubClient, subClient }))
+require('./io')
 
 // Server utils
-const compression      = require('compression');
-const cookieParser     = require('cookie-parser');
-const _                = require('lodash');
-const bodyParser       = require("body-parser");
-const moment           = require('moment');
-const momentDuration   = require("moment-duration-format")(moment);
-const morgan           = require('morgan');
-const fs               = require('fs');
-const helmet           = require('helmet');
-const path             = require('path');
-const expressValidator = require('express-validator');
-const championIds      = require('./assets/data/champions/championIds');
+const compression      = require('compression')
+const cookieParser     = require('cookie-parser')
+const _                = require('lodash')
+const bodyParser       = require("body-parser")
+const moment           = require('moment')
+const momentDuration   = require("moment-duration-format")(moment)
+const morgan           = require('morgan')
+const fs               = require('fs')
+const helmet           = require('helmet')
+const path             = require('path')
+const expressValidator = require('express-validator')
+const championIds      = require('./assets/data/champions/championIds')
 const runesReforged    = require('./assets/league/data/en_US/runesReforged.json')
-const runePaths        = require('./assets/league/data/en_US/runes');
-const runeDesc         = require('./assets/data/runeDesc');
-const leagueConstants  = require('./assets/data/leaugeConstants');
-const zed              = require('./util/zed');
-const port             = process.env.PORT || 3000;
+const runePaths        = require('./assets/league/data/en_US/runes')
+const runeDesc         = require('./assets/data/runeDesc')
+const leagueConstants  = require('./assets/data/leaugeConstants')
+const zed              = require('./util/zed')
+const port             = process.env.PORT || 3000
 // Authentication utils
-const session          = require('express-session');
-const sharedsession    = require("express-socket.io-session");
-const passport         = require('passport');
-const LocalStrategy    = require('passport-local').Strategy;
+const session          = require('express-session')
+const sharedsession    = require("express-socket.io-session")
+const passport         = require('passport')
+const LocalStrategy    = require('passport-local').Strategy
 // DB utils
-const mongoose         = require('mongoose');
-const db               = require('./util/db');
-const redisClient      = require('./util/redis_client');
-const Legend           = require('./models/user');
-const MongoStore       = require('connect-mongo')(session);
+const mongoose         = require('mongoose')
+const db               = require('./util/db')
+const redisClient      = require('./util/redis_client')
+const Legend           = require('./models/user')
+const MongoStore       = require('connect-mongo')(session)
 // Routes 
-const leaderboards     = require('./routes/leaderboards');
-const champions        = require('./routes/champions');
-const summoner         = require('./routes/summoner');
-const statistics       = require('./routes/statistics');
-const logout           = require('./routes/logout');
-const userProfile      = require('./routes/users');
-const profile          = require('./routes/profile');
-const login            = require('./routes/login');
-const register         = require('./routes/register');
-const post             = require('./routes/post');
-const legendSearch     = require('./routes/legendSearch');
-const friendRequests   = require('./routes/friendRequests');
-const index            = require('./routes/index');
-const league           = require('./routes/league');
-const match            = require('./routes/match');
-const items            = require('./routes/items');
-const message          = require('./routes/message');
-const runes            = require('./routes/runes');
-const spectate         = require('./routes/spectate');
-const about            = require('./routes/about');
-const forgot           = require('./routes/forgot');
-const upload           = require('./routes/upload');
+const leaderboards     = require('./routes/leaderboards')
+const champions        = require('./routes/champions')
+const summoner         = require('./routes/summoner')
+const statistics       = require('./routes/statistics')
+const logout           = require('./routes/logout')
+const userProfile      = require('./routes/users')
+const profile          = require('./routes/profile')
+const login            = require('./routes/login')
+const register         = require('./routes/register')
+const post             = require('./routes/post')
+const legendSearch     = require('./routes/legendSearch')
+const friendRequests   = require('./routes/friendRequests')
+const index            = require('./routes/index')
+const league           = require('./routes/league')
+const match            = require('./routes/match')
+const items            = require('./routes/items')
+const message          = require('./routes/message')
+const runes            = require('./routes/runes')
+const spectate         = require('./routes/spectate')
+const about            = require('./routes/about')
+const forgot           = require('./routes/forgot')
+const upload           = require('./routes/upload')
 
-app.locals.moment = moment;
-app.locals.leagueItems = zed.leagueItems;
-app.locals.champInfo = zed.general_cmp_info;
-app.locals._ = _;
-app.locals.summonerSpells = zed.summonerSpells;
-app.locals.ddragon = zed.ddragon;
-app.locals.ddragonNoVer = zed.ddragonNoVer;
-app.locals.cmpId = championIds;
-app.locals.runePaths = runePaths;
-app.locals.runeDesc = runeDesc;
-app.locals.leagueConstants = leagueConstants;
-app.locals.runesReforged = runesReforged;
+app.locals.moment = moment
+app.locals.leagueItems = zed.leagueItems
+app.locals.champInfo = zed.general_cmp_info
+app.locals._ = _
+app.locals.summonerSpells = zed.summonerSpells
+app.locals.ddragon = zed.ddragon
+app.locals.ddragonNoVer = zed.ddragonNoVer
+app.locals.cmpId = championIds
+app.locals.runePaths = runePaths
+app.locals.runeDesc = runeDesc
+app.locals.leagueConstants = leagueConstants
+app.locals.runesReforged = runesReforged
 
-console.log('env', process.env.NODE_ENV);
+console.log('env', process.env.NODE_ENV)
 
 // Create new runesReforged on patch update
-// require('./makeJson');
+// require('./makeJson')
 
 // Redis
 redisClient.on('connect', () => {
-    console.log(`Connected to redis`);
-});
+    console.log(`Connected to redis`)
+})
 
 redisClient.on('error', err => {
-    console.log(`Error: ${err}`);
-});
+    console.log(`Error: ${err}`)
+})
 
 // logs
-const accessLogStream = fs.createWriteStream(path.join(__dirname+'/logs', 'access.log'), {flags: 'a'});
+const accessLogStream = fs.createWriteStream(path.join(__dirname+'/logs', 'access.log'), {flags: 'a'})
 
-app.set('view engine', 'pug');
+app.set('view engine', 'pug')
 
 app
 .use(compression())
@@ -120,14 +120,14 @@ app
 .use(passport.initialize())
 .use(passport.session())
 .use(function(req, res, next){
-    res.locals.currentUser = req.user;
-    res.locals.historyCookie = req.cookies._hist ? JSON.parse(req.cookies._hist) : null;
-    next();
+    res.locals.currentUser = req.user
+    res.locals.historyCookie = req.cookies._hist ? JSON.parse(req.cookies._hist) : null
+    next()
 })
 .use(morgan('combined', {stream: accessLogStream}))
 .use(function(req, res, next){
-    res.locals.messages = require('express-messages')(req, res);
-    next();
+    res.locals.messages = require('express-messages')(req, res)
+    next()
 })
 // Routes
 app
@@ -161,60 +161,60 @@ io.use(sharedsession(session({
     store: new MongoStore({
         mongooseConnection: db
     })
-})));
+})))
 
 passport.use(new LocalStrategy({
         usernameField: 'email'
     },
     function(email, password, done) {
         Legend.authenticate(email.toLowerCase(), password, function (err, user) {
-            if(err || !user) return done(null, false);
-            done(null, user);
-        });
+            if(err || !user) return done(null, false)
+            done(null, user)
+        })
     }
-));
+))
 
 passport.serializeUser((user, done) => {
-    done(null, user);
-});
+    done(null, user)
+})
 
 // Update Session
 passport.deserializeUser((user, done) => {
     Legend.findById(user._id).then(updatedUser => {
-        done(null, updatedUser);
-    });
-});
+        done(null, updatedUser)
+    })
+})
 
 app.get('*', (req, res) => {
     res.render('404', {
         title: 'Page Not Found | Legends'
-    });
-});
+    })
+})
 
 // process.on('unhandledRejection', (reason, p) => {
-//     console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
-// });
+//     console.log('Unhandled Rejection at: Promise', p, 'reason:', reason)
+// })
 
 // process.on('uncaughtException', err => {
-//     console.log(`Caught exception: ${err}\n`);
-// });
+//     console.log(`Caught exception: ${err}\n`)
+// })
 
 server.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-});
+    console.log(`Listening on port ${port}`)
+})
 
 process.on('SIGINT', () => {
-    console.info('SIGINT signal received.');
+    console.info('SIGINT signal received.')
     // Stops the server from accepting new connections and finishes existing connections.
     server.close(err => {
         if (err) {
-            console.error(err);
-            process.exit(1);
+            console.error(err)
+            process.exit(1)
         }
 
         mongoose.connection.close(function () {
-            console.log('Mongoose connection disconnected');
-            process.exit(0);
-        });
-    });
-});
+            console.log('Mongoose connection disconnected')
+            process.exit(0)
+        })
+    })
+})

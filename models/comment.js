@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Schema   = mongoose.Schema;
+const mongoose = require('mongoose')
+const Schema   = mongoose.Schema
 
 const CommentSchema = new Schema({
     parentId: Schema.Types.ObjectId,
@@ -22,6 +22,6 @@ const CommentSchema = new Schema({
         type: Date,
         default: Date.now
     }
-});
+})
 
-module.exports = CommentSchema;
+module.exports = CommentSchema

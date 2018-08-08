@@ -1,19 +1,19 @@
-const express  = require('express');
-const router   = express.Router();
-const Zed      = require('../models/user');
-const pug      = require('pug');
-const mongoose = require('mongoose');
+const express  = require('express')
+const router   = express.Router()
+const Zed      = require('../models/user')
+const pug      = require('pug')
+const mongoose = require('mongoose')
 
 // Edit post route
 router.get('/edit/:id', (req, res) => {
     Zed.findById(req.user._id, (err, user) => {
-        let post = user.posts.id(req.params.id);
+        let post = user.posts.id(req.params.id)
         res.render('edit_post', {
             title: 'Edit | Zed',
             post,
-        });
-    });
-});
+        })
+    })
+})
 
 // Edit a post
 router.post('/edit/:id', (req, res) => {
@@ -21,10 +21,10 @@ router.post('/edit/:id', (req, res) => {
         { 'posts._id': req.params.id },
         { $set: { 'posts.$.body': req.body.postBody }},
         err => {
-            if (err) console.error(err);
-            res.redirect('/profile');
-        });
-});
+            if (err) console.error(err)
+            res.redirect('/profile')
+        })
+})
 
 // Publish a post
 router.post('/', (req, res) => {
@@ -45,10 +45,10 @@ router.post('/', (req, res) => {
             }
         },
         err => {
-            if (err) console.error(err);
-            res.redirect('/profile');
-        });
-});
+            if (err) console.error(err)
+            res.redirect('/profile')
+        })
+})
 
 // Delete a post
 router.delete('/:id', (req, res) => {
@@ -61,10 +61,10 @@ router.delete('/:id', (req, res) => {
             }
         },
         err => {
-            if (err) console.error(err);
-            res.send();
-        });
-});
+            if (err) console.error(err)
+            res.send()
+        })
+})
 
 // Like or Dislike a post
 router.post('/like/:postId', (req, res) => {
@@ -75,11 +75,11 @@ router.post('/like/:postId', (req, res) => {
         { 'posts._id': postId },
         'posts.$',
         (err, doc) => {
-            console.log(err, doc);
+            console.log(err, doc)
             if (err || !doc.length) {
-                return res.status(404).send("It looks like this post has been deleted, Try refreshing the page.");
+                return res.status(404).send("It looks like this post has been deleted, Try refreshing the page.")
             }
-            const alreadyLike = doc[0].posts[0].likes.some(like => like.from.toString() == userId);
+            const alreadyLike = doc[0].posts[0].likes.some(like => like.from.toString() == userId)
 
             if (alreadyLike) {
                 Zed.update(
@@ -90,15 +90,15 @@ router.post('/like/:postId', (req, res) => {
                     },
                     err => {
                         if (err) console.error(err)
-                        res.send('-1');
-                });
+                        res.send('-1')
+                })
                 
                 Zed.findByIdAndUpdate(
                     userId,
                     { $pull: { myLikes: { postId, }}},
                     err => {
-                        if (err) console.error(err);
-                });
+                        if (err) console.error(err)
+                })
             } else {
                 Zed.update(
                     { 'posts._id': postId},
@@ -110,7 +110,7 @@ router.post('/like/:postId', (req, res) => {
                         }}
                     },
                     err => {
-                        if (err) console.error(err);
+                        if (err) console.error(err)
 
                         Zed.find(
                             { 'posts._id': postId },
@@ -120,23 +120,23 @@ router.post('/like/:postId', (req, res) => {
                                         io.to(socketId).emit('likePost', req.user.username)
                                     )
                                 }
-                                res.send('1');
-                            });
-                    });
+                                res.send('1')
+                            })
+                    })
 
                     Zed.findByIdAndUpdate(
                         userId,
                         { $push: { myLikes:{ $each: [{ postId, }], $position: 0}}},
                         err => {
-                            if (err) console.error(err);
-                    });
+                            if (err) console.error(err)
+                    })
             }
-        });
-});
+        })
+})
 
 // Comment
 router.post('/comment/:postId', (req, res) => {
-    const postId = req.params.postId;
+    const postId = req.params.postId
     const comment = {
         _id: mongoose.Types.ObjectId(),
         parentId: postId,
@@ -148,7 +148,7 @@ router.post('/comment/:postId', (req, res) => {
         body: req.body.commentBody,
         likes: []
     }
-    const newCommentId = comment._id;
+    const newCommentId = comment._id
 
     Zed.findOneAndUpdate(
         { 'posts._id': postId },
@@ -157,8 +157,8 @@ router.post('/comment/:postId', (req, res) => {
         (err, user) => {
             console.log(err, user)
             if (err || !user) {
-                console.error(err);
-                return res.status(404).send('It looks like this post has been deleted, Try refreshing the page.');
+                console.error(err)
+                return res.status(404).send('It looks like this post has been deleted, Try refreshing the page.')
             }
             if (connectedUsers[user._id] && user._id != req.user._id.toString()) {
                 connectedUsers[user._id].map(socketId =>
@@ -182,33 +182,33 @@ router.post('/comment/:postId', (req, res) => {
                 },
                 err => {
                     if (err) {
-                        console.error(err);
-                        return res.sendStatus(404);
+                        console.error(err)
+                        return res.sendStatus(404)
                     } 
                     res.send(pug.renderFile('views/partials/comment.pug', {
                         comment,
                         currentUser: req.user
-                    }));
+                    }))
                 }
-            );
-        });
-});
+            )
+        })
+})
 
 // Like or Dislike a comment
 router.post('/comment/like/:postId', (req, res) => {
-    const postId = req.params.postId;
+    const postId = req.params.postId
     const commentId = req.body.commentId
-    const userId = req.user._id;
+    const userId = req.user._id
 
     Zed.findOne(
         { 'posts.comments._id': commentId },
         { 'posts.$': 1, _id: 0 },
         (err, post) => {
-            if (err || !post) res.status(404).send("It looks like this comment or post has been deleted");
+            if (err || !post) res.status(404).send("It looks like this comment or post has been deleted")
             
-            const commentIndex = post.posts[0].comments.findIndex(c => c._id == req.body.commentId);
+            const commentIndex = post.posts[0].comments.findIndex(c => c._id == req.body.commentId)
             const authorId = post.posts[0].comments[commentIndex].author._id
-            const alreadyLike = post.posts[0].comments[commentIndex].likes.some(l => l.from == userId.toString());
+            const alreadyLike = post.posts[0].comments[commentIndex].likes.some(l => l.from == userId.toString())
 
             if (alreadyLike) {
                 Zed.findOneAndUpdate(
@@ -219,22 +219,22 @@ router.post('/comment/like/:postId', (req, res) => {
                     },
                     err => {
                         if (err) {
-                            console.error(err);
-                            res.sendStatus(404);
+                            console.error(err)
+                            res.sendStatus(404)
                         }
-                });
+                })
 
                 Zed.findByIdAndUpdate(
                     userId,
                     { $pull: { myLikes: { postId, }}},
                     err => {
                         if (err) {
-                            console.error(err);
-                            res.sendStatus(404);
+                            console.error(err)
+                            res.sendStatus(404)
                         }
                     }
-                );
-                res.send('-1');
+                )
+                res.send('-1')
             } else {
                 Zed.findOneAndUpdate(
                     { 'posts.comments._id': commentId }, 
@@ -247,8 +247,8 @@ router.post('/comment/like/:postId', (req, res) => {
                     },
                     err => {
                         if (err) {
-                            console.error(err);
-                            res.sendStatus(404);
+                            console.error(err)
+                            res.sendStatus(404)
                         }
                         if (connectedUsers[authorId] && authorId != req.user._id.toString()) {
                             connectedUsers[authorId].map(socketId => 
@@ -256,37 +256,37 @@ router.post('/comment/like/:postId', (req, res) => {
                             )
                         }
                     }
-                );
+                )
 
                 Zed.findByIdAndUpdate(
                     userId,
                     { $push: { myLikes:{ $each: [{ postId, }], $position: 0 }}},
                     err => {
                         if (err) {
-                            console.error(err);
-                            res.sendStatus(404);
+                            console.error(err)
+                            res.sendStatus(404)
                         }
                     }
-                );
-                res.send('1');
+                )
+                res.send('1')
             }
-        });
-});
+        })
+})
 
 // Delete a comment
 router.delete('/comment/:id', (req, res) => {
-    const commentId = req.params.id;
+    const commentId = req.params.id
 
     Zed.findOneAndUpdate(
         { 'posts.comments._id': commentId },
         { $pull: { 'posts.$.comments': { _id: commentId }}},
         err => {
             if (err) {
-                console.error(err);
-                res.sendStatus(404);
+                console.error(err)
+                res.sendStatus(404)
             }
         }
-    );
+    )
 
     Zed.findByIdAndUpdate(
         req.user._id,
@@ -294,11 +294,11 @@ router.delete('/comment/:id', (req, res) => {
         err => {
             if (err) {
                 console.error(err)
-                res.sendStatus(404);
+                res.sendStatus(404)
             }
         }
-    );
-    res.send();
-});
+    )
+    res.send()
+})
 
-module.exports = router;
+module.exports = router

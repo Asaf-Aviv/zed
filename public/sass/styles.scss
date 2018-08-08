@@ -83,6 +83,7 @@
 .nav-search {
   .summoner-input {
     position: relative;
+    display: flex;
     input {
       font-size: 1.5rem;
       background: #6d6d6d;
@@ -124,17 +125,21 @@
       .summoner {
         display: flex;
         justify-content: space-between;
-        padding: 0.8em;
+        align-items: center;
         .remove-history {
           padding: 0 0.8em;
           cursor: pointer;
           i {
             font-size: 0.8em;
+            padding: 1em;
           }
         }
         a {
+          position: relative;
+          z-index: 10;
+          flex-basis: 70%;
           letter-spacing: 0;
-          padding: 0;
+          padding: 1em;
           font-size: 0.9em;
         }
       }

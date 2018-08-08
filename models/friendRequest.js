@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Schema   = mongoose.Schema;
+const mongoose = require('mongoose')
+const Schema   = mongoose.Schema
 
 const FriendRequestSchema = new Schema({
     _id: false,
@@ -12,6 +12,6 @@ const FriendRequestSchema = new Schema({
         type: Boolean,
         default: true
     }
-});
+})
 
-module.exports = FriendRequestSchema;
+module.exports = FriendRequestSchema
